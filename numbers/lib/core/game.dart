@@ -5,13 +5,16 @@ import 'package:flame/components.dart';
 import 'package:flame/game.dart';
 import 'package:flame/gestures.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:numbers/animate.dart';
+import 'package:numbers/animations/animate.dart';
 import 'package:numbers/core/cell.dart';
 import 'package:numbers/core/cells.dart';
 
 class MyGame extends BaseGame with TapDetector {
+  bool isPlaying = false;
   Cell _nextCell = Cell(0, 0, 0, 0);
   Cells _cells = Cells();
+  Timer? _timer;
+
   @override
   Color backgroundColor() => const Color(0xFF343434);
 
@@ -34,6 +37,9 @@ class MyGame extends BaseGame with TapDetector {
   void _spawn() {
     // Check space is clean
     if (_cells.existState(CellState.Flying)) return;
+
+    // Check end game
+    var row = _cells.length(_nextCell.column);
     var reward = 0;
     if (reward > 0) _numRewardCells++;
     var cell = Cell(_nextCell.column, row, _nextCell.value, reward);
@@ -71,6 +77,10 @@ class MyGame extends BaseGame with TapDetector {
       print("${_nextCell.column} changed to $col");
       _nextCell.column = col;
 
+      Animate.tween(_nextCell, 0.3,
+          x: _nextCell.column * Cell.diameter + Cell.radius,
+          curve: Curves.easeInOutQuad);
+
       if (_cells.last!.state == CellState.Flying) {
         var row = _cells.length(_nextCell.column);
         if (_cells.last! == _cells.get(_nextCell.column, row - 1)) --row;
@@ -104,6 +114,8 @@ class MyGame extends BaseGame with TapDetector {
     }
   }
 
+  void _bounceCell(Cell cell) {
+  }
 
   void _fell() {
     _cells.loop((i, j, c) {
