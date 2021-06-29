@@ -82,15 +82,25 @@ class MyGame extends BaseGame with TapDetector {
   }
 
   void _fallAll() {
+    var delay = 0.01;
+    var time = 0.15;
     var numFallings = 0;
     _cells.loop((i, j, c) {
       c.state = CellState.Falling;
-      c.y = Cell.diameter * (Cells.height - c.row) + Cell.radius;
+      var dy = Cell.diameter * (Cells.height - c.row) + Cell.radius;
+      var coef = 0.0;
+      Animate.tween(c, time,
+          y: dy,
+          sizeY: 1 - coef,
+          delay: delay,
+          onComplete: () => _bounceCell(c));
+
       ++numFallings;
     }, state: CellState.Flying);
 
     if (numFallings > 0) {
-      _fell();
+      _timer = Timer(delay + time + 0.5, callback: _fell);
+      _timer!.start();
     }
   }
 

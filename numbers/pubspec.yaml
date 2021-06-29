@@ -28,7 +28,7 @@ flutter:
   #   - texts/
   #   - anims/
 
-  # fonts:
-  #   - family: quicksand
-  #     fonts:
-  #       - asset: fonts/quicksand-bold.ttf
+  fonts:
+    - family: quicksand
+      fonts:
+        - asset: fonts/quicksand-bold.ttf
