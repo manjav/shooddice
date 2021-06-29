@@ -122,7 +122,49 @@ class MyGame extends BaseGame with TapDetector {
       c.state = CellState.Fell;
     }, state: CellState.Falling);
 
-    _spawn();
+    // Check all matchs after falling animation
+    if (!_findMatchs()) _spawn();
   }
+
+  bool _findMatchs() {
+    var numMerges = 0;
+    var cp = _nextCell.column;
+    var cm = _nextCell.column - 1;
+    while (cp < Cells.width || cm > -1) {
+      if (cp < Cells.width) {
+        numMerges += _fundMatch(cp);
+        cp++;
+      }
+      if (cm > -1) {
+        numMerges += _fundMatch(cm);
+        cm--;
+      }
+    }
+    return numMerges > 0;
+  }
+
+  int _fundMatch(int i) {
+    var merges = 0;
+    for (var j = 0; j < Cells.height; j++) {
+      var c = _cells.map[i][j];
+      if (c == null || c.state != CellState.Fell) continue;
+      c.state = CellState.Fixed;
+
+      var matchs = _cells.getMatchs(c.column, c.row, c.value);
+      // Relaese all cells over matchs
+      for (var m in matchs) {
+        _cells.accumulateColumn(m.column, m.row);
+        _collectReward(m);
+        Animate.tween(m, 0.1, x: c.x, y: c.y, onComplete: () => remove(m));
+      }
+
+      if (matchs.length > 0) {
+        _collectReward(c);
+        c.init(c.column, c.row, c.value + matchs.length, 0);
+        merges += matchs.length;
+  }
+      // debugPrint("match $c len:${matchs.length}");
+    }
+    return merges;
   }
   }
