@@ -16,4 +16,29 @@ class Cells {
     return map[column][row];
   }
 
+  void loop(Function(int, int, Cell) callback, {CellState? state}) {
+    for (var i = 0; i < width; i++) {
+      for (var j = 0; j < height; j++) {
+        var c = get(i, j);
+        if (c != null && (state == null || state == c.state))
+          callback.call(i, j, map[i][j]);
+      }
+    }
+  }
+
+  bool existState(CellState state) {
+    for (var i = 0; i < width; i++)
+      for (var j = 0; j < height; j++)
+        if (map[i][j] != null && map[i][j].state == state) return true;
+    return false;
+  }
+
+  int length(int column) {
+    var len = 0;
+    for (var r = 0; r < height; r++) {
+      if (get(column, r) == null) break;
+      ++len;
+    }
+    return len;
+  }
 }
