@@ -5,7 +5,7 @@ import 'package:flame/palette.dart';
 import 'package:flutter/painting.dart';
 import 'package:numbers/core/game.dart';
 
-enum CellState { Init, Flying, Falling, Fell, Fixed }
+enum CellState { Init, Float, Falling, Fell, Fixed }
 
 class Cell extends PositionComponent with HasGameRef<MyGame> {
   static final speed = 0.8;

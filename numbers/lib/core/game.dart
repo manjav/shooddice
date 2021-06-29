@@ -36,7 +36,7 @@ class MyGame extends BaseGame with TapDetector {
 
   void _spawn() {
     // Check space is clean
-    if (_cells.existState(CellState.Flying)) return;
+    if (_cells.existState(CellState.Float)) return;
 
     // Check end game
     var row = _cells.length(_nextCell.column);
@@ -54,8 +54,9 @@ class MyGame extends BaseGame with TapDetector {
 
   void update(double dt) {
     super.update(dt);
+
     if (!isPlaying) return;
-    if (_cells.last == null || _cells.last!.state != CellState.Flying) return;
+    if (_cells.last == null || _cells.last!.state != CellState.Float) return;
 
     // Check reach to target
     if (_cells.last!.y < _cells.target!) {

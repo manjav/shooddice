@@ -80,7 +80,7 @@ class Cells {
       // print("acc", c);
       map[c.column][c.row] = null;
       --c.row;
-      c.state = CellState.Flying;
+      c.state = CellState.Float;
       map[c.column][c.row] = c;
       found = true;
     }
