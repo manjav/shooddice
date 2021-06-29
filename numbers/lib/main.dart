@@ -1,4 +1,4 @@
-import 'package:numbers/game.dart';
+import 'package:numbers/core/game.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 
