@@ -86,14 +86,22 @@ class Cell extends PositionComponent with HasGameRef<MyGame> {
   @override
   void render(Canvas c) {
     super.render(c);
-    c.drawRRect(_backRect, _backPaint);
-    c.drawRRect(_sideRect, _sidePaint!);
-    c.drawRRect(_overRect, _overPaint!);
+    c.drawRRect(_backRect.s(size), _backPaint);
+    c.drawRRect(_sideRect.s(size), _sidePaint!);
+    c.drawRRect(_overRect.s(size), _overPaint!);
     _textPaint!.render(c, "${getScore(value)}", _center, anchor: Anchor.center);
   }
 
   @override
   String toString() {
     return "Cell c:$column, r:$row, v:$value, s:$state}";
+  }
+}
+
+extension RR on RRect {
+  RRect s(Vector2 size) {
+    if (size.x == 1 && size.y == 1) return this;
+    return RRect.fromLTRBXY(left * size.x, top * size.y, right * size.x,
+        bottom * size.y, blRadiusX, blRadiusY);
   }
 }
