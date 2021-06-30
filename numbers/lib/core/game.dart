@@ -161,11 +161,22 @@ class MyGame extends BaseGame with TapDetector {
 
       if (matchs.length > 0) {
         _collectReward(c);
-        c.init(c.column, c.row, c.value + matchs.length, 0);
+        c.init(c.column, c.row, c.value + matchs.length, onInit: _onCellsInit);
         merges += matchs.length;
   }
       // debugPrint("match $c len:${matchs.length}");
     }
     return merges;
+  }
+  void _onCellsInit(Cell cell) {
+
+    // More chance for spawm new cells
+    if (Cell.spawn_max < 7) {
+      var distance = (1.5 * sqrt(Cell.spawn_max)).ceil();
+      if (Cell.spawn_max < cell.value - distance)
+        Cell.spawn_max = cell.value - distance;
+    }
+
+    _fallAll();
   }
   }

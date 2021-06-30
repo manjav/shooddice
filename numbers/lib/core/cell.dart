@@ -40,6 +40,7 @@ class Cell extends PositionComponent with HasGameRef<MyGame> {
   static final _center = Vector2(0, -3);
 
   int column = 0, row = 0, reward = 0, value = 0;
+  Function(Cell)? onInit;
   CellState state = CellState.Init;
   static final RRect _backRect = RRect.fromLTRBXY(
       border - radius,
@@ -59,15 +60,19 @@ class Cell extends PositionComponent with HasGameRef<MyGame> {
   Paint? _sidePaint;
   Paint? _overPaint;
 
-  Cell(int column, int row, int value, int reward) : super() {
-    init(column, row, value, reward);
+  Cell(int column, int row, int value, {int? reward, Function(Cell)? onInit})
+      : super() {
+    init(column, row, value, reward: reward, onInit: onInit);
+    size = Vector2(1, 1);
   }
 
-  Cell init(int column, int row, int value, int reward) {
+  Cell init(int column, int row, int value,
+      {int? reward, Function(Cell)? onInit}) {
     this.column = column;
     this.row = row;
     this.value = value;
-    this.reward = reward;
+    this.reward = reward ?? 0;
+    this.onInit = onInit ?? null;
     state = CellState.Init;
 
     _sidePaint = colors[value].withAlpha(220).paint();
@@ -79,8 +84,22 @@ class Cell extends PositionComponent with HasGameRef<MyGame> {
             fontFamily: 'quicksand',
             color: Color(0xFFFFFFFF)));
 
+    size = Vector2(1.3, 1.3);
+    addEffect(ScaleEffect(
+        size: Vector2(1, 1),
+        duration: 0.2,
+        curve: Curves.easeOutBack,
+        onComplete: _animationComplete));
     return this;
-    this.state = CellState.Flying;
+  }
+
+  void _animationComplete() {
+    size = Vector2(1, 1);
+    Future.delayed(Duration(milliseconds: 200), null).then((value) {
+      this.state = CellState.Float;
+      onInit?.call(this);
+      onInit = null;
+    });
   }
 
   @override
