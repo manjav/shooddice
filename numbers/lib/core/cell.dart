@@ -17,7 +17,7 @@ class Cell extends PositionComponent with HasGameRef<MyGame> {
   static final border = 2.0;
   static final round = 7.0;
   static final first_big_value = 8;
-  static final spawn_max = 3;
+  static int spawn_max = 3;
   static final colors = [
     PaletteEntry(Color(0xFF191C1D)),
     PaletteEntry(Color(0xFF9600FF)),

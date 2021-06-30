@@ -10,11 +10,6 @@ class Cells {
   List<List> map = List.generate(
       width, (c) => List.generate(height, (r) => null, growable: false),
       growable: false);
-  void add(Cell cell) {
-    map[cell.column][cell.row] = cell;
-    last = cell;
-    target = Cell.diameter * (height - cell.row) + Cell.radius;
-  }
 
   Cell? get(int column, int row) {
     if (column < 0 || column >= width || row < 0 || row >= height) return null;

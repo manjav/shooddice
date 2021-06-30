@@ -77,13 +77,15 @@ class MyGame extends BaseGame with TapDetector {
     var row = _cells.length(_nextCell.column);
     var reward = 0;
     if (reward > 0) _numRewardCells++;
-    var cell = Cell(_nextCell.column, row, _nextCell.value, reward);
-    cell.x = cell.column * Cell.diameter + Cell.radius;
+    var cell = Cell(_nextCell.column, row, _nextCell.value, reward: reward);
+    cell.x = bounds.left + cell.column * Cell.diameter + Cell.radius;
     cell.y = _nextCell.y;
-    _cells.add(cell);
+    _cells.map[cell.column][row] = _cells.last = cell;
+    _cells.target =
+        bounds.top + Cell.diameter * (Cells.height - row) + Cell.radius;
     add(cell);
 
-    _nextCell.init(_nextCell.column, 0, Cell.getNextValue(), 0);
+    _nextCell.init(_nextCell.column, 0, Cell.getNextValue());
 
   }
 
@@ -106,7 +108,7 @@ class MyGame extends BaseGame with TapDetector {
   void onTapDown(TapDownInfo info) {
 
     if (!isPlaying) return;
-    var col = (info.eventPosition.global.x / Cell.diameter)
+    var col = ((info.eventPosition.global.x - bounds.left) / Cell.diameter)
         .clamp(0, Cells.width - 1)
         .floor();
     if (_nextCell.column != col) {
@@ -126,7 +128,8 @@ class MyGame extends BaseGame with TapDetector {
         var row = _cells.length(_nextCell.column);
         if (_cells.last! == _cells.get(_nextCell.column, row - 1)) --row;
         _cells.translate(_cells.last!, _nextCell.column, row);
-        _cells.last!.x = _cells.last!.column * Cell.diameter + Cell.radius;
+        _cells.last!.x =
+            bounds.left + _nextCell.column * Cell.diameter + Cell.radius;
       }
     }
     _fallAll();
@@ -209,6 +212,13 @@ class MyGame extends BaseGame with TapDetector {
     }
     return merges;
   }
+
+  void _collectReward(Cell cell) {
+    if (cell.reward <= 0) return;
+
+    --_numRewardCells;
+  }
+
   void _onCellsInit(Cell cell) {
 
     // More chance for spawm new cells
@@ -219,5 +229,14 @@ class MyGame extends BaseGame with TapDetector {
     }
 
     _fallAll();
+  }
+
+  void _removeCell(int column, int row, bool accumulate) {
+    if (_cells.map[column][row] == null) return;
+    remove(_cells.map[column][row]);
+    if (accumulate)
+      _cells.accumulateColumn(column, row);
+    else
+      _cells.map[column][row] = null;
   }
   }
