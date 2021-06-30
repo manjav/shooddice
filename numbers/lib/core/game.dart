@@ -78,9 +78,14 @@ class MyGame extends BaseGame with TapDetector {
       print("${_nextCell.column} changed to $col");
       _nextCell.column = col;
 
-      Animate.tween(_nextCell, 0.3,
-          x: _nextCell.column * Cell.diameter + Cell.radius,
-          curve: Curves.easeInOutQuad);
+      _nextCell.addEffect(MoveEffect(
+          duration: 0.3,
+          path: [
+            Vector2(
+                bounds.left + _nextCell.column * Cell.diameter + Cell.radius,
+                _nextCell.y)
+          ],
+          curve: Curves.easeInOutQuad));
 
       if (_cells.last!.state == CellState.Flying) {
         var row = _cells.length(_nextCell.column);
@@ -94,28 +99,28 @@ class MyGame extends BaseGame with TapDetector {
 
   void _fallAll() {
     var delay = 0.01;
-    var time = 0.15;
-    var numFallings = 0;
+    var time = 0.1;
     _cells.loop((i, j, c) {
       c.state = CellState.Falling;
-      var dy = Cell.diameter * (Cells.height - c.row) + Cell.radius;
-      var coef = 0.0;
-      Animate.tween(c, time,
-          y: dy,
-          sizeY: 1 - coef,
-          delay: delay,
-          onComplete: () => _bounceCell(c));
+      var dy =
+          bounds.top + Cell.diameter * (Cells.height - c.row) + Cell.radius;
+      var coef = ((dy - c.y) / (Cell.diameter * Cells.height)) * 0.2;
 
-      ++numFallings;
-    }, state: CellState.Flying);
-
-    if (numFallings > 0) {
-      _timer = Timer(delay + time + 0.5, callback: _fell);
-      _timer!.start();
-    }
+      var s1 = CombinedEffect(effects: [
+        MoveEffect(
+            path: [Vector2(c.x, dy + Cell.radius * coef)], duration: time),
+        ScaleEffect(size: Vector2(1, 1 - coef), duration: time)
+      ]);
+      var s2 = CombinedEffect(effects: [
+        MoveEffect(path: [Vector2(c.x, dy)], duration: time),
+        ScaleEffect(size: Vector2(1, 1), duration: time)
+      ]);
+      c.addEffect(SequenceEffect(
+          effects: [s1, s2], onComplete: () => fallingComplete(c, dy)));
+    }, state: CellState.Float);
   }
 
-  void _bounceCell(Cell cell) {
+  void fallingComplete(Cell cell, double dy) {
   }
 
   void _fell() {
@@ -156,7 +161,8 @@ class MyGame extends BaseGame with TapDetector {
       for (var m in matchs) {
         _cells.accumulateColumn(m.column, m.row);
         _collectReward(m);
-        Animate.tween(m, 0.1, x: c.x, y: c.y, onComplete: () => remove(m));
+        m.addEffect(MoveEffect(
+            duration: 0.1, path: [c.position], onComplete: () => remove(m)));
       }
 
       if (matchs.length > 0) {
