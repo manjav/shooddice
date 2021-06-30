@@ -1,7 +1,10 @@
 import 'dart:math';
+import 'dart:ui';
 
 import 'package:flame/components.dart';
+import 'package:flame/effects.dart';
 import 'package:flame/palette.dart';
+import 'package:flutter/animation.dart';
 import 'package:flutter/painting.dart';
 import 'package:numbers/core/game.dart';
 
@@ -34,7 +37,10 @@ class Cell extends PositionComponent with HasGameRef<MyGame> {
     PaletteEntry(Color(0xFF0070C0))
   ];
   static final scales = [0, 1, 0.9, 0.75, 0.65, 0.55];
-  static double get strock => border + 2.6;
+  static double diameter = 64.0;
+  static double radius = diameter * 0.5;
+
+  static double get strock => border + 2.4;
   static int getNextValue() => MyGame.random.nextInt(spawn_max) + 1;
   static int getScore(int value) => pow(2, value) as int;
   static final _center = Vector2(0, -3);

@@ -2,28 +2,59 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:flame/components.dart';
+import 'package:flame/effects.dart';
 import 'package:flame/game.dart';
 import 'package:flame/gestures.dart';
+import 'package:flame/palette.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:numbers/animations/animate.dart';
 import 'package:numbers/core/cell.dart';
 import 'package:numbers/core/cells.dart';
 
 class MyGame extends BaseGame with TapDetector {
+  static final padding = 20.0;
+  static final Random random = new Random();
+  static final colors = [
+    PaletteEntry(Color(0xFF2c3134)).paint(),
+    PaletteEntry(Color(0xFF23272A)).paint(),
+    PaletteEntry(Color(0xFF1F2326)).paint(),
+  ];
+  Rect bounds = Rect.fromLTRB(0, 0, 0, 0);
+  RRect? _bgRect;
+  RRect? _lineRect;
+  List<Rect>? _rects;
+
   bool isPlaying = false;
-  Cell _nextCell = Cell(0, 0, 0, 0);
+  Cell _nextCell = Cell(0, 0, 0);
   Cells _cells = Cells();
-  Timer? _timer;
 
   @override
-  Color backgroundColor() => const Color(0xFF343434);
+  Color backgroundColor() => colors[0].color;
 
   @override
   void onAttach() {
     super.onAttach();
-    _nextCell.init(random.nextInt(Cells.width), 0, Cell.getNextValue(), 0);
-    _nextCell.x = _nextCell.column * Cell.diameter + Cell.radius;
-    _nextCell.y = 0;
+
+    var width = size.x - padding * 2;
+    Cell.diameter = width / Cells.width;
+    Cell.radius = Cell.diameter * 0.5;
+    var height = (Cells.height + 1) * Cell.diameter;
+    var t = (size.y - height) * 0.5;
+    bounds = Rect.fromLTRB(padding, t, size.x - padding, size.y - t);
+    _bgRect = RRect.fromLTRBXY(bounds.left - 4, bounds.top - 4,
+        bounds.right + 4, bounds.bottom + 4, 16, 16);
+    _lineRect = RRect.fromLTRBXY(bounds.left + 2, bounds.top + Cell.diameter,
+        bounds.right - 2, bounds.top + Cell.diameter + 5, 4, 4);
+    _rects = List.generate(
+        2,
+        (i) => Rect.fromLTRB(
+            bounds.left + (i + 1) * Cell.diameter,
+            _bgRect!.top,
+            bounds.right - (i + 1) * Cell.diameter,
+            _bgRect!.bottom));
+
+    _nextCell.init(random.nextInt(Cells.width), 0, Cell.getNextValue());
+    _nextCell.x = _nextCell.column * Cell.diameter + Cell.radius + bounds.left;
+    _nextCell.y = bounds.top + Cell.radius;
     add(_nextCell);
 
     isPlaying = true;
@@ -31,6 +62,10 @@ class MyGame extends BaseGame with TapDetector {
   }
 
   void render(Canvas canvas) {
+    canvas.drawRRect(_bgRect!, colors[1]);
+    canvas.drawRect(_rects![0], colors[2]);
+    canvas.drawRect(_rects![1], colors[1]);
+    canvas.drawRRect(_lineRect!, colors[0]);
     super.render(canvas);
   }
 

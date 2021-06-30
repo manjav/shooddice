@@ -2,8 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:numbers/core/cell.dart';
 
 class Cells {
-  static final width = 5;
-  static final height = 6;
+  static int width = 5;
+  static int height = 6;
 
   Cell? last;
   double? target;
