@@ -124,7 +124,8 @@ class MyGame extends BaseGame with TapDetector {
           ],
           curve: Curves.easeInOutQuad));
 
-      if (_cells.last!.state == CellState.Flying) {
+      if (_cells.last!.state.index < CellState.Falling.index &&
+          !_cells.last!.matched) {
         var row = _cells.length(_nextCell.column);
         if (_cells.last! == _cells.get(_nextCell.column, row - 1)) --row;
         _cells.translate(_cells.last!, _nextCell.column, row);
@@ -136,7 +137,7 @@ class MyGame extends BaseGame with TapDetector {
   }
 
   void _fallAll() {
-    var delay = 0.01;
+    // var delay = 0.01;
     var time = 0.1;
     _cells.loop((i, j, c) {
       c.state = CellState.Falling;
@@ -159,13 +160,19 @@ class MyGame extends BaseGame with TapDetector {
   }
 
   void fallingComplete(Cell cell, double dy) {
+    cell.size = Vector2(1, 1);
+    cell.y = dy;
+    cell.state = CellState.Fell;
+    _fell();
   }
 
   void _fell() {
+    // All cells falling completed
+    var hasFloat = false;
     _cells.loop((i, j, c) {
-      c.state = CellState.Fell;
-    }, state: CellState.Falling);
-
+      if (c.state.index < CellState.Fell.index) hasFloat = true;
+    });
+    if (hasFloat) return;
     // Check all matchs after falling animation
     if (!_findMatchs()) _spawn();
   }
@@ -205,6 +212,7 @@ class MyGame extends BaseGame with TapDetector {
 
       if (matchs.length > 0) {
         _collectReward(c);
+        c.matched = true;
         c.init(c.column, c.row, c.value + matchs.length, onInit: _onCellsInit);
         merges += matchs.length;
   }

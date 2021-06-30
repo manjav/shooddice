@@ -45,6 +45,7 @@ class Cell extends PositionComponent with HasGameRef<MyGame> {
   static int getScore(int value) => pow(2, value) as int;
   static final _center = Vector2(0, -3);
 
+  bool matched = false;
   int column = 0, row = 0, reward = 0, value = 0;
   Function(Cell)? onInit;
   CellState state = CellState.Init;
