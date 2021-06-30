@@ -16,12 +16,13 @@ class Cells {
     return map[column][row];
   }
 
-  void loop(Function(int, int, Cell) callback, {CellState? state}) {
+  void loop(Function(int, int, Cell) callback, {CellState? state, int? value}) {
     for (var i = 0; i < width; i++) {
       for (var j = 0; j < height; j++) {
         var c = get(i, j);
-        if (c != null && (state == null || state == c.state))
-          callback.call(i, j, map[i][j]);
+        if (c != null &&
+            (state == null || state == c.state) &&
+            (value == null || value == c.value)) callback.call(i, j, map[i][j]);
       }
     }
   }

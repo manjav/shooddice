@@ -247,4 +247,8 @@ class MyGame extends BaseGame with TapDetector {
     else
       _cells.map[column][row] = null;
   }
+
+  void removeCellsByValueint(value) {
+    _cells.loop((i, j, c) => _removeCell(i, j, true), value: value);
+  }
   }
