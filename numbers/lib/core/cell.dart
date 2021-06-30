@@ -92,7 +92,7 @@ class Cell extends PositionComponent with HasGameRef<MyGame> {
     size = Vector2(1.3, 1.3);
     addEffect(ScaleEffect(
         size: Vector2(1, 1),
-        duration: 0.2,
+        duration: matched ? 0.2 : 0.5,
         curve: Curves.easeOutBack,
         onComplete: _animationComplete));
     return this;

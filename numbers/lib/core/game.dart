@@ -79,7 +79,7 @@ class MyGame extends BaseGame with TapDetector {
     if (reward > 0) _numRewardCells++;
     var cell = Cell(_nextCell.column, row, _nextCell.value, reward: reward);
     cell.x = bounds.left + cell.column * Cell.diameter + Cell.radius;
-    cell.y = _nextCell.y;
+    cell.y = _nextCell.y + Cell.diameter - 8;
     _cells.map[cell.column][row] = _cells.last = cell;
     _cells.target =
         bounds.top + Cell.diameter * (Cells.height - row) + Cell.radius;
