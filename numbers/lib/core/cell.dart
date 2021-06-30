@@ -12,9 +12,7 @@ enum CellState { Init, Float, Falling, Fell, Fixed }
 
 class Cell extends PositionComponent with HasGameRef<MyGame> {
   static final speed = 0.8;
-  static final diameter = 64.0;
-  static final radius = diameter * 0.5;
-  static final border = 2.0;
+  static final border = 1.8;
   static final round = 7.0;
   static final first_big_value = 8;
   static int spawn_max = 3;
@@ -59,7 +57,7 @@ class Cell extends PositionComponent with HasGameRef<MyGame> {
   static final RRect _sideRect = RRect.fromLTRBXY(strock - radius,
       strock - radius, radius - strock, radius - strock, round, round);
   static final RRect _overRect = RRect.fromLTRBXY(strock - radius,
-      strock - radius, radius - strock, radius - strock - 4, round, round);
+      strock - radius, radius - strock, radius - strock - 4.6, round, round);
 
   static final Paint _backPaint = colors[0].paint();
 
@@ -82,7 +80,7 @@ class Cell extends PositionComponent with HasGameRef<MyGame> {
     this.onInit = onInit ?? null;
     state = CellState.Init;
 
-    _sidePaint = colors[value].withAlpha(220).paint();
+    _sidePaint = colors[value].withAlpha(180).paint();
     _overPaint = colors[value].paint();
     _textPaint = TextPaint(
         config: TextPaintConfig(
