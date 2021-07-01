@@ -137,7 +137,7 @@ class MyGame extends BaseGame with TapDetector {
     if (reward > 0) _numRewardCells++;
     var cell = Cell(_nextCell.column, row, _nextCell.value, reward: reward);
     cell.x = bounds.left + cell.column * Cell.diameter + Cell.radius;
-    cell.y = _nextCell.y + Cell.diameter - 10;
+    cell.y = _nextCell.y + Cell.diameter - 20;
     _cells.map[cell.column][row] = _cells.last = cell;
     _cells.target =
         bounds.top + Cell.diameter * (Cells.height - row) + Cell.radius;
@@ -164,14 +164,19 @@ class MyGame extends BaseGame with TapDetector {
   }
 
   void onTapDown(TapDownInfo info) {
-
     if (!isPlaying) return;
+    if (_cells.last!.state == CellState.Float && !_cells.last!.matched) {
     var col = ((info.eventPosition.global.x - bounds.left) / Cell.diameter)
         .clamp(0, Cells.width - 1)
         .floor();
-    if (_cells.last!.state == CellState.Float && !_cells.last!.matched) {
+      var row = _cells.length(col);
+      var _y = bounds.top + Cell.diameter * (Cells.height - row) + Cell.radius;
+      if (_cells.last!.y > _y) {
+        debugPrint("${_cells.last!.y}  >>> $_y");
+        return;
+      }
       var _x = bounds.left + col * Cell.diameter + Cell.radius;
-      // Change 
+      // Change column
       if (_nextCell.column != col) {
       _nextCell.column = col;
       _nextCell.addEffect(MoveEffect(
@@ -179,7 +184,6 @@ class MyGame extends BaseGame with TapDetector {
           path: [Vector2(_x, _nextCell.y)],
           curve: Curves.easeInOutQuad));
 
-        var row = _cells.length(col);
         if (_cells.last! == _cells.get(col, row - 1)) --row;
         _cells.translate(_cells.last!, col, row);
       _cells.last!.x = _x;
