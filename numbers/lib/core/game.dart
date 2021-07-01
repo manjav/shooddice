@@ -17,6 +17,7 @@ class MyGame extends BaseGame with TapDetector {
     PaletteEntry(Color(0xFF2c3134)).paint(),
     PaletteEntry(Color(0xFF23272A)).paint(),
     PaletteEntry(Color(0xFF1F2326)).paint(),
+    PaletteEntry(Color(0xFFFF2326)).paint()
   ];
   int _numRewardCells = 0;
   int _numRevives = 0;
@@ -48,7 +49,7 @@ class MyGame extends BaseGame with TapDetector {
     _bgRect = RRect.fromLTRBXY(bounds.left - 4, bounds.top - 4,
         bounds.right + 4, bounds.bottom + 4, 16, 16);
     _lineRect = RRect.fromLTRBXY(bounds.left + 2, bounds.top + Cell.diameter,
-        bounds.right - 2, bounds.top + Cell.diameter + 5, 4, 4);
+        bounds.right - 2, bounds.top + Cell.diameter + 4, 4, 4);
     _rects = List.generate(
         2,
         (i) => Rect.fromLTRB(
@@ -70,7 +71,7 @@ class MyGame extends BaseGame with TapDetector {
     canvas.drawRRect(_bgRect!, colors[1]);
     canvas.drawRect(_rects![0], colors[2]);
     canvas.drawRect(_rects![1], colors[1]);
-    canvas.drawRRect(_lineRect!, colors[0]);
+    canvas.drawRRect(_lineRect!, _linePaint);
     super.render(canvas);
   }
 
@@ -80,11 +81,19 @@ class MyGame extends BaseGame with TapDetector {
 
     // Check end game
     var row = _cells.length(_nextCell.column);
-    var reward = 0;
+    if (row >= Cells.height) {
+      _linePaint = colors[3];
+      isPlaying = false;
+      onGameOver?.call();
+      // Animate.tween(_endLine, 1.0, {alpha: 0.2}).repeat(1).onComplete(gameOver);
+      print("game over!");
+      return;
+    }
+
     if (reward > 0) _numRewardCells++;
     var cell = Cell(_nextCell.column, row, _nextCell.value, reward: reward);
     cell.x = bounds.left + cell.column * Cell.diameter + Cell.radius;
-    cell.y = _nextCell.y + Cell.diameter - 8;
+    cell.y = _nextCell.y + Cell.diameter - 10;
     _cells.map[cell.column][row] = _cells.last = cell;
     _cells.target =
         bounds.top + Cell.diameter * (Cells.height - row) + Cell.radius;
