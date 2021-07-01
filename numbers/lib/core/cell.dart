@@ -92,7 +92,7 @@ class Cell extends PositionComponent with HasGameRef<MyGame> {
     size = Vector2(1.3, 1.3);
     addEffect(ScaleEffect(
         size: Vector2(1, 1),
-        duration: matched ? 0.2 : 0.5,
+        duration: matched ? 0.2 : 0.3,
         curve: Curves.easeOutBack,
         onComplete: _animationComplete));
     return this;
@@ -122,7 +122,7 @@ class Cell extends PositionComponent with HasGameRef<MyGame> {
   }
 }
 
-extension RR on RRect {
+extension RRectExt on RRect {
   RRect s(Vector2 size) {
     if (size.x == 1 && size.y == 1) return this;
     return RRect.fromLTRBXY(left * size.x, top * size.y, right * size.x,

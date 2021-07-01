@@ -111,27 +111,21 @@ class MyGame extends BaseGame with TapDetector {
     var col = ((info.eventPosition.global.x - bounds.left) / Cell.diameter)
         .clamp(0, Cells.width - 1)
         .floor();
-    if (_nextCell.column != col) {
-      print("${_nextCell.column} changed to $col");
+    if (_nextCell.column != col &&
+        _cells.last!.state == CellState.Float &&
+        !_cells.last!.matched) {
       _nextCell.column = col;
 
+      var _x = bounds.left + _nextCell.column * Cell.diameter + Cell.radius;
       _nextCell.addEffect(MoveEffect(
           duration: 0.3,
-          path: [
-            Vector2(
-                bounds.left + _nextCell.column * Cell.diameter + Cell.radius,
-                _nextCell.y)
-          ],
+          path: [Vector2(_x, _nextCell.y)],
           curve: Curves.easeInOutQuad));
 
-      if (_cells.last!.state.index < CellState.Falling.index &&
-          !_cells.last!.matched) {
         var row = _cells.length(_nextCell.column);
         if (_cells.last! == _cells.get(_nextCell.column, row - 1)) --row;
         _cells.translate(_cells.last!, _nextCell.column, row);
-        _cells.last!.x =
-            bounds.left + _nextCell.column * Cell.diameter + Cell.radius;
-      }
+      _cells.last!.x = _x;
     }
     _fallAll();
   }

@@ -44,7 +44,7 @@ class Cells {
   }
 
   void translate(Cell c, int column, int row) {
-    debugPrint(" => $c $column $row");
+    // debugPrint(" => $c $column $row");
     map[c.column][c.row] = null;
     c.column = column;
     c.row = row;
