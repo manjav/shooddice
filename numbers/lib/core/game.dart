@@ -30,8 +30,9 @@ class MyGame extends BaseGame with TapDetector {
   RRect? _lineRect;
   List<Rect>? _rects;
   Paint _linePaint = colors[0];
+  FallingEffect? _fallingEffect;
 
-
+  Function? onGameOver;
 
   @override
   Color backgroundColor() => colors[0].color;
@@ -57,6 +58,8 @@ class MyGame extends BaseGame with TapDetector {
             _bgRect!.top,
             bounds.right - (i + 1) * Cell.diameter,
             _bgRect!.bottom));
+
+    add(_fallingEffect = FallingEffect());
 
     _nextCell.init(random.nextInt(Cells.width), 0, Cell.getNextValue());
     _nextCell.x = _nextCell.column * Cell.diameter + Cell.radius + bounds.left;
@@ -85,11 +88,13 @@ class MyGame extends BaseGame with TapDetector {
       _linePaint = colors[3];
       isPlaying = false;
       onGameOver?.call();
-      // Animate.tween(_endLine, 1.0, {alpha: 0.2}).repeat(1).onComplete(gameOver);
       print("game over!");
       return;
     }
 
+    var reward = _numRewardCells > 0 || random.nextDouble() > 0.05
+        ? 0
+        : random.nextInt(_nextCell.value * 10);
     if (reward > 0) _numRewardCells++;
     var cell = Cell(_nextCell.column, row, _nextCell.value, reward: reward);
     cell.x = bounds.left + cell.column * Cell.diameter + Cell.radius;
@@ -140,6 +145,10 @@ class MyGame extends BaseGame with TapDetector {
         if (_cells.last! == _cells.get(_nextCell.column, row - 1)) --row;
         _cells.translate(_cells.last!, _nextCell.column, row);
       _cells.last!.x = _x;
+      _fallingEffect!.tint(
+          Rect.fromLTRB(_x - Cell.radius, bounds.top + Cell.diameter,
+              _x + Cell.radius, bounds.bottom),
+          Cell.colors[_cells.last!.value]);
     }
     _fallAll();
   }
@@ -270,5 +279,34 @@ class MyGame extends BaseGame with TapDetector {
       isPlaying = true;
       _spawn();
     });
+  }
+
+}
+
+class FallingEffect extends PositionComponent with HasGameRef<MyGame> {
+  PaletteEntry? _palette;
+  Rect? _rect;
+  Paint? _paint;
+  int _alpha = 0;
+
+  void tint(Rect rect, PaletteEntry palette) {
+    _rect = rect;
+    _alpha = 200;
+    _palette = palette;
+    _paint = palette.paint();
+  }
+
+  void render(Canvas canvas) {
+    if (_alpha <= 0) return;
+    canvas.drawRect(_rect!, _palette!.alphaPaint(_alpha, _paint!));
+    _alpha -= 30;
+    super.render(canvas);
+  }
+}
+
+extension PaletteExt on PaletteEntry {
+  Paint alphaPaint(int alpha, Paint paint) {
+    if (alpha >= 200) return paint;
+    return this.withAlpha(alpha).paint();
   }
   }

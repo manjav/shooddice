@@ -85,7 +85,7 @@ class Cell extends PositionComponent with HasGameRef<MyGame> {
     _textPaint = TextPaint(
         config: TextPaintConfig(
             fontSize:
-                32.0 * scales[getScore(value).toString().length.clamp(0, 5)],
+                radius * scales[getScore(value).toString().length.clamp(0, 5)],
             fontFamily: 'quicksand',
             color: Color(0xFFFFFFFF)));
 
