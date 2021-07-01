@@ -7,6 +7,7 @@ import 'package:flame/game.dart';
 import 'package:flame/gestures.dart';
 import 'package:flame/palette.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:numbers/core/achieves.dart';
 import 'package:numbers/core/cell.dart';
 import 'package:numbers/core/cells.dart';
 
@@ -274,6 +275,7 @@ class MyGame extends BaseGame with TapDetector {
         _collectReward(c);
         c.matched = true;
         c.init(c.column, c.row, c.value + matchs.length, onInit: _onCellsInit);
+        add(Score(Cell.getScore(c.value), c.x, c.y - 20));
         merges += matchs.length;
   }
       // debugPrint("match $c len:${matchs.length}");
@@ -288,9 +290,7 @@ class MyGame extends BaseGame with TapDetector {
   }
 
   void _onCellsInit(Cell cell) {
-    var score = Cell.getScore(cell.value);
-    _setScore(_score + score);
-    // Score.instantiate("+" + score, cell.x - 4, cell.y - Cell.RADIUS, this);
+    _setScore(_score + Cell.getScore(cell.value));
 
     // Show big number popup
     if (cell.value > _valueRecord)
