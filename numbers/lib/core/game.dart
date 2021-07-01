@@ -18,14 +18,19 @@ class MyGame extends BaseGame with TapDetector {
     PaletteEntry(Color(0xFF23272A)).paint(),
     PaletteEntry(Color(0xFF1F2326)).paint(),
   ];
+  int _numRewardCells = 0;
+  int _numRevives = 0;
+  bool isPlaying = false;
+  Cell _nextCell = Cell(0, 0, 0);
+  Cells _cells = Cells();
+
   Rect bounds = Rect.fromLTRB(0, 0, 0, 0);
   RRect? _bgRect;
   RRect? _lineRect;
   List<Rect>? _rects;
+  Paint _linePaint = colors[0];
 
-  bool isPlaying = false;
-  Cell _nextCell = Cell(0, 0, 0);
-  Cells _cells = Cells();
+
 
   @override
   Color backgroundColor() => colors[0].color;
@@ -235,7 +240,7 @@ class MyGame extends BaseGame with TapDetector {
 
   void _removeCell(int column, int row, bool accumulate) {
     if (_cells.map[column][row] == null) return;
-    remove(_cells.map[column][row]);
+    _cells.map[column][row].delete((c) => remove(c));
     if (accumulate)
       _cells.accumulateColumn(column, row);
     else
@@ -244,5 +249,17 @@ class MyGame extends BaseGame with TapDetector {
 
   void removeCellsByValueint(value) {
     _cells.loop((i, j, c) => _removeCell(i, j, true), value: value);
+  }
+
+  void revive(bool reviveMode) {
+    _numRevives++;
+    for (var i = 0; i < Cells.width; i++)
+      for (var j = Cells.height - 3; j < Cells.height; j++)
+        _removeCell(i, j, false);
+
+    Future.delayed(Duration(seconds: 1), null).then((value) {
+      isPlaying = true;
+      _spawn();
+    });
   }
   }

@@ -107,6 +107,14 @@ class Cell extends PositionComponent with HasGameRef<MyGame> {
     });
   }
 
+  void delete(Function(Cell)? onDelete) {
+    addEffect(ScaleEffect(
+        size: Vector2(0, 0),
+        duration: MyGame.random.nextDouble() * 0.8,
+        curve: Curves.easeInBack,
+        onComplete: () => onDelete?.call(this)));
+  }
+
   @override
   void render(Canvas c) {
     super.render(c);
