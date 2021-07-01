@@ -127,7 +127,7 @@ class MyGame extends BaseGame with TapDetector {
       _linePaint = colors[3];
       isPlaying = false;
       onGameOver?.call();
-      print("game over!");
+      debugPrint("game over!");
       return;
     }
 
@@ -169,21 +169,21 @@ class MyGame extends BaseGame with TapDetector {
     var col = ((info.eventPosition.global.x - bounds.left) / Cell.diameter)
         .clamp(0, Cells.width - 1)
         .floor();
-    if (_nextCell.column != col &&
-        _cells.last!.state == CellState.Float &&
-        !_cells.last!.matched) {
+    if (_cells.last!.state == CellState.Float && !_cells.last!.matched) {
+      var _x = bounds.left + col * Cell.diameter + Cell.radius;
+      // Change 
+      if (_nextCell.column != col) {
       _nextCell.column = col;
-
-      var _x = bounds.left + _nextCell.column * Cell.diameter + Cell.radius;
       _nextCell.addEffect(MoveEffect(
           duration: 0.3,
           path: [Vector2(_x, _nextCell.y)],
           curve: Curves.easeInOutQuad));
 
-        var row = _cells.length(_nextCell.column);
-        if (_cells.last! == _cells.get(_nextCell.column, row - 1)) --row;
-        _cells.translate(_cells.last!, _nextCell.column, row);
+        var row = _cells.length(col);
+        if (_cells.last! == _cells.get(col, row - 1)) --row;
+        _cells.translate(_cells.last!, col, row);
       _cells.last!.x = _x;
+      }
       _fallingEffect!.tint(
           Rect.fromLTRB(_x - Cell.radius, bounds.top + Cell.diameter,
               _x + Cell.radius, bounds.bottom),
@@ -337,7 +337,7 @@ class FallingEffect extends PositionComponent with HasGameRef<MyGame> {
 
   void tint(Rect rect, PaletteEntry palette) {
     _rect = rect;
-    _alpha = 200;
+    _alpha = 100;
     _palette = palette;
     _paint = palette.paint();
   }
