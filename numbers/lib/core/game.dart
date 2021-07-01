@@ -11,31 +11,48 @@ import 'package:numbers/core/cell.dart';
 import 'package:numbers/core/cells.dart';
 
 class MyGame extends BaseGame with TapDetector {
+  Function(int)? onScoreChange;
+  Function(int)? onScoreRecord;
+  Function(int)? onValueRecord;
+  Function? onGameOver;
   static final padding = 20.0;
   static final Random random = new Random();
+  bool isPlaying = false;
+  int numRevives = 0;
+  Rect bounds = Rect.fromLTRB(0, 0, 0, 0);
   static final colors = [
     PaletteEntry(Color(0xFF2c3134)).paint(),
     PaletteEntry(Color(0xFF23272A)).paint(),
     PaletteEntry(Color(0xFF1F2326)).paint(),
     PaletteEntry(Color(0xFFFF2326)).paint()
   ];
+  bool _recordChanged = false;
   int _numRewardCells = 0;
-  int _numRevives = 0;
-  bool isPlaying = false;
+  int _valueRecord = 0;
+  int _score = 0;
   Cell _nextCell = Cell(0, 0, 0);
   Cells _cells = Cells();
 
-  Rect bounds = Rect.fromLTRB(0, 0, 0, 0);
   RRect? _bgRect;
   RRect? _lineRect;
   List<Rect>? _rects;
   Paint _linePaint = colors[0];
   FallingEffect? _fallingEffect;
 
-  Function? onGameOver;
-
   @override
   Color backgroundColor() => colors[0].color;
+
+  void _setScore(int value) {
+    if (_score >= value) return;
+    onScoreRecord?.call(_score = value);
+    // Prefs.instance.set(SCORES, value);
+    // if (Prefs.instance.get(RECORD) >= _score) return;
+    // Prefs.instance.set(RECORD, value);
+    if (value > 3 && !_recordChanged) {
+      onScoreRecord?.call(value);
+      _recordChanged = true;
+    }
+  }
 
   @override
   void onAttach() {
@@ -61,6 +78,7 @@ class MyGame extends BaseGame with TapDetector {
 
     add(_fallingEffect = FallingEffect());
 
+    _valueRecord = Cell.first_big_value;
     _nextCell.init(random.nextInt(Cells.width), 0, Cell.getNextValue());
     _nextCell.x = _nextCell.column * Cell.diameter + Cell.radius + bounds.left;
     _nextCell.y = bounds.top + Cell.radius;
@@ -245,6 +263,13 @@ class MyGame extends BaseGame with TapDetector {
   }
 
   void _onCellsInit(Cell cell) {
+    var score = Cell.getScore(cell.value);
+    _setScore(_score + score);
+    // Score.instantiate("+" + score, cell.x - 4, cell.y - Cell.RADIUS, this);
+
+    // Show big number popup
+    if (cell.value > _valueRecord)
+      onValueRecord?.call(_valueRecord = cell.value);
 
     // More chance for spawm new cells
     if (Cell.spawn_max < 7) {
@@ -270,7 +295,7 @@ class MyGame extends BaseGame with TapDetector {
   }
 
   void revive(bool reviveMode) {
-    _numRevives++;
+    numRevives++;
     for (var i = 0; i < Cells.width; i++)
       for (var j = Cells.height - 3; j < Cells.height; j++)
         _removeCell(i, j, false);
