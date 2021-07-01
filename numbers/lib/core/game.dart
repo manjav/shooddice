@@ -11,21 +11,25 @@ import 'package:numbers/core/cell.dart';
 import 'package:numbers/core/cells.dart';
 
 class MyGame extends BaseGame with TapDetector {
-  Function(int)? onScoreChange;
-  Function(int)? onScoreRecord;
-  Function(int)? onValueRecord;
-  Function? onGameOver;
   static final padding = 20.0;
   static final Random random = new Random();
-  bool isPlaying = false;
-  int numRevives = 0;
-  Rect bounds = Rect.fromLTRB(0, 0, 0, 0);
   static final colors = [
     PaletteEntry(Color(0xFF2c3134)).paint(),
     PaletteEntry(Color(0xFF23272A)).paint(),
     PaletteEntry(Color(0xFF1F2326)).paint(),
     PaletteEntry(Color(0xFFFF2326)).paint()
   ];
+
+  Function(int)? onScoreChange;
+  Function(int)? onScoreRecord;
+  Function(int)? onValueRecord;
+  Function? onGameOver;
+  bool isPlaying = false;
+  int numRevives = 0;
+  Rect bounds = Rect.fromLTRB(0, 0, 0, 0);
+  bool boostNext = false;
+  bool boostBig = false;
+
   bool _recordChanged = false;
   int _numRewardCells = 0;
   int _valueRecord = 0;
@@ -84,8 +88,25 @@ class MyGame extends BaseGame with TapDetector {
     _nextCell.y = bounds.top + Cell.radius;
     add(_nextCell);
 
+    // Add initial cells
+    if (boostBig) _createCell(_nextCell.column, 9);
+    var cols = List.generate(5, (i) => random.nextInt(Cells.width));
+    for (var c in cols) _createCell(c, Cell.getNextValue());
+
     isPlaying = true;
-    _spawn();
+    _fallAll();
+  }
+
+  void _createCell(int column, value) {
+    var row = _cells.length(column);
+    while (_cells.getMatchs(column, row, value).length > 0)
+      value = Cell.getNextValue();
+    var cell = Cell(column, row, value);
+    cell.x = bounds.left + column * Cell.diameter + Cell.radius;
+    cell.y = bounds.top + Cell.diameter * (Cells.height - row) + Cell.radius;
+    cell.state = CellState.Float;
+    _cells.map[column][row] = cell;
+    add(cell);
   }
 
   void render(Canvas canvas) {
