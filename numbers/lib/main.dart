@@ -10,58 +10,25 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(theme: Themes.darkData, home: MyHomePage());
+    return MaterialApp(theme: Themes.darkData, home: MainPage());
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key? key}) : super(key: key);
+class MainPage extends StatefulWidget {
+  MainPage({Key? key}) : super(key: key);
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  MyGame? _game;
+class _MyHomePageState extends State<MainPage> {
 
   void initState() {
-    super.initState();
     Sound.init();
-    _game = MyGame(onScore: _onGameCallbacks, onRecord: _onGameCallbacks);
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    var theme = Theme.of(context);
-    return Scaffold(
-        body: Stack(children: [
-      GameWidget(game: _game!),
-      Positioned(
-          top: 80,
-          left: 24,
-          child: Buttons.button(
-            content: Row(children: [
-              SvgPicture.asset(
-                "assets/images/coin.svg",
-                width: 32,
-              ),
-              Expanded(
-                  child: Text("1,230",
-                      textAlign: TextAlign.center,
-                      style: theme.textTheme.button)),
-              Text("+  ",
-                  textAlign: TextAlign.center, style: theme.textTheme.button)
-            ]),
-            onTap: () => print("object"),
-          )),
-    ]));
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
-  void _onGameCallbacks(int score) {
-    setState(() {});
+    return Scaffold(body: HomePage());
   }
 }
