@@ -1,5 +1,5 @@
 import 'dart:math';
-import 'dart:ui';
+import 'dart:ui' as ui;
 
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
@@ -194,9 +194,9 @@ class MyGame extends BaseGame with TapDetector {
 
       Sound.play("fall");
       _fallingEffect!.tint(
-          Rect.fromLTRB(_x - Cell.radius, bounds.top + Cell.diameter,
+          Rect.fromLTRB(_x - Cell.radius, _cells.last!.y + Cell.diameter,
               _x + Cell.radius, bounds.bottom),
-          Cell.colors[_cells.last!.value]);
+          Cell.colors[_cells.last!.value].color);
     }
     _fallAll();
   }
@@ -342,29 +342,28 @@ class MyGame extends BaseGame with TapDetector {
 }
 
 class FallingEffect extends PositionComponent with HasGameRef<MyGame> {
-  PaletteEntry? _palette;
   Rect? _rect;
-  Paint? _paint;
+  Color? _color;
   int _alpha = 0;
 
-  void tint(Rect rect, PaletteEntry palette) {
+  void tint(Rect rect, Color color) {
     _rect = rect;
-    _alpha = 100;
-    _palette = palette;
-    _paint = palette.paint();
+    _color = color;
+    _alpha = 255;
   }
 
   void render(Canvas canvas) {
     if (_alpha <= 0) return;
-    canvas.drawRect(_rect!, _palette!.alphaPaint(_alpha, _paint!));
-    _alpha -= 30;
+    canvas.drawRect(_rect!, alphaPaint(_alpha));
+    _alpha -= 15;
     super.render(canvas);
   }
-}
 
-extension PaletteExt on PaletteEntry {
-  Paint alphaPaint(int alpha, Paint paint) {
-    if (alpha >= 200) return paint;
-    return this.withAlpha(alpha).paint();
+  Paint alphaPaint(int alpha) {
+    return Paint()
+      ..shader = ui.Gradient.linear(_rect!.topCenter, _rect!.bottomCenter, [
+        _color!.withAlpha(0),
+        _color!.withAlpha(_alpha),
+      ]);
   }
   }
