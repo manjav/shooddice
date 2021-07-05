@@ -2,14 +2,14 @@ import 'package:numbers/core/game.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:numbers/utils/sounds.dart';
+import 'package:numbers/utils/themes.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        theme: ThemeData(primarySwatch: Colors.blue), home: MyHomePage());
+    return MaterialApp(theme: Themes.darkData, home: MyHomePage());
   }
 }
 
