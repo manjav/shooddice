@@ -3,6 +3,7 @@ import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:numbers/utils/sounds.dart';
 import 'package:numbers/utils/themes.dart';
+import 'package:numbers/widgets/buttons.dart';
 
 void main() => runApp(MyApp());
 
@@ -34,6 +35,20 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
         body: Stack(children: [
       GameWidget(game: _game!),
+      Positioned(
+          top: 80,
+          left: 24,
+          child: Buttons.button(
+            content: Row(children: [
+              Expanded(
+                  child: Text("1,230",
+                      textAlign: TextAlign.center,
+                      style: theme.textTheme.button)),
+              Text("+  ",
+                  textAlign: TextAlign.center, style: theme.textTheme.button)
+            ]),
+            onTap: () => print("object"),
+          )),
     ]));
   }
 
