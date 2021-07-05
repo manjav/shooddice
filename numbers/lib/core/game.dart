@@ -22,21 +22,21 @@ class MyGame extends BaseGame with TapDetector {
     PaletteEntry(Color(0xFFFF2326)).paint()
   ];
 
-  Function(int)? onScoreChange;
-  Function(int)? onScoreRecord;
-  Function(int)? onValueRecord;
-  Function? onGameOver;
+  Function(int)? onScore;
+  Function(int)? onRecord;
+  Function(int)? onBigValue;
+  Function? onLose;
   bool isPlaying = false;
   int numRevives = 0;
   Rect bounds = Rect.fromLTRB(0, 0, 0, 0);
   bool boostNext = false;
   bool boostBig = false;
+  int score = 0;
 
   bool _recordChanged = false;
   int _numRewardCells = 0;
   int _mergesCount = 0;
   int _valueRecord = 0;
-  int _score = 0;
   Cell _nextCell = Cell(0, 0, 0);
   Cells _cells = Cells();
 
@@ -46,17 +46,18 @@ class MyGame extends BaseGame with TapDetector {
   Paint _linePaint = colors[0];
   FallingEffect? _fallingEffect;
 
+  MyGame({this.onScore, this.onRecord, this.onBigValue, this.onLose }) : super();
   @override
   Color backgroundColor() => colors[0].color;
 
   void _setScore(int value) {
-    if (_score >= value) return;
-    onScoreRecord?.call(_score = value);
+    if (score >= value) return;
+    onScore?.call(score = value);
     // Prefs.instance.set(SCORES, value);
     // if (Prefs.instance.get(RECORD) >= _score) return;
     // Prefs.instance.set(RECORD, value);
     if (value > 3 && !_recordChanged) {
-      onScoreRecord?.call(value);
+      onRecord?.call(value);
       _recordChanged = true;
     }
   }
@@ -85,7 +86,7 @@ class MyGame extends BaseGame with TapDetector {
 
     add(_fallingEffect = FallingEffect());
 
-    _valueRecord = Cell.first_big_value;
+    _valueRecord = Cell.firstBigRecord;
     _nextCell.init(random.nextInt(Cells.width), 0, Cell.getNextValue());
     _nextCell.x = _nextCell.column * Cell.diameter + Cell.radius + bounds.left;
     _nextCell.y = bounds.top + Cell.radius;
@@ -130,7 +131,7 @@ class MyGame extends BaseGame with TapDetector {
       _linePaint = colors[3];
       isPlaying = false;
       Sound.play("lose");
-      onGameOver?.call();
+      onLose?.call();
       debugPrint("game over!");
       return;
     }
@@ -298,17 +299,17 @@ class MyGame extends BaseGame with TapDetector {
   }
 
   void _onCellsInit(Cell cell) {
-    _setScore(_score + Cell.getScore(cell.value));
+    _setScore(score + Cell.getScore(cell.value));
 
     // Show big number popup
     if (cell.value > _valueRecord)
-      onValueRecord?.call(_valueRecord = cell.value);
+      onBigValue?.call(_valueRecord = cell.value);
 
     // More chance for spawm new cells
-    if (Cell.spawn_max < 7) {
-      var distance = (1.5 * sqrt(Cell.spawn_max)).ceil();
-      if (Cell.spawn_max < cell.value - distance)
-        Cell.spawn_max = cell.value - distance;
+    if (Cell.maxRandomValue < 7) {
+      var distance = (1.5 * sqrt(Cell.maxRandomValue)).ceil();
+      if (Cell.maxRandomValue < cell.value - distance)
+        Cell.maxRandomValue = cell.value - distance;
     }
 
     _fallAll();

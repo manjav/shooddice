@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:numbers/core/cell.dart';
 
 class Cells {

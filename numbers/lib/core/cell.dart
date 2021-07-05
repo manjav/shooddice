@@ -14,8 +14,8 @@ class Cell extends PositionComponent with HasGameRef<MyGame> {
   static final speed = 0.8;
   static final border = 1.8;
   static final round = 7.0;
-  static final first_big_value = 8;
-  static int spawn_max = 3;
+  static final firstBigRecord = 8;
+  static int maxRandomValue = 3;
   static final colors = [
     PaletteEntry(Color(0xFF191C1D)),
     PaletteEntry(Color(0xFF9600FF)),
@@ -39,7 +39,7 @@ class Cell extends PositionComponent with HasGameRef<MyGame> {
   static double radius = diameter * 0.5;
 
   static double get strock => border + 2.4;
-  static int getNextValue() => MyGame.random.nextInt(spawn_max) + 1;
+  static int getNextValue() => MyGame.random.nextInt(maxRandomValue) + 1;
   static int getScore(int value) => pow(2, value) as int;
   static final _center = Vector2(0, -3);
 
