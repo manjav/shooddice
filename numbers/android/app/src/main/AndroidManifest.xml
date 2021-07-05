@@ -2,6 +2,7 @@
     package="com.example.numbers">
    <application
         android:label="numbers"
+        android:allowBackup="false"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

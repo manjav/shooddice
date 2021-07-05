@@ -1,9 +1,8 @@
-import 'package:numbers/core/game.dart';
-import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
+import 'package:numbers/utils/prefs.dart';
 import 'package:numbers/utils/sounds.dart';
 import 'package:numbers/utils/themes.dart';
-import 'package:numbers/widgets/buttons.dart';
+import 'package:numbers/widgets/home.dart';
 
 void main() => runApp(MyApp());
 
@@ -21,14 +20,25 @@ class MainPage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MainPage> {
+  int _loadingState = 0;
 
   void initState() {
     Sound.init();
+    Prefs.init(() => _loadingState = 1);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: HomePage());
+    return Scaffold(body: _getPage());
+  }
+
+  Widget _getPage() {
+    switch (_loadingState) {
+      case 1:
+        return HomePage();
+      default:
+        return SizedBox();
+    }
   }
 }
