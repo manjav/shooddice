@@ -12,7 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
   flame: ^1.0.0-rc10
-
+  soundpool: ^2.1.0
   cupertino_icons: ^1.0.3
 
 dev_dependencies:
@@ -23,10 +23,10 @@ flutter:
   # generate: true
   uses-material-design: true
 
-  # assets:
-  #   - images/
+  assets:
   #   - texts/
   #   - anims/
+    - assets/sounds/
 
   fonts:
     - family: quicksand

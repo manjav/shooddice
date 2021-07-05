@@ -10,6 +10,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:numbers/core/achieves.dart';
 import 'package:numbers/core/cell.dart';
 import 'package:numbers/core/cells.dart';
+import 'package:numbers/utils/sounds.dart';
 
 class MyGame extends BaseGame with TapDetector {
   static final padding = 20.0;
@@ -33,6 +34,7 @@ class MyGame extends BaseGame with TapDetector {
 
   bool _recordChanged = false;
   int _numRewardCells = 0;
+  int _mergesCount = 0;
   int _valueRecord = 0;
   int _score = 0;
   Cell _nextCell = Cell(0, 0, 0);
@@ -127,6 +129,7 @@ class MyGame extends BaseGame with TapDetector {
     if (row >= Cells.height) {
       _linePaint = colors[3];
       isPlaying = false;
+      Sound.play("lose");
       onGameOver?.call();
       debugPrint("game over!");
       return;
@@ -143,9 +146,8 @@ class MyGame extends BaseGame with TapDetector {
     _cells.target =
         bounds.top + Cell.diameter * (Cells.height - row) + Cell.radius;
     add(cell);
-
+    _mergesCount = 0;
     _nextCell.init(_nextCell.column, 0, Cell.getNextValue());
-
   }
 
   void update(double dt) {
@@ -189,6 +191,8 @@ class MyGame extends BaseGame with TapDetector {
         _cells.translate(_cells.last!, col, row);
       _cells.last!.x = _x;
       }
+
+      Sound.play("fall");
       _fallingEffect!.tint(
           Rect.fromLTRB(_x - Cell.radius, bounds.top + Cell.diameter,
               _x + Cell.radius, bounds.bottom),
@@ -279,6 +283,10 @@ class MyGame extends BaseGame with TapDetector {
         merges += matchs.length;
   }
       // debugPrint("match $c len:${matchs.length}");
+    }
+    if (merges > 0) {
+      _mergesCount++;
+      Sound.play("merge-$_mergesCount");
     }
     return merges;
   }
