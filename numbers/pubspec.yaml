@@ -14,6 +14,7 @@ dependencies:
   cupertino_icons: ^1.0.3
   flame: ^1.0.0-rc10
   flutter_svg: ^0.22.0
+  intl: ^0.17.0
   shared_preferences: ^2.0.6
   soundpool: ^2.1.0
 
