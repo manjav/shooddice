@@ -62,7 +62,32 @@ class _HomePageState extends State<HomePage> {
         right: 80,
         child: Text("${Pref.record.value.format()}",
             style: theme.textTheme.headline5),
-      )
+      ),
+      Positioned(
+          bottom: 70,
+          left: 20,
+          width: 72,
+          height: 72,
+          child: IconButton(
+              icon: SvgPicture.asset("assets/images/pause.svg", width: 48),
+              onPressed: () {})),
+      Positioned(
+          bottom: 60,
+          right: 20,
+          width: 90,
+          height: 90,
+          child: IconButton(
+              icon: SvgPicture.asset("assets/images/remove-one.svg", width: 64),
+              onPressed: () {})),
+      Positioned(
+          bottom: 60,
+          right: 100,
+          width: 90,
+          height: 90,
+          child: IconButton(
+              icon:
+                  SvgPicture.asset("assets/images/remove-color.svg", width: 64),
+              onPressed: () {}))
     ]));
   }
 
