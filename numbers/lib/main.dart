@@ -40,6 +40,10 @@ class _MyHomePageState extends State<MyHomePage> {
           left: 24,
           child: Buttons.button(
             content: Row(children: [
+              SvgPicture.asset(
+                "assets/images/coin.svg",
+                width: 32,
+              ),
               Expanded(
                   child: Text("1,230",
                       textAlign: TextAlign.center,
