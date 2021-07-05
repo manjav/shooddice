@@ -10,6 +10,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:numbers/core/achieves.dart';
 import 'package:numbers/core/cell.dart';
 import 'package:numbers/core/cells.dart';
+import 'package:numbers/utils/prefs.dart';
 import 'package:numbers/utils/sounds.dart';
 
 class MyGame extends BaseGame with TapDetector {
@@ -46,18 +47,17 @@ class MyGame extends BaseGame with TapDetector {
   Paint _linePaint = colors[0];
   FallingEffect? _fallingEffect;
 
-  MyGame({this.onScore, this.onRecord, this.onBigValue, this.onLose }) : super();
+  MyGame({this.onScore, this.onRecord, this.onBigValue, this.onLose}) : super();
   @override
   Color backgroundColor() => colors[0].color;
 
-  void _setScore(int value) {
-    if (score >= value) return;
-    onScore?.call(score = value);
-    // Prefs.instance.set(SCORES, value);
-    // if (Prefs.instance.get(RECORD) >= _score) return;
-    // Prefs.instance.set(RECORD, value);
+  void _addScore(int value) {
+    var _new = Cell.getScore(value);
+    onScore?.call(score += _new);
+    if (Pref.record.value >= score) return;
+    Pref.record.set(score);
     if (value > 3 && !_recordChanged) {
-      onRecord?.call(value);
+      onRecord?.call(score);
       _recordChanged = true;
     }
   }
@@ -299,11 +299,10 @@ class MyGame extends BaseGame with TapDetector {
   }
 
   void _onCellsInit(Cell cell) {
-    _setScore(score + Cell.getScore(cell.value));
+    _addScore(cell.value);
 
     // Show big number popup
-    if (cell.value > _valueRecord)
-      onBigValue?.call(_valueRecord = cell.value);
+    if (cell.value > _valueRecord) onBigValue?.call(_valueRecord = cell.value);
 
     // More chance for spawm new cells
     if (Cell.maxRandomValue < 7) {
