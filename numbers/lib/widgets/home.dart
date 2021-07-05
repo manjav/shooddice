@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:numbers/core/game.dart';
+import 'package:numbers/utils/prefs.dart';
 
 import 'buttons.dart';
 
@@ -37,7 +38,7 @@ class _HomePageState extends State<HomePage> {
                 width: 32,
               ),
               Expanded(
-                  child: Text("1,230",
+                  child: Text("${Pref.coin.value}",
                       textAlign: TextAlign.center,
                       style: theme.textTheme.button)),
               Text("+  ",
@@ -45,6 +46,21 @@ class _HomePageState extends State<HomePage> {
             ]),
             onTap: () => print("object"),
           )),
+      Positioned(
+        top: 86,
+        right: 24,
+        child: SvgPicture.asset("assets/images/cup.svg", width: 48),
+      ),
+      Positioned(
+        top: 82,
+        right: 80,
+        child: Text(_game!.score.toString(), style: theme.textTheme.headline4),
+      ),
+      Positioned(
+        top: 110,
+        right: 80,
+        child: Text("${Pref.record.value}", style: theme.textTheme.headline5),
+      )
     ]));
   }
 
