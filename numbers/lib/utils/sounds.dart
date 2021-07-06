@@ -8,6 +8,8 @@ class Sound {
     for (var i = 1; i <= 9; i++) add("merge-$i");
     add("fall");
     add("lose");
+    add("pop");
+    add("tap");
   }
 
   static Future<void> add(String name) async {

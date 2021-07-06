@@ -2,6 +2,7 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:numbers/utils/sounds.dart';
 import 'package:numbers/utils/themes.dart';
 
 class Buttons {
@@ -12,7 +13,10 @@ class Buttons {
       List<Color>? colors,
       double? cornerRadius}) {
     return GestureDetector(
-        onTap: onTap,
+        onTap: () {
+          Sound.play("tap");
+          onTap?.call();
+        },
         child: Container(
           padding: padding ?? EdgeInsets.fromLTRB(10, 6, 10, 12),
           child: content ?? SizedBox(),

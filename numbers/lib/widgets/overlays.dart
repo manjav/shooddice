@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:numbers/utils/prefs.dart';
+import 'package:numbers/utils/sounds.dart';
 import 'package:numbers/utils/themes.dart';
 import 'package:numbers/utils/utils.dart';
 import 'package:numbers/widgets/buttons.dart';
@@ -14,6 +15,7 @@ class Overlays {
       String? title,
       bool hasClose = true}) {
     var theme = Theme.of(context);
+    Sound.play("pop");
     return Stack(alignment: Alignment.center, children: [
       Positioned(top: 50, right: 24, child: Components.scores(theme)),
       Positioned(top: 52, left: 24, child: Components.coins(theme)),
