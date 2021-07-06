@@ -8,13 +8,12 @@ class Prefs {
   static void init(Function onInit) {
     SharedPreferences.getInstance().then((SharedPreferences prefs) {
       _instance = prefs;
-      if (prefs.containsKey("numRuns")) {
+      if (!prefs.containsKey("numRuns")) {
         Pref.coin.set(500);
         Pref.removeOne.set(3);
         Pref.removeColor.set(3);
       }
       Pref.numRuns.set(Pref.numRuns.value + 1);
-
       onInit();
     });
   }

@@ -22,14 +22,15 @@ class MainPage extends StatefulWidget {
 class _MyHomePageState extends State<MainPage> {
   int _loadingState = 0;
 
-  void initState() {
-    Sound.init();
-    Prefs.init(() => _loadingState = 1);
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
+    if (_loadingState == 0) {
+      Sound.init();
+      Prefs.init(() {
+        _loadingState = 1;
+        setState(() {});
+      });
+    }
     return Scaffold(body: _getPage());
   }
 
