@@ -28,33 +28,11 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
         body: Stack(children: [
       GameWidget(game: _game!),
+      Positioned(top: 82, right: 34, child: Components.scores(theme)),
       Positioned(
-          top: 80,
-          left: 24,
-          child: Buttons.button(
-            content: Row(children: [
-              SVG.show("coin", 32),
-              Expanded(
-                  child: Text("${Pref.coin.value.format()}",
-                      textAlign: TextAlign.center,
-                      style: theme.textTheme.button)),
-              Text("+  ",
-                  textAlign: TextAlign.center, style: theme.textTheme.button)
-            ]),
-            onTap: () => print("object"),
-          )),
-      Positioned(top: 86, right: 24, child: SVG.show("cup", 48)),
-      Positioned(
-        top: 82,
-        right: 80,
-        child: Text(_game!.score.format(), style: theme.textTheme.headline4),
-      ),
-      Positioned(
-        top: 110,
-        right: 80,
-        child: Text("${Pref.record.value.format()}",
-            style: theme.textTheme.headline5),
-      ),
+          top: 84,
+          left: 34,
+          child: Components.coins(theme, onTap: _onGameLose)),
       Positioned(
           bottom: 70,
           left: 20,
