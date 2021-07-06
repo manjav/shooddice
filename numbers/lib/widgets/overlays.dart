@@ -6,6 +6,7 @@ import 'package:numbers/utils/themes.dart';
 import 'package:numbers/utils/utils.dart';
 import 'package:numbers/widgets/buttons.dart';
 import 'package:numbers/widgets/components.dart';
+import 'package:rive/rive.dart';
 
 class Overlays {
   static Widget basic(BuildContext context,
@@ -63,7 +64,12 @@ class Overlays {
                 top: 24,
                 child: Text(Prefs.score.format(),
                     style: theme.textTheme.headline3)),
-            Center(heightFactor: 1.9, child: SVG.show("heart", 128)),
+            Center(
+                heightFactor: 0.85,
+                child: RiveAnimation.asset(
+                  'anims/numbers.riv',
+                  stateMachines: ["revive"],
+                )),
             Positioned(
                 height: 76,
                 width: 124,
