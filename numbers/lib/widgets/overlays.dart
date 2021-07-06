@@ -42,3 +42,81 @@ class Overlays {
       ])
     ]);
   }
+
+  static revive(BuildContext context, Function? callback) {
+    var theme = Theme.of(context);
+    return basic(context,
+        title: "Revive",
+        content: Stack(
+          alignment: Alignment.topCenter,
+          children: [
+            Positioned(
+                child:
+                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              SVG.show("record", 16),
+              Text(" ${Pref.record.value.format()}",
+                  style: theme.textTheme.headline6)
+            ])),
+            Positioned(
+                top: 24,
+                child: Text(Prefs.score.format(),
+                    style: theme.textTheme.headline3)),
+            Center(heightFactor: 1.9, child: SVG.show("heart", 128)),
+            Positioned(
+                height: 76,
+                width: 124,
+                bottom: 0,
+                left: 0,
+                child: Buttons.button(
+                    onTap: () => _buttonsClick(context, "coin", callback),
+                    cornerRadius: 20,
+                    content: Stack(alignment: Alignment.centerLeft, children: [
+                      SVG.show("coin", 36),
+                      Positioned(
+                          top: 5,
+                          left: 40,
+                          child: Text("100", style: theme.textTheme.button)),
+                      Positioned(
+                          bottom: 8,
+                          left: 40,
+                          child: Text("Revive",
+                              style: TextStyle(
+                                  fontSize: 15,
+                                  color: Themes.swatch[TColors.black]![0]))),
+                    ]))),
+            Positioned(
+                height: 76,
+                width: 124,
+                bottom: 0,
+                right: 0,
+                child: Buttons.button(
+                    onTap: () => _buttonsClick(context, "ads", callback),
+                    colors: Themes.swatch[TColors.orange],
+                    cornerRadius: 20,
+                    content: Stack(alignment: Alignment.centerLeft, children: [
+                      SVG.show("ads", 36),
+                      Positioned(
+                          top: 5,
+                          left: 40,
+                          child:
+                              Text("Free", style: theme.textTheme.headline4)),
+                      Positioned(
+                          bottom: 8,
+                          left: 40,
+                          child:
+                              Text("Revive", style: theme.textTheme.headline6)),
+                    ])))
+          ],
+        ));
+  }
+
+  static _buttonsClick(BuildContext context, String? type, Function? callback) {
+    if (type == "ads")
+      callback?.call();
+    else if (type == "coin") {
+      Pref.coin.set(Pref.coin.value - 100);
+      callback?.call();
+    }
+    Navigator.of(context).pop();
+  }
+}

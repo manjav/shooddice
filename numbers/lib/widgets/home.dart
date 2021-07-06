@@ -73,6 +73,12 @@ class _HomePageState extends State<HomePage> {
         barrierColor: Theme.of(context).backgroundColor.withAlpha(180),
         barrierDismissible: true,
         pageBuilder: (BuildContext context, _, __) =>
+            Overlays.revive(context, () {
+              _game = MyGame(
+                  onScore: _onGameCallbacks,
+                  onRecord: _onGameCallbacks,
+                  onLose: _onGameLose);
+              setState(() {});
             })));
   }
 }
