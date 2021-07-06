@@ -1,7 +1,6 @@
 import 'package:flame/game.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:numbers/core/game.dart';
 import 'package:numbers/utils/utils.dart';
 import 'package:numbers/utils/prefs.dart';
@@ -34,10 +33,7 @@ class _HomePageState extends State<HomePage> {
           left: 24,
           child: Buttons.button(
             content: Row(children: [
-              SvgPicture.asset(
-                "assets/images/coin.svg",
-                width: 32,
-              ),
+              SVG.show("coin", 32),
               Expanded(
                   child: Text("${Pref.coin.value.format()}",
                       textAlign: TextAlign.center,
@@ -47,11 +43,7 @@ class _HomePageState extends State<HomePage> {
             ]),
             onTap: () => print("object"),
           )),
-      Positioned(
-        top: 86,
-        right: 24,
-        child: SvgPicture.asset("assets/images/cup.svg", width: 48),
-      ),
+      Positioned(top: 86, right: 24, child: SVG.show("cup", 48)),
       Positioned(
         top: 82,
         right: 80,
@@ -68,26 +60,21 @@ class _HomePageState extends State<HomePage> {
           left: 20,
           width: 72,
           height: 72,
-          child: IconButton(
-              icon: SvgPicture.asset("assets/images/pause.svg", width: 48),
-              onPressed: () {})),
+          child: IconButton(icon: SVG.show("pause", 48), onPressed: () {})),
       Positioned(
           bottom: 60,
           right: 20,
           width: 90,
           height: 90,
-          child: IconButton(
-              icon: SvgPicture.asset("assets/images/remove-one.svg", width: 64),
-              onPressed: () {})),
+          child:
+              IconButton(icon: SVG.show("remove-one", 64), onPressed: () {})),
       Positioned(
           bottom: 60,
           right: 100,
           width: 90,
           height: 90,
-          child: IconButton(
-              icon:
-                  SvgPicture.asset("assets/images/remove-color.svg", width: 64),
-              onPressed: () {}))
+          child:
+              IconButton(icon: SVG.show("remove-color", 64), onPressed: () {})),
     ]));
   }
 
