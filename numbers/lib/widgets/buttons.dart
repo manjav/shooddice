@@ -19,7 +19,7 @@ class Buttons {
           decoration: CustomDecoration(
               colors ?? Themes.swatch[TColors.white]!, cornerRadius ?? 12),
           width: 154,
-          height: 56,
+          height: 52,
         ));
   }
 }

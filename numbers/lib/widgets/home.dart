@@ -3,9 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:numbers/core/game.dart';
 import 'package:numbers/utils/utils.dart';
-import 'package:numbers/utils/prefs.dart';
-
-import 'buttons.dart';
+import 'package:numbers/widgets/components.dart';
+import 'package:numbers/widgets/overlays.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
@@ -19,7 +18,10 @@ class _HomePageState extends State<HomePage> {
 
   void initState() {
     super.initState();
-    _game = MyGame(onScore: _onGameCallbacks, onRecord: _onGameCallbacks);
+    _game = MyGame(
+        onScore: _onGameCallbacks,
+        onRecord: _onGameCallbacks,
+        onLose: _onGameLose);
   }
 
   @override
@@ -63,5 +65,14 @@ class _HomePageState extends State<HomePage> {
 
   void _onGameCallbacks(int score) {
     setState(() {});
+  }
+
+  void _onGameLose() {
+    Navigator.of(context).push(new PageRouteBuilder(
+        opaque: true,
+        barrierColor: Theme.of(context).backgroundColor.withAlpha(180),
+        barrierDismissible: true,
+        pageBuilder: (BuildContext context, _, __) =>
+            })));
   }
 }
