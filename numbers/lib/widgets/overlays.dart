@@ -26,12 +26,13 @@ class Overlays {
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  if (title != null)
-                    Text(title, style: theme.textTheme.bodyText2),
+                  title != null
+                      ? Text(title, style: theme.textTheme.bodyText2)
+                      : SizedBox(),
                   if (hasClose)
                     GestureDetector(
                         child: SVG.show("close", 28),
-                        onTap: () => _buttonsClick(context, null, null))
+                        onTap: () => Navigator.of(context).pop())
                 ])),
         Container(
             width: width ?? 300,
@@ -66,17 +67,16 @@ class Overlays {
                     style: theme.textTheme.headline3)),
             Center(
                 heightFactor: 0.85,
-                child: RiveAnimation.asset(
-                  'anims/numbers.riv',
-                  stateMachines: ["revive"],
-                )),
+                child: RiveAnimation.asset('anims/nums-revive.riv',
+                    stateMachines: ["machine"])),
             Positioned(
                 height: 76,
                 width: 124,
                 bottom: 0,
                 left: 0,
                 child: Buttons.button(
-                    onTap: () => _buttonsClick(context, "coin", callback),
+                    onTap: () =>
+                        _buttonsClick(context, "revive_coin", callback),
                     cornerRadius: 20,
                     content: Stack(alignment: Alignment.centerLeft, children: [
                       SVG.show("coin", 36),
@@ -85,7 +85,7 @@ class Overlays {
                           left: 40,
                           child: Text("100", style: theme.textTheme.button)),
                       Positioned(
-                          bottom: 8,
+                          bottom: 7,
                           left: 40,
                           child: Text("Revive",
                               style: TextStyle(
@@ -98,7 +98,7 @@ class Overlays {
                 bottom: 0,
                 right: 0,
                 child: Buttons.button(
-                    onTap: () => _buttonsClick(context, "ads", callback),
+                    onTap: () => _buttonsClick(context, "revive_ads", callback),
                     colors: Themes.swatch[TColors.orange],
                     cornerRadius: 20,
                     content: Stack(alignment: Alignment.centerLeft, children: [
@@ -109,7 +109,7 @@ class Overlays {
                           child:
                               Text("Free", style: theme.textTheme.headline4)),
                       Positioned(
-                          bottom: 8,
+                          bottom: 7,
                           left: 40,
                           child:
                               Text("Revive", style: theme.textTheme.headline6)),
@@ -118,13 +118,87 @@ class Overlays {
         ));
   }
 
+  static int rewardCoef = 3;
+  static int recordReward = 200;
+  static record(BuildContext context, Function? callback) {
+    var theme = Theme.of(context);
+    return basic(context,
+        content: Stack(
+          alignment: Alignment.topCenter,
+          children: [
+            Center(
+                heightFactor: 0.52,
+                child: RiveAnimation.asset('anims/nums-record.riv',
+                    stateMachines: ["machine"])),
+            Positioned(
+                top: 152,
+                child: Text("New Record", style: theme.textTheme.caption)),
+            Positioned(
+                top: 166,
+                child: Text(Prefs.score.format(),
+                    style: theme.textTheme.headline2)),
+            Positioned(
+                height: 76,
+                width: 124,
+                bottom: 0,
+                left: 0,
+                child: Buttons.button(
+                    onTap: () =>
+                        _buttonsClick(context, "record_coin", callback),
+                    cornerRadius: 20,
+                    content: Stack(alignment: Alignment.centerLeft, children: [
+                      SVG.show("coin", 36),
+                      Positioned(
+                          top: 5,
+                          left: 40,
+                          child: Text(recordReward.format(),
+                              style: theme.textTheme.button)),
+                      Positioned(
+                          bottom: 7,
+                          left: 40,
+                          child:
+                              Text("Claim", style: theme.textTheme.subtitle1)),
+                    ]))),
+            Positioned(
+                height: 76,
+                width: 124,
+                bottom: 0,
+                right: 0,
+                child: Buttons.button(
+                    onTap: () => _buttonsClick(context, "record_ads", callback),
+                    colors: Themes.swatch[TColors.orange],
+                    cornerRadius: 20,
+                    content: Stack(alignment: Alignment.centerLeft, children: [
+                      SVG.show("ads", 36),
+                      Positioned(
+                          top: 5,
+                          left: 44,
+                          child: Text((recordReward * rewardCoef).format(),
+                              style: theme.textTheme.headline4)),
+                      Positioned(
+                          bottom: 7,
+                          left: 44,
+                          child: Row(children: [
+                            SVG.show("coin", 22),
+                            Text("x$rewardCoef",
+                                style: theme.textTheme.headline6)
+                          ])),
+                    ])))
+          ],
+        ));
+  }
+
   static _buttonsClick(BuildContext context, String? type, Function? callback) {
-    if (type == "ads")
+    if (type == "revive_ads")
       callback?.call();
-    else if (type == "coin") {
+    else if (type == "revive_coin")
       Pref.coin.set(Pref.coin.value - 100);
-      callback?.call();
-    }
+    else if (type == "record_coin")
+      Pref.coin.set(Pref.coin.value + recordReward);
+    else if (type == "record_ads")
+      Pref.coin.set(Pref.coin.value + (recordReward * rewardCoef));
+
+    callback?.call();
     Navigator.of(context).pop();
   }
 }

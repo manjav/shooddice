@@ -33,9 +33,12 @@ class Themes {
     // var hl = TextStyle(
     //     color: swatch[TColors.black]![0], fontWeight: FontWeight.bold);
     var textTheme = TextTheme(
+      caption: TextStyle(color: Colors.yellow, fontSize: 16),
       button: TextStyle(color: swatch[TColors.black]![0], fontSize: 24),
+      subtitle1: TextStyle(color: swatch[TColors.black]![0], fontSize: 16),
       bodyText1: TextStyle(color: swatch[TColors.black]![0], fontSize: 23),
       bodyText2: TextStyle(color: swatch[TColors.white]![3], fontSize: 23),
+      headline2: TextStyle(color: swatch[TColors.white]![3], fontSize: 36),
       headline3: TextStyle(color: swatch[TColors.white]![3], fontSize: 30),
       headline4: TextStyle(color: swatch[TColors.white]![3], fontSize: 24),
       headline5: TextStyle(color: swatch[TColors.white]![3], fontSize: 20),
