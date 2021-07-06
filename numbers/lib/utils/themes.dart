@@ -3,24 +3,43 @@ import 'package:flutter/material.dart';
 enum TColors { black, white, yellow, blue, orange, green }
 
 class Themes {
-  static final Map<TColors, List<Color>> swatch = {
-    TColors.black: [Color(0xFF2c3134), Color(0xFF212527), Color(0xFFCCCCCC)],
-    TColors.white: [Color(0xFFEDEDED), Color(0xFFEDEDED), Color(0xFFCCCCCC)],
-    TColors.yellow: [Color(0xFFFFC000), Color(0xFFFE9C0F), Color(0xFFEB6D0A)],
-    TColors.blue: [Color(0xFF00B0F0), Color(0xFF0070C0), Color(0xFF00619F)],
-    TColors.orange: [Color(0xFFFB6127), Color(0xFFFA3838), Color(0xFFE92A26)],
-    TColors.green: [Color(0xFF71D32c), Color(0xFF00B050), Color(0xFF0A903D)]
-  };
+  static Map<TColors, List<Color>> get swatch => {
+        TColors.black: [
+          Color(0xFF2c3134),
+          Color(0x8B000000),
+          Color(0xEF2E3336),
+        ],
+        TColors.white: [
+          Color(0xFFEDEDED),
+          Color(0xFFEDEDED),
+          Color(0xFFCCCCCC),
+          Color(0xFFFFFFFF)
+        ],
+        TColors.yellow: [
+          Color(0xFFFFC000),
+          Color(0xFFFE9C0F),
+          Color(0xFFEB6D0A)
+        ],
+        TColors.blue: [Color(0xFF00B0F0), Color(0xFF0070C0), Color(0xFF00619F)],
+        TColors.orange: [
+          Color(0xFFFB6127),
+          Color(0xFFFA3838),
+          Color(0xFFE92A26)
+        ],
+        TColors.green: [Color(0xFF71D32c), Color(0xFF00B050), Color(0xFF0A903D)]
+      };
 
   static ThemeData get darkData {
     // var hl = TextStyle(
     //     color: swatch[TColors.black]![0], fontWeight: FontWeight.bold);
     var textTheme = TextTheme(
+      button: TextStyle(color: swatch[TColors.black]![0], fontSize: 24),
       bodyText1: TextStyle(color: swatch[TColors.black]![0], fontSize: 23),
-      button: TextStyle(color: swatch[TColors.black]![0], fontSize: 23),
-      bodyText2: TextStyle(color: swatch[TColors.white]![0], fontSize: 23),
-      headline4: TextStyle(color: swatch[TColors.white]![0], fontSize: 26),
-      headline5: TextStyle(color: swatch[TColors.white]![0], fontSize: 20),
+      bodyText2: TextStyle(color: swatch[TColors.white]![3], fontSize: 23),
+      headline3: TextStyle(color: swatch[TColors.white]![3], fontSize: 30),
+      headline4: TextStyle(color: swatch[TColors.white]![3], fontSize: 24),
+      headline5: TextStyle(color: swatch[TColors.white]![3], fontSize: 20),
+      headline6: TextStyle(color: swatch[TColors.white]![3], fontSize: 16),
     );
 
     // var iconTheme = IconThemeData(color: primaries[50]);
@@ -58,10 +77,12 @@ class Themes {
       // inputDecorationTheme:
       //     InputDecorationTheme(hintStyle: TextStyle(color: primaries[150])),
       fontFamily: "quicksand",
+      dialogBackgroundColor: swatch[TColors.black]![1],
       // accentColor: primaries[0],
       // buttonColor: primaries[600],
       // scaffoldBackgroundColor: primaries[900],
-      // backgroundColor: primaries[900],
+      backgroundColor: swatch[TColors.black]![2],
+      dialogTheme: DialogTheme(backgroundColor: swatch[TColors.black]![1]),
       // cardColor: primaries[800],
       // primaryColor: primaries[700],
       // focusColor: primaries[750],
