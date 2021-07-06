@@ -1,10 +1,8 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Prefs {
+  static int score = 0;
   static SharedPreferences? _instance;
-
-  static void set(Pref type, int value) => _instance!.setInt(type.name, value);
-
   static void init(Function onInit) {
     SharedPreferences.getInstance().then((SharedPreferences prefs) {
       _instance = prefs;

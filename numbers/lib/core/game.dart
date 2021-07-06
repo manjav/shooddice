@@ -32,7 +32,6 @@ class MyGame extends BaseGame with TapDetector {
   Rect bounds = Rect.fromLTRB(0, 0, 0, 0);
   bool boostNext = false;
   bool boostBig = false;
-  int score = 0;
 
   bool _recordChanged = false;
   int _numRewardCells = 0;
@@ -47,17 +46,20 @@ class MyGame extends BaseGame with TapDetector {
   Paint _linePaint = colors[0];
   FallingEffect? _fallingEffect;
 
-  MyGame({this.onScore, this.onRecord, this.onBigValue, this.onLose}) : super();
+  MyGame({this.onScore, this.onRecord, this.onBigValue, this.onLose})
+      : super() {
+    Prefs.score = 0;
+  }
   @override
   Color backgroundColor() => colors[0].color;
 
   void _addScore(int value) {
     var _new = Cell.getScore(value);
-    onScore?.call(score += _new);
-    if (Pref.record.value >= score) return;
-    Pref.record.set(score);
+    onScore?.call(Prefs.score += _new);
+    if (Pref.record.value >= Prefs.score) return;
+    Pref.record.set(Prefs.score);
     if (value > 3 && !_recordChanged) {
-      onRecord?.call(score);
+      onRecord?.call(Prefs.score);
       _recordChanged = true;
     }
   }
