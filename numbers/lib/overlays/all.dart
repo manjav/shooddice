@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:numbers/core/cell.dart';
 import 'package:numbers/utils/prefs.dart';
 import 'package:numbers/utils/sounds.dart';
 import 'package:numbers/utils/themes.dart';
@@ -188,6 +189,82 @@ class Overlays {
                     ])))
           ]
         ));
+  }
+
+  static bigValue(BuildContext context, int value) {
+    var theme = Theme.of(context);
+    return basic(context,
+        height: 380,
+        title: "Big Block",
+        hasClose: false,
+        content: Stack(alignment: Alignment.topCenter, children: [
+          Positioned(
+              top: 0,
+              width: 200,
+              height: 200,
+              child: RiveAnimation.asset('anims/nums-shine.riv',
+                  stateMachines: ["machine"])),
+          Positioned(
+              top: 58,
+              width: 80,
+              height: 80,
+              child: RotationTransition(
+                turns: AlwaysStoppedAnimation(-0.02),
+                child: Widgets.cell(theme, value),
+              )),
+          Positioned(
+              top: 170,
+              child: Text("Congnratulation.\nYou made ${Cell.getScore(value)}!",
+                  style: theme.textTheme.caption, textAlign: TextAlign.center)),
+          Positioned(
+              top: 225,
+              child:
+                  Text("Earn more reward?", style: theme.textTheme.headline6)),
+          Positioned(
+              height: 76,
+              width: 124,
+              bottom: 0,
+              left: 0,
+              child: Buttons.button(
+                  onTap: () => _buttonsClick(context, "record_coin"),
+                  cornerRadius: 16,
+                  content: Stack(alignment: Alignment.centerLeft, children: [
+                    SVG.show("coin", 36),
+                    Positioned(
+                        top: 5,
+                        left: 40,
+                        child: Text(recordReward.format(),
+                            style: theme.textTheme.button)),
+                    Positioned(
+                        bottom: 7,
+                        left: 40,
+                        child: Text("Claim", style: theme.textTheme.subtitle1)),
+                  ]))),
+          Positioned(
+              height: 76,
+              width: 124,
+              bottom: 0,
+              right: 0,
+              child: Buttons.button(
+                  onTap: () => _buttonsClick(context, "record_ads"),
+                  colors: Themes.swatch[TColors.orange],
+                  cornerRadius: 16,
+                  content: Stack(alignment: Alignment.centerLeft, children: [
+                    SVG.show("ads", 36),
+                    Positioned(
+                        top: 5,
+                        left: 44,
+                        child: Text((recordReward * rewardCoef).format(),
+                            style: theme.textTheme.headline4)),
+                    Positioned(
+                        bottom: 7,
+                        left: 44,
+                        child: Row(children: [
+                          SVG.show("coin", 22),
+                          Text("x$rewardCoef", style: theme.textTheme.headline6)
+                        ])),
+                  ])))
+        ]));
   }
 
   static _buttonsClick(BuildContext context, String? type) {

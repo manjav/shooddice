@@ -59,11 +59,9 @@ class _HomePageState extends State<HomePage> {
   void _onGameEventHandler(GameEvent event, int value) async {
     Widget? _widget;
     switch (event) {
-  void _createGame() {
-    _game = MyGame(
-        onScore: _onGameCallbacks,
-        onRecord: _onGameCallbacks,
-        onLose: _onGameLose);
+      case GameEvent.big:
+        _widget = Overlays.bigValue(context, value);
+        break;
       case GameEvent.lose:
         _widget = Overlays.revive(context);
         break;
