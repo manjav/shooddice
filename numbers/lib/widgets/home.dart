@@ -2,9 +2,10 @@ import 'package:flame/game.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:numbers/core/game.dart';
+import 'package:numbers/overlays/all.dart';
+import 'package:numbers/overlays/pause.dart';
 import 'package:numbers/utils/utils.dart';
 import 'package:numbers/widgets/components.dart';
-import 'package:numbers/widgets/overlays.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
@@ -40,7 +41,7 @@ class _HomePageState extends State<HomePage> {
           left: 20,
           width: 72,
           height: 72,
-          child: IconButton(icon: SVG.show("pause", 48), onPressed: () {})),
+          child: IconButton(icon: SVG.show("pause", 48), onPressed: _pause)),
       Positioned(
           bottom: 60,
           right: 20,
@@ -58,9 +59,12 @@ class _HomePageState extends State<HomePage> {
     ]));
   }
 
-  @override
-  void dispose() {
-    super.dispose();
+  void _createGame() {
+    _game = MyGame(
+        onScore: _onGameCallbacks,
+        onRecord: _onGameCallbacks,
+        onLose: _onGameLose);
+    setState(() {});
   }
 
   void _onGameCallbacks(int score) {
@@ -69,16 +73,35 @@ class _HomePageState extends State<HomePage> {
 
   void _onGameLose() {
     Navigator.of(context).push(new PageRouteBuilder(
-        opaque: true,
         barrierColor: Theme.of(context).backgroundColor.withAlpha(180),
-        barrierDismissible: true,
         pageBuilder: (BuildContext context, _, __) =>
-            Overlays.record(context, () {
-              _game = MyGame(
-                  onScore: _onGameCallbacks,
-                  onRecord: _onGameCallbacks,
-                  onLose: _onGameLose);
-              setState(() {});
-            })));
+            Overlays.record(context, _createGame)));
+  }
+
+  void _pause({bool showMenu = true}) {
+    _game!.isPlaying = false;
+    if (!showMenu) return;
+    Navigator.of(context).push(new PageRouteBuilder(
+        // opaque: false,
+        barrierColor: Theme.of(context).backgroundColor.withAlpha(180),
+        // barrierDismissible: true,
+        pageBuilder: (BuildContext context, _, __) =>
+            PauseOverlay(onUpdate: _onPauseButtonsClick)));
+  }
+
+  void _onPauseButtonsClick(String type) {
+    switch (type) {
+      case "reset":
+        _createGame();
+        break;
+      case "resume":
+        _game!.isPlaying = true;
+        break;
+    }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 }

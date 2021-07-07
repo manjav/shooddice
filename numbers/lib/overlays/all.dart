@@ -14,6 +14,8 @@ class Overlays {
       double? width,
       double? height,
       String? title,
+      EdgeInsets? padding,
+      bool hasChrome = true,
       bool hasClose = true}) {
     var theme = Theme.of(context);
     Sound.play("pop");
@@ -37,11 +39,13 @@ class Overlays {
         Container(
             width: width ?? 300,
             height: height ?? 340,
-            padding: EdgeInsets.fromLTRB(18, 12, 18, 28),
-            decoration: BoxDecoration(
-                color: theme.dialogTheme.backgroundColor,
-                shape: BoxShape.rectangle,
-                borderRadius: BorderRadius.all(Radius.circular(24))),
+            padding: padding ?? EdgeInsets.fromLTRB(18, 12, 18, 28),
+            decoration: hasChrome
+                ? BoxDecoration(
+                    color: theme.dialogTheme.backgroundColor,
+                    shape: BoxShape.rectangle,
+                    borderRadius: BorderRadius.all(Radius.circular(24)))
+                : null,
             child: content ?? SizedBox())
       ])
     ]);
@@ -77,7 +81,7 @@ class Overlays {
                 child: Buttons.button(
                     onTap: () =>
                         _buttonsClick(context, "revive_coin", callback),
-                    cornerRadius: 20,
+                    cornerRadius: 16,
                     content: Stack(alignment: Alignment.centerLeft, children: [
                       SVG.show("coin", 36),
                       Positioned(
@@ -100,7 +104,7 @@ class Overlays {
                 child: Buttons.button(
                     onTap: () => _buttonsClick(context, "revive_ads", callback),
                     colors: Themes.swatch[TColors.orange],
-                    cornerRadius: 20,
+                    cornerRadius: 16,
                     content: Stack(alignment: Alignment.centerLeft, children: [
                       SVG.show("ads", 36),
                       Positioned(
@@ -145,7 +149,7 @@ class Overlays {
                 child: Buttons.button(
                     onTap: () =>
                         _buttonsClick(context, "record_coin", callback),
-                    cornerRadius: 20,
+                    cornerRadius: 16,
                     content: Stack(alignment: Alignment.centerLeft, children: [
                       SVG.show("coin", 36),
                       Positioned(
@@ -167,7 +171,7 @@ class Overlays {
                 child: Buttons.button(
                     onTap: () => _buttonsClick(context, "record_ads", callback),
                     colors: Themes.swatch[TColors.orange],
-                    cornerRadius: 20,
+                    cornerRadius: 16,
                     content: Stack(alignment: Alignment.centerLeft, children: [
                       SVG.show("ads", 36),
                       Positioned(

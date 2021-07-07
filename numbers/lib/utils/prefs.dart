@@ -17,7 +17,7 @@ class Prefs {
   }
 }
 
-enum Pref { coin, numRuns, rate, record, removeOne, removeColor }
+enum Pref { coin, numRuns, rate, record, removeOne, removeColor, isMute }
 
 extension PrefExt on Pref {
   String get name {
@@ -34,6 +34,8 @@ extension PrefExt on Pref {
         return "removeOne";
       case Pref.removeColor:
         return "removeColor";
+      case Pref.isMute:
+        return "isMute";
       default:
         return "";
     }

@@ -1,4 +1,5 @@
 import 'package:flutter/services.dart';
+import 'package:numbers/utils/prefs.dart';
 import 'package:soundpool/soundpool.dart';
 
 class Sound {
@@ -21,6 +22,7 @@ class Sound {
   }
 
   static Future<int> play(String name) async {
+    if (Pref.isMute.value == 1) return 0;
     return await pool.play(map[name]!);
   }
 }
