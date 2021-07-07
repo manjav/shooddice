@@ -45,8 +45,8 @@ class _CustomDecorationPainter extends BoxPainter {
   var _shadowPaint = Paint()
     ..color = Color(0xFF000000)
     ..style = PaintingStyle.fill
-    ..maskFilter = MaskFilter.blur(BlurStyle.outer, 2);
-  static final _mainPaint = Paint()..style = PaintingStyle.fill;
+    ..maskFilter = MaskFilter.blur(BlurStyle.outer, 1.5);
+  final _mainPaint = Paint()..style = PaintingStyle.fill;
   var _overPaint = Paint()..style = PaintingStyle.fill;
 
   final List<Color> colors;

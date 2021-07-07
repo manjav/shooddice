@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:numbers/utils/prefs.dart';
+import 'package:numbers/utils/themes.dart';
 import 'package:numbers/utils/utils.dart';
 import 'package:numbers/widgets/buttons.dart';
 
@@ -32,9 +34,9 @@ class Components {
             Expanded(
                 child: Text("${Pref.coin.value.format()}",
                     textAlign: TextAlign.center,
-                    style: theme.textTheme.button)),
+                    style: theme.textTheme.bodyText1)),
             Text("+  ",
-                textAlign: TextAlign.center, style: theme.textTheme.button)
+                textAlign: TextAlign.center, style: theme.textTheme.bodyText1)
           ]),
           onTap: onTap ?? () {},
         ));

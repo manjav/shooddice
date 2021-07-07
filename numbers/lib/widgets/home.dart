@@ -31,9 +31,7 @@ class _HomePageState extends State<HomePage> {
       GameWidget(game: _game!),
       Positioned(top: 82, right: 34, child: Components.scores(theme)),
       Positioned(
-          top: 84,
-          left: 34,
-          child: Components.coins(theme, onTap: _onGameLose)),
+          top: 84, left: 34, child: Components.coins(theme, onTap: () {})),
       Positioned(
           bottom: 70,
           left: 20,
@@ -70,9 +68,9 @@ class _HomePageState extends State<HomePage> {
         _widget = Overlays.record(context);
         break;
       case GameEvent.score:
-    setState(() {});
+        setState(() {});
         return;
-  }
+    }
 
     if (_widget != null) {
       var result = await _push(_widget);
@@ -80,7 +78,7 @@ class _HomePageState extends State<HomePage> {
         if (result == null) widget.onBack();
         _game!.revive();
         return;
-  }
+      }
     }
     _onPauseButtonsClick("resume");
   }
@@ -106,6 +104,15 @@ class _HomePageState extends State<HomePage> {
 
   dynamic _push(Widget page) async {
     return await Navigator.of(context).push(PageRouteBuilder(
+        opaque: false,
+        reverseTransitionDuration: Duration(milliseconds: 200),
+        barrierColor: Theme.of(context).backgroundColor.withAlpha(230),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+            SlideTransition(
+                position: animation.drive(
+                    Tween(begin: Offset(0.0, 0.08), end: Offset.zero)
+                        .chain(CurveTween(curve: Curves.easeOutExpo))),
+                child: child),
         pageBuilder: (BuildContext context, _, __) => page));
   }
 }
