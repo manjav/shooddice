@@ -4,6 +4,8 @@ import 'package:numbers/utils/sounds.dart';
 import 'package:numbers/utils/themes.dart';
 import 'package:numbers/widgets/home.dart';
 
+import 'overlays/all.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -37,7 +39,9 @@ class _MyHomePageState extends State<MainPage> {
   Widget _getPage() {
     switch (_loadingState) {
       case 1:
-        return HomePage();
+        return Overlays.start(context, () => setState(() => _loadingState = 2));
+      case 2:
+        return HomePage(() => setState(() => _loadingState = 1));
       default:
         return SizedBox();
     }

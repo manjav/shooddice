@@ -8,7 +8,8 @@ import 'package:numbers/utils/utils.dart';
 import 'package:numbers/widgets/components.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({Key? key}) : super(key: key);
+  final Function() onBack;
+  HomePage(this.onBack, {Key? key}) : super(key: key);
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -76,6 +77,7 @@ class _HomePageState extends State<HomePage> {
     if (_widget != null) {
       var result = await _push(_widget);
       if (event == GameEvent.lose) {
+        if (result == null) widget.onBack();
         _game!.revive();
         return;
   }
@@ -87,13 +89,13 @@ class _HomePageState extends State<HomePage> {
     _game!.isPlaying = false;
     if (!showMenu) return;
     var result = await _push(PauseOverlay());
-    _onPauseButtonsClick(result);
+    _onPauseButtonsClick(result ?? "resume");
   }
 
   void _onPauseButtonsClick(String type) {
     switch (type) {
       case "reset":
-        _createGame();
+        widget.onBack();
         break;
       case "resume":
         _game!.isPlaying = true;
