@@ -14,6 +14,7 @@ class Cell extends PositionComponent with HasGameRef<MyGame> {
   static final speed = 0.8;
   static final border = 1.8;
   static final round = 7.0;
+  static final firstRecord = 1024;
   static final firstBigRecord = 8;
   static int maxRandomValue = 3;
   static final colors = [

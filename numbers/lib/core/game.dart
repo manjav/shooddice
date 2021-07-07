@@ -52,11 +52,11 @@ class MyGame extends BaseGame with TapDetector {
   Color backgroundColor() => colors[0].color;
 
   void _addScore(int value) {
-    var _new = Cell.getScore(value);
-    onGameEvent?.call(GameEvent.score, Prefs.score += _new);
+    var _new = Prefs.score += Cell.getScore(value);
+    onGameEvent?.call(GameEvent.score, _new);
     if (Pref.record.value >= Prefs.score) return;
     Pref.record.set(Prefs.score);
-    if (value > Cell.firstBigRecord && !_recordChanged) {
+    if (Prefs.score > Cell.firstRecord && !_recordChanged) {
       isPlaying = false;
       onGameEvent?.call(GameEvent.record, Prefs.score);
       _recordChanged = true;

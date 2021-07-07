@@ -122,7 +122,7 @@ class Overlays {
   }
 
   static int rewardCoef = 3;
-  static int recordReward = 200;
+  static int recordReward = 100;
   static record(BuildContext context) {
     var theme = Theme.of(context);
     return basic(context,
