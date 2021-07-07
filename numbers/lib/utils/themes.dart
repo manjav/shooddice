@@ -7,7 +7,8 @@ class Themes {
         TColors.black: [
           Color(0xFF2c3134),
           Color(0x8B000000),
-          Color(0xEF2E3336),
+          Color(0xFF1F2326),
+          Color(0xFF23272A),
         ],
         TColors.white: [
           Color(0xFFEDEDED),
@@ -36,7 +37,8 @@ class Themes {
       caption: TextStyle(color: Colors.yellow, fontSize: 16),
       button: TextStyle(color: swatch[TColors.black]![0], fontSize: 24),
       subtitle1: TextStyle(color: swatch[TColors.black]![0], fontSize: 16),
-      bodyText1: TextStyle(color: swatch[TColors.black]![0], fontSize: 23),
+      subtitle2: TextStyle(color: swatch[TColors.black]![0], fontSize: 14),
+      bodyText1: TextStyle(color: swatch[TColors.black]![0], fontSize: 20),
       bodyText2: TextStyle(color: swatch[TColors.white]![3], fontSize: 23),
       headline2: TextStyle(color: swatch[TColors.white]![3], fontSize: 36),
       headline3: TextStyle(color: swatch[TColors.white]![3], fontSize: 30),

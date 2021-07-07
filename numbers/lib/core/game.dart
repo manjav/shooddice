@@ -5,25 +5,19 @@ import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flame/game.dart';
 import 'package:flame/gestures.dart';
-import 'package:flame/palette.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:numbers/core/achieves.dart';
 import 'package:numbers/core/cell.dart';
 import 'package:numbers/core/cells.dart';
 import 'package:numbers/utils/prefs.dart';
 import 'package:numbers/utils/sounds.dart';
+import 'package:numbers/utils/themes.dart';
 
 enum GameEvent { big, lose, record, score }
 
 class MyGame extends BaseGame with TapDetector {
   static final padding = 20.0;
   static final Random random = new Random();
-  static final colors = [
-    PaletteEntry(Color(0xFF2c3134)).paint(),
-    PaletteEntry(Color(0xFF23272A)).paint(),
-    PaletteEntry(Color(0xFF1F2326)).paint(),
-    PaletteEntry(Color(0xFFFF2326)).paint()
-  ];
 
   Function(GameEvent, int)? onGameEvent;
   bool isPlaying = false;
@@ -42,14 +36,16 @@ class MyGame extends BaseGame with TapDetector {
   RRect? _bgRect;
   RRect? _lineRect;
   List<Rect>? _rects;
-  Paint _linePaint = colors[0];
+  Paint _linePaint = Paint();
+  Paint _mainPaint = Paint()..color = Themes.swatch[TColors.black]![2];
+  Paint _zebraPaint = Paint()..color = Themes.swatch[TColors.black]![3];
   FallingEffect? _fallingEffect;
 
   MyGame({this.onGameEvent}) : super() {
     Prefs.score = 0;
   }
   @override
-  Color backgroundColor() => colors[0].color;
+  Color backgroundColor() => Themes.swatch[TColors.black]![0];
 
   void _addScore(int value) {
     var _new = Prefs.score += Cell.getScore(value);
@@ -67,6 +63,7 @@ class MyGame extends BaseGame with TapDetector {
   void onAttach() {
     super.onAttach();
 
+    _linePaint.color = Themes.swatch[TColors.black]![0];
     var width = size.x - padding * 2;
     Cell.diameter = width / Cells.width;
     Cell.radius = Cell.diameter * 0.5;
@@ -115,9 +112,9 @@ class MyGame extends BaseGame with TapDetector {
   }
 
   void render(Canvas canvas) {
-    canvas.drawRRect(_bgRect!, colors[1]);
-    canvas.drawRect(_rects![0], colors[2]);
-    canvas.drawRect(_rects![1], colors[1]);
+    canvas.drawRRect(_bgRect!, _mainPaint);
+    canvas.drawRect(_rects![0], _zebraPaint);
+    canvas.drawRect(_rects![1], _mainPaint);
     canvas.drawRRect(_lineRect!, _linePaint);
     super.render(canvas);
   }
@@ -129,7 +126,7 @@ class MyGame extends BaseGame with TapDetector {
     // Check end game
     var row = _cells.length(_nextCell.column);
     if (row >= Cells.height) {
-      _linePaint = colors[3];
+      _linePaint.color = Themes.swatch[TColors.orange]![0];
       isPlaying = false;
       Sound.play("lose");
       onGameEvent?.call(GameEvent.lose, 0);
@@ -332,6 +329,7 @@ class MyGame extends BaseGame with TapDetector {
   }
 
   void revive() {
+    _linePaint.color = Themes.swatch[TColors.black]![0];
     numRevives++;
     for (var i = 0; i < Cells.width; i++)
       for (var j = Cells.height - 3; j < Cells.height; j++)
