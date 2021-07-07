@@ -6,8 +6,10 @@ class Widgets {
   static Widget cell(ThemeData theme, int value) {
     return Container(
       child: Center(
-          child:
-              Text("${Cell.getScore(value)}", style: theme.textTheme.headline2),
+          child: Text("${Cell.getScore(value)}",
+              style: value > 7
+                  ? theme.textTheme.headline4
+                  : theme.textTheme.headline2),
           heightFactor: 0.1),
       decoration: CellDecoration(value),
       width: 154,
