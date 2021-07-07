@@ -39,4 +39,53 @@ class Components {
           onTap: onTap ?? () {},
         ));
   }
+
+  static Widget startButton(ThemeData theme, String title, SvgPicture icon) {
+    return Expanded(
+        child: Container(
+      padding: EdgeInsets.fromLTRB(10, 6, 10, 12),
+      decoration: CustomDecoration(Themes.swatch[TColors.white]!, 12),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          icon,
+          SizedBox(height: 12),
+          Text(title,
+              style: theme.textTheme.subtitle2, textAlign: TextAlign.center),
+          SizedBox(height: 12),
+          SizedBox(
+              width: 92,
+              height: 40,
+              child: Buttons.button(
+                cornerRadius: 8,
+                content: Row(children: [
+                  SVG.show("coin", 20),
+                  Expanded(
+                      child: Text("100",
+                          textAlign: TextAlign.center,
+                          style: theme.textTheme.bodyText1))
+                ]),
+                onTap: () {},
+              )),
+          SizedBox(height: 8),
+          SizedBox(
+              width: 92,
+              height: 40,
+              child: Buttons.button(
+                cornerRadius: 8,
+                colors: Themes.swatch[TColors.orange],
+                content: Row(children: [
+                  SVG.show("ads", 20),
+                  Expanded(
+                      child: Text("Free",
+                          textAlign: TextAlign.center,
+                          style: theme.textTheme.headline5))
+                ]),
+                onTap: () {},
+              )),
+          SizedBox(height: 4)
+        ]
+      )
+    ));
+  }
 }

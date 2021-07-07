@@ -7,6 +7,7 @@ import 'package:numbers/utils/themes.dart';
 import 'package:numbers/utils/utils.dart';
 import 'package:numbers/widgets/buttons.dart';
 import 'package:numbers/widgets/components.dart';
+import 'package:numbers/widgets/widgets.dart';
 import 'package:rive/rive.dart';
 
 class Overlays {
@@ -264,6 +265,42 @@ class Overlays {
                           Text("x$rewardCoef", style: theme.textTheme.headline6)
                         ])),
                   ])))
+        ]));
+  }
+
+  static start(BuildContext context, Function() callback) {
+    var theme = Theme.of(context);
+    return basic(context,
+        hasClose: false,
+        title: "Select Boost Items",
+        padding: EdgeInsets.fromLTRB(12, 12, 12, 16),
+        content:
+            Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+          Expanded(
+              child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                Components.startButton(theme, "Start the game with black 512!",
+                    SVG.show("ice", 32)),
+                Components.startButton(theme,
+                    "Preview the next upcoming black!", SVG.show("ice", 32))
+              ])),
+          SizedBox(height: 4),
+          Container(
+              height: 76,
+              child: Buttons.button(
+                  colors: Themes.swatch[TColors.blue],
+                  onTap: callback,
+                  cornerRadius: 16,
+                  content: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SVG.show("play", 32),
+                        SizedBox(width: 12),
+                        Text("Start",
+                            style: theme.textTheme.headline5,
+                            textAlign: TextAlign.center)
+                      ])))
         ]));
   }
 
