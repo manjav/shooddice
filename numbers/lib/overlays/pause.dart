@@ -7,20 +7,13 @@ import 'package:numbers/widgets/buttons.dart';
 
 import 'all.dart';
 
-
 class PauseOverlay extends StatefulWidget {
-  final Function(String) onUpdate;
-
-  PauseOverlay({Key? key, required this.onUpdate}) : super(key: key);
+  PauseOverlay({Key? key}) : super(key: key);
   @override
   _PauseOverlayState createState() => _PauseOverlayState();
 }
 
 class _PauseOverlayState extends State<PauseOverlay> {
-  void initState() {
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
@@ -39,7 +32,7 @@ class _PauseOverlayState extends State<PauseOverlay> {
                 top: 0,
                 left: 0,
                 child: Buttons.button(
-                    onTap: () => _buttonsClick(context, "reset"),
+                    onTap: () => Navigator.of(context).pop("reset"),
                     colors: Themes.swatch[TColors.green],
                     cornerRadius: 16,
                     content: Row(
@@ -54,7 +47,7 @@ class _PauseOverlayState extends State<PauseOverlay> {
                 top: 0,
                 right: 0,
                 child: Buttons.button(
-                    onTap: () => _buttonsClick(context, "resume"),
+                    onTap: () => Navigator.of(context).pop("resume"),
                     colors: Themes.swatch[TColors.blue],
                     cornerRadius: 16,
                     content: Row(
@@ -69,7 +62,7 @@ class _PauseOverlayState extends State<PauseOverlay> {
                 top: 90,
                 left: 66,
                 child: Buttons.button(
-                    onTap: () => _buttonsClick(context, "resume"),
+                    onTap: () => Navigator.of(context).pop("resume"),
                     colors: Themes.swatch[TColors.orange],
                     cornerRadius: 16,
                     content: Center(child: SVG.show("noads-mono", 32)))),
@@ -89,10 +82,5 @@ class _PauseOverlayState extends State<PauseOverlay> {
                         child: SVG.show("mute-${Pref.isMute.value}", 32)))),
           ],
         ));
-  }
-
-  _buttonsClick(BuildContext context, String type) {
-    widget.onUpdate(type);
-    Navigator.of(context).pop();
   }
 }

@@ -79,8 +79,7 @@ class Overlays {
                 bottom: 0,
                 left: 0,
                 child: Buttons.button(
-                    onTap: () =>
-                        _buttonsClick(context, "revive_coin", callback),
+                    onTap: () => _buttonsClick(context, "revive_coin"),
                     cornerRadius: 16,
                     content: Stack(alignment: Alignment.centerLeft, children: [
                       SVG.show("coin", 36),
@@ -102,7 +101,7 @@ class Overlays {
                 bottom: 0,
                 right: 0,
                 child: Buttons.button(
-                    onTap: () => _buttonsClick(context, "revive_ads", callback),
+                    onTap: () => _buttonsClick(context, "revive_ads"),
                     colors: Themes.swatch[TColors.orange],
                     cornerRadius: 16,
                     content: Stack(alignment: Alignment.centerLeft, children: [
@@ -169,7 +168,7 @@ class Overlays {
                 bottom: 0,
                 right: 0,
                 child: Buttons.button(
-                    onTap: () => _buttonsClick(context, "record_ads", callback),
+                    onTap: () => _buttonsClick(context, "record_ads"),
                     colors: Themes.swatch[TColors.orange],
                     cornerRadius: 16,
                     content: Stack(alignment: Alignment.centerLeft, children: [
@@ -192,17 +191,14 @@ class Overlays {
         ));
   }
 
-  static _buttonsClick(BuildContext context, String? type, Function? callback) {
-    if (type == "revive_ads")
-      callback?.call();
-    else if (type == "revive_coin")
+  static _buttonsClick(BuildContext context, String? type) {
+    if (type == "revive_coin")
       Pref.coin.set(Pref.coin.value - 100);
     else if (type == "record_coin")
       Pref.coin.set(Pref.coin.value + recordReward);
     else if (type == "record_ads")
       Pref.coin.set(Pref.coin.value + (recordReward * rewardCoef));
 
-    callback?.call();
-    Navigator.of(context).pop();
+    Navigator.of(context).pop(type);
   }
 }

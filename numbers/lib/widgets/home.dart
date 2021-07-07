@@ -71,22 +71,21 @@ class _HomePageState extends State<HomePage> {
     setState(() {});
   }
 
-  void _onGameLose() {
-    Navigator.of(context).push(new PageRouteBuilder(
+  void _onGameLose() async {
+    await Navigator.of(context).push(new PageRouteBuilder(
         barrierColor: Theme.of(context).backgroundColor.withAlpha(180),
         pageBuilder: (BuildContext context, _, __) =>
-            Overlays.record(context, _createGame)));
+            Overlays.bigValue(context)));
+    _onPauseButtonsClick("resume");
   }
 
-  void _pause({bool showMenu = true}) {
+  void _pause({bool showMenu = true}) async {
     _game!.isPlaying = false;
     if (!showMenu) return;
-    Navigator.of(context).push(new PageRouteBuilder(
-        // opaque: false,
+    var result = await Navigator.of(context).push(new PageRouteBuilder(
         barrierColor: Theme.of(context).backgroundColor.withAlpha(180),
-        // barrierDismissible: true,
-        pageBuilder: (BuildContext context, _, __) =>
-            PauseOverlay(onUpdate: _onPauseButtonsClick)));
+        pageBuilder: (BuildContext context, _, __) => PauseOverlay()));
+    _onPauseButtonsClick(result);
   }
 
   void _onPauseButtonsClick(String type) {
@@ -96,12 +95,8 @@ class _HomePageState extends State<HomePage> {
         break;
       case "resume":
         _game!.isPlaying = true;
+        setState(() {});
         break;
     }
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
   }
 }
