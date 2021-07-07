@@ -56,7 +56,7 @@ class MyGame extends BaseGame with TapDetector {
     onGameEvent?.call(GameEvent.score, Prefs.score += _new);
     if (Pref.record.value >= Prefs.score) return;
     Pref.record.set(Prefs.score);
-    if (value > 3 && !_recordChanged) {
+    if (value > Cell.firstBigRecord && !_recordChanged) {
       isPlaying = false;
       onGameEvent?.call(GameEvent.record, Prefs.score);
       _recordChanged = true;
