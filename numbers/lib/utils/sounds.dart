@@ -23,6 +23,7 @@ class Sound {
 
   static Future<int> play(String name) async {
     if (Pref.isMute.value == 1) return 0;
+    if (map.isEmpty) return 0;
     return await pool.play(map[name]!);
   }
 }
