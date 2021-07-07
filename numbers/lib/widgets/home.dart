@@ -73,7 +73,7 @@ class _HomePageState extends State<HomePage> {
     }
 
     if (_widget != null) {
-      var result = await _push(_widget);
+      var result = await Rout.push(context, _widget);
       if (event == GameEvent.lose) {
         if (result == null) widget.onBack();
         _game!.revive();
@@ -86,7 +86,7 @@ class _HomePageState extends State<HomePage> {
   void _pause({bool showMenu = true}) async {
     _game!.isPlaying = false;
     if (!showMenu) return;
-    var result = await _push(PauseOverlay());
+    var result = await Rout.push(context, PauseOverlay());
     _onPauseButtonsClick(result ?? "resume");
   }
 
@@ -100,19 +100,5 @@ class _HomePageState extends State<HomePage> {
         setState(() {});
         break;
     }
-  }
-
-  dynamic _push(Widget page) async {
-    return await Navigator.of(context).push(PageRouteBuilder(
-        opaque: false,
-        reverseTransitionDuration: Duration(milliseconds: 200),
-        barrierColor: Theme.of(context).backgroundColor.withAlpha(230),
-        transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-            SlideTransition(
-                position: animation.drive(
-                    Tween(begin: Offset(0.0, 0.08), end: Offset.zero)
-                        .chain(CurveTween(curve: Curves.easeOutExpo))),
-                child: child),
-        pageBuilder: (BuildContext context, _, __) => page));
   }
 }

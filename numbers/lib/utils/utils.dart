@@ -1,7 +1,23 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 
-class Utils {}
+class Rout {
+  static dynamic push(BuildContext context, Widget page) async {
+    return await Navigator.of(context).push(PageRouteBuilder(
+        opaque: false,
+        reverseTransitionDuration: Duration(milliseconds: 200),
+        barrierColor: Theme.of(context).backgroundColor.withAlpha(230),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+            SlideTransition(
+                position: animation.drive(
+                    Tween(begin: Offset(0.0, 0.08), end: Offset.zero)
+                        .chain(CurveTween(curve: Curves.easeOutExpo))),
+                child: child),
+        pageBuilder: (BuildContext context, _, __) => page));
+  }
+}
 
 extension IntExt on int {
   static final _formatter = NumberFormat('#,##,###');
