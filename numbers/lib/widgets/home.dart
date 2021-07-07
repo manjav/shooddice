@@ -19,10 +19,7 @@ class _HomePageState extends State<HomePage> {
 
   void initState() {
     super.initState();
-    _game = MyGame(
-        onScore: _onGameCallbacks,
-        onRecord: _onGameCallbacks,
-        onLose: _onGameLose);
+    _game = MyGame(onGameEvent: _onGameEventHandler);
   }
 
   @override
@@ -59,32 +56,39 @@ class _HomePageState extends State<HomePage> {
     ]));
   }
 
+  void _onGameEventHandler(GameEvent event, int value) async {
+    Widget? _widget;
+    switch (event) {
   void _createGame() {
     _game = MyGame(
         onScore: _onGameCallbacks,
         onRecord: _onGameCallbacks,
         onLose: _onGameLose);
+      case GameEvent.lose:
+        _widget = Overlays.revive(context);
+        break;
+      case GameEvent.record:
+        _widget = Overlays.record(context);
+        break;
+      case GameEvent.score:
     setState(() {});
+        return;
   }
 
-  void _onGameCallbacks(int score) {
-    setState(() {});
+    if (_widget != null) {
+      var result = await _push(_widget);
+      if (event == GameEvent.lose) {
+        _game!.revive();
+        return;
   }
-
-  void _onGameLose() async {
-    await Navigator.of(context).push(new PageRouteBuilder(
-        barrierColor: Theme.of(context).backgroundColor.withAlpha(180),
-        pageBuilder: (BuildContext context, _, __) =>
-            Overlays.bigValue(context)));
+    }
     _onPauseButtonsClick("resume");
   }
 
   void _pause({bool showMenu = true}) async {
     _game!.isPlaying = false;
     if (!showMenu) return;
-    var result = await Navigator.of(context).push(new PageRouteBuilder(
-        barrierColor: Theme.of(context).backgroundColor.withAlpha(180),
-        pageBuilder: (BuildContext context, _, __) => PauseOverlay()));
+    var result = await _push(PauseOverlay());
     _onPauseButtonsClick(result);
   }
 
@@ -98,5 +102,10 @@ class _HomePageState extends State<HomePage> {
         setState(() {});
         break;
     }
+  }
+
+  dynamic _push(Widget page) async {
+    return await Navigator.of(context).push(PageRouteBuilder(
+        pageBuilder: (BuildContext context, _, __) => page));
   }
 }

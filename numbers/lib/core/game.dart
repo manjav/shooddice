@@ -13,6 +13,8 @@ import 'package:numbers/core/cells.dart';
 import 'package:numbers/utils/prefs.dart';
 import 'package:numbers/utils/sounds.dart';
 
+enum GameEvent { big, lose, record, score }
+
 class MyGame extends BaseGame with TapDetector {
   static final padding = 20.0;
   static final Random random = new Random();
@@ -23,10 +25,7 @@ class MyGame extends BaseGame with TapDetector {
     PaletteEntry(Color(0xFFFF2326)).paint()
   ];
 
-  Function(int)? onScore;
-  Function(int)? onRecord;
-  Function(int)? onBigValue;
-  Function? onLose;
+  Function(GameEvent, int)? onGameEvent;
   bool isPlaying = false;
   int numRevives = 0;
   Rect bounds = Rect.fromLTRB(0, 0, 0, 0);
@@ -46,8 +45,7 @@ class MyGame extends BaseGame with TapDetector {
   Paint _linePaint = colors[0];
   FallingEffect? _fallingEffect;
 
-  MyGame({this.onScore, this.onRecord, this.onBigValue, this.onLose})
-      : super() {
+  MyGame({this.onGameEvent}) : super() {
     Prefs.score = 0;
   }
   @override
@@ -55,11 +53,12 @@ class MyGame extends BaseGame with TapDetector {
 
   void _addScore(int value) {
     var _new = Cell.getScore(value);
-    onScore?.call(Prefs.score += _new);
+    onGameEvent?.call(GameEvent.score, Prefs.score += _new);
     if (Pref.record.value >= Prefs.score) return;
     Pref.record.set(Prefs.score);
     if (value > 3 && !_recordChanged) {
-      onRecord?.call(Prefs.score);
+      isPlaying = false;
+      onGameEvent?.call(GameEvent.record, Prefs.score);
       _recordChanged = true;
     }
   }
@@ -133,7 +132,7 @@ class MyGame extends BaseGame with TapDetector {
       _linePaint = colors[3];
       isPlaying = false;
       Sound.play("lose");
-      onLose?.call();
+      onGameEvent?.call(GameEvent.lose, 0);
       debugPrint("game over!");
       return;
     }
@@ -172,9 +171,9 @@ class MyGame extends BaseGame with TapDetector {
   void onTapDown(TapDownInfo info) {
     if (!isPlaying) return;
     if (_cells.last!.state == CellState.Float && !_cells.last!.matched) {
-    var col = ((info.eventPosition.global.x - bounds.left) / Cell.diameter)
-        .clamp(0, Cells.width - 1)
-        .floor();
+      var col = ((info.eventPosition.global.x - bounds.left) / Cell.diameter)
+          .clamp(0, Cells.width - 1)
+          .floor();
       var row = _cells.length(col);
       var _y = bounds.top + Cell.diameter * (Cells.height - row) + Cell.radius;
       if (_cells.last!.y > _y) {
@@ -184,15 +183,15 @@ class MyGame extends BaseGame with TapDetector {
       var _x = bounds.left + col * Cell.diameter + Cell.radius;
       // Change column
       if (_nextCell.column != col) {
-      _nextCell.column = col;
-      _nextCell.addEffect(MoveEffect(
-          duration: 0.3,
-          path: [Vector2(_x, _nextCell.y)],
-          curve: Curves.easeInOutQuad));
+        _nextCell.column = col;
+        _nextCell.addEffect(MoveEffect(
+            duration: 0.3,
+            path: [Vector2(_x, _nextCell.y)],
+            curve: Curves.easeInOutQuad));
 
         if (_cells.last! == _cells.get(col, row - 1)) --row;
         _cells.translate(_cells.last!, col, row);
-      _cells.last!.x = _x;
+        _cells.last!.x = _x;
       }
 
       Sound.play("fall");
@@ -284,7 +283,7 @@ class MyGame extends BaseGame with TapDetector {
         c.init(c.column, c.row, c.value + matchs.length, onInit: _onCellsInit);
         add(Score(Cell.getScore(c.value), c.x, c.y - 20));
         merges += matchs.length;
-  }
+      }
       // debugPrint("match $c len:${matchs.length}");
     }
     if (merges > 0) {
@@ -304,7 +303,10 @@ class MyGame extends BaseGame with TapDetector {
     _addScore(cell.value);
 
     // Show big number popup
-    if (cell.value > _valueRecord) onBigValue?.call(_valueRecord = cell.value);
+    if (cell.value > _valueRecord) {
+      isPlaying = false;
+      onGameEvent?.call(GameEvent.big, _valueRecord = cell.value);
+    }
 
     // More chance for spawm new cells
     if (Cell.maxRandomValue < 7) {
@@ -329,7 +331,7 @@ class MyGame extends BaseGame with TapDetector {
     _cells.loop((i, j, c) => _removeCell(i, j, true), value: value);
   }
 
-  void revive(bool reviveMode) {
+  void revive() {
     numRevives++;
     for (var i = 0; i < Cells.width; i++)
       for (var j = Cells.height - 3; j < Cells.height; j++)
@@ -340,7 +342,6 @@ class MyGame extends BaseGame with TapDetector {
       _spawn();
     });
   }
-
 }
 
 class FallingEffect extends PositionComponent with HasGameRef<MyGame> {
@@ -368,4 +369,4 @@ class FallingEffect extends PositionComponent with HasGameRef<MyGame> {
         _color!.withAlpha(_alpha),
       ]);
   }
-  }
+}

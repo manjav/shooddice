@@ -51,7 +51,7 @@ class Overlays {
     ]);
   }
 
-  static revive(BuildContext context, Function? callback) {
+  static revive(BuildContext context) {
     var theme = Theme.of(context);
     return basic(context,
         title: "Revive",
@@ -123,7 +123,7 @@ class Overlays {
 
   static int rewardCoef = 3;
   static int recordReward = 200;
-  static record(BuildContext context, Function? callback) {
+  static record(BuildContext context) {
     var theme = Theme.of(context);
     return basic(context,
         content: Stack(
@@ -146,8 +146,7 @@ class Overlays {
                 bottom: 0,
                 left: 0,
                 child: Buttons.button(
-                    onTap: () =>
-                        _buttonsClick(context, "record_coin", callback),
+                    onTap: () => _buttonsClick(context, "record_coin"),
                     cornerRadius: 16,
                     content: Stack(alignment: Alignment.centerLeft, children: [
                       SVG.show("coin", 36),
@@ -187,7 +186,7 @@ class Overlays {
                                 style: theme.textTheme.headline6)
                           ])),
                     ])))
-          ],
+          ]
         ));
   }
 
