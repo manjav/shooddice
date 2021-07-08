@@ -30,9 +30,9 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
         body: Stack(children: [
       GameWidget(game: _game!),
-      Positioned(top: 82, right: 34, child: Components.scores(theme)),
+      Positioned(top: 132, right: 34, child: Components.scores(theme)),
       Positioned(
-          top: 84,
+          top: 134,
           left: 34,
           child: Components.coins(context, onTap: () async {
             _game!.isPlaying = false;
@@ -40,20 +40,20 @@ class _HomePageState extends State<HomePage> {
             _game!.isPlaying = true;
           })),
       Positioned(
-          bottom: 70,
+          bottom: 20,
           left: 20,
           width: 72,
           height: 72,
           child: IconButton(icon: SVG.show("pause", 48), onPressed: _pause)),
       Positioned(
-          bottom: 60,
+          bottom: 10,
           right: 20,
           width: 90,
           height: 90,
           child:
               IconButton(icon: SVG.show("remove-one", 64), onPressed: () {})),
       Positioned(
-          bottom: 60,
+          bottom: 10,
           right: 100,
           width: 90,
           height: 90,
