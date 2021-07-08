@@ -101,11 +101,9 @@ class Cell extends PositionComponent with HasGameRef<MyGame> {
 
   void _animationComplete() {
     size = Vector2(1, 1);
-    Future.delayed(Duration(milliseconds: 200), null).then((value) {
       this.state = CellState.Float;
       onInit?.call(this);
       onInit = null;
-    });
   }
 
   void delete(Function(Cell)? onDelete) {
