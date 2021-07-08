@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.numbers">
+    package="com.gerantech.numbers">
    <application
-        android:label="numbers"
+        android:label="Drop and Merge Number"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher">
         <activity

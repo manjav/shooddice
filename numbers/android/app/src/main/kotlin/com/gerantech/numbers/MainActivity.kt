@@ -1,4 +1,4 @@
-package com.example.numbers
+package com.gerantech.numbers
 
 import io.flutter.embedding.android.FlutterActivity
 
