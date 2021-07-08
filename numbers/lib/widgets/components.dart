@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:numbers/core/game.dart';
 import 'package:numbers/overlays/shop.dart';
 import 'package:numbers/utils/prefs.dart';
 import 'package:numbers/utils/themes.dart';
@@ -94,5 +94,10 @@ class Components {
                   )),
               SizedBox(height: 4)
             ])));
+  }
+
+  static _onStartTap(String boost, String type) {
+    if (boost == "next") MyGame.instance!.boostNextMode = 1;
+    if (boost == "512") MyGame.instance!.boostBig = true;
   }
 }

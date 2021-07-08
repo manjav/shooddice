@@ -5,6 +5,7 @@ import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flame/palette.dart';
 import 'package:flutter/animation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:numbers/core/game.dart';
 
@@ -46,6 +47,7 @@ class Cell extends PositionComponent with HasGameRef<MyGame> {
   static final _center = Vector2(0, -3);
 
   bool matched = false;
+  int hiddenMode = 0;
   int column = 0, row = 0, reward = 0, value = 0;
   Function(Cell)? onInit;
   CellState state = CellState.Init;
@@ -66,6 +68,7 @@ class Cell extends PositionComponent with HasGameRef<MyGame> {
   TextPaint? _textPaint;
   Paint? _sidePaint;
   Paint? _overPaint;
+  Paint? _hiddenPaint;
 
   Cell(int column, int row, int value, {int? reward, Function(Cell)? onInit})
       : super() {
@@ -74,12 +77,13 @@ class Cell extends PositionComponent with HasGameRef<MyGame> {
   }
 
   Cell init(int column, int row, int value,
-      {int? reward, Function(Cell)? onInit}) {
+      {int? reward, Function(Cell)? onInit, int hiddenMode = 0}) {
     this.column = column;
     this.row = row;
     this.value = value;
     this.reward = reward ?? 0;
     this.onInit = onInit ?? null;
+    this.hiddenMode = hiddenMode;
     state = CellState.Init;
 
     _sidePaint = colors[value].withAlpha(180).paint();
@@ -89,7 +93,13 @@ class Cell extends PositionComponent with HasGameRef<MyGame> {
             fontSize:
                 radius * scales[getScore(value).toString().length.clamp(0, 5)],
             fontFamily: 'quicksand',
-            color: Color(0xFFFFFFFF)));
+            color: hiddenMode > 1 ? colors[value].color : Colors.white));
+
+    if (hiddenMode > 0)
+      _hiddenPaint = Paint()
+        ..strokeWidth = 2
+        ..style = PaintingStyle.stroke
+        ..color = hiddenMode > 1 ? colors[value].color : Colors.white;
 
     size = Vector2(1.3, 1.3);
     addEffect(ScaleEffect(
@@ -118,10 +128,16 @@ class Cell extends PositionComponent with HasGameRef<MyGame> {
   @override
   void render(Canvas c) {
     super.render(c);
-    c.drawRRect(_backRect.s(size), _backPaint);
-    c.drawRRect(_sideRect.s(size), _sidePaint!);
-    c.drawRRect(_overRect.s(size), _overPaint!);
-    _textPaint!.render(c, "${getScore(value)}", _center, anchor: Anchor.center);
+    if (hiddenMode > 0) {
+      c.drawRRect(_overRect.s(size), _hiddenPaint!);
+    } else {
+      c.drawRRect(_backRect.s(size), _backPaint);
+      c.drawRRect(_sideRect.s(size), _sidePaint!);
+      c.drawRRect(_overRect.s(size), _overPaint!);
+    }
+
+    _textPaint!.render(c, "${hiddenMode == 1 ? "?" : getScore(value)}", _center,
+        anchor: Anchor.center);
   }
 
   @override

@@ -18,12 +18,12 @@ enum GameEvent { big, lose, record, score }
 class MyGame extends BaseGame with TapDetector {
   static final padding = 20.0;
   static final Random random = new Random();
-
+  static MyGame? instance;
   Function(GameEvent, int)? onGameEvent;
   bool isPlaying = false;
   int numRevives = 0;
   Rect bounds = Rect.fromLTRB(0, 0, 0, 0);
-  bool boostNext = false;
+  int boostNextMode = 0;
   bool boostBig = false;
 
   bool _recordChanged = false;
@@ -64,6 +64,7 @@ class MyGame extends BaseGame with TapDetector {
   void onAttach() {
     super.onAttach();
 
+    instance = this;
     _linePaint.color = Themes.swatch[TColors.black]![0];
     var width = size.x - padding * 2;
     Cell.diameter = width / Cells.width;
@@ -73,8 +74,13 @@ class MyGame extends BaseGame with TapDetector {
     bounds = Rect.fromLTRB(padding, t, size.x - padding, t + Cell.diameter * 7);
     _bgRect = RRect.fromLTRBXY(bounds.left - 4, bounds.top - 4,
         bounds.right + 4, bounds.bottom + 4, 16, 16);
-    _lineRect = RRect.fromLTRBXY(bounds.left + 2, bounds.top + Cell.diameter,
-        bounds.right - 2, bounds.top + Cell.diameter + 4, 4, 4);
+    _lineRect = RRect.fromLTRBXY(
+        bounds.left + 2,
+        bounds.top + Cell.diameter - 4,
+        bounds.right - 2,
+        bounds.top + Cell.diameter,
+        4,
+        4);
     _rects = List.generate(
         2,
         (i) => Rect.fromLTRB(
@@ -169,6 +175,12 @@ class MyGame extends BaseGame with TapDetector {
 
   void onTapDown(TapDownInfo info) {
     if (!isPlaying) return;
+    if (boostNextMode == 1 &&
+        info.eventPosition.global.y < bounds.top + Cell.diameter) {
+      boostNextMode = 2;
+      _nextCell.init(_nextCell.column, 0, _nextCell.value);
+      return;
+    }
     if (_cells.last!.state == CellState.Float && !_cells.last!.matched) {
       var col = ((info.eventPosition.global.x - bounds.left) / Cell.diameter)
           .clamp(0, Cells.width - 1)
