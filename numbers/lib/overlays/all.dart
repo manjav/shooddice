@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:numbers/core/cell.dart';
+import 'package:numbers/core/game.dart';
 import 'package:numbers/utils/prefs.dart';
 import 'package:numbers/utils/sounds.dart';
 import 'package:numbers/utils/themes.dart';
@@ -275,6 +276,8 @@ class Overlays {
 
   static start(BuildContext context, Function() callback) {
     var theme = Theme.of(context);
+    MyGame.boostNextMode = 0;
+    MyGame.boostBig = false;
     return basic(context,
         hasClose: false,
         title: "Select Boost Items",

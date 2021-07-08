@@ -19,12 +19,13 @@ class MyGame extends BaseGame with TapDetector {
   static final padding = 20.0;
   static final Random random = new Random();
   static MyGame? instance;
+  static int boostNextMode = 0;
+  static bool boostBig = false;
+
   Function(GameEvent, int)? onGameEvent;
   bool isPlaying = false;
   int numRevives = 0;
   Rect bounds = Rect.fromLTRB(0, 0, 0, 0);
-  int boostNextMode = 0;
-  bool boostBig = false;
 
   bool _recordChanged = false;
   int _numRewardCells = 0;
@@ -92,7 +93,8 @@ class MyGame extends BaseGame with TapDetector {
     add(_fallingEffect = FallingEffect());
 
     _valueRecord = Cell.firstBigRecord;
-    _nextCell.init(random.nextInt(Cells.width), 0, Cell.getNextValue());
+    _nextCell.init(random.nextInt(Cells.width), 0, Cell.getNextValue(),
+        hiddenMode: boostNextMode + 1);
     _nextCell.x = _nextCell.column * Cell.diameter + Cell.radius + bounds.left;
     _nextCell.y = bounds.top + Cell.radius;
     add(_nextCell);
@@ -152,7 +154,8 @@ class MyGame extends BaseGame with TapDetector {
         bounds.top + Cell.diameter * (Cells.height - row) + Cell.radius;
     add(cell);
     _mergesCount = 0;
-    _nextCell.init(_nextCell.column, 0, Cell.getNextValue());
+    _nextCell.init(_nextCell.column, 0, Cell.getNextValue(),
+        hiddenMode: boostNextMode + 1);
     _speed = Cell.minSpeed;
   }
 
@@ -175,10 +178,11 @@ class MyGame extends BaseGame with TapDetector {
 
   void onTapDown(TapDownInfo info) {
     if (!isPlaying) return;
-    if (boostNextMode == 1 &&
+    if (boostNextMode == 0 &&
         info.eventPosition.global.y < bounds.top + Cell.diameter) {
-      boostNextMode = 2;
-      _nextCell.init(_nextCell.column, 0, _nextCell.value);
+      boostNextMode = 1;
+      _nextCell.init(_nextCell.column, 0, _nextCell.value,
+          hiddenMode: boostNextMode + 1);
       return;
     }
     if (_cells.last!.state == CellState.Float && !_cells.last!.matched) {
@@ -215,8 +219,6 @@ class MyGame extends BaseGame with TapDetector {
   }
 
   void _fallAll() {
-    debugPrint("c_fallAll");
-    // var delay = 0.01;
     var time = 0.1;
     _cells.loop((i, j, c) {
       c.state = CellState.Falling;

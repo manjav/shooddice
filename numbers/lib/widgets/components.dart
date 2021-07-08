@@ -97,7 +97,7 @@ class Components {
   }
 
   static _onStartTap(String boost, String type) {
-    if (boost == "next") MyGame.instance!.boostNextMode = 1;
-    if (boost == "512") MyGame.instance!.boostBig = true;
+    if (boost == "next") MyGame.boostNextMode = 1;
+    if (boost == "512") MyGame.boostBig = true;
   }
 }
