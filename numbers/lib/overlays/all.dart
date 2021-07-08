@@ -14,13 +14,13 @@ class Overlays {
   static Widget basic(
     BuildContext context, {
     String? title,
-      double? width,
-      double? height,
+    double? width,
+    double? height,
     Widget? content,
     Widget? scoreButton,
     Widget? coinButton,
-      EdgeInsets? padding,
-      bool hasChrome = true,
+    EdgeInsets? padding,
+    bool hasChrome = true,
     bool hasClose = true,
   }) {
     var theme = Theme.of(context);
@@ -134,68 +134,63 @@ class Overlays {
   static record(BuildContext context) {
     var theme = Theme.of(context);
     return basic(context,
-        content: Stack(
-          alignment: Alignment.topCenter,
-          children: [
-            Center(
-                heightFactor: 0.52,
-                child: RiveAnimation.asset('anims/nums-record.riv',
-                    stateMachines: ["machine"])),
-            Positioned(
-                top: 152,
-                child: Text("New Record", style: theme.textTheme.caption)),
-            Positioned(
-                top: 166,
-                child: Text(Prefs.score.format(),
-                    style: theme.textTheme.headline2)),
-            Positioned(
-                height: 76,
-                width: 124,
-                bottom: 0,
-                left: 0,
-                child: Buttons.button(
-                    onTap: () => _buttonsClick(context, "record_coin"),
-                    cornerRadius: 16,
-                    content: Stack(alignment: Alignment.centerLeft, children: [
-                      SVG.show("coin", 36),
-                      Positioned(
-                          top: 5,
-                          left: 40,
-                          child: Text(recordReward.format(),
-                              style: theme.textTheme.button)),
-                      Positioned(
-                          bottom: 7,
-                          left: 40,
-                          child:
-                              Text("Claim", style: theme.textTheme.subtitle1)),
-                    ]))),
-            Positioned(
-                height: 76,
-                width: 124,
-                bottom: 0,
-                right: 0,
-                child: Buttons.button(
-                    onTap: () => _buttonsClick(context, "record_ads"),
-                    colors: Themes.swatch[TColors.orange],
-                    cornerRadius: 16,
-                    content: Stack(alignment: Alignment.centerLeft, children: [
-                      SVG.show("ads", 36),
-                      Positioned(
-                          top: 5,
-                          left: 44,
-                          child: Text((recordReward * rewardCoef).format(),
-                              style: theme.textTheme.headline4)),
-                      Positioned(
-                          bottom: 7,
-                          left: 44,
-                          child: Row(children: [
-                            SVG.show("coin", 22),
-                            Text("x$rewardCoef",
-                                style: theme.textTheme.headline6)
-                          ])),
-                    ])))
-          ]
-        ));
+        content: Stack(alignment: Alignment.topCenter, children: [
+          Center(
+              heightFactor: 0.52,
+              child: RiveAnimation.asset('anims/nums-record.riv',
+                  stateMachines: ["machine"])),
+          Positioned(
+              top: 152,
+              child: Text("New Record", style: theme.textTheme.caption)),
+          Positioned(
+              top: 166,
+              child:
+                  Text(Prefs.score.format(), style: theme.textTheme.headline2)),
+          Positioned(
+              height: 76,
+              width: 124,
+              bottom: 0,
+              left: 0,
+              child: Buttons.button(
+                  onTap: () => _buttonsClick(context, "record_coin"),
+                  cornerRadius: 16,
+                  content: Stack(alignment: Alignment.centerLeft, children: [
+                    SVG.show("coin", 36),
+                    Positioned(
+                        top: 5,
+                        left: 40,
+                        child: Text(recordReward.format(),
+                            style: theme.textTheme.button)),
+                    Positioned(
+                        bottom: 7,
+                        left: 40,
+                        child: Text("Claim", style: theme.textTheme.subtitle1)),
+                  ]))),
+          Positioned(
+              height: 76,
+              width: 124,
+              bottom: 0,
+              right: 0,
+              child: Buttons.button(
+                  onTap: () => _buttonsClick(context, "record_ads"),
+                  colors: Themes.swatch[TColors.orange],
+                  cornerRadius: 16,
+                  content: Stack(alignment: Alignment.centerLeft, children: [
+                    SVG.show("ads", 36),
+                    Positioned(
+                        top: 5,
+                        left: 44,
+                        child: Text((recordReward * rewardCoef).format(),
+                            style: theme.textTheme.headline4)),
+                    Positioned(
+                        bottom: 7,
+                        left: 44,
+                        child: Row(children: [
+                          SVG.show("coin", 22),
+                          Text("x$rewardCoef", style: theme.textTheme.headline6)
+                        ])),
+                  ])))
+        ]));
   }
 
   static bigValue(BuildContext context, int value) {
@@ -287,9 +282,9 @@ class Overlays {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                 Components.startButton(theme, "Start the game with black 512!",
-                    SVG.show("ice", 32)),
+                    SVG.show("512", 72)),
                 Components.startButton(theme,
-                    "Preview the next upcoming black!", SVG.show("ice", 32))
+                    "Preview the next upcoming black!", SVG.show("next", 72))
               ])),
           SizedBox(height: 4),
           Container(
