@@ -30,6 +30,7 @@ class MyGame extends BaseGame with TapDetector {
   int _numRewardCells = 0;
   int _mergesCount = 0;
   int _valueRecord = 0;
+  double _speed = Cell.minSpeed;
   Cell _nextCell = Cell(0, 0, 0);
   Cells _cells = Cells();
 
@@ -146,6 +147,7 @@ class MyGame extends BaseGame with TapDetector {
     add(cell);
     _mergesCount = 0;
     _nextCell.init(_nextCell.column, 0, Cell.getNextValue());
+    _speed = Cell.minSpeed;
   }
 
   void update(double dt) {
@@ -156,7 +158,8 @@ class MyGame extends BaseGame with TapDetector {
 
     // Check reach to target
     if (_cells.last!.y < _cells.target!) {
-      _cells.last!.y += Cell.speed;
+      _speed = (_speed + 0.01).clamp(Cell.minSpeed, Cell.maxSpeed);
+      _cells.last!.y += _speed;
       return;
     }
 

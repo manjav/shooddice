@@ -11,7 +11,8 @@ import 'package:numbers/core/game.dart';
 enum CellState { Init, Float, Falling, Fell, Fixed }
 
 class Cell extends PositionComponent with HasGameRef<MyGame> {
-  static final speed = 0.8;
+  static final minSpeed = 0.01;
+  static final maxSpeed = 0.8;
   static final border = 1.8;
   static final round = 7.0;
   static final firstRecord = 1024;
@@ -101,9 +102,9 @@ class Cell extends PositionComponent with HasGameRef<MyGame> {
 
   void _animationComplete() {
     size = Vector2(1, 1);
-      this.state = CellState.Float;
-      onInit?.call(this);
-      onInit = null;
+    this.state = CellState.Float;
+    onInit?.call(this);
+    onInit = null;
   }
 
   void delete(Function(Cell)? onDelete) {
