@@ -13,6 +13,7 @@ import 'package:rive/rive.dart';
 class Overlays {
   static Widget basic(
     BuildContext context, {
+    String? sfx,
     String? title,
     double? width,
     double? height,
@@ -24,7 +25,7 @@ class Overlays {
     bool hasClose = true,
   }) {
     var theme = Theme.of(context);
-    Sound.play("pop");
+    Sound.play(sfx ?? "pop");
     return Stack(alignment: Alignment.center, children: [
       Positioned(
           top: 50, right: 24, child: scoreButton ?? Components.scores(theme)),
@@ -62,6 +63,7 @@ class Overlays {
   static revive(BuildContext context) {
     var theme = Theme.of(context);
     return basic(context,
+        sfx: "lose",
         title: "Revive",
         content: Stack(
           alignment: Alignment.topCenter,
@@ -134,6 +136,7 @@ class Overlays {
   static record(BuildContext context) {
     var theme = Theme.of(context);
     return basic(context,
+        sfx: "win",
         content: Stack(alignment: Alignment.topCenter, children: [
           Center(
               heightFactor: 0.52,
@@ -196,9 +199,10 @@ class Overlays {
   static bigValue(BuildContext context, int value) {
     var theme = Theme.of(context);
     return basic(context,
+        sfx: "win",
         height: 380,
-        title: "Big Block",
         hasClose: false,
+        title: "Big Block",
         content: Stack(alignment: Alignment.topCenter, children: [
           Positioned(
               top: 0,

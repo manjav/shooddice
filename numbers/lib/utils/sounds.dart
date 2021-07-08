@@ -11,6 +11,7 @@ class Sound {
     add("lose");
     add("pop");
     add("tap");
+    add("win");
   }
 
   static Future<void> add(String name) async {
