@@ -196,13 +196,14 @@ class MyGame extends BaseGame with TapDetector {
       Sound.play("fall");
       _fallingEffect!.tint(
           Rect.fromLTRB(_x - Cell.radius, _cells.last!.y + Cell.diameter,
-              _x + Cell.radius, bounds.bottom),
+              _x + Cell.radius, bounds.bottom - row * Cell.diameter),
           Cell.colors[_cells.last!.value].color);
     }
     _fallAll();
   }
 
   void _fallAll() {
+    debugPrint("c_fallAll");
     // var delay = 0.01;
     var time = 0.1;
     _cells.loop((i, j, c) {
@@ -249,18 +250,18 @@ class MyGame extends BaseGame with TapDetector {
     var cm = _nextCell.column - 1;
     while (cp < Cells.width || cm > -1) {
       if (cp < Cells.width) {
-        numMerges += _fundMatch(cp);
+        numMerges += _foundMatch(cp);
         cp++;
       }
       if (cm > -1) {
-        numMerges += _fundMatch(cm);
+        numMerges += _foundMatch(cm);
         cm--;
       }
     }
     return numMerges > 0;
   }
 
-  int _fundMatch(int i) {
+  int _foundMatch(int i) {
     var merges = 0;
     for (var j = 0; j < Cells.height; j++) {
       var c = _cells.map[i][j];
