@@ -171,9 +171,10 @@ class MyGame extends BaseGame with TapDetector {
           .clamp(0, Cells.width - 1)
           .floor();
       var row = _cells.length(col);
+      if (_cells.last! == _cells.get(col, row - 1)) --row;
       var _y = bounds.top + Cell.diameter * (Cells.height - row) + Cell.radius;
       if (_cells.last!.y > _y) {
-        debugPrint("${_cells.last!.y}  >>> $_y");
+        debugPrint("col:$col  ${_cells.last!.y}  >>> $_y");
         return;
       }
       var _x = bounds.left + col * Cell.diameter + Cell.radius;
@@ -185,7 +186,6 @@ class MyGame extends BaseGame with TapDetector {
             path: [Vector2(_x, _nextCell.y)],
             curve: Curves.easeInOutQuad));
 
-        if (_cells.last! == _cells.get(col, row - 1)) --row;
         _cells.translate(_cells.last!, col, row);
         _cells.last!.x = _x;
       }
