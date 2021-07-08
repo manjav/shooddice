@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:numbers/core/game.dart';
 import 'package:numbers/overlays/all.dart';
 import 'package:numbers/overlays/pause.dart';
+import 'package:numbers/overlays/shop.dart';
 import 'package:numbers/utils/utils.dart';
 import 'package:numbers/widgets/components.dart';
 
@@ -31,7 +32,13 @@ class _HomePageState extends State<HomePage> {
       GameWidget(game: _game!),
       Positioned(top: 82, right: 34, child: Components.scores(theme)),
       Positioned(
-          top: 84, left: 34, child: Components.coins(theme, onTap: () {})),
+          top: 84,
+          left: 34,
+          child: Components.coins(context, onTap: () async {
+            _game!.isPlaying = false;
+            await Rout.push(context, ShopOverlay());
+            _game!.isPlaying = true;
+          })),
       Positioned(
           bottom: 70,
           left: 20,

@@ -25,7 +25,9 @@ class Components {
         ]));
   }
 
-  static Widget coins(ThemeData theme, {Function()? onTap}) {
+  static Widget coins(BuildContext context,
+      {Function()? onTap, bool clickable = true}) {
+    var theme = Theme.of(context);
     return Hero(
         tag: "coin",
         child: Buttons.button(
@@ -35,11 +37,16 @@ class Components {
                 child: Text("${Pref.coin.value.format()}",
                     textAlign: TextAlign.center,
                     style: theme.textTheme.bodyText1)),
-            Text("+  ",
-                textAlign: TextAlign.center, style: theme.textTheme.bodyText1)
+              clickable
+                  ? Text("+  ",
+                      textAlign: TextAlign.center,
+                      style: theme.textTheme.bodyText1)
+                  : SizedBox()
           ]),
-          onTap: onTap ?? () {},
-        ));
+            onTap: onTap ??
+                () {
+                  if (clickable) Rout.push(context, ShopOverlay());
+                }));
   }
 
   static Widget startButton(ThemeData theme, String title, SvgPicture icon) {

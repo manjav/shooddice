@@ -18,7 +18,7 @@ class Buttons {
           onTap?.call();
         },
         child: Container(
-          padding: padding ?? EdgeInsets.fromLTRB(10, 6, 10, 12),
+          padding: padding ?? EdgeInsets.fromLTRB(10, 6, 10, 10),
           child: content ?? SizedBox(),
           decoration: CustomDecoration(
               colors ?? Themes.swatch[TColors.white]!, cornerRadius ?? 12),

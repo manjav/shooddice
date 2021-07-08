@@ -11,19 +11,25 @@ import 'package:numbers/widgets/widgets.dart';
 import 'package:rive/rive.dart';
 
 class Overlays {
-  static Widget basic(BuildContext context,
-      {Widget? content,
+  static Widget basic(
+    BuildContext context, {
+    String? title,
       double? width,
       double? height,
-      String? title,
+    Widget? content,
+    Widget? scoreButton,
+    Widget? coinButton,
       EdgeInsets? padding,
       bool hasChrome = true,
-      bool hasClose = true}) {
+    bool hasClose = true,
+  }) {
     var theme = Theme.of(context);
     Sound.play("pop");
     return Stack(alignment: Alignment.center, children: [
-      Positioned(top: 50, right: 24, child: Components.scores(theme)),
-      Positioned(top: 52, left: 24, child: Components.coins(theme)),
+      Positioned(
+          top: 50, right: 24, child: scoreButton ?? Components.scores(theme)),
+      Positioned(
+          top: 52, left: 24, child: coinButton ?? Components.coins(context)),
       Column(mainAxisAlignment: MainAxisAlignment.center, children: [
         Padding(
             padding: EdgeInsets.fromLTRB(48, 64, 48, 20),
