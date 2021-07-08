@@ -43,10 +43,10 @@ class _HomePageState extends State<HomePage> {
             _game!.isPlaying = true;
           })),
       Positioned(
-          bottom: 10.d,
+          bottom: 6.d,
           left: 20.d,
-          width: 64.d,
-          height: 64.d,
+          width: 56.d,
+          height: 65.d,
           child: IconButton(icon: SVG.show("pause", 48.d), onPressed: _pause)),
       Positioned(
           bottom: 4,

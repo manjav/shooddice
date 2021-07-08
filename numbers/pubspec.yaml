@@ -37,3 +37,6 @@ flutter:
     - family: quicksand
       fonts:
         - asset: fonts/quicksand-bold.ttf
+    - family: icons
+      fonts:
+        - asset: fonts/myicons.ttf

@@ -42,6 +42,7 @@ class _ShopOverlayState extends State<ShopOverlay> {
                     CustomDecoration(Themes.swatch[TColors.white]!, 12.d),
                 child: Row(children: [
                   SizedBox(width: 8.d),
+                  SVG.icon("3", theme),
                   SizedBox(width: 16.d),
                   Expanded(
                       child: Text("No Ads", style: theme.textTheme.bodyText1)),
@@ -83,6 +84,7 @@ class _ShopOverlayState extends State<ShopOverlay> {
                             colors: Themes.swatch[TColors.orange],
                             onTap: () => Navigator.of(context).pop("resume"),
                             content: Row(children: [
+                              SVG.icon("0", theme),
                               SizedBox(width: 8.d),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -92,7 +94,7 @@ class _ShopOverlayState extends State<ShopOverlay> {
                                       style: theme.textTheme.headline5),
                                   Row(
                                     children: [
-                                      SVG.show("coin", 24),
+                                      SVG.show("coin", 24.d),
                                       Text("+100",
                                           style: theme.textTheme.headline6)
                                     ],
@@ -107,6 +109,7 @@ class _ShopOverlayState extends State<ShopOverlay> {
                             colors: Themes.swatch[TColors.green],
                             cornerRadius: 16.d,
                             content: Row(children: [
+                              SVG.icon("5", theme),
                               SizedBox(width: 12.d),
                               Text("Restore\nPurchase",
                                   overflow: TextOverflow.ellipsis,
@@ -126,7 +129,7 @@ class _ShopOverlayState extends State<ShopOverlay> {
           content: Column(children: [
             SizedBox(height: 4.d),
             Row(children: [
-              SVG.show("coin", 26),
+              SVG.show("coin", 26.d),
               Text("2100", style: theme.textTheme.bodyText1)
             ]),
             SizedBox(height: 8.d),

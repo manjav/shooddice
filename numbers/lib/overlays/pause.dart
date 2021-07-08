@@ -38,7 +38,7 @@ class _PauseOverlayState extends State<PauseOverlay> {
                     content: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          SVG.show("reset", 26),
+                          SVG.icon("5", theme),
                           Text("Restart", style: theme.textTheme.headline5)
                         ]))),
             Positioned(
@@ -53,7 +53,7 @@ class _PauseOverlayState extends State<PauseOverlay> {
                     content: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          SVG.show("play", 26),
+                          SVG.icon("4", theme),
                           Text("Continue", style: theme.textTheme.headline5)
                         ]))),
             Positioned(
@@ -66,6 +66,7 @@ class _PauseOverlayState extends State<PauseOverlay> {
                     colors: Themes.swatch[TColors.orange],
                     cornerRadius: 16.d,
                     content: Center(
+                      child: SVG.icon("3", theme, scale: 1.4),
                     ))),
             Positioned(
                 height: 76.d,
@@ -80,7 +81,8 @@ class _PauseOverlayState extends State<PauseOverlay> {
                     colors: Themes.swatch[TColors.yellow],
                     cornerRadius: 16.d,
                     content: Center(
-                        child: SVG.show("mute-${Pref.isMute.value}", 32)))),
+                        child: SVG.icon("${Pref.isMute.value + 1}", theme,
+                            scale: 1.2)))),
           ],
         ));
   }

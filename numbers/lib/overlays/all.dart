@@ -120,7 +120,7 @@ class Overlays {
                     colors: Themes.swatch[TColors.orange],
                     cornerRadius: 16.d,
                     content: Stack(alignment: Alignment.centerLeft, children: [
-                      SVG.show("ads", 36),
+                      SVG.icon("0", theme),
                       Positioned(
                           top: 5.d,
                           left: 40.d,
@@ -184,7 +184,7 @@ class Overlays {
                   colors: Themes.swatch[TColors.orange],
                   cornerRadius: 16.d,
                   content: Stack(alignment: Alignment.centerLeft, children: [
-                    SVG.show("ads", 36),
+                    SVG.icon("0", theme),
                     Positioned(
                         top: 5.d,
                         left: 44.d,
@@ -261,7 +261,7 @@ class Overlays {
                   colors: Themes.swatch[TColors.orange],
                   cornerRadius: 16.d,
                   content: Stack(alignment: Alignment.centerLeft, children: [
-                    SVG.show("ads", 36),
+                    SVG.icon("0", theme),
                     Positioned(
                         top: 5.d,
                         left: 44.d,
@@ -307,6 +307,7 @@ class Overlays {
                   content: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+                        SVG.icon("4", theme),
                         SizedBox(width: 12.d),
                         Text("Start",
                             style: theme.textTheme.headline5,

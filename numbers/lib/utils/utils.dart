@@ -30,4 +30,21 @@ class SVG {
   static SvgPicture show(String name, double size) {
     return SvgPicture.asset("assets/images/$name.svg", width: size);
   }
+
+  static Text icon(String name, ThemeData theme, {double? scale}) {
+    if (scale != null)
+      return Text(name,
+          style: theme.textTheme.overline!
+              .copyWith(fontSize: theme.textTheme.overline!.fontSize! * scale));
+    return Text(name, style: theme.textTheme.overline);
+  }
+}
+
+extension Device on double {
+  static double ratio = 1;
+  double get d => this * Device.ratio;
+}
+
+extension DeviceI on int {
+  double get d => this * Device.ratio;
 }

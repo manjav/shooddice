@@ -83,7 +83,7 @@ class Components {
                     cornerRadius: 8.d,
                     colors: Themes.swatch[TColors.orange],
                     content: Row(children: [
-                      SVG.show("ads", 20),
+                      SVG.icon("0", theme, scale: 0.8),
                       Expanded(
                           child: Text("Free",
                               textAlign: TextAlign.center,

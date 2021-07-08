@@ -30,22 +30,35 @@ class Themes {
         TColors.green: [Color(0xFF71D32c), Color(0xFF00B050), Color(0xFF0A903D)]
       };
 
+  static _style(Color color, double fontSize,
+      {String? font, List<Shadow>? shadows}) {
+    return TextStyle(
+        color: color,
+        fontSize: fontSize,
+        fontFamily: font,
+        shadows: shadows ??
+            [
+              BoxShadow(
+                  color: Colors.black.withAlpha(150),
+                  blurRadius: 3,
+                  offset: Offset(0.5, 2))
+            ]);
+  }
+
   static ThemeData get darkData {
-    // var hl = TextStyle(
-    //     color: swatch[TColors.black]![0], fontWeight: FontWeight.bold);
     var textTheme = TextTheme(
-      caption: TextStyle(color: Colors.yellow, fontSize: 16),
-      button: TextStyle(color: swatch[TColors.black]![0], fontSize: 24),
-      subtitle1: TextStyle(color: swatch[TColors.black]![0], fontSize: 16),
-      subtitle2: TextStyle(color: swatch[TColors.black]![0], fontSize: 14),
-      bodyText1: TextStyle(color: swatch[TColors.black]![0], fontSize: 20),
-      bodyText2: TextStyle(color: swatch[TColors.white]![3], fontSize: 23),
-      headline2: TextStyle(color: swatch[TColors.white]![3], fontSize: 36),
-      headline3: TextStyle(color: swatch[TColors.white]![3], fontSize: 30),
-      headline4: TextStyle(color: swatch[TColors.white]![3], fontSize: 24),
-      headline5: TextStyle(color: swatch[TColors.white]![3], fontSize: 20),
-      headline6: TextStyle(color: swatch[TColors.white]![3], fontSize: 16),
-    );
+        caption: TextStyle(color: Colors.yellow, fontSize: 16),
+        button: _style(swatch[TColors.black]![0], 24, shadows: []),
+        subtitle1: _style(swatch[TColors.black]![0], 16, shadows: []),
+        subtitle2: _style(swatch[TColors.black]![0], 14, shadows: []),
+        bodyText1: _style(swatch[TColors.black]![0], 20, shadows: []),
+        bodyText2: _style(swatch[TColors.white]![3], 23),
+        headline2: _style(swatch[TColors.white]![3], 36),
+        headline3: _style(swatch[TColors.white]![3], 30),
+        headline4: _style(swatch[TColors.white]![3], 24),
+        headline5: _style(swatch[TColors.white]![3], 20),
+        headline6: _style(swatch[TColors.white]![3], 16),
+        overline: _style(swatch[TColors.white]![3], 32, font: "icons"));
 
     // var iconTheme = IconThemeData(color: primaries[50]);
     return ThemeData(
