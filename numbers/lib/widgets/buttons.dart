@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:numbers/utils/sounds.dart';
 import 'package:numbers/utils/themes.dart';
+import 'package:numbers/utils/utils.dart';
 
 class Buttons {
   static Widget button(
@@ -18,12 +19,12 @@ class Buttons {
           onTap?.call();
         },
         child: Container(
-          padding: padding ?? EdgeInsets.fromLTRB(10, 6, 10, 10),
+          padding: padding ?? EdgeInsets.fromLTRB(10.d, 6.d, 10.d, 10.d),
           child: content ?? SizedBox(),
           decoration: CustomDecoration(
-              colors ?? Themes.swatch[TColors.white]!, cornerRadius ?? 12),
-          width: 154,
-          height: 52,
+              colors ?? Themes.swatch[TColors.white]!, cornerRadius ?? 12.d),
+          width: 154.d,
+          height: 52.d,
         ));
   }
 }
@@ -58,7 +59,7 @@ class _CustomDecorationPainter extends BoxPainter {
 
   @override
   void paint(Canvas canvas, Offset offset, ImageConfiguration configuration) {
-    var b = 2.0;
+    var b = 2.0.d;
     var _cr = cornerRadius;
     var r = RRect.fromLTRBXY(
         offset.dx,
@@ -70,7 +71,7 @@ class _CustomDecorationPainter extends BoxPainter {
     var mr = RRect.fromLTRBXY(
         r.left + b, r.top + b, r.right - b, r.bottom - b, _cr, _cr);
     var or = RRect.fromLTRBXY(
-        r.left + b, r.top + b, r.right - b, r.bottom - b - 5, _cr, _cr);
+        r.left + b, r.top + b, r.right - b, r.bottom - b - 5.d, _cr, _cr);
 
     _overPaint = Paint()
       ..shader = ui.Gradient.linear(Offset(or.left, or.top),

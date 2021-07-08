@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:numbers/utils/prefs.dart';
 import 'package:numbers/utils/sounds.dart';
 import 'package:numbers/utils/themes.dart';
+import 'package:numbers/utils/utils.dart';
 import 'package:numbers/widgets/home.dart';
 
 import 'overlays/all.dart';
@@ -34,6 +35,9 @@ class _MyHomePageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
+    Device.ratio = MediaQuery.of(context).size.width / 360;
+    print(
+        "${MediaQuery.of(context).size} ${MediaQuery.of(context).devicePixelRatio}");
     if (_loadingState == 0) {
       Sound.init();
       Prefs.init(() {

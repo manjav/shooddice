@@ -31,37 +31,37 @@ class _HomePageState extends State<HomePage> {
         body: Stack(children: [
       GameWidget(game: _game!),
       Positioned(
-          top: _game!.bounds.top - 68,
-          right: 34,
+          top: _game!.bounds.top - 68.d,
+          right: 34.d,
           child: Components.scores(theme)),
       Positioned(
-          top: _game!.bounds.top - 70,
-          left: 34,
+          top: _game!.bounds.top - 70.d,
+          left: 34.d,
           child: Components.coins(context, onTap: () async {
             _game!.isPlaying = false;
             await Rout.push(context, ShopOverlay());
             _game!.isPlaying = true;
           })),
       Positioned(
-          bottom: 10,
-          left: 20,
-          width: 72,
-          height: 72,
-          child: IconButton(icon: SVG.show("pause", 48), onPressed: _pause)),
+          bottom: 10.d,
+          left: 20.d,
+          width: 64.d,
+          height: 64.d,
+          child: IconButton(icon: SVG.show("pause", 48.d), onPressed: _pause)),
       Positioned(
-          bottom: 0,
-          right: 20,
-          width: 90,
-          height: 90,
+          bottom: 4,
+          right: 20.d,
+          width: 72.d,
+          height: 72.d,
           child:
-              IconButton(icon: SVG.show("remove-one", 64), onPressed: () {})),
+              IconButton(icon: SVG.show("remove-one", 64.d), onPressed: () {})),
       Positioned(
-          bottom: 0,
-          right: 100,
-          width: 90,
-          height: 90,
-          child:
-              IconButton(icon: SVG.show("remove-color", 64), onPressed: () {})),
+          bottom: 4,
+          right: 92.d,
+          width: 72.d,
+          height: 72.d,
+          child: IconButton(
+              icon: SVG.show("remove-color", 64.d), onPressed: () {})),
     ]));
   }
 

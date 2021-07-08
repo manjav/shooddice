@@ -21,8 +21,8 @@ class Components {
                   style: theme.textTheme.headline5)
             ],
           ),
-          SizedBox(width: 4),
-          SVG.show("cup", 48),
+          SizedBox(width: 4.d),
+          SVG.show("cup", 48.d),
         ]));
   }
 
@@ -33,7 +33,7 @@ class Components {
         tag: "coin",
         child: Buttons.button(
             content: Row(children: [
-              SVG.show("coin", 32),
+              SVG.show("coin", 32.d),
               Expanded(
                   child: Text("${Pref.coin.value.format()}",
                       textAlign: TextAlign.center,
@@ -50,38 +50,37 @@ class Components {
                 }));
   }
 
-  static Widget startButton(ThemeData theme, String title, SvgPicture icon) {
+  static Widget startButton(ThemeData theme, String title, String boost) {
     return Expanded(
         child: Container(
-            padding: EdgeInsets.fromLTRB(10, 6, 10, 12),
-            decoration: CustomDecoration(Themes.swatch[TColors.white]!, 12),
+            padding: EdgeInsets.fromLTRB(10.d, 6.d, 10.d, 12.d),
+            decoration: CustomDecoration(Themes.swatch[TColors.white]!, 12.d),
             child: Column(mainAxisAlignment: MainAxisAlignment.end, children: [
-              icon,
-              // SizedBox(height: 4),
+              SVG.show(boost, 72.d),
               Text(title,
                   style: theme.textTheme.subtitle2,
                   textAlign: TextAlign.center),
-              SizedBox(height: 12),
+              SizedBox(height: 12.d),
               SizedBox(
-                  width: 92,
-                  height: 40,
+                  width: 92.d,
+                  height: 40.d,
                   child: Buttons.button(
-                    cornerRadius: 8,
+                    cornerRadius: 8.d,
                     content: Row(children: [
-                      SVG.show("coin", 24),
+                      SVG.show("coin", 24.d),
                       Expanded(
                           child: Text("100",
                               textAlign: TextAlign.center,
                               style: theme.textTheme.bodyText1))
                     ]),
-                    onTap: () {},
+                    onTap: () => _onStartTap(boost, "coin"),
                   )),
-              SizedBox(height: 8),
+              SizedBox(height: 8.d),
               SizedBox(
-                  width: 92,
-                  height: 40,
+                  width: 92.d,
+                  height: 40.d,
                   child: Buttons.button(
-                    cornerRadius: 8,
+                    cornerRadius: 8.d,
                     colors: Themes.swatch[TColors.orange],
                     content: Row(children: [
                       SVG.show("ads", 20),
@@ -90,9 +89,9 @@ class Components {
                               textAlign: TextAlign.center,
                               style: theme.textTheme.headline5))
                     ]),
-                    onTap: () {},
+                    onTap: () => _onStartTap(boost, "ads"),
                   )),
-              SizedBox(height: 4)
+              SizedBox(height: 4.d)
             ])));
   }
 

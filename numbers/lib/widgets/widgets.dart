@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:numbers/core/cell.dart';
+import 'package:numbers/utils/utils.dart';
 
 class Widgets {
   static Widget cell(ThemeData theme, int value) {
@@ -12,8 +13,8 @@ class Widgets {
                   : theme.textTheme.headline2),
           heightFactor: 0.1),
       decoration: CellDecoration(value),
-      width: 154,
-      height: 52,
+      width: 154.d,
+      height: 52.d,
     );
   }
 }

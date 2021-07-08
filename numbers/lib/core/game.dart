@@ -70,7 +70,7 @@ class MyGame extends BaseGame with TapDetector {
     var width = size.x - padding * 2;
     Cell.diameter = width / Cells.width;
     Cell.radius = Cell.diameter * 0.5;
-    var t = (size.y - ((Cells.height + 1) * Cell.diameter)) - 90;
+    var t = (size.y - ((Cells.height + 1) * Cell.diameter)) - 96;
     bounds = Rect.fromLTRB(padding, t, size.x - padding, t + Cell.diameter * 7);
     _bgRect = RRect.fromLTRBXY(bounds.left - 4, bounds.top - 4,
         bounds.right + 4, bounds.bottom + 4, 16, 16);

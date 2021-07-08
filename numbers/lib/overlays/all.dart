@@ -29,12 +29,16 @@ class Overlays {
     Sound.play(sfx ?? "pop");
     return Stack(alignment: Alignment.center, children: [
       Positioned(
-          top: 50, right: 24, child: scoreButton ?? Components.scores(theme)),
+          top: 50.d,
+          right: 24.d,
+          child: scoreButton ?? Components.scores(theme)),
       Positioned(
-          top: 52, left: 24, child: coinButton ?? Components.coins(context)),
+          top: 52.d,
+          left: 24.d,
+          child: coinButton ?? Components.coins(context)),
       Column(mainAxisAlignment: MainAxisAlignment.center, children: [
         Padding(
-            padding: EdgeInsets.fromLTRB(48, 64, 48, 20),
+            padding: EdgeInsets.fromLTRB(48.d, 64.d, 48.d, 20.d),
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -43,13 +47,13 @@ class Overlays {
                       : SizedBox(),
                   if (hasClose)
                     GestureDetector(
-                        child: SVG.show("close", 28),
+                        child: SVG.show("close", 28.d),
                         onTap: () => Navigator.of(context).pop())
                 ])),
         Container(
-            width: width ?? 300,
-            height: height ?? 340,
-            padding: padding ?? EdgeInsets.fromLTRB(18, 12, 18, 28),
+            width: width ?? 300.d,
+            height: height ?? 340.d,
+            padding: padding ?? EdgeInsets.fromLTRB(18.d, 12.d, 18.d, 28.d),
             decoration: hasChrome
                 ? BoxDecoration(
                     color: theme.dialogTheme.backgroundColor,
@@ -72,12 +76,12 @@ class Overlays {
             Positioned(
                 child:
                     Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-              SVG.show("record", 16),
+              SVG.show("record", 16.d),
               Text(" ${Pref.record.value.format()}",
                   style: theme.textTheme.headline6)
             ])),
             Positioned(
-                top: 24,
+                top: 24.d,
                 child: Text(Prefs.score.format(),
                     style: theme.textTheme.headline3)),
             Center(
@@ -85,46 +89,46 @@ class Overlays {
                 child: RiveAnimation.asset('anims/nums-revive.riv',
                     stateMachines: ["machine"])),
             Positioned(
-                height: 76,
-                width: 124,
+                height: 76.d,
+                width: 124.d,
                 bottom: 0,
                 left: 0,
                 child: Buttons.button(
                     onTap: () => _buttonsClick(context, "revive_coin"),
-                    cornerRadius: 16,
+                    cornerRadius: 16.d,
                     content: Stack(alignment: Alignment.centerLeft, children: [
-                      SVG.show("coin", 36),
+                      SVG.show("coin", 36.d),
                       Positioned(
-                          top: 5,
-                          left: 40,
+                          top: 5.d,
+                          left: 40.d,
                           child: Text("100", style: theme.textTheme.button)),
                       Positioned(
-                          bottom: 7,
-                          left: 40,
+                          bottom: 7.d,
+                          left: 40.d,
                           child: Text("Revive",
                               style: TextStyle(
                                   fontSize: 15,
                                   color: Themes.swatch[TColors.black]![0]))),
                     ]))),
             Positioned(
-                height: 76,
-                width: 124,
+                height: 76.d,
+                width: 124.d,
                 bottom: 0,
                 right: 0,
                 child: Buttons.button(
                     onTap: () => _buttonsClick(context, "revive_ads"),
                     colors: Themes.swatch[TColors.orange],
-                    cornerRadius: 16,
+                    cornerRadius: 16.d,
                     content: Stack(alignment: Alignment.centerLeft, children: [
                       SVG.show("ads", 36),
                       Positioned(
-                          top: 5,
-                          left: 40,
+                          top: 5.d,
+                          left: 40.d,
                           child:
                               Text("Free", style: theme.textTheme.headline4)),
                       Positioned(
-                          bottom: 7,
-                          left: 40,
+                          bottom: 7.d,
+                          left: 40.d,
                           child:
                               Text("Revive", style: theme.textTheme.headline6)),
                     ])))
@@ -144,53 +148,53 @@ class Overlays {
               child: RiveAnimation.asset('anims/nums-record.riv',
                   stateMachines: ["machine"])),
           Positioned(
-              top: 152,
+              top: 152.d,
               child: Text("New Record", style: theme.textTheme.caption)),
           Positioned(
-              top: 166,
+              top: 166.d,
               child:
                   Text(Prefs.score.format(), style: theme.textTheme.headline2)),
           Positioned(
-              height: 76,
-              width: 124,
+              height: 76.d,
+              width: 124.d,
               bottom: 0,
               left: 0,
               child: Buttons.button(
                   onTap: () => _buttonsClick(context, "record_coin"),
-                  cornerRadius: 16,
+                  cornerRadius: 16.d,
                   content: Stack(alignment: Alignment.centerLeft, children: [
-                    SVG.show("coin", 36),
+                    SVG.show("coin", 36.d),
                     Positioned(
-                        top: 5,
-                        left: 40,
+                        top: 5.d,
+                        left: 40.d,
                         child: Text(recordReward.format(),
                             style: theme.textTheme.button)),
                     Positioned(
-                        bottom: 7,
-                        left: 40,
+                        bottom: 7.d,
+                        left: 40.d,
                         child: Text("Claim", style: theme.textTheme.subtitle1)),
                   ]))),
           Positioned(
-              height: 76,
-              width: 124,
+              height: 76.d,
+              width: 124.d,
               bottom: 0,
               right: 0,
               child: Buttons.button(
                   onTap: () => _buttonsClick(context, "record_ads"),
                   colors: Themes.swatch[TColors.orange],
-                  cornerRadius: 16,
+                  cornerRadius: 16.d,
                   content: Stack(alignment: Alignment.centerLeft, children: [
                     SVG.show("ads", 36),
                     Positioned(
-                        top: 5,
-                        left: 44,
+                        top: 5.d,
+                        left: 44.d,
                         child: Text((recordReward * rewardCoef).format(),
                             style: theme.textTheme.headline4)),
                     Positioned(
-                        bottom: 7,
-                        left: 44,
+                        bottom: 7.d,
+                        left: 44.d,
                         child: Row(children: [
-                          SVG.show("coin", 22),
+                          SVG.show("coin", 22.d),
                           Text("x$rewardCoef", style: theme.textTheme.headline6)
                         ])),
                   ])))
@@ -201,73 +205,73 @@ class Overlays {
     var theme = Theme.of(context);
     return basic(context,
         sfx: "win",
-        height: 380,
+        height: 380.d,
         hasClose: false,
         title: "Big Block",
         content: Stack(alignment: Alignment.topCenter, children: [
           Positioned(
               top: 0,
-              width: 200,
-              height: 200,
+              width: 200.d,
+              height: 200.d,
               child: RiveAnimation.asset('anims/nums-shine.riv',
                   stateMachines: ["machine"])),
           Positioned(
-              top: 58,
-              width: 80,
-              height: 80,
+              top: 58.d,
+              width: 80.d,
+              height: 80.d,
               child: RotationTransition(
                 turns: AlwaysStoppedAnimation(-0.02),
                 child: Widgets.cell(theme, value),
               )),
           Positioned(
-              top: 170,
+              top: 170.d,
               child: Text("Congnratulation.\nYou made ${Cell.getScore(value)}!",
                   style: theme.textTheme.caption, textAlign: TextAlign.center)),
           Positioned(
-              top: 225,
+              top: 225.d,
               child:
                   Text("Earn more reward?", style: theme.textTheme.headline6)),
           Positioned(
-              height: 76,
-              width: 124,
+              height: 76.d,
+              width: 124.d,
               bottom: 0,
               left: 0,
               child: Buttons.button(
                   onTap: () => _buttonsClick(context, "record_coin"),
-                  cornerRadius: 16,
+                  cornerRadius: 16.d,
                   content: Stack(alignment: Alignment.centerLeft, children: [
-                    SVG.show("coin", 36),
+                    SVG.show("coin", 36.d),
                     Positioned(
-                        top: 5,
-                        left: 40,
+                        top: 5.d,
+                        left: 40.d,
                         child: Text(recordReward.format(),
                             style: theme.textTheme.button)),
                     Positioned(
-                        bottom: 7,
-                        left: 40,
+                        bottom: 7.d,
+                        left: 40.d,
                         child: Text("Claim", style: theme.textTheme.subtitle1)),
                   ]))),
           Positioned(
-              height: 76,
-              width: 124,
+              height: 76.d,
+              width: 124.d,
               bottom: 0,
               right: 0,
               child: Buttons.button(
                   onTap: () => _buttonsClick(context, "record_ads"),
                   colors: Themes.swatch[TColors.orange],
-                  cornerRadius: 16,
+                  cornerRadius: 16.d,
                   content: Stack(alignment: Alignment.centerLeft, children: [
                     SVG.show("ads", 36),
                     Positioned(
-                        top: 5,
-                        left: 44,
+                        top: 5.d,
+                        left: 44.d,
                         child: Text((recordReward * rewardCoef).format(),
                             style: theme.textTheme.headline4)),
                     Positioned(
-                        bottom: 7,
-                        left: 44,
+                        bottom: 7.d,
+                        left: 44.d,
                         child: Row(children: [
-                          SVG.show("coin", 22),
+                          SVG.show("coin", 22.d),
                           Text("x$rewardCoef", style: theme.textTheme.headline6)
                         ])),
                   ])))
@@ -281,30 +285,29 @@ class Overlays {
     return basic(context,
         hasClose: false,
         title: "Select Boost Items",
-        padding: EdgeInsets.fromLTRB(12, 12, 12, 16),
+        padding: EdgeInsets.fromLTRB(12.d, 12.d, 12.d, 16.d),
         content:
             Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
           Expanded(
               child: Row(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                Components.startButton(theme, "Start the game with black 512!",
-                    SVG.show("512", 72)),
-                Components.startButton(theme,
-                    "Preview the next upcoming black!", SVG.show("next", 72))
+                Components.startButton(
+                    theme, "Start the game with black 512!", "512"),
+                Components.startButton(
+                    theme, "Preview the next upcoming black!", "next")
               ])),
-          SizedBox(height: 4),
+          SizedBox(height: 4.d),
           Container(
-              height: 76,
+              height: 76.d,
               child: Buttons.button(
                   colors: Themes.swatch[TColors.blue],
                   onTap: callback,
-                  cornerRadius: 16,
+                  cornerRadius: 16.d,
                   content: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        SVG.show("play", 32),
-                        SizedBox(width: 12),
+                        SizedBox(width: 12.d),
                         Text("Start",
                             style: theme.textTheme.headline5,
                             textAlign: TextAlign.center)
