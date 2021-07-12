@@ -189,7 +189,7 @@ class MyGame extends BaseGame with TapDetector {
               .floor());
       if (cell == null || cell.state != CellState.Fixed) return;
       if (removingMode == "one") {
-        Pref.removeColor.set(Pref.removeOne.value - 1);
+        Pref.removeOne.set(Pref.removeOne.value - 1);
         _removeCell(cell.column, cell.row, true);
       } else {
         Pref.removeColor.set(Pref.removeColor.value - 1);

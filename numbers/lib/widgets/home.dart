@@ -89,10 +89,9 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     Text("Select ${_game!.removingMode} to remove!"),
                     GestureDetector(
-                        child: SVG.show("close", 32), onTap: _onRemoveBlock)
-                  ],
-                ),
-              ))
+                            child: SVG.show("close", 32.d),
+                            onTap: _onRemoveBlock)
+                      ])))
     ]));
   }
 
@@ -102,21 +101,21 @@ class _HomePageState extends State<HomePage> {
       case GameEvent.big:
         _widget = Overlays.bigValue(context, value);
         break;
+      case GameEvent.boost:
+        await _boost("next");
+        break;
       case GameEvent.lose:
         _widget = Overlays.revive(context, 100 * (_game!.numRevives + 1));
         break;
       case GameEvent.record:
         _widget = Overlays.record(context);
         break;
+      case GameEvent.remove:
+        _onRemoveBlock();
+        break;
       case GameEvent.score:
         setState(() {});
         return;
-      case GameEvent.boost:
-        await _boost("next");
-        break;
-      default:
-        _onRemoveBlock();
-        break;
     }
 
     if (_widget != null) {
@@ -180,6 +179,8 @@ class _HomePageState extends State<HomePage> {
         _game!.boostNext();
         return;
       }
+      if (type == "one") Pref.removeOne.set(1);
+      if (type == "color") Pref.removeColor.set(1);
       setState(() => _game!.removingMode = type);
       return;
     }
