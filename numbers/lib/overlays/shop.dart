@@ -78,7 +78,7 @@ class _ShopOverlayState extends State<ShopOverlay> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     SizedBox(
-                        width: 120.d,
+                        width: 124.d,
                         child: Buttons.button(
                             cornerRadius: 16.d,
                             colors: Themes.swatch[TColors.orange],
@@ -103,7 +103,7 @@ class _ShopOverlayState extends State<ShopOverlay> {
                               )
                             ]))),
                     SizedBox(
-                        width: 144.d,
+                        width: 140.d,
                         child: Buttons.button(
                             onTap: () {},
                             colors: Themes.swatch[TColors.green],
@@ -129,8 +129,8 @@ class _ShopOverlayState extends State<ShopOverlay> {
           content: Column(children: [
             SizedBox(height: 4.d),
             Row(children: [
-              SVG.show("coin", 26.d),
-              Text("2100", style: theme.textTheme.bodyText1)
+              SVG.show("coin", 22.d),
+              Text(" 2100", style: theme.textTheme.bodyText2)
             ]),
             SizedBox(height: 8.d),
             Container(
