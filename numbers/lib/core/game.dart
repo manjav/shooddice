@@ -212,8 +212,13 @@ class MyGame extends BaseGame with TapDetector {
 
       Sound.play("fall");
       _fallingEffect!.tint(
-          Rect.fromLTRB(_x - Cell.radius, _cells.last!.y + Cell.diameter,
-              _x + Cell.radius, bounds.bottom - row * Cell.diameter),
+          RRect.fromLTRBXY(
+              _x - Cell.radius,
+              _cells.last!.y + Cell.diameter,
+              _x + Cell.radius,
+              bounds.bottom - row * Cell.diameter,
+              Cell.round,
+              Cell.round),
           Cell.colors[_cells.last!.value].color);
     }
     _fallAll();
@@ -361,11 +366,11 @@ class MyGame extends BaseGame with TapDetector {
 }
 
 class FallingEffect extends PositionComponent with HasGameRef<MyGame> {
-  Rect? _rect;
+  RRect? _rect;
   Color? _color;
   int _alpha = 0;
 
-  void tint(Rect rect, Color color) {
+  void tint(RRect rect, Color color) {
     _rect = rect;
     _color = color;
     _alpha = 255;
@@ -373,14 +378,15 @@ class FallingEffect extends PositionComponent with HasGameRef<MyGame> {
 
   void render(Canvas canvas) {
     if (_alpha <= 0) return;
-    canvas.drawRect(_rect!, alphaPaint(_alpha));
+    canvas.drawRRect(_rect!, alphaPaint(_alpha));
     _alpha -= 15;
     super.render(canvas);
   }
 
   Paint alphaPaint(int alpha) {
     return Paint()
-      ..shader = ui.Gradient.linear(_rect!.topCenter, _rect!.bottomCenter, [
+      ..shader =
+          ui.Gradient.linear(Offset(0, _rect!.top), Offset(0, _rect!.bottom), [
         _color!.withAlpha(0),
         _color!.withAlpha(_alpha),
       ]);
