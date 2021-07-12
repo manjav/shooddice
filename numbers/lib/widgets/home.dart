@@ -5,6 +5,7 @@ import 'package:numbers/core/game.dart';
 import 'package:numbers/overlays/all.dart';
 import 'package:numbers/overlays/pause.dart';
 import 'package:numbers/overlays/shop.dart';
+import 'package:numbers/utils/prefs.dart';
 import 'package:numbers/utils/utils.dart';
 import 'package:numbers/widgets/components.dart';
 
@@ -49,19 +50,49 @@ class _HomePageState extends State<HomePage> {
           height: 65.d,
           child: IconButton(icon: SVG.show("pause", 48.d), onPressed: _pause)),
       Positioned(
-          bottom: 4,
+          bottom: 4.d,
           right: 20.d,
           width: 72.d,
           height: 72.d,
-          child:
-              IconButton(icon: SVG.show("remove-one", 64.d), onPressed: () {})),
+          child: IconButton(
+              icon: SVG.show("remove-one", 64.d),
+              onPressed: () => _boost("one"))),
       Positioned(
-          bottom: 4,
+          bottom: 4.d,
           right: 92.d,
           width: 72.d,
           height: 72.d,
           child: IconButton(
-              icon: SVG.show("remove-color", 64.d), onPressed: () {})),
+              icon: SVG.show("remove-color", 64.d),
+              onPressed: () => _boost("color"))),
+      _game!.removingMode == null
+          ? SizedBox()
+          : Positioned(
+              bottom: 4,
+              right: 4.d,
+              left: 4.d,
+              height: 86.d,
+              child: Container(
+                padding: EdgeInsets.fromLTRB(32, 28, 32, 32),
+                decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                          blurRadius: 3,
+                          color: Colors.black,
+                          offset: Offset(0.5, 2))
+                    ],
+                    color: theme.cardColor,
+                    shape: BoxShape.rectangle,
+                    borderRadius: BorderRadius.all(Radius.circular(16))),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("Select ${_game!.removingMode} to remove!"),
+                    GestureDetector(
+                        child: SVG.show("close", 32), onTap: _onRemoveBlock)
+                  ],
+                ),
+              ))
     ]));
   }
 
@@ -70,9 +101,6 @@ class _HomePageState extends State<HomePage> {
     switch (event) {
       case GameEvent.big:
         _widget = Overlays.bigValue(context, value);
-        break;
-      case GameEvent.boost:
-        await _boost("next");
         break;
       case GameEvent.lose:
         _widget = Overlays.revive(context, 100 * (_game!.numRevives + 1));
@@ -83,6 +111,12 @@ class _HomePageState extends State<HomePage> {
       case GameEvent.score:
         setState(() {});
         return;
+      case GameEvent.boost:
+        await _boost("next");
+        break;
+      default:
+        _onRemoveBlock();
+        break;
     }
 
     if (_widget != null) {
@@ -119,12 +153,23 @@ class _HomePageState extends State<HomePage> {
   _boost(String type) async {
     _game!.isPlaying = false;
 
+    if (type == "one" && Pref.removeOne.value > 0 ||
+        type == "color" && Pref.removeColor.value > 0) {
+      setState(() => _game!.removingMode = type);
+      return;
+    }
     var title = "";
     EdgeInsets padding = EdgeInsets.only(right: 16, bottom: 80);
     switch (type) {
       case "next":
         title = "Show next upcomming block!";
         padding = EdgeInsets.only(left: 32, top: _game!.bounds.top + 68);
+        break;
+      case "one":
+        title = "Remove one block!";
+        break;
+      case "color":
+        title = "Select color for remove!";
         break;
     }
     var result = await Rout.push(
@@ -135,8 +180,15 @@ class _HomePageState extends State<HomePage> {
         _game!.boostNext();
         return;
       }
+      setState(() => _game!.removingMode = type);
+      return;
     }
     _game!.isPlaying = true;
   }
 
+  void _onRemoveBlock() {
+    _game!.removingMode = null;
+    _game!.isPlaying = true;
+    setState(() {});
+  }
 }

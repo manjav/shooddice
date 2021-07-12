@@ -13,7 +13,7 @@ import 'package:numbers/utils/prefs.dart';
 import 'package:numbers/utils/sounds.dart';
 import 'package:numbers/utils/themes.dart';
 
-enum GameEvent { big, boost, lose, record, score }
+enum GameEvent { big, boost, lose, record, remove, score }
 
 class MyGame extends BaseGame with TapDetector {
   static final padding = 20.0;
@@ -25,6 +25,7 @@ class MyGame extends BaseGame with TapDetector {
   Function(GameEvent, int)? onGameEvent;
   bool isPlaying = false;
   int numRevives = 0;
+  String? removingMode;
   Rect bounds = Rect.fromLTRB(0, 0, 0, 0);
 
   bool _recordChanged = false;
@@ -178,6 +179,27 @@ class MyGame extends BaseGame with TapDetector {
   }
 
   void onTapDown(TapDownInfo info) {
+    if (removingMode != null) {
+      var cell = _cells.get(
+          ((info.eventPosition.global.x - bounds.left) / Cell.diameter)
+              .clamp(0, Cells.width - 1)
+              .floor(),
+          ((bounds.bottom - info.eventPosition.global.y) / Cell.diameter)
+              .clamp(0, Cells.height - 1)
+              .floor());
+      if (cell == null || cell.state != CellState.Fixed) return;
+      if (removingMode == "one") {
+        Pref.removeColor.set(Pref.removeOne.value - 1);
+        _removeCell(cell.column, cell.row, true);
+      } else {
+        Pref.removeColor.set(Pref.removeColor.value - 1);
+        _removeCellsByValue(cell.value);
+      }
+      isPlaying = true;
+      _fallAll();
+      onGameEvent?.call(GameEvent.remove, 0);
+      return;
+    }
     if (!isPlaying) return;
     if (boostNextMode == 0 &&
         info.eventPosition.global.y < bounds.top + Cell.diameter) {
@@ -346,7 +368,7 @@ class MyGame extends BaseGame with TapDetector {
       _cells.map[column][row] = null;
   }
 
-  void removeCellsByValueint(value) {
+  void _removeCellsByValue(int value) {
     _cells.loop((i, j, c) => _removeCell(i, j, true), value: value);
   }
 
