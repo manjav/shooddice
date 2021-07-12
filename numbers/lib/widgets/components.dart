@@ -29,15 +29,17 @@ class Components {
   static Widget coins(BuildContext context,
       {Function()? onTap, bool clickable = true}) {
     var theme = Theme.of(context);
+    var text = "${Pref.coin.value.format()}";
     return Hero(
         tag: "coin",
         child: Buttons.button(
             content: Row(children: [
               SVG.show("coin", 32.d),
               Expanded(
-                  child: Text("${Pref.coin.value.format()}",
+                  child: Text(text,
                       textAlign: TextAlign.center,
-                      style: theme.textTheme.bodyText1)),
+                      style: theme.textTheme.bodyText2!
+                          .copyWith(fontSize: text.length > 5 ? 17 : 22))),
               clickable
                   ? Text("+  ",
                       textAlign: TextAlign.center,
