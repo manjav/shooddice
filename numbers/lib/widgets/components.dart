@@ -43,7 +43,7 @@ class Components {
               clickable
                   ? Text("+  ",
                       textAlign: TextAlign.center,
-                      style: theme.textTheme.bodyText1)
+                      style: theme.textTheme.button)
                   : SizedBox()
             ]),
             onTap: onTap ??
@@ -73,7 +73,7 @@ class Components {
                       Expanded(
                           child: Text("100",
                               textAlign: TextAlign.center,
-                              style: theme.textTheme.bodyText1))
+                              style: theme.textTheme.bodyText2))
                     ]),
                     onTap: () => _onStartTap(boost, "coin"),
                   )),
@@ -85,7 +85,7 @@ class Components {
                     cornerRadius: 8.d,
                     colors: Themes.swatch[TColors.orange],
                     content: Row(children: [
-                      SVG.icon("0", theme, scale: 0.8),
+                      SVG.icon("0", theme, scale: 0.7),
                       Expanded(
                           child: Text("Free",
                               textAlign: TextAlign.center,

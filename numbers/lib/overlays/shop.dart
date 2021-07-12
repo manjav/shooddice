@@ -42,10 +42,10 @@ class _ShopOverlayState extends State<ShopOverlay> {
                     CustomDecoration(Themes.swatch[TColors.white]!, 12.d),
                 child: Row(children: [
                   SizedBox(width: 8.d),
-                  SVG.icon("3", theme),
-                  SizedBox(width: 16.d),
+                  SVG.show("noads", 48),
+                  SizedBox(width: 24.d),
                   Expanded(
-                      child: Text("No Ads", style: theme.textTheme.bodyText1)),
+                      child: Text("No Ads", style: theme.textTheme.bodyText2)),
                   SizedBox(
                       width: 92.d,
                       height: 40.d,
@@ -132,7 +132,7 @@ class _ShopOverlayState extends State<ShopOverlay> {
               SVG.show("coin", 22.d),
               Text(" 2100", style: theme.textTheme.bodyText2)
             ]),
-            SizedBox(height: 8.d),
+            SizedBox(height: 7.d),
             Container(
               width: 92.d,
               height: 40.d,

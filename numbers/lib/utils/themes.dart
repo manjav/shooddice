@@ -49,10 +49,10 @@ class Themes {
     var textTheme = TextTheme(
         caption: TextStyle(color: Colors.yellow, fontSize: 16),
         button: _style(swatch[TColors.black]![0], 24, shadows: []),
+        bodyText1: _style(swatch[TColors.black]![0], 22, shadows: []),
+        bodyText2: _style(swatch[TColors.black]![0], 20, shadows: []),
         subtitle1: _style(swatch[TColors.black]![0], 16, shadows: []),
         subtitle2: _style(swatch[TColors.black]![0], 14, shadows: []),
-        bodyText1: _style(swatch[TColors.black]![0], 20, shadows: []),
-        bodyText2: _style(swatch[TColors.white]![3], 23),
         headline2: _style(swatch[TColors.white]![3], 36),
         headline3: _style(swatch[TColors.white]![3], 30),
         headline4: _style(swatch[TColors.white]![3], 24),

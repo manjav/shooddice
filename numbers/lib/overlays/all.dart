@@ -43,7 +43,7 @@ class Overlays {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   title != null
-                      ? Text(title, style: theme.textTheme.bodyText2)
+                      ? Text(title, style: theme.textTheme.headline4)
                       : SizedBox(),
                   if (hasClose)
                     GestureDetector(
@@ -105,10 +105,8 @@ class Overlays {
                       Positioned(
                           bottom: 7.d,
                           left: 40.d,
-                          child: Text("Revive",
-                              style: TextStyle(
-                                  fontSize: 15,
-                                  color: Themes.swatch[TColors.black]![0]))),
+                          child:
+                              Text("Revive", style: theme.textTheme.subtitle2)),
                     ]))),
             Positioned(
                 height: 76.d,
@@ -172,7 +170,7 @@ class Overlays {
                     Positioned(
                         bottom: 7.d,
                         left: 40.d,
-                        child: Text("Claim", style: theme.textTheme.subtitle1)),
+                        child: Text("Claim", style: theme.textTheme.subtitle2)),
                   ]))),
           Positioned(
               height: 76.d,
@@ -249,7 +247,7 @@ class Overlays {
                     Positioned(
                         bottom: 7.d,
                         left: 40.d,
-                        child: Text("Claim", style: theme.textTheme.subtitle1)),
+                        child: Text("Claim", style: theme.textTheme.subtitle2)),
                   ]))),
           Positioned(
               height: 76.d,
