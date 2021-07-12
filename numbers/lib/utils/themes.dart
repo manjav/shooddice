@@ -101,11 +101,10 @@ class Themes {
       // scaffoldBackgroundColor: primaries[900],
       backgroundColor: swatch[TColors.black]![2],
       dialogTheme: DialogTheme(backgroundColor: swatch[TColors.black]![1]),
-      // cardColor: primaries[800],
+      cardColor: swatch[TColors.white]![0],
       // primaryColor: primaries[700],
       // focusColor: primaries[750],
       // textTheme: textTheme,
-      // dialogBackgroundColor: primaries[800],
       colorScheme: ColorScheme.dark(
           // primary: primaries[700],
           // onPrimary: Colors.white,

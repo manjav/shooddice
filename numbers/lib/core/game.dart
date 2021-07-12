@@ -13,7 +13,7 @@ import 'package:numbers/utils/prefs.dart';
 import 'package:numbers/utils/sounds.dart';
 import 'package:numbers/utils/themes.dart';
 
-enum GameEvent { big, lose, record, score }
+enum GameEvent { big, boost, lose, record, score }
 
 class MyGame extends BaseGame with TapDetector {
   static final padding = 20.0;
@@ -181,9 +181,8 @@ class MyGame extends BaseGame with TapDetector {
     if (!isPlaying) return;
     if (boostNextMode == 0 &&
         info.eventPosition.global.y < bounds.top + Cell.diameter) {
-      boostNextMode = 1;
-      _nextCell.init(_nextCell.column, 0, _nextCell.value,
-          hiddenMode: boostNextMode + 1);
+      isPlaying = false;
+      onGameEvent?.call(GameEvent.boost, 0);
       return;
     }
     if (_cells.last!.state == CellState.Float && !_cells.last!.matched) {
@@ -349,6 +348,12 @@ class MyGame extends BaseGame with TapDetector {
 
   void removeCellsByValueint(value) {
     _cells.loop((i, j, c) => _removeCell(i, j, true), value: value);
+  }
+
+  void boostNext() {
+    boostNextMode = 1;
+    _nextCell.init(_nextCell.column, 0, _nextCell.value,
+        hiddenMode: boostNextMode + 1);
   }
 
   void revive() {

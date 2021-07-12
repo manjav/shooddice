@@ -4,11 +4,14 @@ import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 
 class Rout {
-  static dynamic push(BuildContext context, Widget page) async {
+  static dynamic push(BuildContext context, Widget page,
+      {Color? barrierColor, bool barrierDismissible = false}) async {
     return await Navigator.of(context).push(PageRouteBuilder(
         opaque: false,
         reverseTransitionDuration: Duration(milliseconds: 200),
-        barrierColor: Theme.of(context).backgroundColor.withAlpha(230),
+        barrierColor:
+            barrierColor ?? Theme.of(context).backgroundColor.withAlpha(230),
+        barrierDismissible: barrierDismissible,
         transitionsBuilder: (context, animation, secondaryAnimation, child) =>
             SlideTransition(
                 position: animation.drive(
@@ -20,7 +23,7 @@ class Rout {
 }
 
 extension IntExt on int {
-  static final _formatter = NumberFormat('#,##,###');
+  static final _formatter = NumberFormat('###,###,###');
   String format() {
     return _formatter.format(this);
   }

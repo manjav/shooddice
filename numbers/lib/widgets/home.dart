@@ -32,11 +32,11 @@ class _HomePageState extends State<HomePage> {
       GameWidget(game: _game!),
       Positioned(
           top: _game!.bounds.top - 68.d,
-          right: 34.d,
+          right: 28.d,
           child: Components.scores(theme)),
       Positioned(
           top: _game!.bounds.top - 70.d,
-          left: 34.d,
+          left: 28.d,
           child: Components.coins(context, onTap: () async {
             _game!.isPlaying = false;
             await Rout.push(context, ShopOverlay());
@@ -71,8 +71,11 @@ class _HomePageState extends State<HomePage> {
       case GameEvent.big:
         _widget = Overlays.bigValue(context, value);
         break;
+      case GameEvent.boost:
+        await _boost("next");
+        break;
       case GameEvent.lose:
-        _widget = Overlays.revive(context);
+        _widget = Overlays.revive(context, 100 * (_game!.numRevives + 1));
         break;
       case GameEvent.record:
         _widget = Overlays.record(context);
@@ -87,6 +90,7 @@ class _HomePageState extends State<HomePage> {
       if (event == GameEvent.lose) {
         if (result == null) widget.onBack();
         _game!.revive();
+        setState(() {});
         return;
       }
     }
@@ -111,4 +115,28 @@ class _HomePageState extends State<HomePage> {
         break;
     }
   }
+
+  _boost(String type) async {
+    _game!.isPlaying = false;
+
+    var title = "";
+    EdgeInsets padding = EdgeInsets.only(right: 16, bottom: 80);
+    switch (type) {
+      case "next":
+        title = "Show next upcomming block!";
+        padding = EdgeInsets.only(left: 32, top: _game!.bounds.top + 68);
+        break;
+    }
+    var result = await Rout.push(
+        context, Overlays.callout(context, title, type, padding: padding),
+        barrierColor: Colors.transparent, barrierDismissible: true);
+    if (result != null) {
+      if (type == "next") {
+        _game!.boostNext();
+        return;
+      }
+    }
+    _game!.isPlaying = true;
+  }
+
 }
