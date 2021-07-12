@@ -105,7 +105,7 @@ class MyGame extends BaseGame with TapDetector {
     for (var c in cols) _createCell(c, Cell.getNextValue());
 
     isPlaying = true;
-    _fallAll();
+    _spawn();
     await Future.delayed(Duration(milliseconds: 10));
     onGameEvent?.call(GameEvent.score, 0);
   }
@@ -117,7 +117,7 @@ class MyGame extends BaseGame with TapDetector {
     var cell = Cell(column, row, value);
     cell.x = bounds.left + column * Cell.diameter + Cell.radius;
     cell.y = bounds.top + Cell.diameter * (Cells.height - row) + Cell.radius;
-    cell.state = CellState.Float;
+    cell.state = CellState.Fixed;
     _cells.map[column][row] = cell;
     add(cell);
   }

@@ -112,7 +112,7 @@ class Cell extends PositionComponent with HasGameRef<MyGame> {
 
   void _animationComplete() {
     size = Vector2(1, 1);
-    this.state = CellState.Float;
+    if (state == CellState.Init) state = CellState.Float;
     onInit?.call(this);
     onInit = null;
   }
