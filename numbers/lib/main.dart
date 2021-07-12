@@ -6,6 +6,7 @@ import 'package:numbers/utils/themes.dart';
 import 'package:numbers/utils/utils.dart';
 import 'package:numbers/widgets/home.dart';
 
+import 'core/game.dart';
 import 'overlays/all.dart';
 
 void main() => runApp(MyApp());
@@ -51,11 +52,18 @@ class _MyHomePageState extends State<MainPage> {
   Widget _getPage() {
     switch (_loadingState) {
       case 1:
-        return Overlays.start(context, () => setState(() => _loadingState = 2));
+        return Overlays.start(context, () => setState(() => _loadingState = 2),
+            () => setState(() {}));
       case 2:
-        return HomePage(() => setState(() => _loadingState = 1));
+        return HomePage(_onHomeBack);
       default:
         return SizedBox();
     }
+  }
+
+  void _onHomeBack() {
+    MyGame.boostNextMode = 0;
+    MyGame.boostBig = false;
+    setState(() => _loadingState = 1);
   }
 }

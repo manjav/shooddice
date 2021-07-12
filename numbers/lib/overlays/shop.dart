@@ -39,7 +39,7 @@ class _ShopOverlayState extends State<ShopOverlay> {
                 height: 76,
                 padding: EdgeInsets.fromLTRB(10.d, 6.d, 10.d, 12.d),
                 decoration:
-                    CustomDecoration(Themes.swatch[TColors.white]!, 12.d),
+                    CustomDecoration(Themes.swatch[TColors.white]!, 12.d, true),
                 child: Row(children: [
                   SizedBox(width: 8.d),
                   SVG.show("noads", 48),
@@ -136,7 +136,7 @@ class _ShopOverlayState extends State<ShopOverlay> {
             Container(
               width: 92.d,
               height: 40.d,
-              decoration: CustomDecoration(Themes.swatch[TColors.green]!, 8.d),
+              decoration: CustomDecoration(Themes.swatch[TColors.green]!, 8.d, true),
               child: Center(
                   child: Text("\$2.99", style: theme.textTheme.headline6)),
             ),
