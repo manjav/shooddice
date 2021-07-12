@@ -90,13 +90,22 @@ class Components {
                               textAlign: TextAlign.center,
                               style: theme.textTheme.headline5))
                     ]),
-                    onTap: () => _onStartTap(boost, "ads"),
-                  )),
+                      onTap: () => _onStartTap(context, boost, 0, onSelect))),
               SizedBox(height: 4.d)
             ])));
   }
 
-  static _onStartTap(String boost, String type) {
+  static void _onStartTap(context, String boost, int cost, Function? onSelect) {
+    if (cost > 0) {
+      if (Pref.coin.value < cost) {
+        Rout.push(context, ShopOverlay());
+        return;
+      }
+    } else {
+      print("Show Ad");
+    }
+    Pref.coin.set(Pref.coin.value - cost);
+
     if (boost == "next") MyGame.boostNextMode = 1;
     if (boost == "512") MyGame.boostBig = true;
   }

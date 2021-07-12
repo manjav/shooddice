@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:numbers/core/cell.dart';
-import 'package:numbers/core/game.dart';
+import 'package:numbers/overlays/shop.dart';
 import 'package:numbers/utils/prefs.dart';
 import 'package:numbers/utils/sounds.dart';
 import 'package:numbers/utils/themes.dart';
@@ -65,7 +65,8 @@ class Overlays {
     ]);
   }
 
-  static revive(BuildContext context) {
+  static int rewardCoef = 3;
+  static revive(BuildContext context, int cost) {
     var theme = Theme.of(context);
     return basic(context,
         sfx: "lose",
@@ -94,14 +95,15 @@ class Overlays {
                 bottom: 0,
                 left: 0,
                 child: Buttons.button(
-                    onTap: () => _buttonsClick(context, "revive_coin"),
+                    onTap: () => _buttonsClick(context, "revive", -cost),
                     cornerRadius: 16.d,
                     content: Stack(alignment: Alignment.centerLeft, children: [
                       SVG.show("coin", 36.d),
                       Positioned(
                           top: 5.d,
                           left: 40.d,
-                          child: Text("100", style: theme.textTheme.button)),
+                          child: Text("${cost.format()}",
+                              style: theme.textTheme.button)),
                       Positioned(
                           bottom: 7.d,
                           left: 40.d,
@@ -114,7 +116,8 @@ class Overlays {
                 bottom: 0,
                 right: 0,
                 child: Buttons.button(
-                    onTap: () => _buttonsClick(context, "revive_ads"),
+                    onTap: () =>
+                        _buttonsClick(context, "revive", 0, showAd: true),
                     colors: Themes.swatch[TColors.orange],
                     cornerRadius: 16.d,
                     content: Stack(alignment: Alignment.centerLeft, children: [
@@ -134,9 +137,8 @@ class Overlays {
         ));
   }
 
-  static int rewardCoef = 3;
-  static int recordReward = 100;
   static record(BuildContext context) {
+    var reward = 100;
     var theme = Theme.of(context);
     return basic(context,
         sfx: "win",
@@ -158,14 +160,14 @@ class Overlays {
               bottom: 0,
               left: 0,
               child: Buttons.button(
-                  onTap: () => _buttonsClick(context, "record_coin"),
+                  onTap: () => _buttonsClick(context, "record", reward),
                   cornerRadius: 16.d,
                   content: Stack(alignment: Alignment.centerLeft, children: [
                     SVG.show("coin", 36.d),
                     Positioned(
                         top: 5.d,
                         left: 40.d,
-                        child: Text(recordReward.format(),
+                        child: Text(reward.format(),
                             style: theme.textTheme.button)),
                     Positioned(
                         bottom: 7.d,
@@ -178,7 +180,9 @@ class Overlays {
               bottom: 0,
               right: 0,
               child: Buttons.button(
-                  onTap: () => _buttonsClick(context, "record_ads"),
+                  onTap: () => _buttonsClick(
+                      context, "record", rewardCoef * reward,
+                      showAd: true),
                   colors: Themes.swatch[TColors.orange],
                   cornerRadius: 16.d,
                   content: Stack(alignment: Alignment.centerLeft, children: [
@@ -186,7 +190,7 @@ class Overlays {
                     Positioned(
                         top: 5.d,
                         left: 44.d,
-                        child: Text((recordReward * rewardCoef).format(),
+                        child: Text((rewardCoef * reward).format(),
                             style: theme.textTheme.headline4)),
                     Positioned(
                         bottom: 7.d,
@@ -200,6 +204,7 @@ class Overlays {
   }
 
   static bigValue(BuildContext context, int value) {
+    var reward = value * 20;
     var theme = Theme.of(context);
     return basic(context,
         sfx: "win",
@@ -235,14 +240,14 @@ class Overlays {
               bottom: 0,
               left: 0,
               child: Buttons.button(
-                  onTap: () => _buttonsClick(context, "record_coin"),
+                  onTap: () => _buttonsClick(context, "big", reward),
                   cornerRadius: 16.d,
                   content: Stack(alignment: Alignment.centerLeft, children: [
                     SVG.show("coin", 36.d),
                     Positioned(
                         top: 5.d,
                         left: 40.d,
-                        child: Text(recordReward.format(),
+                        child: Text(reward.format(),
                             style: theme.textTheme.button)),
                     Positioned(
                         bottom: 7.d,
@@ -255,7 +260,9 @@ class Overlays {
               bottom: 0,
               right: 0,
               child: Buttons.button(
-                  onTap: () => _buttonsClick(context, "record_ads"),
+                  onTap: () => _buttonsClick(
+                      context, "big", reward * rewardCoef,
+                      showAd: true),
                   colors: Themes.swatch[TColors.orange],
                   cornerRadius: 16.d,
                   content: Stack(alignment: Alignment.centerLeft, children: [
@@ -263,7 +270,7 @@ class Overlays {
                     Positioned(
                         top: 5.d,
                         left: 44.d,
-                        child: Text((recordReward * rewardCoef).format(),
+                        child: Text((reward * rewardCoef).format(),
                             style: theme.textTheme.headline4)),
                     Positioned(
                         bottom: 7.d,
@@ -383,6 +390,15 @@ class Overlays {
   }
 
   static _buttonsClick(BuildContext context, String type, int coin,
+      {bool showAd = false}) {
+    if (coin < 0 && Pref.coin.value < -coin) {
+      Rout.push(context, ShopOverlay());
+      return;
+    }
+    if (showAd) {
+      print("Show Ad");
+    }
+    Pref.coin.set(Pref.coin.value + coin);
     Navigator.of(context).pop(type);
   }
 }
