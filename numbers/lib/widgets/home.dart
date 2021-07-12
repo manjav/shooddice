@@ -49,50 +49,69 @@ class _HomePageState extends State<HomePage> {
           width: 56.d,
           height: 65.d,
           child: IconButton(icon: SVG.show("pause", 48.d), onPressed: _pause)),
-      Positioned(
-          bottom: 4.d,
-          right: 20.d,
-          width: 72.d,
-          height: 72.d,
-          child: IconButton(
-              icon: SVG.show("remove-one", 64.d),
-              onPressed: () => _boost("one"))),
-      Positioned(
-          bottom: 4.d,
-          right: 92.d,
-          width: 72.d,
-          height: 72.d,
-          child: IconButton(
-              icon: SVG.show("remove-color", 64.d),
-              onPressed: () => _boost("color"))),
+      _removeButton(theme, 20.d, "remove-one", () => _boost("one")),
+      _badge(theme, 60.d, Pref.removeOne.value),
+      _removeButton(theme, 96.d, "remove-color", () => _boost("color")),
+      _badge(theme, 136.d, Pref.removeColor.value),
       _game!.removingMode == null
           ? SizedBox()
           : Positioned(
-              bottom: 4,
+              bottom: 4.d,
               right: 4.d,
               left: 4.d,
               height: 86.d,
               child: Container(
-                padding: EdgeInsets.fromLTRB(32, 28, 32, 32),
-                decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                          blurRadius: 3,
-                          color: Colors.black,
-                          offset: Offset(0.5, 2))
-                    ],
-                    color: theme.cardColor,
-                    shape: BoxShape.rectangle,
-                    borderRadius: BorderRadius.all(Radius.circular(16))),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("Select ${_game!.removingMode} to remove!"),
-                    GestureDetector(
+                  padding: EdgeInsets.fromLTRB(32.d, 28.d, 32.d, 32.d),
+                  decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                            blurRadius: 3.d,
+                            color: Colors.black,
+                            offset: Offset(0.5.d, 2.d))
+                      ],
+                      color: theme.cardColor,
+                      shape: BoxShape.rectangle,
+                      borderRadius: BorderRadius.all(Radius.circular(16))),
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("Select ${_game!.removingMode} to remove!"),
+                        GestureDetector(
                             child: SVG.show("close", 32.d),
                             onTap: _onRemoveBlock)
                       ])))
     ]));
+  }
+
+  Widget _removeButton(
+      ThemeData theme, double right, String icon, Function() onPressed) {
+    return Positioned(
+        right: right,
+        bottom: 4.d,
+        width: 72.d,
+        height: 72.d,
+        child: IconButton(icon: SVG.show(icon, 64.d), onPressed: onPressed));
+  }
+
+  Widget _badge(ThemeData theme, double right, int value) {
+    return Positioned(
+        bottom: 12.d,
+        height: 22.d,
+        right: right,
+        child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 8.d),
+            child: Text(value == 0 ? "free" : "$value",
+                style: theme.textTheme.headline6),
+            decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                      blurRadius: 4.d,
+                      color: Colors.black,
+                      offset: Offset(0.5.d, 0.5.d))
+                ],
+                color: Colors.pink[700],
+                shape: BoxShape.rectangle,
+                borderRadius: BorderRadius.all(Radius.circular(12)))));
   }
 
   void _onGameEventHandler(GameEvent event, int value) async {
