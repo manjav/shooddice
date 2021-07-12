@@ -56,13 +56,11 @@ class Cells {
     _addMatch(column, row - 1, value, matchs); // bottom
     _addMatch(column - 1, row, value, matchs); // left
     _addMatch(column + 1, row, value, matchs); // right
-    // print(c, matchs);
     return matchs;
   }
 
   void _addMatch(int column, int row, int value, List<Cell> matchs) {
     var cell = get(column, row);
-    // print("_addMatch", column, row, cell);
     if (cell != null && cell.value == value) matchs.add(cell);
   }
 
@@ -72,7 +70,6 @@ class Cells {
     for (var r = row + 1; r < height; r++) {
       var c = map[column][r];
       if (c == null) continue;
-      // print("acc", c);
       map[c.column][c.row] = null;
       --c.row;
       c.state = CellState.Float;

@@ -44,9 +44,9 @@ class _CustomDecorationPainter extends BoxPainter {
     ..color = Color(0xFF212527)
     ..style = PaintingStyle.fill;
   var _shadowPaint = Paint()
-    ..color = Color(0xFF000000)
+    ..color = Color(0x66000000)
     ..style = PaintingStyle.fill
-    ..maskFilter = MaskFilter.blur(BlurStyle.outer, 1.5);
+    ..maskFilter = MaskFilter.blur(BlurStyle.normal, 1.5);
   final _mainPaint = Paint()..style = PaintingStyle.fill;
   var _overPaint = Paint()..style = PaintingStyle.fill;
 
@@ -68,6 +68,8 @@ class _CustomDecorationPainter extends BoxPainter {
         offset.dy + configuration.size!.height,
         _cr * 1.1,
         _cr * 1.1);
+    var sr = RRect.fromLTRBXY(
+        r.left - s, r.top, r.right + s, r.bottom + s * 3, _cr * 1.2, _cr * 1.2);
     var mr = RRect.fromLTRBXY(
         r.left + b, r.top + b, r.right - b, r.bottom - b, _cr, _cr);
     var or = RRect.fromLTRBXY(
@@ -77,7 +79,7 @@ class _CustomDecorationPainter extends BoxPainter {
       ..shader = ui.Gradient.linear(Offset(or.left, or.top),
           Offset(or.left, or.bottom), [colors[0], colors[1]]);
 
-    canvas.drawRRect(r, _shadowPaint);
+    canvas.drawRRect(sr, _shadowPaint);
     canvas.drawRRect(r, _backPaint);
     canvas.drawRRect(mr, _mainPaint);
     canvas.drawRRect(or, _overPaint);
