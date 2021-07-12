@@ -19,8 +19,7 @@ class Components {
               Text(Prefs.score.format(), style: theme.textTheme.headline4),
               Text("${Pref.record.value.format()}",
                   style: theme.textTheme.headline5)
-            ],
-          ),
+              ]),
           SizedBox(width: 4.d),
           SVG.show("cup", 48.d),
         ]));

@@ -314,14 +314,75 @@ class Overlays {
         ]));
   }
 
-  static _buttonsClick(BuildContext context, String? type) {
-    if (type == "revive_coin")
-      Pref.coin.set(Pref.coin.value - 100);
-    else if (type == "record_coin")
-      Pref.coin.set(Pref.coin.value + recordReward);
-    else if (type == "record_ads")
-      Pref.coin.set(Pref.coin.value + (recordReward * rewardCoef));
+  static callout(BuildContext context, String title, String type,
+      {EdgeInsets? padding}) {
+    var cost = 100;
+    Sound.play("pop");
+    var theme = Theme.of(context);
+    return Stack(children: [
+      Positioned(
+          left: padding != null && padding.left != 0 ? padding.left : null,
+          top: padding != null && padding.top != 0 ? padding.top : null,
+          right: padding != null && padding.right != 0 ? padding.right : null,
+          bottom:
+              padding != null && padding.bottom != 0 ? padding.bottom : null,
+          child: Container(
+              width: 220.d,
+              height: 84.d,
+              padding: EdgeInsets.all(8.d),
+              decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                        blurRadius: 3,
+                        color: Colors.black,
+                        offset: Offset(0.5, 2))
+                  ],
+                  color: theme.cardColor,
+                  shape: BoxShape.rectangle,
+                  borderRadius: BorderRadius.all(Radius.circular(16))),
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Text(title, style: theme.textTheme.subtitle2),
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          SizedBox(
+                              width: 98,
+                              height: 40,
+                              child: Buttons.button(
+                                  cornerRadius: 8.d,
+                                  content: Row(children: [
+                                    SVG.show("coin", 24.d),
+                                    Expanded(
+                                        child: Text("100",
+                                            textAlign: TextAlign.center,
+                                            style: theme.textTheme.bodyText2))
+                                  ]),
+                                  onTap: () =>
+                                      _buttonsClick(context, type, -cost))),
+                          SizedBox(
+                              width: 98.d,
+                              height: 40.d,
+                              child: Buttons.button(
+                                  cornerRadius: 8.d,
+                                  colors: Themes.swatch[TColors.orange],
+                                  content: Row(children: [
+                                    SVG.icon("0", theme, scale: 0.7),
+                                    Expanded(
+                                        child: Text("Free",
+                                            textAlign: TextAlign.center,
+                                            style: theme.textTheme.headline5))
+                                  ]),
+                                  onTap: () => _buttonsClick(context, type, 0,
+                                      showAd: true)))
+                        ])
+                  ])))
+    ]);
+  }
 
+  static _buttonsClick(BuildContext context, String type, int coin,
     Navigator.of(context).pop(type);
   }
 }
