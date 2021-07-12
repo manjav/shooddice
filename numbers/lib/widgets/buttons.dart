@@ -9,33 +9,39 @@ import 'package:numbers/utils/utils.dart';
 class Buttons {
   static Widget button(
       {Function()? onTap,
+      bool isEnable = true,
       Widget? content,
       EdgeInsets? padding,
       List<Color>? colors,
       double? cornerRadius}) {
     return GestureDetector(
         onTap: () {
-          Sound.play("tap");
-          onTap?.call();
+          if (isEnable) {
+            Sound.play("tap");
+            onTap?.call();
+          }
         },
         child: Container(
-          padding: padding ?? EdgeInsets.fromLTRB(10.d, 6.d, 10.d, 12.d),
-          child: content ?? SizedBox(),
-          decoration: CustomDecoration(
-              colors ?? Themes.swatch[TColors.white]!, cornerRadius ?? 12.d),
-          width: 154.d,
-          height: 52.d,
-        ));
+            padding: padding ?? EdgeInsets.fromLTRB(10.d, 6.d, 10.d, 12.d),
+            child: content ?? SizedBox(),
+            decoration: CustomDecoration(
+                colors ?? Themes.swatch[TColors.white]!,
+                cornerRadius ?? 12.d,
+                isEnable),
+            width: 154.d,
+            height: 52.d));
   }
 }
 
 class CustomDecoration extends Decoration {
+  final bool isEnable;
   final List<Color> colors;
   final double cornerRadius;
-  CustomDecoration(this.colors, this.cornerRadius);
+
+  CustomDecoration(this.colors, this.cornerRadius, this.isEnable);
   @override
   BoxPainter createBoxPainter([VoidCallback? onChanged]) {
-    return _CustomDecorationPainter(colors, cornerRadius);
+    return _CustomDecorationPainter(colors, cornerRadius, isEnable);
   }
 }
 
@@ -52,13 +58,16 @@ class _CustomDecorationPainter extends BoxPainter {
 
   final List<Color> colors;
   final double cornerRadius;
-  // int state = 0;
-  _CustomDecorationPainter(this.colors, this.cornerRadius) : super() {
+  bool isEnable = true;
+  _CustomDecorationPainter(this.colors, this.cornerRadius, bool isEnable)
+      : super() {
     _mainPaint.color = colors[2];
+    this.isEnable = isEnable;
   }
 
   @override
   void paint(Canvas canvas, Offset offset, ImageConfiguration configuration) {
+    var s = 0.8.d;
     var b = 2.0.d;
     var _cr = cornerRadius;
     var r = RRect.fromLTRBXY(
@@ -82,6 +91,6 @@ class _CustomDecorationPainter extends BoxPainter {
     canvas.drawRRect(sr, _shadowPaint);
     canvas.drawRRect(r, _backPaint);
     canvas.drawRRect(mr, _mainPaint);
-    canvas.drawRRect(or, _overPaint);
+    if (isEnable) canvas.drawRRect(or, _overPaint);
   }
 }

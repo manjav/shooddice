@@ -283,10 +283,8 @@ class Overlays {
         ]));
   }
 
-  static start(BuildContext context, Function() callback) {
+  static start(BuildContext context, Function() callback, Function onUpdate) {
     var theme = Theme.of(context);
-    MyGame.boostNextMode = 0;
-    MyGame.boostBig = false;
     return basic(context,
         hasClose: false,
         title: "Select Boost Items",
@@ -298,9 +296,9 @@ class Overlays {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                 Components.startButton(
-                    theme, "Start the game with black 512!", "512"),
-                Components.startButton(
-                    theme, "Preview the next upcoming black!", "next")
+                    context, "Start the game with black 512!", "512", onUpdate),
+                Components.startButton(context,
+                    "Preview the next upcoming black!", "next", onUpdate)
               ])),
           SizedBox(height: 4.d),
           Container(
