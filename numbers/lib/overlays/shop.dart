@@ -141,8 +141,11 @@ class _ShopOverlayState extends State<ShopOverlay> {
               height: 40.d,
               decoration:
                   CustomDecoration(Themes.swatch[TColors.green]!, 8.d, true),
-              child: Center(
-                  child: Text("\$2.99", style: theme.textTheme.headline6)),
+              child: Padding(
+                  padding: EdgeInsets.fromLTRB(12.d, 6.d, 12.d, 7.d),
+                  child: Text("\$2.99",
+                      style: theme.textTheme.headline6,
+                      textAlign: TextAlign.center)),
             ),
             SizedBox(height: 4.d)
           ]),

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:numbers/core/game.dart';
 import 'package:numbers/overlays/shop.dart';
+import 'package:numbers/utils/ads.dart';
 import 'package:numbers/utils/prefs.dart';
 import 'package:numbers/utils/themes.dart';
 import 'package:numbers/utils/utils.dart';
@@ -85,7 +86,7 @@ class Components {
                   height: 40.d,
                   child: Buttons.button(
                       cornerRadius: 8.d,
-                      isEnable: !_has(boost),
+                      isEnable: !_has(boost) && Ads.isReady("boost$boost"),
                       colors: Themes.swatch[TColors.orange],
                       content: Row(children: [
                         SVG.icon("0", theme, scale: 0.7),
@@ -99,14 +100,16 @@ class Components {
             ])));
   }
 
-  static void _onStartTap(context, String boost, int cost, Function? onSelect) {
+  static void _onStartTap(
+      context, String boost, int cost, Function? onSelect) async {
     if (cost > 0) {
       if (Pref.coin.value < cost) {
         Rout.push(context, ShopOverlay());
         return;
       }
     } else {
-      print("Show Ad");
+      var complete = await Ads.show("boost$boost");
+      if (!complete) return;
     }
     Pref.coin.set(Pref.coin.value - cost);
 
