@@ -125,7 +125,8 @@ class _HomePageState extends State<HomePage> {
         await _boost("next");
         break;
       case GameEvent.lose:
-        _widget = Overlays.revive(context, 100 * (_game!.numRevives + 1));
+        await Future.delayed(Duration(seconds: 1));
+        _widget = Overlays.revive(context, _game!.numRevives);
         break;
       case GameEvent.record:
         _widget = Overlays.record(context);
