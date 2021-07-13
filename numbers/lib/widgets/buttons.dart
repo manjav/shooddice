@@ -26,7 +26,7 @@ class Buttons {
             child: content ?? SizedBox(),
             decoration: CustomDecoration(
                 colors ?? Themes.swatch[TColors.white]!,
-                cornerRadius ?? 12.d,
+                cornerRadius ?? 10.d,
                 isEnable),
             width: 154.d,
             height: 52.d));
@@ -75,8 +75,8 @@ class _CustomDecorationPainter extends BoxPainter {
         offset.dy,
         offset.dx + configuration.size!.width,
         offset.dy + configuration.size!.height,
-        _cr * 1.1,
-        _cr * 1.1);
+        _cr * 1.2,
+        _cr * 1.2);
     var sr = RRect.fromLTRBXY(
         r.left - s, r.top, r.right + s, r.bottom + s * 3, _cr * 1.2, _cr * 1.2);
     var mr = RRect.fromLTRBXY(

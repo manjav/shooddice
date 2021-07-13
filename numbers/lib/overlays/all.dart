@@ -109,7 +109,7 @@ class Overlays {
                           bottom: 7.d,
                           left: 40.d,
                           child:
-                              Text("Revive", style: theme.textTheme.subtitle2)),
+                              Text("Revive", style: theme.textTheme.subtitle1)),
                     ]))),
             Positioned(
                 height: 76.d,
