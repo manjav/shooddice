@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:numbers/core/cell.dart';
@@ -66,9 +68,9 @@ class Overlays {
     ]);
   }
 
-  static int rewardCoef = 3;
-  static revive(BuildContext context, int cost) {
+  static revive(BuildContext context, int numRevive) {
     var theme = Theme.of(context);
+    var cost = 100 * pow(2, numRevive).round();
     return basic(context,
         sfx: "lose",
         title: "Revive",
@@ -118,7 +120,7 @@ class Overlays {
                 right: 0,
                 child: Buttons.button(
                     cornerRadius: 16.d,
-                    isEnable: Ads.isReady("revive"),
+                    isEnable: numRevive < 2 && Ads.isReady("revive"),
                     onTap: () =>
                         _buttonsClick(context, "revive", 0, adId: "revive"),
                     colors: Themes.swatch[TColors.orange],
@@ -139,6 +141,7 @@ class Overlays {
         ));
   }
 
+  static int rewardCoef = 2;
   static record(BuildContext context) {
     var reward = 100;
     var theme = Theme.of(context);
