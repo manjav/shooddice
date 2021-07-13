@@ -21,9 +21,9 @@ class MyGame extends BaseGame with TapDetector {
   static MyGame? instance;
   static int boostNextMode = 0;
   static bool boostBig = false;
+  static bool isPlaying = false;
 
   Function(GameEvent, int)? onGameEvent;
-  bool isPlaying = false;
   int numRevives = 0;
   String? removingMode;
   Rect bounds = Rect.fromLTRB(0, 0, 0, 0);

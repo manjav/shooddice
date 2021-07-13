@@ -387,6 +387,24 @@ class Overlays {
     ]);
   }
 
+  static Widget quit(BuildContext context) {
+    var theme = Theme.of(context);
+    return basic(context,
+        hasClose: false,
+        coinButton: SizedBox(),
+        scoreButton: SizedBox(),
+        padding: EdgeInsets.fromLTRB(16, 4, 16, 8),
+        height: 54,
+        title: "Quit",
+        content:
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+          Text("Are you sure?", style: theme.textTheme.headline5),
+          GestureDetector(
+              child: SVG.show("accept", 28.d),
+              onTap: () => _buttonsClick(context, "quit", 0))
+        ]));
+  }
+
   static _buttonsClick(BuildContext context, String type, int coin,
       {bool showAd = false}) {
     if (coin < 0 && Pref.coin.value < -coin) {
@@ -396,7 +414,7 @@ class Overlays {
     if (showAd) {
       print("Show Ad");
     }
-    Pref.coin.set(Pref.coin.value + coin);
+    if (coin != 0) Pref.coin.set(Pref.coin.value + coin);
     Navigator.of(context).pop(type);
   }
 }

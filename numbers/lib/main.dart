@@ -28,10 +28,10 @@ class MyApp extends StatelessWidget {
 class MainPage extends StatefulWidget {
   MainPage({Key? key}) : super(key: key);
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _MainPageState createState() => _MainPageState();
 }
 
-class _MyHomePageState extends State<MainPage> {
+class _MainPageState extends State<MainPage> {
   int _loadingState = 0;
 
   @override
@@ -46,7 +46,8 @@ class _MyHomePageState extends State<MainPage> {
         setState(() {});
       });
     }
-    return Scaffold(body: _getPage());
+    return WillPopScope(
+        onWillPop: _onWillPop, child: Scaffold(body: _getPage()));
   }
 
   Widget _getPage() {
@@ -65,5 +66,13 @@ class _MyHomePageState extends State<MainPage> {
     MyGame.boostNextMode = 0;
     MyGame.boostBig = false;
     setState(() => _loadingState = 1);
+  }
+
+  Future<bool> _onWillPop() async {
+    if (_loadingState == 2) MyGame.isPlaying = false;
+    var result = await Rout.push(context, Overlays.quit(context),
+        barrierDismissible: true);
+    MyGame.isPlaying = true;
+    return result != null;
   }
 }

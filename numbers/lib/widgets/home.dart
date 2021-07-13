@@ -39,9 +39,9 @@ class _HomePageState extends State<HomePage> {
           top: _game!.bounds.top - 70.d,
           left: 28.d,
           child: Components.coins(context, onTap: () async {
-            _game!.isPlaying = false;
+            MyGame.isPlaying = false;
             await Rout.push(context, ShopOverlay());
-            _game!.isPlaying = true;
+            MyGame.isPlaying = true;
           })),
       Positioned(
           bottom: 6.d,
@@ -150,7 +150,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _pause({bool showMenu = true}) async {
-    _game!.isPlaying = false;
+    MyGame.isPlaying = false;
     if (!showMenu) return;
     var result = await Rout.push(context, PauseOverlay());
     _onPauseButtonsClick(result ?? "resume");
@@ -162,14 +162,14 @@ class _HomePageState extends State<HomePage> {
         widget.onBack();
         break;
       case "resume":
-        _game!.isPlaying = true;
+        MyGame.isPlaying = true;
         setState(() {});
         break;
     }
   }
 
   _boost(String type) async {
-    _game!.isPlaying = false;
+    MyGame.isPlaying = false;
 
     if (type == "one" && Pref.removeOne.value > 0 ||
         type == "color" && Pref.removeColor.value > 0) {
@@ -203,12 +203,12 @@ class _HomePageState extends State<HomePage> {
       setState(() => _game!.removingMode = type);
       return;
     }
-    _game!.isPlaying = true;
+    MyGame.isPlaying = true;
   }
 
   void _onRemoveBlock() {
     _game!.removingMode = null;
-    _game!.isPlaying = true;
+    MyGame.isPlaying = true;
     setState(() {});
   }
 }
