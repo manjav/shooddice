@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:numbers/utils/ads.dart';
+import 'package:numbers/utils/prefs.dart';
 import 'package:numbers/utils/themes.dart';
 import 'package:numbers/utils/utils.dart';
 import 'package:numbers/widgets/buttons.dart';
@@ -81,8 +83,9 @@ class _ShopOverlayState extends State<ShopOverlay> {
                         width: 124.d,
                         child: Buttons.button(
                             cornerRadius: 16.d,
+                            isEnable: Ads.isReady("rewardedVideo"),
                             colors: Themes.swatch[TColors.orange],
-                            onTap: () => Navigator.of(context).pop("resume"),
+                            onTap: _freeCoin,
                             content: Row(children: [
                               SVG.icon("0", theme),
                               SizedBox(width: 8.d),
@@ -136,7 +139,8 @@ class _ShopOverlayState extends State<ShopOverlay> {
             Container(
               width: 92.d,
               height: 40.d,
-              decoration: CustomDecoration(Themes.swatch[TColors.green]!, 8.d, true),
+              decoration:
+                  CustomDecoration(Themes.swatch[TColors.green]!, 8.d, true),
               child: Center(
                   child: Text("\$2.99", style: theme.textTheme.headline6)),
             ),
@@ -147,5 +151,13 @@ class _ShopOverlayState extends State<ShopOverlay> {
 
   _onShopItemTap(int index) {
     print(index);
+  }
+
+  _freeCoin() async {
+    var complete = await Ads.show("rewardedVideo");
+    if (complete) {
+      Pref.coin.set(Pref.coin.value + 100);
+      setState(() {});
+    }
   }
 }

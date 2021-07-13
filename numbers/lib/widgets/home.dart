@@ -42,6 +42,7 @@ class _HomePageState extends State<HomePage> {
             MyGame.isPlaying = false;
             await Rout.push(context, ShopOverlay());
             MyGame.isPlaying = true;
+            setState(() {});
           })),
       Positioned(
           bottom: 6.d,
