@@ -46,9 +46,7 @@ class CustomDecoration extends Decoration {
 }
 
 class _CustomDecorationPainter extends BoxPainter {
-  var _backPaint = Paint()
-    ..color = Color(0xFF212527)
-    ..style = PaintingStyle.fill;
+  var _backPaint = Paint()..style = PaintingStyle.fill;
   var _shadowPaint = Paint()
     ..color = Color(0x66000000)
     ..style = PaintingStyle.fill
@@ -61,8 +59,10 @@ class _CustomDecorationPainter extends BoxPainter {
   bool isEnable = true;
   _CustomDecorationPainter(this.colors, this.cornerRadius, bool isEnable)
       : super() {
-    _mainPaint.color = colors[2];
     this.isEnable = isEnable;
+    _mainPaint.color =
+        isEnable ? colors[2] : Color.lerp(colors[2], Color(0xFF8a8a8a), 0.85)!;
+    _backPaint.color = isEnable ? Color(0xFF212527) : Colors.grey[600]!;
   }
 
   @override
@@ -88,7 +88,7 @@ class _CustomDecorationPainter extends BoxPainter {
       ..shader = ui.Gradient.linear(Offset(or.left, or.top),
           Offset(or.left, or.bottom), [colors[0], colors[1]]);
 
-    canvas.drawRRect(sr, _shadowPaint);
+    if (isEnable) canvas.drawRRect(sr, _shadowPaint);
     canvas.drawRRect(r, _backPaint);
     canvas.drawRRect(mr, _mainPaint);
     if (isEnable) canvas.drawRRect(or, _overPaint);
