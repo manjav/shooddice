@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:numbers/utils/ads.dart';
 import 'package:numbers/utils/prefs.dart';
 import 'package:numbers/utils/sounds.dart';
 import 'package:numbers/utils/themes.dart';
@@ -40,6 +41,7 @@ class _MainPageState extends State<MainPage> {
     print(
         "${MediaQuery.of(context).size} ${MediaQuery.of(context).devicePixelRatio}");
     if (_loadingState == 0) {
+      Ads.init();
       Sound.init();
       Prefs.init(() {
         _loadingState = 1;

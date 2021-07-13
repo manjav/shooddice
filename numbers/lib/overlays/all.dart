@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:numbers/core/cell.dart';
 import 'package:numbers/overlays/shop.dart';
+import 'package:numbers/utils/ads.dart';
 import 'package:numbers/utils/prefs.dart';
 import 'package:numbers/utils/sounds.dart';
 import 'package:numbers/utils/themes.dart';
@@ -116,10 +117,11 @@ class Overlays {
                 bottom: 0,
                 right: 0,
                 child: Buttons.button(
-                    onTap: () =>
-                        _buttonsClick(context, "revive", 0, showAd: true),
-                    colors: Themes.swatch[TColors.orange],
                     cornerRadius: 16.d,
+                    isEnable: Ads.isReady("revive"),
+                    onTap: () =>
+                        _buttonsClick(context, "revive", 0, adId: "revive"),
+                    colors: Themes.swatch[TColors.orange],
                     content: Stack(alignment: Alignment.centerLeft, children: [
                       SVG.icon("0", theme),
                       Positioned(
@@ -180,11 +182,12 @@ class Overlays {
               bottom: 0,
               right: 0,
               child: Buttons.button(
+                  cornerRadius: 16.d,
+                  isEnable: Ads.isReady("prize"),
+                  colors: Themes.swatch[TColors.orange],
                   onTap: () => _buttonsClick(
                       context, "record", rewardCoef * reward,
-                      showAd: true),
-                  colors: Themes.swatch[TColors.orange],
-                  cornerRadius: 16.d,
+                      adId: "prize"),
                   content: Stack(alignment: Alignment.centerLeft, children: [
                     SVG.icon("0", theme),
                     Positioned(
@@ -260,11 +263,12 @@ class Overlays {
               bottom: 0,
               right: 0,
               child: Buttons.button(
+                  cornerRadius: 16.d,
+                  isEnable: Ads.isReady("prize"),
+                  colors: Themes.swatch[TColors.orange],
                   onTap: () => _buttonsClick(
                       context, "big", reward * rewardCoef,
-                      showAd: true),
-                  colors: Themes.swatch[TColors.orange],
-                  cornerRadius: 16.d,
+                      adId: "prize"),
                   content: Stack(alignment: Alignment.centerLeft, children: [
                     SVG.icon("0", theme),
                     Positioned(
@@ -324,6 +328,7 @@ class Overlays {
     var cost = 100;
     Sound.play("pop");
     var theme = Theme.of(context);
+    var adId = type == "next" ? "boostnext" : "powerups";
     return Stack(children: [
       Positioned(
           left: padding != null && padding.left != 0 ? padding.left : null,
@@ -372,6 +377,7 @@ class Overlays {
                               height: 40.d,
                               child: Buttons.button(
                                   cornerRadius: 8.d,
+                                  isEnable: Ads.isReady(adId),
                                   colors: Themes.swatch[TColors.orange],
                                   content: Row(children: [
                                     SVG.icon("0", theme, scale: 0.7),
@@ -381,7 +387,7 @@ class Overlays {
                                             style: theme.textTheme.headline5))
                                   ]),
                                   onTap: () => _buttonsClick(context, type, 0,
-                                      showAd: true)))
+                                      adId: adId)))
                         ])
                   ])))
     ]);
@@ -406,13 +412,17 @@ class Overlays {
   }
 
   static _buttonsClick(BuildContext context, String type, int coin,
-      {bool showAd = false}) {
+      {String? adId}) async {
     if (coin < 0 && Pref.coin.value < -coin) {
       Rout.push(context, ShopOverlay());
       return;
     }
-    if (showAd) {
-      print("Show Ad");
+    if (adId != null) {
+      var complete = await Ads.show(adId);
+      if (!complete) {
+        Navigator.of(context).pop(null);
+        return;
+      }
     }
     if (coin != 0) Pref.coin.set(Pref.coin.value + coin);
     Navigator.of(context).pop(type);
