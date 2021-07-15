@@ -391,6 +391,7 @@ class MyGame extends BaseGame with TapDetector {
   }
 
   void showReward(int value, Vector2 destination) {
+    Sound.play("coin");
     var r = Reward(value, size.x * 0.5, size.y * 0.6);
     var start = ScaleEffect(
         size: Vector2(1, 1), duration: 0.3, curve: Curves.easeOutBack);
