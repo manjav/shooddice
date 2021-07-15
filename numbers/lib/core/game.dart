@@ -143,8 +143,7 @@ class MyGame extends BaseGame with TapDetector {
       debugPrint("game over!");
       return;
     }
-    print("_numRewardCells $_numRewardCells");
-    var reward = _numRewardCells > 0 || random.nextDouble() < 0.05
+    var reward = _numRewardCells > 0 || random.nextDouble() > 0.05
         ? 0
         : random.nextInt(_nextCell.value * 10);
     if (reward > 0) _numRewardCells++;
@@ -336,7 +335,6 @@ class MyGame extends BaseGame with TapDetector {
 
   void _collectReward(Cell cell) {
     if (cell.reward <= 0) return;
-    Pref.coin.increase(cell.reward);
     onGameEvent?.call(GameEvent.reward, cell.reward);
     --_numRewardCells;
   }
@@ -390,6 +388,23 @@ class MyGame extends BaseGame with TapDetector {
       isPlaying = true;
       _spawn();
     });
+  }
+
+  void showReward(int value, Vector2 destination) {
+    var r = Reward(value, size.x * 0.5, size.y * 0.6);
+    var start = ScaleEffect(
+        size: Vector2(1, 1), duration: 0.3, curve: Curves.easeOutBack);
+    var end = CombinedEffect(effects: [
+      MoveEffect(path: [destination], duration: 0.3),
+      ScaleEffect(size: Vector2(0.3, 0.3), duration: 0.3)
+    ]);
+    r.addEffect(SequenceEffect(
+        effects: [start, ScaleEffect(size: Vector2(1, 1), duration: 0.3), end],
+        onComplete: () {
+          remove(r);
+          Pref.coin.increase(value);
+        }));
+    add(r);
   }
 }
 

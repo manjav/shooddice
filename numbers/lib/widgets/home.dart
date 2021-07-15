@@ -20,6 +20,7 @@ class _HomePageState extends State<HomePage> {
   MyGame? _game;
   int loadingState = 0;
 
+  Positioned? _coins;
   void initState() {
     super.initState();
     _game = MyGame(onGameEvent: _onGameEventHandler);
@@ -35,7 +36,7 @@ class _HomePageState extends State<HomePage> {
           top: _game!.bounds.top - 68.d,
           right: 28.d,
           child: Components.scores(theme)),
-      Positioned(
+      _coins = Positioned(
           top: _game!.bounds.top - 70.d,
           left: 28.d,
           child: Components.coins(context, onTap: () async {
@@ -134,6 +135,10 @@ class _HomePageState extends State<HomePage> {
       case GameEvent.remove:
         _onRemoveBlock();
         break;
+      case GameEvent.reward:
+        _game!.showReward(
+            value, Vector2(_coins!.left! + 24.d, _coins!.top! + 16.d));
+        return;
       case GameEvent.score:
         setState(() {});
         return;
