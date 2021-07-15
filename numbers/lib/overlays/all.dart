@@ -427,7 +427,7 @@ class Overlays {
         return;
       }
     }
-    if (coin != 0) Pref.coin.set(Pref.coin.value + coin);
+    if (coin != 0) Pref.coin.increase(coin);
     Navigator.of(context).pop(type);
   }
 }

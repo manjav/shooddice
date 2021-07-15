@@ -11,7 +11,7 @@ class Prefs {
         Pref.removeOne.set(3);
         Pref.removeColor.set(3);
       }
-      Pref.numRuns.set(Pref.numRuns.value + 1);
+      Pref.numRuns.increase(1);
       onInit();
     });
   }
@@ -48,5 +48,9 @@ extension PrefExt on Pref {
   int set(int value) {
     Prefs._instance!.setInt(name, value);
     return value;
+  }
+
+  int increase(int value) {
+    return set(this.value + value);
   }
 }

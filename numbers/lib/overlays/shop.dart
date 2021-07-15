@@ -159,7 +159,7 @@ class _ShopOverlayState extends State<ShopOverlay> {
   _freeCoin() async {
     var complete = await Ads.show("rewardedVideo");
     if (complete) {
-      Pref.coin.set(Pref.coin.value + 100);
+      Pref.coin.increase(100);
       setState(() {});
     }
   }

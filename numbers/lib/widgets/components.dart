@@ -111,7 +111,7 @@ class Components {
       var complete = await Ads.show("boost$boost");
       if (!complete) return;
     }
-    Pref.coin.set(Pref.coin.value - cost);
+    Pref.coin.increase(-cost);
 
     if (boost == "next") MyGame.boostNextMode = 1;
     if (boost == "512") MyGame.boostBig = true;

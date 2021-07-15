@@ -189,10 +189,10 @@ class MyGame extends BaseGame with TapDetector {
               .floor());
       if (cell == null || cell.state != CellState.Fixed) return;
       if (removingMode == "one") {
-        Pref.removeOne.set(Pref.removeOne.value - 1);
+        Pref.removeOne.increase(-1);
         _removeCell(cell.column, cell.row, true);
       } else {
-        Pref.removeColor.set(Pref.removeColor.value - 1);
+        Pref.removeColor.increase(-1);
         _removeCellsByValue(cell.value);
       }
       isPlaying = true;
@@ -336,7 +336,7 @@ class MyGame extends BaseGame with TapDetector {
 
   void _collectReward(Cell cell) {
     if (cell.reward <= 0) return;
-    Pref.coin.set(Pref.coin.value + cell.reward);
+    Pref.coin.increase(cell.reward);
     onGameEvent?.call(GameEvent.reward, cell.reward);
     --_numRewardCells;
   }
