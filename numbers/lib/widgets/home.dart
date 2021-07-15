@@ -16,14 +16,18 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   MyGame? _game;
   int loadingState = 0;
 
   Positioned? _coins;
+  AnimationController? _rewardAnimation;
+
   void initState() {
     super.initState();
     _game = MyGame(onGameEvent: _onGameEventHandler);
+    _rewardAnimation = AnimationController(vsync: this);
+    _rewardAnimation!.addListener(() => setState(() {}));
   }
 
   @override
@@ -39,6 +43,7 @@ class _HomePageState extends State<HomePage> {
       _coins = Positioned(
           top: _game!.bounds.top - 70.d,
           left: 28.d,
+          height: 52 - 5 * _rewardAnimation!.value,
           child: Components.coins(context, onTap: () async {
             MyGame.isPlaying = false;
             await Rout.push(context, ShopOverlay());
@@ -138,6 +143,11 @@ class _HomePageState extends State<HomePage> {
       case GameEvent.reward:
         _game!.showReward(
             value, Vector2(_coins!.left! + 24.d, _coins!.top! + 16.d));
+        return;
+      case GameEvent.rewarded:
+        _rewardAnimation!.value = 1;
+        _rewardAnimation!.animateTo(0,
+            duration: Duration(milliseconds: 200), curve: Curves.easeOutSine);
         return;
       case GameEvent.score:
         setState(() {});

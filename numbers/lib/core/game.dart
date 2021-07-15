@@ -13,7 +13,7 @@ import 'package:numbers/utils/prefs.dart';
 import 'package:numbers/utils/sounds.dart';
 import 'package:numbers/utils/themes.dart';
 
-enum GameEvent { big, boost, lose, record, remove, reward, score }
+enum GameEvent { big, boost, lose, record, remove, reward, rewarded, score }
 
 class MyGame extends BaseGame with TapDetector {
   static final padding = 20.0;
@@ -403,6 +403,7 @@ class MyGame extends BaseGame with TapDetector {
         onComplete: () {
           remove(r);
           Pref.coin.increase(value);
+          onGameEvent?.call(GameEvent.rewarded, 0);
         }));
     add(r);
   }
