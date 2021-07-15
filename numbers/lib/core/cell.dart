@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flame/palette.dart';
+import 'package:flame_svg/svg.dart';
 import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -69,19 +70,22 @@ class Cell extends PositionComponent with HasGameRef<MyGame> {
   Paint? _sidePaint;
   Paint? _overPaint;
   Paint? _hiddenPaint;
+  Svg? _coin;
+  Vector2 _coinPos = Vector2.all(-radius * 0.86);
+  Vector2 _coinSize = Vector2.all(26);
 
-  Cell(int column, int row, int value, {int? reward, Function(Cell)? onInit})
+  Cell(int column, int row, int value, {int reward = 0, Function(Cell)? onInit})
       : super() {
     init(column, row, value, reward: reward, onInit: onInit);
     size = Vector2(1, 1);
   }
 
-  Cell init(int column, int row, int value,
-      {int? reward, Function(Cell)? onInit, int hiddenMode = 0}) {
+  Future<Cell> init(int column, int row, int value,
+      {int reward = 0, Function(Cell)? onInit, int hiddenMode = 0}) async {
     this.column = column;
     this.row = row;
     this.value = value;
-    this.reward = reward ?? 0;
+    this.reward = reward;
     this.onInit = onInit ?? null;
     this.hiddenMode = hiddenMode;
     state = CellState.Init;
@@ -100,6 +104,7 @@ class Cell extends PositionComponent with HasGameRef<MyGame> {
         ..strokeWidth = 2
         ..style = PaintingStyle.stroke
         ..color = hiddenMode > 1 ? colors[value].color : Colors.white;
+    if (reward > 0) _coin = await Svg.load('images/coin.svg');
 
     size = Vector2(1.3, 1.3);
     addEffect(ScaleEffect(
@@ -138,6 +143,7 @@ class Cell extends PositionComponent with HasGameRef<MyGame> {
 
     _textPaint!.render(c, "${hiddenMode == 1 ? "?" : getScore(value)}", _center,
         anchor: Anchor.center);
+    if (reward > 0) _coin!.renderPosition(c, _coinPos, _coinSize);
   }
 
   @override

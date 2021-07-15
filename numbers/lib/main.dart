@@ -47,6 +47,18 @@ class _MainPageState extends State<MainPage> {
         _loadingState = 1;
         setState(() {});
       });
+
+      //   Map appsFlyerOptions = {
+      //     "afDevKey": "YBThmUqaiHZYpiSwZ3GQz4",
+      //     "afAppId": "com.gerantech.muslim.holy.quran",
+      //     "isDebug": false
+      //   };
+
+      //   AppsflyerSdk appsflyerSdk = AppsflyerSdk(appsFlyerOptions);
+      //   appsflyerSdk.initSdk(
+      //       registerConversionDataCallback: true,
+      //       registerOnAppOpenAttributionCallback: true,
+      //       registerOnDeepLinkingCallback: true);
     }
     return WillPopScope(
         onWillPop: _onWillPop, child: Scaffold(body: _getPage()));

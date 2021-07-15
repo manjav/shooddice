@@ -13,7 +13,7 @@ import 'package:numbers/utils/prefs.dart';
 import 'package:numbers/utils/sounds.dart';
 import 'package:numbers/utils/themes.dart';
 
-enum GameEvent { big, boost, lose, record, remove, score }
+enum GameEvent { big, boost, lose, record, remove, reward, score }
 
 class MyGame extends BaseGame with TapDetector {
   static final padding = 20.0;
@@ -143,8 +143,8 @@ class MyGame extends BaseGame with TapDetector {
       debugPrint("game over!");
       return;
     }
-
-    var reward = _numRewardCells > 0 || random.nextDouble() > 0.05
+    print("_numRewardCells $_numRewardCells");
+    var reward = _numRewardCells > 0 || random.nextDouble() < 0.05
         ? 0
         : random.nextInt(_nextCell.value * 10);
     if (reward > 0) _numRewardCells++;
@@ -336,7 +336,8 @@ class MyGame extends BaseGame with TapDetector {
 
   void _collectReward(Cell cell) {
     if (cell.reward <= 0) return;
-
+    Pref.coin.set(Pref.coin.value + cell.reward);
+    onGameEvent?.call(GameEvent.reward, cell.reward);
     --_numRewardCells;
   }
 
