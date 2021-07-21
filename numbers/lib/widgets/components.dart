@@ -86,7 +86,7 @@ class Components {
                   height: 40.d,
                   child: Buttons.button(
                       cornerRadius: 8.d,
-                      isEnable: !_has(boost) && Ads.isReady("boost$boost"),
+                      isEnable: !_has(boost) && Ads.isReady(),
                       colors: Themes.swatch[TColors.orange],
                       content: Row(children: [
                         SVG.icon("0", theme, scale: 0.7),
@@ -108,7 +108,7 @@ class Components {
         return;
       }
     } else {
-      var complete = await Ads.show("boost$boost");
+      var complete = await Ads.show();
       if (!complete) return;
     }
     Pref.coin.increase(-cost);

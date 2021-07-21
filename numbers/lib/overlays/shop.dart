@@ -83,7 +83,7 @@ class _ShopOverlayState extends State<ShopOverlay> {
                         width: 124.d,
                         child: Buttons.button(
                             cornerRadius: 16.d,
-                            isEnable: Ads.isReady("rewardedVideo"),
+                            isEnable: Ads.isReady(),
                             colors: Themes.swatch[TColors.orange],
                             onTap: _freeCoin,
                             content: Row(children: [
@@ -157,7 +157,7 @@ class _ShopOverlayState extends State<ShopOverlay> {
   }
 
   _freeCoin() async {
-    var complete = await Ads.show("rewardedVideo");
+    var complete = await Ads.show();
     if (complete) {
       Pref.coin.increase(100);
       setState(() {});

@@ -120,9 +120,9 @@ class Overlays {
                 right: 0,
                 child: Buttons.button(
                     cornerRadius: 16.d,
-                    isEnable: numRevive < 2 && Ads.isReady("revive"),
-                    onTap: () =>
-                        _buttonsClick(context, "revive", 0, adId: "revive"),
+                    isEnable: numRevive < 2 && Ads.isReady(),
+                    onTap: () => _buttonsClick(context, "revive", 0,
+                        adId: AdPlace.Rewarded),
                     colors: Themes.swatch[TColors.orange],
                     content: Stack(alignment: Alignment.centerLeft, children: [
                       SVG.icon("0", theme),
@@ -186,11 +186,10 @@ class Overlays {
               right: 0,
               child: Buttons.button(
                   cornerRadius: 16.d,
-                  isEnable: Ads.isReady("prize"),
+                  isEnable: Ads.isReady(),
                   colors: Themes.swatch[TColors.orange],
-                  onTap: () => _buttonsClick(
-                      context, "record", rewardCoef * reward,
-                      adId: "prize"),
+                  onTap: () =>
+                      _buttonsClick(context, "record", rewardCoef * reward),
                   content: Stack(alignment: Alignment.centerLeft, children: [
                     SVG.icon("0", theme),
                     Positioned(
@@ -267,11 +266,10 @@ class Overlays {
               right: 0,
               child: Buttons.button(
                   cornerRadius: 16.d,
-                  isEnable: Ads.isReady("prize"),
+                  isEnable: Ads.isReady(),
                   colors: Themes.swatch[TColors.orange],
-                  onTap: () => _buttonsClick(
-                      context, "big", reward * rewardCoef,
-                      adId: "prize"),
+                  onTap: () =>
+                      _buttonsClick(context, "big", reward * rewardCoef),
                   content: Stack(alignment: Alignment.centerLeft, children: [
                     SVG.icon("0", theme),
                     Positioned(
@@ -331,7 +329,6 @@ class Overlays {
     var cost = 100;
     Sound.play("pop");
     var theme = Theme.of(context);
-    var adId = type == "next" ? "boostnext" : "powerups";
     return Stack(children: [
       Positioned(
           left: padding != null && padding.left != 0 ? padding.left : null,
@@ -380,7 +377,7 @@ class Overlays {
                               height: 40.d,
                               child: Buttons.button(
                                   cornerRadius: 8.d,
-                                  isEnable: Ads.isReady(adId),
+                                  isEnable: Ads.isReady(),
                                   colors: Themes.swatch[TColors.orange],
                                   content: Row(children: [
                                     SVG.icon("0", theme, scale: 0.7),
@@ -389,8 +386,7 @@ class Overlays {
                                             textAlign: TextAlign.center,
                                             style: theme.textTheme.headline5))
                                   ]),
-                                  onTap: () => _buttonsClick(context, type, 0,
-                                      adId: adId)))
+                                  onTap: () => _buttonsClick(context, type, 0)))
                         ])
                   ])))
     ]);
@@ -415,7 +411,7 @@ class Overlays {
   }
 
   static _buttonsClick(BuildContext context, String type, int coin,
-      {String? adId}) async {
+      {AdPlace? adId}) async {
     if (coin < 0 && Pref.coin.value < -coin) {
       Rout.push(context, ShopOverlay());
       return;
