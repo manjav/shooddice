@@ -10,7 +10,7 @@ class Ads {
   static UnityAdState? _lastAdState;
   static init() async {
     UnityAds.init(
-        gameId: "3974257",
+        gameId: "4230791",
         listener: (UnityAdState state, data) {
           if (state == UnityAdState.ready)
             _placementIds.add(data['placementId']);
