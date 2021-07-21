@@ -53,6 +53,7 @@ class Themes {
         bodyText2: _style(swatch[TColors.black]![0], 20, shadows: []),
         subtitle1: _style(swatch[TColors.black]![0], 16, shadows: []),
         subtitle2: _style(swatch[TColors.black]![0], 14, shadows: []),
+        headline1: _style(swatch[TColors.white]![3], 56),
         headline2: _style(swatch[TColors.white]![3], 36),
         headline3: _style(swatch[TColors.white]![3], 30),
         headline4: _style(swatch[TColors.white]![3], 24),
