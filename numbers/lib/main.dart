@@ -52,7 +52,7 @@ class _MainPageState extends State<MainPage> {
 
       //   Map appsFlyerOptions = {
       //     "afDevKey": "YBThmUqaiHZYpiSwZ3GQz4",
-      //     "afAppId": "com.gerantech.muslim.holy.quran",
+      //     "afAppId": "game.block.puzzle.drop.the.number.merge",
       //     "isDebug": false
       //   };
 
