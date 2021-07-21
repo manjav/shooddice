@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:numbers/utils/ads.dart';
+import 'package:numbers/utils/notification.dart';
 import 'package:numbers/utils/prefs.dart';
 import 'package:numbers/utils/sounds.dart';
 import 'package:numbers/utils/themes.dart';
@@ -43,6 +44,7 @@ class _MainPageState extends State<MainPage> {
     if (_loadingState == 0) {
       Ads.init();
       Sound.init();
+      Notifier.init();
       Prefs.init(() {
         _loadingState = 1;
         setState(() {});
