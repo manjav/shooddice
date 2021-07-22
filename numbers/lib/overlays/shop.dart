@@ -39,16 +39,18 @@ class _ShopOverlayState extends State<ShopOverlay> {
       setState(() => _message = "");
       return;
     }
+    StreamSubscription<List<PurchaseDetails>>? _subscription;
+    _subscription =
+        InAppPurchase.instance.purchaseStream.listen((purchaseDetailsList) {
+      _listenToPurchaseUpdated(purchaseDetailsList);
+    }, onDone: () => _subscription!.cancel(), onError: (error) => print(error));
 
-    Set<String> skus = {"noAds"};
+    Set<String> skus = {"no_ads"};
     for (var i = 0; i < 6; i++) skus.add("coin_$i");
     var response = await InAppPurchase.instance.queryProductDetails(skus);
-    if (response.notFoundIDs.isNotEmpty) {
-      // Handle the error.
-    }
     coins = [];
+    others = [];
     for (var product in response.productDetails) {
-      print(product.id);
       if (product.isConsumable)
         coins.add(product);
       else
@@ -56,6 +58,26 @@ class _ShopOverlayState extends State<ShopOverlay> {
     }
     setState(() => _message = "");
   }
+
+  void _listenToPurchaseUpdated(List<PurchaseDetails> purchaseDetailsList) {
+    purchaseDetailsList.forEach((PurchaseDetails purchaseDetails) async {
+      if (purchaseDetails.status == PurchaseStatus.pending) {
+      } else {
+        if (purchaseDetails.status == PurchaseStatus.error) {
+          setState(() => _message = "");
+          // _handleError(purchaseDetails.error!);
+        } else if (purchaseDetails.status == PurchaseStatus.purchased ||
+            purchaseDetails.status == PurchaseStatus.restored) {
+          setState(() => _message = "");
+          _deliverProduct(purchaseDetails);
+        }
+        if (purchaseDetails.pendingCompletePurchase) {
+          await InAppPurchase.instance.completePurchase(purchaseDetails);
+        }
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
@@ -240,6 +262,15 @@ class _ShopOverlayState extends State<ShopOverlay> {
     if (complete) {
       Pref.coin.increase(100);
       setState(() {});
+    }
+  }
+
+  _deliverProduct(PurchaseDetails purchaseDetails) {
+    if (purchaseDetails.productID == "no_ads") {
+      Pref.noAds.set(1);
+    } else {
+      var product = coins.firstWhere((p) => p.id == purchaseDetails.productID);
+      Pref.coin.increase(product.amount);
     }
   }
 }
