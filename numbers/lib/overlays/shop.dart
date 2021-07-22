@@ -186,6 +186,12 @@ class _ShopOverlayState extends State<ShopOverlay> {
   }
 
   _onShopItemTap(ProductDetails product) {
+    var purchaseParam = PurchaseParam(productDetails: product);
+    if (product.isConsumable) {
+      InAppPurchase.instance.buyConsumable(purchaseParam: purchaseParam);
+    } else {
+      InAppPurchase.instance.buyNonConsumable(purchaseParam: purchaseParam);
+    }
   }
 
   _restorePurchases() async {
