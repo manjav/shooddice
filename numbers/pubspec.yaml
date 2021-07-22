@@ -11,7 +11,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  # appsflyer_sdk: ^6.2.4+4-nullsafety
+  appsflyer_sdk: ^6.2.4+4-nullsafety
   cupertino_icons: ^1.0.3
   flame: ^1.0.0-rc13
   flame_svg: ^1.0.0-rc3

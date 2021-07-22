@@ -35,7 +35,6 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   int _loadingState = 0;
-
   @override
   Widget build(BuildContext context) {
     Device.ratio = MediaQuery.of(context).size.width / 360;
@@ -50,17 +49,16 @@ class _MainPageState extends State<MainPage> {
         setState(() {});
       });
 
-      //   Map appsFlyerOptions = {
-      //     "afDevKey": "YBThmUqaiHZYpiSwZ3GQz4",
-      //     "afAppId": "game.block.puzzle.drop.the.number.merge",
-      //     "isDebug": false
-      //   };
 
-      //   AppsflyerSdk appsflyerSdk = AppsflyerSdk(appsFlyerOptions);
-      //   appsflyerSdk.initSdk(
-      //       registerConversionDataCallback: true,
-      //       registerOnAppOpenAttributionCallback: true,
-      //       registerOnDeepLinkingCallback: true);
+      var appsflyerSdk = AppsflyerSdk({
+        "afDevKey": "YBThmUqaiHZYpiSwZ3GQz4",
+        "afAppId": "game.block.puzzle.drop.the.number.merge",
+        "isDebug": false
+      });
+      appsflyerSdk.initSdk(
+          registerConversionDataCallback: true,
+          registerOnAppOpenAttributionCallback: true,
+          registerOnDeepLinkingCallback: true);
     }
     return WillPopScope(
         onWillPop: _onWillPop, child: Scaffold(body: _getPage()));
