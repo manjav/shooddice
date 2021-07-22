@@ -7,6 +7,7 @@ class Prefs {
     SharedPreferences.getInstance().then((SharedPreferences prefs) {
       _instance = prefs;
       if (!prefs.containsKey("numRuns")) {
+        Pref.noAds.set(0);
         Pref.coin.set(500);
         Pref.removeOne.set(3);
         Pref.removeColor.set(3);
@@ -17,7 +18,7 @@ class Prefs {
   }
 }
 
-enum Pref { coin, numRuns, rate, record, removeOne, removeColor, isMute }
+enum Pref { coin, noAds, numRuns, rate, record, removeOne, removeColor, isMute }
 
 extension PrefExt on Pref {
   String get name {
@@ -26,6 +27,8 @@ extension PrefExt on Pref {
         return "coin";
       case Pref.numRuns:
         return "numRuns";
+      case Pref.noAds:
+        return "noAds";
       case Pref.rate:
         return "rate";
       case Pref.record:
