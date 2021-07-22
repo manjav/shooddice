@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "124378585012",
+    "project_id": "drop-and-merge-number-21503699",
+    "storage_bucket": "drop-and-merge-number-21503699.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:124378585012:android:58834b21b699cb6c67c4e1",
+        "android_client_info": {
+          "package_name": "game.block.puzzle.drop.the.number.merge"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "124378585012-jglmq0shilf3k4spaih6tqdsvfl19a98.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "game.block.puzzle.drop.the.number.merge",
+            "certificate_hash": "e509051173898e09c58635fa03db1dc9b5b4f183"
+          }
+        },
+        {
+          "client_id": "124378585012-moard54pdb16nnquk2kf60gvm8k9cvia.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBwmCj81bOm3heyX3LKYIyKrjnNLrPsikU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "124378585012-moard54pdb16nnquk2kf60gvm8k9cvia.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -15,7 +15,9 @@ dependencies:
   cupertino_icons: ^1.0.3
   flame: ^1.0.0-rc13
   flame_svg: ^1.0.0-rc3
-  # firebase_messaging: ^10.0.4
+  firebase_analytics: ^8.2.0
+  firebase_core: ^1.4.0
+  firebase_messaging: ^10.0.4
   flutter_local_notifications: ^6.0.0
   flutter_svg: ^0.22.0
   intl: ^0.17.0

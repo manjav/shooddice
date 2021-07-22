@@ -1,3 +1,7 @@
+import 'package:appsflyer_sdk/appsflyer_sdk.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/observer.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:numbers/utils/ads.dart';
@@ -11,14 +15,22 @@ import 'package:numbers/widgets/home.dart';
 import 'core/game.dart';
 import 'overlays/all.dart';
 
-void main() => runApp(MyApp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
+  static FirebaseAnalytics analytics = FirebaseAnalytics();
+  static FirebaseAnalyticsObserver observer =
+      FirebaseAnalyticsObserver(analytics: analytics);
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations(
         [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
     return MaterialApp(
+        navigatorObservers: <NavigatorObserver>[observer],
         theme: Themes.darkData,
         builder: (BuildContext context, Widget? child) => MediaQuery(
             data: MediaQuery.of(context).copyWith(textScaleFactor: 1),
