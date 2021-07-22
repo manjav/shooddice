@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:numbers/utils/ads.dart';
 import 'package:numbers/utils/prefs.dart';
 import 'package:numbers/utils/themes.dart';
@@ -52,7 +55,7 @@ class _ShopOverlayState extends State<ShopOverlay> {
         title: "Shop",
         scoreButton: SizedBox(),
         coinButton: Components.coins(context, clickable: false),
-        padding: EdgeInsets.fromLTRB(8.d, 0, 8.d, 16.d),
+        padding: EdgeInsets.fromLTRB(6.d, 0, 6.d, 16.d),
         height: 460.d,
         content: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -64,7 +67,8 @@ class _ShopOverlayState extends State<ShopOverlay> {
                   crossAxisSpacing: 3.d,
                   mainAxisSpacing: 2.d,
                   childAspectRatio: 0.94,
-                  children: List.generate(6, (i) => _itemBuilder(theme, i)),
+                  children: List.generate(
+                      coins.length, (i) => _itemBuilder(theme, coins[i])),
                 )),
             Container(
                 height: 76,
@@ -84,7 +88,7 @@ class _ShopOverlayState extends State<ShopOverlay> {
                         cornerRadius: 8.d,
                         colors: Themes.swatch[TColors.green],
                         content: Center(
-                            child: Text("\$1.99",
+                            child: Text("${'others[0].price'}",
                                 style: theme.textTheme.headline5)),
                         onTap: () {},
                       )),
@@ -153,16 +157,16 @@ class _ShopOverlayState extends State<ShopOverlay> {
         ));
   }
 
-  Widget _itemBuilder(ThemeData theme, int index) {
+  Widget _itemBuilder(ThemeData theme, ProductDetails product) {
     return Container(
         height: 110.d,
         child: Buttons.button(
-          onTap: () => _onShopItemTap(index),
+          onTap: () => _onShopItemTap(product),
           content: Column(children: [
-            SizedBox(height: 4.d),
+            SizedBox(height: 7.d),
             Row(children: [
-              SVG.show("coin", 22.d),
-              Text(" 2100", style: theme.textTheme.bodyText2)
+              SVG.show("coin", 20.d),
+              Text(" ${product.name}", style: theme.textTheme.subtitle1)
             ]),
             SizedBox(height: 7.d),
             Container(
@@ -171,8 +175,8 @@ class _ShopOverlayState extends State<ShopOverlay> {
               decoration:
                   CustomDecoration(Themes.swatch[TColors.green]!, 8.d, true),
               child: Padding(
-                  padding: EdgeInsets.fromLTRB(12.d, 6.d, 12.d, 7.d),
-                  child: Text("\$2.99",
+                  padding: EdgeInsets.fromLTRB(6.d, 6.d, 6.d, 7.d),
+                  child: Text("${product.price}",
                       style: theme.textTheme.headline6,
                       textAlign: TextAlign.center)),
             ),
@@ -181,8 +185,7 @@ class _ShopOverlayState extends State<ShopOverlay> {
         ));
   }
 
-  _onShopItemTap(int index) {
-    print(index);
+  _onShopItemTap(ProductDetails product) {
   }
 
   _freeCoin() async {
@@ -195,5 +198,7 @@ class _ShopOverlayState extends State<ShopOverlay> {
 }
 
 extension PExt on ProductDetails {
+  String get name => title.split(' ')[0];
+  int get amount => int.parse(name);
   bool get isConsumable => title.substring(0, 5) == "coin_";
 }
