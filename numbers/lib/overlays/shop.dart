@@ -19,6 +19,7 @@ class ShopOverlay extends StatefulWidget {
 }
 
 class _ShopOverlayState extends State<ShopOverlay> {
+  String _message = "Please Wait...";
   List<ProductDetails> coins = [];
   List<ProductDetails> others = [];
 
@@ -30,7 +31,10 @@ class _ShopOverlayState extends State<ShopOverlay> {
 
   Future<void> _initShop() async {
     var available = await InAppPurchase.instance.isAvailable();
-    if (!available) return;
+    if (!available) {
+      setState(() => _message = "Shop is inavalable!");
+      return;
+    }
 
     Set<String> skus = {"noAds"};
     for (var i = 0; i < 6; i++) skus.add("coin_$i");
@@ -46,12 +50,13 @@ class _ShopOverlayState extends State<ShopOverlay> {
       else
         others.add(product);
     }
-    setState(() {});
+    setState(() => _message = "");
   }
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
-    return Overlays.basic(context,
+    return Stack(children: [
+      Overlays.basic(context,
         title: "Shop",
         scoreButton: SizedBox(),
         coinButton: Components.coins(context, clickable: false),
@@ -73,14 +78,15 @@ class _ShopOverlayState extends State<ShopOverlay> {
             Container(
                 height: 76,
                 padding: EdgeInsets.fromLTRB(10.d, 6.d, 10.d, 12.d),
-                decoration:
-                    CustomDecoration(Themes.swatch[TColors.white]!, 12.d, true),
+                  decoration: CustomDecoration(
+                      Themes.swatch[TColors.white]!, 12.d, true),
                 child: Row(children: [
                   SizedBox(width: 8.d),
                   SVG.show("noads", 48),
                   SizedBox(width: 24.d),
                   Expanded(
-                      child: Text("No Ads", style: theme.textTheme.bodyText2)),
+                        child:
+                            Text("No Ads", style: theme.textTheme.bodyText2)),
                   SizedBox(
                       width: 92.d,
                       height: 40.d,
@@ -88,9 +94,10 @@ class _ShopOverlayState extends State<ShopOverlay> {
                         cornerRadius: 8.d,
                         colors: Themes.swatch[TColors.green],
                         content: Center(
-                            child: Text("${'others[0].price'}",
+                              child: Text(
+                                  "${others.length > 0 ? others[0].price : 0}",
                                 style: theme.textTheme.headline5)),
-                        onTap: () {},
+                          onTap: () => _onShopItemTap(others[0]),
                       )),
                   SizedBox(height: 4.d)
                 ])),
@@ -154,7 +161,31 @@ class _ShopOverlayState extends State<ShopOverlay> {
                   ],
                 ))
           ],
-        ));
+          )),
+      _overlay(theme)
+    ]);
+  }
+
+  _overlay(ThemeData theme) {
+    if (_message == "") return SizedBox();
+    return Container(
+        color: Themes.swatch[TColors.black]![0].withAlpha(230),
+        alignment: Alignment.center,
+        padding: EdgeInsets.all(16.d),
+        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+          Text(_message, style: theme.textTheme.headline4),
+          SizedBox(height: 32.d),
+          _message == "Please Wait..."
+              ? CircularProgressIndicator()
+              : TextButton(
+                  onPressed: () {
+                    if (_message == "Shop is inavalable!")
+                      Navigator.of(context).pop();
+                    else
+                      setState(() => _message = "");
+                  },
+                  child: Text("OK"))
+        ]));
   }
 
   Widget _itemBuilder(ThemeData theme, ProductDetails product) {
@@ -186,6 +217,7 @@ class _ShopOverlayState extends State<ShopOverlay> {
   }
 
   _onShopItemTap(ProductDetails product) {
+    setState(() => _message = "Please Wait...");
     var purchaseParam = PurchaseParam(productDetails: product);
     if (product.isConsumable) {
       InAppPurchase.instance.buyConsumable(purchaseParam: purchaseParam);
