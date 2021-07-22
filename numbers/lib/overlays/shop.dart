@@ -16,6 +16,35 @@ class ShopOverlay extends StatefulWidget {
 }
 
 class _ShopOverlayState extends State<ShopOverlay> {
+  List<ProductDetails> coins = [];
+  List<ProductDetails> others = [];
+
+  @override
+  void initState() {
+    _initShop();
+    super.initState();
+  }
+
+  Future<void> _initShop() async {
+    var available = await InAppPurchase.instance.isAvailable();
+    if (!available) return;
+
+    Set<String> skus = {"noAds"};
+    for (var i = 0; i < 6; i++) skus.add("coin_$i");
+    var response = await InAppPurchase.instance.queryProductDetails(skus);
+    if (response.notFoundIDs.isNotEmpty) {
+      // Handle the error.
+    }
+    coins = [];
+    for (var product in response.productDetails) {
+      print(product.id);
+      if (product.isConsumable)
+        coins.add(product);
+      else
+        others.add(product);
+    }
+    setState(() {});
+  }
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
@@ -163,4 +192,8 @@ class _ShopOverlayState extends State<ShopOverlay> {
       setState(() {});
     }
   }
+}
+
+extension PExt on ProductDetails {
+  bool get isConsumable => title.substring(0, 5) == "coin_";
 }
