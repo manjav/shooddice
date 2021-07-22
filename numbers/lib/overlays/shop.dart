@@ -247,5 +247,5 @@ class _ShopOverlayState extends State<ShopOverlay> {
 extension PExt on ProductDetails {
   String get name => title.split(' ')[0];
   int get amount => int.parse(name);
-  bool get isConsumable => title.substring(0, 5) == "coin_";
+  bool get isConsumable => id.substring(0, 5) == "coin_";
 }
