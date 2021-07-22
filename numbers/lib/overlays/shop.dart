@@ -141,7 +141,7 @@ class _ShopOverlayState extends State<ShopOverlay> {
                     SizedBox(
                         width: 140.d,
                         child: Buttons.button(
-                            onTap: () {},
+                            onTap: _restorePurchases,
                             colors: Themes.swatch[TColors.green],
                             cornerRadius: 16.d,
                             content: Row(children: [
@@ -186,6 +186,11 @@ class _ShopOverlayState extends State<ShopOverlay> {
   }
 
   _onShopItemTap(ProductDetails product) {
+  }
+
+  _restorePurchases() async {
+    await InAppPurchase.instance.restorePurchases();
+    setState(() {});
   }
 
   _freeCoin() async {
