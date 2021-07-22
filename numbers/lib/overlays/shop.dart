@@ -20,8 +20,8 @@ class ShopOverlay extends StatefulWidget {
 
 class _ShopOverlayState extends State<ShopOverlay> {
   String _message = "Please Wait...";
-  List<ProductDetails> coins = [];
-  List<ProductDetails> others = [];
+  static List<ProductDetails> coins = [];
+  static List<ProductDetails> others = [];
 
   @override
   void initState() {
@@ -33,6 +33,10 @@ class _ShopOverlayState extends State<ShopOverlay> {
     var available = await InAppPurchase.instance.isAvailable();
     if (!available) {
       setState(() => _message = "Shop is inavalable!");
+      return;
+    }
+    if (coins.length > 0) {
+      setState(() => _message = "");
       return;
     }
 
