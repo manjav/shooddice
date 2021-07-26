@@ -1,20 +1,20 @@
 {
   "project_info": {
-    "project_number": "124378585012",
-    "project_id": "drop-and-merge-number-21503699",
-    "storage_bucket": "drop-and-merge-number-21503699.appspot.com"
+    "project_number": "815670881859",
+    "project_id": "merge-numbers-e2e36",
+    "storage_bucket": "merge-numbers-e2e36.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:124378585012:android:58834b21b699cb6c67c4e1",
+        "mobilesdk_app_id": "1:815670881859:android:43dd8b174669e025852ef6",
         "android_client_info": {
           "package_name": "game.block.puzzle.drop.the.number.merge"
         }
       },
       "oauth_client": [
         {
-          "client_id": "124378585012-jglmq0shilf3k4spaih6tqdsvfl19a98.apps.googleusercontent.com",
+          "client_id": "815670881859-cs1eb6lq8k1lqlr4g5ldjb3e4itc1oua.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "game.block.puzzle.drop.the.number.merge",
@@ -22,20 +22,36 @@
           }
         },
         {
-          "client_id": "124378585012-moard54pdb16nnquk2kf60gvm8k9cvia.apps.googleusercontent.com",
+          "client_id": "815670881859-d2ln2h62hcdnbd4miavnp0b7fq3en76b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "game.block.puzzle.drop.the.number.merge",
+            "certificate_hash": "42b83f3056529b27c3a6d2a75f3df46dc54975d0"
+          }
+        },
+        {
+          "client_id": "815670881859-k31s1r1cfp98m4pljdciqp51h20001j9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "game.block.puzzle.drop.the.number.merge",
+            "certificate_hash": "e212c42cfad736381a3165ef8124ff38a96ddcaf"
+          }
+        },
+        {
+          "client_id": "815670881859-b0kgg8h23sgakhtlc4kf0t6i36eduv1f.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBwmCj81bOm3heyX3LKYIyKrjnNLrPsikU"
+          "current_key": "AIzaSyBAr8w1yfsyFVdOt3uA7rJ7os2pod97A3A"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "124378585012-moard54pdb16nnquk2kf60gvm8k9cvia.apps.googleusercontent.com",
+              "client_id": "815670881859-b0kgg8h23sgakhtlc4kf0t6i36eduv1f.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
