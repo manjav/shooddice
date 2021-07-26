@@ -9,21 +9,24 @@ import 'package:numbers/utils/utils.dart';
 import 'package:numbers/widgets/buttons.dart';
 
 class Components {
-  static Widget scores(ThemeData theme) {
+  static Widget scores(ThemeData theme, {Function()? onTap}) {
     return Hero(
         tag: "score",
+        child: GestureDetector(
+            onTap: onTap,
         child: Row(children: [
           Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Text(Prefs.score.format(), style: theme.textTheme.headline4),
+                    Text(Prefs.score.format(),
+                        style: theme.textTheme.headline4),
                 Text("${Pref.record.value.format()}",
                     style: theme.textTheme.headline5)
               ]),
           SizedBox(width: 4.d),
           SVG.show("cup", 48.d),
-        ]));
+            ])));
   }
 
   static Widget coins(BuildContext context,

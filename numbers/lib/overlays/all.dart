@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:games_services/games_services.dart';
 import 'package:numbers/core/cell.dart';
 import 'package:numbers/overlays/shop.dart';
 import 'package:numbers/utils/ads.dart';
@@ -34,7 +35,9 @@ class Overlays {
       Positioned(
           top: 50.d,
           right: 24.d,
-          child: scoreButton ?? Components.scores(theme)),
+          child: scoreButton ??
+              Components.scores(theme,
+                  onTap: () => GamesServices.showLeaderboards())),
       Positioned(
           top: 52.d,
           left: 24.d,

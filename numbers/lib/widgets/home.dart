@@ -39,7 +39,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       Positioned(
           top: _game!.bounds.top - 68.d,
           right: 28.d,
-          child: Components.scores(theme)),
+          child: Components.scores(theme, onTap: () {
+            _pause();
+            GamesServices.showLeaderboards();
+          })),
       _coins = Positioned(
           top: _game!.bounds.top - 70.d,
           left: 28.d,
