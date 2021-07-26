@@ -6,6 +6,7 @@ import 'package:flame/effects.dart';
 import 'package:flame/game.dart';
 import 'package:flame/gestures.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:games_services/games_services.dart';
 import 'package:numbers/core/achieves.dart';
 import 'package:numbers/core/cell.dart';
 import 'package:numbers/core/cells.dart';
@@ -53,12 +54,17 @@ class MyGame extends BaseGame with TapDetector {
   void _addScore(int value) {
     var _new = Prefs.score += Cell.getScore(value);
     onGameEvent?.call(GameEvent.score, _new);
+    GamesServices.submitScore(
+        score: Score(
+            androidLeaderboardID: "CgkIw9yXzt4XEAIQAQ", value: Prefs.score));
     if (Pref.record.value >= Prefs.score) return;
     Pref.record.set(Prefs.score);
-    if (Prefs.score > Cell.firstRecord && !_recordChanged) {
+    if (Prefs.score > Cell.firstRecord) {
+      if (!_recordChanged) {
       isPlaying = false;
       onGameEvent?.call(GameEvent.record, Prefs.score);
       _recordChanged = true;
+      }
     }
   }
 
