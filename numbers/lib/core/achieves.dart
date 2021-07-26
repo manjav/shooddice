@@ -3,14 +3,14 @@ import 'package:flame_svg/svg.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:numbers/core/game.dart';
 
-class Score extends PositionComponent with HasGameRef<MyGame> {
+class ScoreFX extends PositionComponent with HasGameRef<MyGame> {
   static final _textColor = Color(0xFFFFFFFF);
 
   final value;
   int _alpha = 255;
   double dy = 0;
   double diff = 100;
-  Score(this.value, double x, double y) {
+  ScoreFX(this.value, double x, double y) {
     position = Vector2(x, y);
     dy = y - diff;
   }
@@ -70,7 +70,6 @@ class Reward extends PositionComponent with HasGameRef<MyGame> {
                 fontFamily: 'quicksand',
                 color: _textColor.withAlpha(_alpha)))
         .render(canvas, "x$value", _textPos, anchor: Anchor.centerLeft);
-    print("size.x ${size.x}");
 
     var pos = Vector2(_coinPos.x * size.x, _coinPos.y * size.y);
     _coin!.renderPosition(canvas, pos, _coinSize.scaled(size.x));

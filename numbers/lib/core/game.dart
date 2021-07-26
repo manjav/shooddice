@@ -321,7 +321,7 @@ class MyGame extends BaseGame with TapDetector {
         _collectReward(c);
         c.matched = true;
         c.init(c.column, c.row, c.value + matchs.length, onInit: _onCellsInit);
-        add(Score(Cell.getScore(c.value), c.x, c.y - 20));
+        add(ScoreFX(Cell.getScore(c.value), c.x, c.y - 20));
         merges += matchs.length;
       }
       // debugPrint("match $c len:${matchs.length}");
