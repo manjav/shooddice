@@ -13,6 +13,7 @@ import 'package:numbers/core/cells.dart';
 import 'package:numbers/utils/prefs.dart';
 import 'package:numbers/utils/sounds.dart';
 import 'package:numbers/utils/themes.dart';
+import 'package:vibration/vibration.dart';
 
 enum GameEvent { big, boost, lose, record, remove, reward, rewarded, score }
 
@@ -335,6 +336,7 @@ class MyGame extends BaseGame with TapDetector {
     if (merges > 0) {
       _mergesCount++;
       Sound.play("merge-$_mergesCount");
+      Vibration.vibrate(duration: 3 + 4 * _mergesCount);
     }
     return merges;
   }
