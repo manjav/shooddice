@@ -346,7 +346,7 @@ class Overlays {
     return basic(context,
         hasClose: false,
         title: "Select Boost Items",
-        padding: EdgeInsets.fromLTRB(12.d, 12.d, 12.d, 16.d),
+        padding: EdgeInsets.fromLTRB(12.d, 12.d, 12.d, 14.d),
         content:
             Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
           Expanded(

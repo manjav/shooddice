@@ -10,6 +10,7 @@ import 'package:numbers/widgets/buttons.dart';
 
 class Components {
   static Widget scores(ThemeData theme, {Function()? onTap}) {
+    if (Pref.tutorMode.value == 0) return SizedBox();
     return Hero(
         tag: "score",
         child: GestureDetector(
@@ -31,6 +32,7 @@ class Components {
 
   static Widget coins(BuildContext context,
       {Function()? onTap, bool clickable = true}) {
+    if (Pref.tutorMode.value == 0) return SizedBox();
     var theme = Theme.of(context);
     var text = "${Pref.coin.value.format()}";
     return Hero(

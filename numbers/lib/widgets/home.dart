@@ -54,12 +54,24 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             MyGame.isPlaying = true;
             setState(() {});
           })),
-      Positioned(
-          bottom: 6.d,
-          left: 20.d,
-          width: 56.d,
-          height: 65.d,
-          child: IconButton(icon: SVG.show("pause", 48.d), onPressed: _pause)),
+      Pref.tutorMode.index == 0
+          ? SizedBox()
+          : Positioned(
+              top: _game!.bounds.top - 68.d,
+              right: 28.d,
+              left: 28.d,
+              child: Text("How to play?",
+                  style: theme.textTheme.headline4,
+                  textAlign: TextAlign.center)),
+      Pref.tutorMode.value == 0
+          ? SizedBox()
+          : Positioned(
+              bottom: 6.d,
+              left: 20.d,
+              width: 56.d,
+              height: 65.d,
+              child:
+                  IconButton(icon: SVG.show("pause", 48.d), onPressed: _pause)),
       _removeButton(theme, 20.d, "remove-one", () => _boost("one")),
       _badge(theme, 60.d, Pref.removeOne.value),
       _removeButton(theme, 96.d, "remove-color", () => _boost("color")),
@@ -96,6 +108,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   Widget _removeButton(
       ThemeData theme, double right, String icon, Function() onPressed) {
+    if (Pref.tutorMode.value == 0) return SizedBox();
     return Positioned(
         right: right,
         bottom: 4.d,
@@ -105,6 +118,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   }
 
   Widget _badge(ThemeData theme, double right, int value) {
+    if (Pref.tutorMode.value == 0) return SizedBox();
     return Positioned(
         bottom: 12.d,
         height: 22.d,
