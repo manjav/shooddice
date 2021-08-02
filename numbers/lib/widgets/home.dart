@@ -6,7 +6,6 @@ import 'package:numbers/core/game.dart';
 import 'package:numbers/overlays/all.dart';
 import 'package:numbers/overlays/pause.dart';
 import 'package:numbers/overlays/shop.dart';
-import 'package:numbers/utils/ads.dart';
 import 'package:numbers/utils/prefs.dart';
 import 'package:numbers/utils/utils.dart';
 import 'package:numbers/widgets/components.dart';
@@ -178,7 +177,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     _onPauseButtonsClick(result ?? "resume");
   }
 
-  Future<void> _onPauseButtonsClick(String type) async {
+  void _onPauseButtonsClick(String type) {
     switch (type) {
       case "reset":
         widget.onBack();
