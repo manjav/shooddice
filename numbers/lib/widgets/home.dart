@@ -54,15 +54,15 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             MyGame.isPlaying = true;
             setState(() {});
           })),
-      Pref.tutorMode.index == 0
-          ? SizedBox()
-          : Positioned(
+      Pref.tutorMode.value == 0
+          ? Positioned(
               top: _game!.bounds.top - 68.d,
               right: 28.d,
               left: 28.d,
               child: Text("How to play?",
                   style: theme.textTheme.headline4,
-                  textAlign: TextAlign.center)),
+                  textAlign: TextAlign.center))
+          : SizedBox(),
       Pref.tutorMode.value == 0
           ? SizedBox()
           : Positioned(
