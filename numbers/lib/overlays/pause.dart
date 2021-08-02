@@ -62,12 +62,16 @@ class _PauseOverlayState extends State<PauseOverlay> {
                 top: 90.d,
                 left: 66.d,
                 child: Buttons.button(
-                    onTap: () => Navigator.of(context).pop("resume"),
+                    onTap: () {
+                      Pref.isVibrateOff
+                          .set(Pref.isVibrateOff.value == 0 ? 1 : 0);
+                      setState(() {});
+                    },
                     colors: Themes.swatch[TColors.orange],
                     cornerRadius: 16.d,
                     content: Center(
-                      child: SVG.icon("3", theme, scale: 1.4),
-                    ))),
+                        child: SVG.icon("${Pref.isVibrateOff.value + 6}", theme,
+                            scale: 1.2)))),
             Positioned(
                 height: 76.d,
                 width: 76.d,

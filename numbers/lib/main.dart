@@ -82,8 +82,7 @@ class _MainPageState extends State<MainPage> {
   Widget _getPage() {
     switch (_loadingState) {
       case 1:
-        return Overlays.start(context, () => setState(() => _loadingState = 2),
-            () => setState(() {}));
+        return Overlays.start(context, _onStartCallback, () => setState(() {}));
       case 2:
         return HomePage(_onHomeBack);
       default:
@@ -103,5 +102,10 @@ class _MainPageState extends State<MainPage> {
         barrierDismissible: true);
     MyGame.isPlaying = true;
     return result != null;
+  }
+
+  Future<void> _onStartCallback() async {
+    if (Pref.numRuns.value > 8) await Ads.show(AdPlace.Interstitial);
+    setState(() => _loadingState = 2);
   }
 }

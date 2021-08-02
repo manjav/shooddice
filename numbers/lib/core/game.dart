@@ -62,9 +62,9 @@ class MyGame extends BaseGame with TapDetector {
     Pref.record.set(Prefs.score);
     if (Prefs.score > Cell.firstRecord) {
       if (!_recordChanged) {
-      isPlaying = false;
-      onGameEvent?.call(GameEvent.record, Prefs.score);
-      _recordChanged = true;
+        isPlaying = false;
+        onGameEvent?.call(GameEvent.record, Prefs.score);
+        _recordChanged = true;
       }
     }
   }
@@ -336,7 +336,8 @@ class MyGame extends BaseGame with TapDetector {
     if (merges > 0) {
       _mergesCount++;
       Sound.play("merge-$_mergesCount");
-      Vibration.vibrate(duration: 3 + 4 * _mergesCount);
+      if (Pref.isVibrateOff.value == 0)
+        Vibration.vibrate(duration: 3 + 4 * _mergesCount);
     }
     return merges;
   }
