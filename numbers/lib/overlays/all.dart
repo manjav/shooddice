@@ -291,6 +291,56 @@ class Overlays {
         ]));
   }
 
+  static Widget? endTutorial(BuildContext context) {
+    var theme = Theme.of(context);
+    return basic(context,
+        sfx: "win",
+        title: "Good Job!",
+        height: 200,
+        width: 340,
+        hasClose: false,
+        content: Stack(alignment: Alignment.topCenter, children: [
+          // Center(
+          //     heightFactor: 0.52,
+          //     child: RiveAnimation.asset('anims/nums-record.riv',
+          //         stateMachines: ["machine"])),
+          Positioned(
+              top: 20.d,
+              child: Text("Now lets try the next larg number.\nAre you ready?",
+                  style: theme.textTheme.caption)),
+          Positioned(
+              height: 76.d,
+              width: 140.d,
+              bottom: 0,
+              left: 0,
+              child: Buttons.button(
+                  onTap: () => Navigator.of(context).pop("tutorReset"),
+                  colors: Themes.swatch[TColors.green],
+                  cornerRadius: 16.d,
+                  content: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        SVG.icon("5", theme),
+                        Text("Replay", style: theme.textTheme.headline5)
+                      ]))),
+          Positioned(
+              height: 76.d,
+              width: 140.d,
+              bottom: 0,
+              right: 0,
+              child: Buttons.button(
+                  onTap: () => Navigator.of(context).pop("tutorFinish"),
+                  colors: Themes.swatch[TColors.blue],
+                  cornerRadius: 16.d,
+                  content: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        SVG.icon("4", theme),
+                        Text("Ok", style: theme.textTheme.headline5)
+                      ]))),
+        ]));
+  }
+
   static start(BuildContext context, Function() callback, Function onUpdate) {
     var theme = Theme.of(context);
     return basic(context,

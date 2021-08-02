@@ -18,7 +18,17 @@ import 'package:numbers/utils/sounds.dart';
 import 'package:numbers/utils/themes.dart';
 import 'package:vibration/vibration.dart';
 
-enum GameEvent { big, boost, lose, record, remove, reward, rewarded, score }
+enum GameEvent {
+  big,
+  boost,
+  completeTutorial,
+  lose,
+  record,
+  remove,
+  reward,
+  rewarded,
+  score
+}
 
 class MyGame extends BaseGame with TapDetector {
   static final padding = 20.0;
@@ -161,8 +171,12 @@ class MyGame extends BaseGame with TapDetector {
   void _spawn() {
     // Check space is clean
     if (_cells.existState(CellState.Float)) return;
-
-    // Check end game
+    // Check end of tutorial
+    if (_tutorMode && _fallingsCount > 6) {
+      onGameEvent?.call(GameEvent.completeTutorial, 0);
+      return;
+    }
+    // Check end of game
     var row = _cells.length(_nextCell.column);
     if (row >= Cells.height) {
       _linePaint.color = Themes.swatch[TColors.orange]![0];

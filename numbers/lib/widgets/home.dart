@@ -134,6 +134,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       case GameEvent.boost:
         await _boost("next");
         break;
+      case GameEvent.completeTutorial:
+        _widget = Overlays.endTutorial(context);
+        break;
       case GameEvent.lose:
         await Future.delayed(Duration(seconds: 1));
         _widget = Overlays.revive(context, _game!.numRevives);
@@ -165,6 +168,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         _game!.revive();
         setState(() {});
         return;
+      }
+      if (event == GameEvent.completeTutorial) {
+        if (result == "tutorFinish") Pref.tutorMode.set(1);
+        _game = MyGame(onGameEvent: _onGameEventHandler);
       }
     }
     _onPauseButtonsClick("resume");
