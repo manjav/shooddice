@@ -14,6 +14,7 @@ import 'package:numbers/utils/themes.dart';
 import 'package:numbers/utils/utils.dart';
 import 'package:numbers/widgets/home.dart';
 
+import 'core/cell.dart';
 import 'core/game.dart';
 import 'overlays/all.dart';
 
@@ -91,6 +92,7 @@ class _MainPageState extends State<MainPage> {
   }
 
   void _onHomeBack() {
+    Cell.maxRandomValue = 3;
     MyGame.boostNextMode = 0;
     MyGame.boostBig = false;
     setState(() => _loadingState = 1);

@@ -192,7 +192,7 @@ class Overlays {
                   isEnable: Ads.isReady(),
                   colors: Themes.swatch[TColors.orange],
                   onTap: () =>
-                      _buttonsClick(context, "record", rewardCoef * reward),
+                      _buttonsClick(context, "record", rewardCoef * reward, adId: AdPlace.Rewarded),
                   content: Stack(alignment: Alignment.centerLeft, children: [
                     SVG.icon("0", theme),
                     Positioned(
@@ -272,7 +272,7 @@ class Overlays {
                   isEnable: Ads.isReady(),
                   colors: Themes.swatch[TColors.orange],
                   onTap: () =>
-                      _buttonsClick(context, "big", reward * rewardCoef),
+                      _buttonsClick(context, "big", reward * rewardCoef, adId: AdPlace.Rewarded),
                   content: Stack(alignment: Alignment.centerLeft, children: [
                     SVG.icon("0", theme),
                     Positioned(
@@ -439,7 +439,7 @@ class Overlays {
                                             textAlign: TextAlign.center,
                                             style: theme.textTheme.headline5))
                                   ]),
-                                  onTap: () => _buttonsClick(context, type, 0)))
+                                  onTap: () => _buttonsClick(context, type, 0, adId: AdPlace.Rewarded)))
                         ])
                   ])))
     ]);
@@ -472,7 +472,7 @@ class Overlays {
     if (adId != null) {
       var complete = await Ads.show(adId);
       if (!complete) {
-        Navigator.of(context).pop(null);
+        // Navigator.of(context).pop(null);
         return;
       }
     }
