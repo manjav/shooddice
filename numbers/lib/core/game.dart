@@ -59,6 +59,7 @@ class MyGame extends BaseGame with TapDetector {
   Color backgroundColor() => Themes.swatch[TColors.black]![0];
 
   void _addScore(int value) {
+    if (_tutorMode) return;
     var _new = Prefs.score += Cell.getScore(value);
     onGameEvent?.call(GameEvent.score, _new);
     GamesServices.submitScore(
@@ -213,6 +214,7 @@ class MyGame extends BaseGame with TapDetector {
   }
 
   void onTapDown(TapDownInfo info) {
+    if (_tutorMode == isPlaying) return;
     if (removingMode != null) {
       var cell = _cells.get(
           ((info.eventPosition.global.x - bounds.left) / Cell.diameter)
@@ -234,8 +236,8 @@ class MyGame extends BaseGame with TapDetector {
       onGameEvent?.call(GameEvent.remove, 0);
       return;
     }
-    if (!isPlaying) return;
-    if (boostNextMode == 0 &&
+    if (!_tutorMode &&
+        boostNextMode == 0 &&
         info.eventPosition.global.y < bounds.top + Cell.diameter) {
       isPlaying = false;
       onGameEvent?.call(GameEvent.boost, 0);
