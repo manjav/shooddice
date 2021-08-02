@@ -6,6 +6,7 @@ import 'package:flame/effects.dart';
 import 'package:flame/game.dart';
 import 'package:flame/gestures.dart';
 import 'package:flame/palette.dart';
+import 'package:flame_svg/svg.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:games_services/games_services.dart';
@@ -33,9 +34,11 @@ class MyGame extends BaseGame with TapDetector {
   Rect bounds = Rect.fromLTRB(0, 0, 0, 0);
 
   bool _recordChanged = false;
+  bool _tutorMode = Pref.tutorMode.value == 0;
   int _numRewardCells = 0;
   int _mergesCount = 0;
   int _valueRecord = 0;
+  int _fallingsCount = 0;
   double _speed = Cell.minSpeed;
   Cell _nextCell = Cell(0, 0, 0);
   Cells _cells = Cells();
@@ -47,6 +50,7 @@ class MyGame extends BaseGame with TapDetector {
   Paint _mainPaint = Paint()..color = Themes.swatch[TColors.black]![2];
   Paint _zebraPaint = Paint()..color = Themes.swatch[TColors.black]![3];
   FallingEffect? _fallingEffect;
+  ColumnHint? _columnHint;
 
   MyGame({this.onGameEvent}) : super() {
     Prefs.score = 0;
@@ -102,11 +106,22 @@ class MyGame extends BaseGame with TapDetector {
     add(_fallingEffect = FallingEffect());
 
     _valueRecord = Cell.firstBigRecord;
-    _nextCell.init(random.nextInt(Cells.width), 0, Cell.getNextValue(),
+    _nextCell.init(Cell.getNextColumn(_fallingsCount), 0,
+        Cell.getNextValue(_fallingsCount),
         hiddenMode: boostNextMode + 1);
     _nextCell.x = _nextCell.column * Cell.diameter + Cell.radius + bounds.left;
     _nextCell.y = bounds.top + Cell.radius;
     add(_nextCell);
+
+    if (_tutorMode) {
+      add(_columnHint = ColumnHint(RRect.fromLTRBXY(
+          0,
+          _bgRect!.top + Cell.diameter + Cell.border * 3,
+          0,
+          _bgRect!.bottom - Cell.border * 2,
+          8,
+          8)));
+    }
 
     // Add initial cells
     if (boostBig) _createCell(_nextCell.column, 9);
@@ -178,6 +193,14 @@ class MyGame extends BaseGame with TapDetector {
     if (!isPlaying) return;
     if (_cells.last == null || _cells.last!.state != CellState.Float) return;
 
+    if (_tutorMode) {
+      if (_cells.last!.y > 315) {
+        isPlaying = false;
+        var c = Cell.getNextColumn(_fallingsCount);
+        _columnHint!.show(bounds.left + c * Cell.diameter + Cell.radius,
+            c - _nextCell.column);
+      }
+    }
     // Check reach to target
     if (_cells.last!.y < _cells.target!) {
       _speed = (_speed + 0.01).clamp(Cell.minSpeed, Cell.maxSpeed);
@@ -222,6 +245,11 @@ class MyGame extends BaseGame with TapDetector {
       var col = ((info.eventPosition.global.x - bounds.left) / Cell.diameter)
           .clamp(0, Cells.width - 1)
           .floor();
+      if (_tutorMode) {
+        if (col != Cell.getNextColumn(_fallingsCount)) return;
+        _columnHint!.hide();
+        isPlaying = true;
+      }
       var row = _cells.length(col);
       if (_cells.last! == _cells.get(col, row - 1)) --row;
       var _y = bounds.top + Cell.diameter * (Cells.height - row) + Cell.radius;
@@ -450,5 +478,54 @@ class FallingEffect extends PositionComponent with HasGameRef<MyGame> {
         _color!.withAlpha(0),
         _color!.withAlpha(_alpha),
       ]);
+  }
+}
+
+class ColumnHint extends PositionComponent with HasGameRef<MyGame> {
+  int appearanceState = 0;
+  RRect rect;
+  static final Paint _paint = PaletteEntry(Color(0xAAAADDFF)).paint()
+    ..strokeWidth = 2
+    ..style = PaintingStyle.stroke;
+  int alpha = 0;
+
+  Svg? _arrow;
+  Vector2 _arrowPos = Vector2.all(0);
+  Vector2 _arrowSize = Vector2.all(48);
+
+  ColumnHint(this.rect) : super();
+
+  void render(Canvas canvas) {
+    if (alpha <= 0) return;
+    super.render(canvas);
+    canvas.drawRRect(rect, alphaPaint(alpha));
+    if (appearanceState == 0)
+      alpha -= 15;
+    else if (appearanceState == 2) alpha += 15;
+    _arrow!.renderPosition(canvas, _arrowPos, _arrowSize);
+  }
+
+  show(double x, int direction) async {
+    var side = direction == 0 ? "down" : (direction > 0 ? "right" : "left");
+    _arrow = await Svg.load('images/arrow-$side.svg');
+    alpha = 1;
+    rect = RRect.fromLTRBXY(
+        x - Cell.radius, rect.top, x + Cell.radius, rect.bottom, 8, 8);
+    _arrowPos.x = rect.center.dx - _arrowSize.x * 0.5;
+    _arrowPos.y = rect.center.dy - _arrowSize.y * (direction == 0 ? 2.5 : 3);
+    appearanceState = 2;
+  }
+
+  void hide() {
+    alpha = 255;
+    appearanceState = 0;
+  }
+
+  Paint alphaPaint(int alpha) {
+    if (alpha >= 255) return _paint;
+    return Paint()
+      ..color = _paint.color.withAlpha(alpha)
+      ..strokeWidth = 2
+      ..style = PaintingStyle.stroke;
   }
 }
