@@ -20,14 +20,15 @@ class Prefs {
 
 enum Pref {
   coin,
+  isMute,
+  isVibrateOff,
   noAds,
   numRuns,
   rate,
   record,
   removeOne,
   removeColor,
-  isMute,
-  isVibrateOff
+  tutorMode
 }
 
 extension PrefExt on Pref {
@@ -35,6 +36,10 @@ extension PrefExt on Pref {
     switch (this) {
       case Pref.coin:
         return "coin";
+      case Pref.isMute:
+        return "isMute";
+      case Pref.isVibrateOff:
+        return "isVibrateOff";
       case Pref.numRuns:
         return "numRuns";
       case Pref.noAds:
@@ -47,10 +52,8 @@ extension PrefExt on Pref {
         return "removeOne";
       case Pref.removeColor:
         return "removeColor";
-      case Pref.isMute:
-        return "isMute";
-      case Pref.isVibrateOff:
-        return "isVibrateOff";
+      case Pref.tutorMode:
+        return "tutorMode";
       default:
         return "";
     }

@@ -5,7 +5,9 @@ import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flame/game.dart';
 import 'package:flame/gestures.dart';
+import 'package:flame/palette.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:games_services/games_services.dart';
 import 'package:numbers/core/achieves.dart';
 import 'package:numbers/core/cell.dart';
@@ -108,8 +110,11 @@ class MyGame extends BaseGame with TapDetector {
 
     // Add initial cells
     if (boostBig) _createCell(_nextCell.column, 9);
-    var cols = List.generate(5, (i) => random.nextInt(Cells.width));
-    for (var c in cols) _createCell(c, Cell.getNextValue());
+    for (var i = 0; i < (_tutorMode ? 3 : 5); i++) {
+      _createCell(Cell.getNextColumn(_fallingsCount),
+          Cell.getNextValue(_fallingsCount));
+      ++_fallingsCount;
+    }
 
     isPlaying = true;
     _spawn();
@@ -120,7 +125,7 @@ class MyGame extends BaseGame with TapDetector {
   void _createCell(int column, value) {
     var row = _cells.length(column);
     while (_cells.getMatchs(column, row, value).length > 0)
-      value = Cell.getNextValue();
+      value = Cell.getNextValue(0);
     var cell = Cell(column, row, value);
     cell.x = bounds.left + column * Cell.diameter + Cell.radius;
     cell.y = bounds.top + Cell.diameter * (Cells.height - row) + Cell.radius;
@@ -238,6 +243,7 @@ class MyGame extends BaseGame with TapDetector {
       }
 
       Sound.play("fall");
+      ++_fallingsCount;
       _fallingEffect!.tint(
           RRect.fromLTRBXY(
               _x - Cell.radius,

@@ -3,12 +3,15 @@ import 'dart:ui';
 
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
+import 'package:flame/game.dart';
 import 'package:flame/palette.dart';
 import 'package:flame_svg/svg.dart';
 import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:numbers/core/cells.dart';
 import 'package:numbers/core/game.dart';
+import 'package:numbers/utils/prefs.dart';
 
 enum CellState { Init, Float, Falling, Fell, Fixed }
 
@@ -43,8 +46,14 @@ class Cell extends PositionComponent with HasGameRef<MyGame> {
   static double radius = diameter * 0.5;
 
   static double get strock => border + 2.4;
-  static int getNextValue() => MyGame.random.nextInt(maxRandomValue) + 1;
   static int getScore(int value) => pow(2, value) as int;
+  static int getNextValue(int step) => Pref.tutorMode.value == 0
+      ? [1, 3, 5, 1, 2, 4, 5][step]
+      : MyGame.random.nextInt(maxRandomValue) + 1;
+  static int getNextColumn(int step) => Pref.tutorMode.value == 0
+      ? [2, 0, 3, 2, 1, 1, 2][step]
+      : MyGame.random.nextInt(Cells.width);
+
   static final _center = Vector2(0, -3);
 
   bool matched = false;
