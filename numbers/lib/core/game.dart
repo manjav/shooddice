@@ -185,7 +185,9 @@ class MyGame extends BaseGame with TapDetector {
       debugPrint("game over!");
       return;
     }
-    var reward = _numRewardCells > 0 || random.nextDouble() > 0.05
+    _nextCell.init(_nextCell.column, 0, Cell.getNextValue(_fallingsCount),
+        hiddenMode: boostNextMode + 1);
+    var reward = _numRewardCells > 0 || random.nextDouble() > 0.05 || _tutorMode
         ? 0
         : random.nextInt(_nextCell.value * 10);
     if (reward > 0) _numRewardCells++;
@@ -197,8 +199,6 @@ class MyGame extends BaseGame with TapDetector {
         bounds.top + Cell.diameter * (Cells.height - row) + Cell.radius;
     add(cell);
     _mergesCount = 0;
-    _nextCell.init(_nextCell.column, 0, Cell.getNextValue(),
-        hiddenMode: boostNextMode + 1);
     _speed = Cell.minSpeed;
   }
 
