@@ -232,7 +232,6 @@ class MyGame extends BaseGame with TapDetector {
   }
 
   void onTapDown(TapDownInfo info) {
-    if (_tutorMode == isPlaying) return;
     if (removingMode != null) {
       var cell = _cells.get(
           ((info.eventPosition.global.x - bounds.left) / Cell.diameter)
@@ -254,6 +253,7 @@ class MyGame extends BaseGame with TapDetector {
       onGameEvent?.call(GameEvent.remove, 0);
       return;
     }
+    if (_tutorMode == isPlaying) return;
     if (!_tutorMode &&
         boostNextMode == 0 &&
         info.eventPosition.global.y < bounds.top + Cell.diameter) {
