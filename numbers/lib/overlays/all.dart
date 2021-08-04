@@ -100,7 +100,7 @@ class Overlays {
                 width: 124.d,
                 bottom: 0,
                 left: 0,
-                child: Buttons.button(
+                child: BumpedButton(
                     onTap: () => _buttonsClick(context, "revive", -cost),
                     cornerRadius: 16.d,
                     content: Stack(alignment: Alignment.centerLeft, children: [
@@ -121,7 +121,7 @@ class Overlays {
                 width: 124.d,
                 bottom: 0,
                 right: 0,
-                child: Buttons.button(
+                child: BumpedButton(
                     cornerRadius: 16.d,
                     isEnable: numRevive < 2 && Ads.isReady(),
                     onTap: () => _buttonsClick(context, "revive", 0,
@@ -167,7 +167,7 @@ class Overlays {
               width: 124.d,
               bottom: 0,
               left: 0,
-              child: Buttons.button(
+              child: BumpedButton(
                   onTap: () => _buttonsClick(context, "record", reward),
                   cornerRadius: 16.d,
                   content: Stack(alignment: Alignment.centerLeft, children: [
@@ -187,7 +187,7 @@ class Overlays {
               width: 124.d,
               bottom: 0,
               right: 0,
-              child: Buttons.button(
+              child: BumpedButton(
                   cornerRadius: 16.d,
                   isEnable: Ads.isReady(),
                   colors: TColors.orange.value,
@@ -248,7 +248,7 @@ class Overlays {
               width: 124.d,
               bottom: 0,
               left: 0,
-              child: Buttons.button(
+              child: BumpedButton(
                   onTap: () => _buttonsClick(context, "big", reward),
                   cornerRadius: 16.d,
                   content: Stack(alignment: Alignment.centerLeft, children: [
@@ -268,7 +268,7 @@ class Overlays {
               width: 124.d,
               bottom: 0,
               right: 0,
-              child: Buttons.button(
+              child: BumpedButton(
                   cornerRadius: 16.d,
                   isEnable: Ads.isReady(),
                   colors: TColors.orange.value,
@@ -315,7 +315,7 @@ class Overlays {
               width: 140.d,
               bottom: 0,
               left: 0,
-              child: Buttons.button(
+              child: BumpedButton(
                   onTap: () => Navigator.of(context).pop("tutorReset"),
                   colors: TColors.green.value,
                   cornerRadius: 16.d,
@@ -330,7 +330,7 @@ class Overlays {
               width: 140.d,
               bottom: 0,
               right: 0,
-              child: Buttons.button(
+              child: BumpedButton(
                   onTap: () => Navigator.of(context).pop("tutorFinish"),
                   colors: TColors.blue.value,
                   cornerRadius: 16.d,
@@ -363,8 +363,8 @@ class Overlays {
           SizedBox(height: 4.d),
           Container(
               height: 76.d,
-              child: Buttons.button(
-                  colors: Themes.swatch[TColors.blue],
+              child: BumpedButton(
+                  colors: TColors.blue.value,
                   onTap: callback,
                   cornerRadius: 16.d,
                   content: Row(
@@ -416,7 +416,7 @@ class Overlays {
                           SizedBox(
                               width: 98,
                               height: 40,
-                              child: Buttons.button(
+                              child: BumpedButton(
                                   cornerRadius: 8.d,
                                   content: Row(children: [
                                     SVG.show("coin", 24.d),
@@ -430,7 +430,7 @@ class Overlays {
                           SizedBox(
                               width: 98.d,
                               height: 40.d,
-                              child: Buttons.button(
+                              child: BumpedButton(
                                   cornerRadius: 8.d,
                                   isEnable: Ads.isReady(),
                                   colors: TColors.orange.value,

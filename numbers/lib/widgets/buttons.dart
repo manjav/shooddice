@@ -6,46 +6,64 @@ import 'package:numbers/utils/sounds.dart';
 import 'package:numbers/utils/themes.dart';
 import 'package:numbers/utils/utils.dart';
 
-class Buttons {
-  static Widget button(
-      {Function()? onTap,
-      bool isEnable = true,
-      Widget? content,
-      EdgeInsets? padding,
-      List<Color>? colors,
-      double? cornerRadius}) {
+class BumpedButton extends StatefulWidget {
+  final bool? isEnable;
+  final Widget? content;
+  final EdgeInsets? padding;
+  final List<Color>? colors;
+  final Function()? onTap;
+  final double? cornerRadius;
+
+  BumpedButton(
+      {Key? key,
+      this.onTap,
+      this.isEnable,
+      this.content,
+      this.padding,
+      this.colors,
+      this.cornerRadius})
+      : super(key: key);
+  @override
+  _BumpedButtonState createState() => _BumpedButtonState();
+}
+
+class _BumpedButtonState extends State<BumpedButton> {
+
+  @override
+  Widget build(BuildContext context) {
+    var enable = widget.isEnable?? true;
+    var padding = widget.padding ?? EdgeInsets.fromLTRB(10.d, 6.d, 10.d, 12.d);
     return GestureDetector(
         onTap: () {
-          if (isEnable) {
+          if (enable) {
             Sound.play("tap");
-            onTap?.call();
+            widget.onTap?.call();
           }
         },
         child: Container(
-            padding: padding ?? EdgeInsets.fromLTRB(10.d, 6.d, 10.d, 12.d),
-            child: content ?? SizedBox(),
-            decoration: ButtonDecor(
-                colors ?? TColors.white.value,
-                cornerRadius ?? 10.d,
-                isEnable),
+            padding: padding,
+            child: widget.content ?? SizedBox(),
+            decoration: ButtonDecor(widget.colors ?? TColors.white.value,
+                widget.cornerRadius ?? 10.d, enable),
             width: 154.d,
             height: 52.d));
   }
 }
 
-class CustomDecoration extends Decoration {
+class ButtonDecor extends Decoration {
   final bool isEnable;
   final List<Color> colors;
   final double cornerRadius;
 
-  CustomDecoration(this.colors, this.cornerRadius, this.isEnable);
+  ButtonDecor(this.colors, this.cornerRadius, this.isEnable);
+
   @override
   BoxPainter createBoxPainter([VoidCallback? onChanged]) {
-    return _CustomDecorationPainter(colors, cornerRadius, isEnable);
+    return _ButtonDecorationPainter(colors, cornerRadius, isEnable);
   }
 }
 
-class _CustomDecorationPainter extends BoxPainter {
+class _ButtonDecorationPainter extends BoxPainter {
   var _backPaint = Paint()..style = PaintingStyle.fill;
   var _shadowPaint = Paint()
     ..color = Color(0x66000000)
@@ -57,7 +75,9 @@ class _CustomDecorationPainter extends BoxPainter {
   final List<Color> colors;
   final double cornerRadius;
   bool isEnable = true;
-  _CustomDecorationPainter(this.colors, this.cornerRadius, bool isEnable)
+
+  _ButtonDecorationPainter(
+      this.colors, this.cornerRadius, bool isEnable)
       : super() {
     this.isEnable = isEnable;
     _mainPaint.color =

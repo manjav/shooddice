@@ -31,7 +31,7 @@ class _PauseOverlayState extends State<PauseOverlay> {
                 width: 146.d,
                 top: 0,
                 left: 0,
-                child: Buttons.button(
+                child: BumpedButton(
                     onTap: () => Navigator.of(context).pop("reset"),
                     colors: TColors.green.value,
                     cornerRadius: 16.d,
@@ -46,7 +46,7 @@ class _PauseOverlayState extends State<PauseOverlay> {
                 width: 146.d,
                 top: 0,
                 right: 0,
-                child: Buttons.button(
+                child: BumpedButton(
                     onTap: () => Navigator.of(context).pop("resume"),
                     colors: TColors.blue.value,
                     cornerRadius: 16.d,
@@ -61,7 +61,7 @@ class _PauseOverlayState extends State<PauseOverlay> {
                 width: 76.d,
                 top: 90.d,
                 left: 66.d,
-                child: Buttons.button(
+                child: BumpedButton(
                     onTap: () {
                       Pref.isVibrateOff
                           .set(Pref.isVibrateOff.value == 0 ? 1 : 0);
@@ -77,7 +77,7 @@ class _PauseOverlayState extends State<PauseOverlay> {
                 width: 76.d,
                 top: 90.d,
                 right: 66.d,
-                child: Buttons.button(
+                child: BumpedButton(
                     onTap: () {
                       Pref.isMute.set(Pref.isMute.value == 0 ? 1 : 0);
                       setState(() {});

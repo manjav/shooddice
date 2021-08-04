@@ -37,7 +37,7 @@ class Components {
     var text = "${Pref.coin.value.format()}";
     return Hero(
         tag: "coin",
-        child: Buttons.button(
+        child: BumpedButton(
             content: Row(children: [
               SVG.show("coin", 32.d),
               Expanded(
@@ -73,7 +73,7 @@ class Components {
               SizedBox(
                   width: 92.d,
                   height: 40.d,
-                  child: Buttons.button(
+                  child: BumpedButton(
                       cornerRadius: 8.d,
                       isEnable: !_has(boost),
                       content: Row(children: [
@@ -88,7 +88,7 @@ class Components {
               SizedBox(
                   width: 92.d,
                   height: 40.d,
-                  child: Buttons.button(
+                  child: BumpedButton(
                       cornerRadius: 8.d,
                       isEnable: !_has(boost) && Ads.isReady(),
                       colors: TColors.orange.value,

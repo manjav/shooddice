@@ -105,7 +105,7 @@ class _ShopOverlayState extends State<ShopOverlay> {
                   height: 76,
                   padding: EdgeInsets.fromLTRB(10.d, 6.d, 10.d, 12.d),
                   decoration:
-                      CustomDecoration(TColors.whiteFlat.value, 12.d, true, false),
+                      ButtonDecor(TColors.whiteFlat.value, 12.d, true, false),
                   child: Row(children: [
                     SizedBox(width: 8.d),
                     SVG.show("noads", 48),
@@ -116,7 +116,7 @@ class _ShopOverlayState extends State<ShopOverlay> {
                     SizedBox(
                         width: 92.d,
                         height: 40.d,
-                        child: Buttons.button(
+                        child: BumpedButton(
                           cornerRadius: 8.d,
                           colors: TColors.green.value,
                           content: Center(
@@ -147,7 +147,7 @@ class _ShopOverlayState extends State<ShopOverlay> {
                     children: [
                       SizedBox(
                           width: 124.d,
-                          child: Buttons.button(
+                          child: BumpedButton(
                               cornerRadius: 16.d,
                               isEnable: Ads.isReady(),
                               colors: TColors.orange.value,
@@ -173,7 +173,7 @@ class _ShopOverlayState extends State<ShopOverlay> {
                               ]))),
                       SizedBox(
                           width: 140.d,
-                          child: Buttons.button(
+                          child: BumpedButton(
                               onTap: _restorePurchases,
                               colors: TColors.green.value,
                               cornerRadius: 16.d,
@@ -217,7 +217,7 @@ class _ShopOverlayState extends State<ShopOverlay> {
   Widget _itemBuilder(ThemeData theme, ProductDetails product) {
     return Container(
         height: 110.d,
-        child: Buttons.button(
+        child: BumpedButton(
           colors: TColors.whiteFlat.value,
           onTap: () => _onShopItemTap(product),
           content: Column(children: [
