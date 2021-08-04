@@ -28,11 +28,13 @@ class BumpedButton extends StatefulWidget {
 }
 
 class _BumpedButtonState extends State<BumpedButton> {
+  bool _isPressed = false;
 
   @override
   Widget build(BuildContext context) {
     var enable = widget.isEnable?? true;
     var padding = widget.padding ?? EdgeInsets.fromLTRB(10.d, 6.d, 10.d, 12.d);
+    if (_isPressed) padding = padding.copyWith(top: padding.top + 4);
     return GestureDetector(
         onTap: () {
           if (enable) {
@@ -40,11 +42,19 @@ class _BumpedButtonState extends State<BumpedButton> {
             widget.onTap?.call();
           }
         },
+        onTapDown: (details) {
+          _isPressed = true;
+          setState(() {});
+        },
+        onTapCancel: () {
+          _isPressed = false;
+          setState(() {});
+        },
         child: Container(
             padding: padding,
             child: widget.content ?? SizedBox(),
             decoration: ButtonDecor(widget.colors ?? TColors.white.value,
-                widget.cornerRadius ?? 10.d, enable),
+                widget.cornerRadius ?? 10.d, enable, _isPressed),
             width: 154.d,
             height: 52.d));
   }
@@ -52,14 +62,15 @@ class _BumpedButtonState extends State<BumpedButton> {
 
 class ButtonDecor extends Decoration {
   final bool isEnable;
+  final bool isPressed;
   final List<Color> colors;
   final double cornerRadius;
 
-  ButtonDecor(this.colors, this.cornerRadius, this.isEnable);
+  ButtonDecor(this.colors, this.cornerRadius, this.isEnable, this.isPressed);
 
   @override
   BoxPainter createBoxPainter([VoidCallback? onChanged]) {
-    return _ButtonDecorationPainter(colors, cornerRadius, isEnable);
+    return _ButtonDecorationPainter(colors, cornerRadius, isEnable, isPressed);
   }
 }
 
@@ -74,12 +85,14 @@ class _ButtonDecorationPainter extends BoxPainter {
 
   final List<Color> colors;
   final double cornerRadius;
+  bool isPressed = false;
   bool isEnable = true;
 
   _ButtonDecorationPainter(
-      this.colors, this.cornerRadius, bool isEnable)
+      this.colors, this.cornerRadius, bool isEnable, bool isPressed)
       : super() {
     this.isEnable = isEnable;
+    this.isPressed = isPressed;
     _mainPaint.color =
         isEnable ? colors[2] : Color.lerp(colors[2], Color(0xFF8a8a8a), 0.85)!;
     _backPaint.color = isEnable ? Color(0xFF212527) : Colors.grey[600]!;
@@ -99,8 +112,8 @@ class _ButtonDecorationPainter extends BoxPainter {
         _cr * 1.2);
     var sr = RRect.fromLTRBXY(
         r.left - s, r.top, r.right + s, r.bottom + s * 3, _cr * 1.2, _cr * 1.2);
-    var mr = RRect.fromLTRBXY(
-        r.left + b, r.top + b, r.right - b, r.bottom - b, _cr, _cr);
+    var mr = RRect.fromLTRBXY(r.left + b, r.top + b + (isEnable ? 2.d : 0),
+        r.right - b, r.bottom - b, _cr, _cr);
     var or = RRect.fromLTRBXY(
         r.left + b, r.top + b, r.right - b, r.bottom - b - 5.d, _cr, _cr);
 
@@ -110,7 +123,7 @@ class _ButtonDecorationPainter extends BoxPainter {
 
     if (isEnable) canvas.drawRRect(sr, _shadowPaint);
     canvas.drawRRect(r, _backPaint);
-    canvas.drawRRect(mr, _mainPaint);
-    if (isEnable) canvas.drawRRect(or, _overPaint);
+    if (!isPressed) canvas.drawRRect(mr, _mainPaint);
+    if (isEnable) canvas.drawRRect(isPressed ? mr : or, _overPaint);
   }
 }
