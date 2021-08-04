@@ -13,6 +13,7 @@ dependencies:
     sdk: flutter
   appsflyer_sdk: ^6.2.4+4-nullsafety
   cupertino_icons: ^1.0.3
+  device_info: ^2.0.2
   flame: ^1.0.0-rc13
   flame_svg: ^1.0.0-rc3
   firebase_analytics: ^8.2.0
@@ -24,6 +25,7 @@ dependencies:
   in_app_purchase: ^1.0.6
   intl: ^0.17.0
   shared_preferences: ^2.0.6
+  smartlook: ^2.0.1
   soundpool: ^2.1.0
   rive: ^0.7.22
   unity_ads_plugin: ^0.2.2

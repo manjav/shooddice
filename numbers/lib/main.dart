@@ -1,4 +1,5 @@
 import 'package:appsflyer_sdk/appsflyer_sdk.dart';
+import 'package:device_info/device_info.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -13,6 +14,7 @@ import 'package:numbers/utils/sounds.dart';
 import 'package:numbers/utils/themes.dart';
 import 'package:numbers/utils/utils.dart';
 import 'package:numbers/widgets/home.dart';
+import 'package:smartlook/smartlook.dart';
 
 import 'core/cell.dart';
 import 'core/game.dart';
@@ -60,6 +62,7 @@ class _MainPageState extends State<MainPage> {
       Sound.init();
       Notifier.init();
       Prefs.init(() {
+        _recordApp();
         _loadingState = 1;
         setState(() {});
       });
@@ -109,5 +112,16 @@ class _MainPageState extends State<MainPage> {
   Future<void> _onStartCallback() async {
     if (Pref.numRuns.value > 8) await Ads.show(AdPlace.Interstitial);
     setState(() => _loadingState = 2);
+  }
+
+  _recordApp() async {
+    if (Pref.numRuns.value > 1) return;
+    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+    AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+    print('android version ${androidInfo.version.sdkInt}');
+    if (androidInfo.version.sdkInt < 26) return;
+    Smartlook.setupAndStartRecording(
+        SetupOptionsBuilder('0c098e523024224cb6c534619b7d46df3d9b04b1')
+            .build());
   }
 }
