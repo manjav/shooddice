@@ -83,110 +83,110 @@ class _ShopOverlayState extends State<ShopOverlay> {
     var theme = Theme.of(context);
     return Stack(children: [
       Overlays.basic(context,
-        title: "Shop",
-        scoreButton: SizedBox(),
-        coinButton: Components.coins(context, clickable: false),
-        padding: EdgeInsets.fromLTRB(6.d, 0, 6.d, 16.d),
-        height: 460.d,
-        content: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            SizedBox(
-                height: 240.d,
-                child: GridView.count(
-                  crossAxisCount: 3,
-                  crossAxisSpacing: 3.d,
-                  mainAxisSpacing: 2.d,
-                  childAspectRatio: 0.94,
-                  children: List.generate(
-                      coins.length, (i) => _itemBuilder(theme, coins[i])),
-                )),
-            Container(
-                height: 76,
-                padding: EdgeInsets.fromLTRB(10.d, 6.d, 10.d, 12.d),
-                  decoration: CustomDecoration(
-                      Themes.swatch[TColors.white]!, 12.d, true),
-                child: Row(children: [
-                  SizedBox(width: 8.d),
-                  SVG.show("noads", 48),
-                  SizedBox(width: 24.d),
-                  Expanded(
+          title: "Shop",
+          scoreButton: SizedBox(),
+          coinButton: Components.coins(context, clickable: false),
+          padding: EdgeInsets.fromLTRB(6.d, 0, 6.d, 16.d),
+          height: 460.d,
+          content: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              SizedBox(
+                  height: 240.d,
+                  child: GridView.count(
+                    crossAxisCount: 3,
+                    crossAxisSpacing: 3.d,
+                    mainAxisSpacing: 2.d,
+                    childAspectRatio: 0.94,
+                    children: List.generate(
+                        coins.length, (i) => _itemBuilder(theme, coins[i])),
+                  )),
+              Container(
+                  height: 76,
+                  padding: EdgeInsets.fromLTRB(10.d, 6.d, 10.d, 12.d),
+                  decoration:
+                      CustomDecoration(TColors.whiteFlat.value, 12.d, true, false),
+                  child: Row(children: [
+                    SizedBox(width: 8.d),
+                    SVG.show("noads", 48),
+                    SizedBox(width: 24.d),
+                    Expanded(
                         child:
                             Text("No Ads", style: theme.textTheme.bodyText2)),
-                  SizedBox(
-                      width: 92.d,
-                      height: 40.d,
-                      child: Buttons.button(
-                        cornerRadius: 8.d,
-                        colors: Themes.swatch[TColors.green],
-                        content: Center(
+                    SizedBox(
+                        width: 92.d,
+                        height: 40.d,
+                        child: Buttons.button(
+                          cornerRadius: 8.d,
+                          colors: TColors.green.value,
+                          content: Center(
                               child: Text(
                                   "${others.length > 0 ? others[0].price : 0}",
-                                style: theme.textTheme.headline5)),
+                                  style: theme.textTheme.headline5)),
                           onTap: () => _onShopItemTap(others[0]),
-                      )),
-                  SizedBox(height: 4.d)
-                ])),
-            Container(
-                height: 44.d,
-                alignment: Alignment.center,
-                child: Container(
-                    width: 48.d,
-                    height: 7.d,
-                    decoration: BoxDecoration(
-                        color: Colors.grey,
-                        shape: BoxShape.rectangle,
-                        borderRadius:
-                            BorderRadius.all(Radius.circular(24.d))))),
-            Container(
-                height: 80.d,
-                padding: EdgeInsets.symmetric(horizontal: 8.d),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    SizedBox(
-                        width: 124.d,
-                        child: Buttons.button(
-                            cornerRadius: 16.d,
-                            isEnable: Ads.isReady(),
-                            colors: Themes.swatch[TColors.orange],
-                            onTap: _freeCoin,
-                            content: Row(children: [
-                              SVG.icon("0", theme),
-                              SizedBox(width: 8.d),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text("Free",
-                                      style: theme.textTheme.headline5),
-                                  Row(
-                                    children: [
-                                      SVG.show("coin", 24.d),
-                                      Text("+100",
-                                          style: theme.textTheme.headline6)
-                                    ],
-                                  )
-                                ],
-                              )
-                            ]))),
-                    SizedBox(
-                        width: 140.d,
-                        child: Buttons.button(
-                            onTap: _restorePurchases,
-                            colors: Themes.swatch[TColors.green],
-                            cornerRadius: 16.d,
-                            content: Row(children: [
-                              SVG.icon("5", theme),
-                              SizedBox(width: 12.d),
-                              Text("Restore\nPurchase",
-                                  overflow: TextOverflow.ellipsis,
-                                  style: theme.textTheme.headline6)
-                            ]))),
-                  ],
-                ))
-          ],
+                        )),
+                    SizedBox(height: 4.d)
+                  ])),
+              Container(
+                  height: 44.d,
+                  alignment: Alignment.center,
+                  child: Container(
+                      width: 48.d,
+                      height: 7.d,
+                      decoration: BoxDecoration(
+                          color: Colors.grey,
+                          shape: BoxShape.rectangle,
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(24.d))))),
+              Container(
+                  height: 80.d,
+                  padding: EdgeInsets.symmetric(horizontal: 8.d),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      SizedBox(
+                          width: 124.d,
+                          child: Buttons.button(
+                              cornerRadius: 16.d,
+                              isEnable: Ads.isReady(),
+                              colors: TColors.orange.value,
+                              onTap: _freeCoin,
+                              content: Row(children: [
+                                SVG.icon("0", theme),
+                                SizedBox(width: 8.d),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text("Free",
+                                        style: theme.textTheme.headline5),
+                                    Row(
+                                      children: [
+                                        SVG.show("coin", 24.d),
+                                        Text("+100",
+                                            style: theme.textTheme.headline6)
+                                      ],
+                                    )
+                                  ],
+                                )
+                              ]))),
+                      SizedBox(
+                          width: 140.d,
+                          child: Buttons.button(
+                              onTap: _restorePurchases,
+                              colors: TColors.green.value,
+                              cornerRadius: 16.d,
+                              content: Row(children: [
+                                SVG.icon("5", theme),
+                                SizedBox(width: 12.d),
+                                Text("Restore\nPurchase",
+                                    overflow: TextOverflow.ellipsis,
+                                    style: theme.textTheme.headline6)
+                              ]))),
+                    ],
+                  ))
+            ],
           )),
       _overlay(theme)
     ]);
@@ -195,7 +195,7 @@ class _ShopOverlayState extends State<ShopOverlay> {
   _overlay(ThemeData theme) {
     if (_message == "") return SizedBox();
     return Container(
-        color: Themes.swatch[TColors.black]![0].withAlpha(230),
+        color: TColors.black.value[0].withAlpha(230),
         alignment: Alignment.center,
         padding: EdgeInsets.all(16.d),
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -218,6 +218,7 @@ class _ShopOverlayState extends State<ShopOverlay> {
     return Container(
         height: 110.d,
         child: Buttons.button(
+          colors: TColors.whiteFlat.value,
           onTap: () => _onShopItemTap(product),
           content: Column(children: [
             SizedBox(height: 7.d),
@@ -229,8 +230,7 @@ class _ShopOverlayState extends State<ShopOverlay> {
             Container(
               width: 92.d,
               height: 40.d,
-              decoration:
-                  CustomDecoration(Themes.swatch[TColors.green]!, 8.d, true),
+              decoration: ButtonDecor(TColors.green.value, 8.d, true, false),
               child: Padding(
                   padding: EdgeInsets.fromLTRB(6.d, 6.d, 6.d, 7.d),
                   child: Text("${product.price}",

@@ -24,8 +24,8 @@ class Buttons {
         child: Container(
             padding: padding ?? EdgeInsets.fromLTRB(10.d, 6.d, 10.d, 12.d),
             child: content ?? SizedBox(),
-            decoration: CustomDecoration(
-                colors ?? Themes.swatch[TColors.white]!,
+            decoration: ButtonDecor(
+                colors ?? TColors.white.value,
                 cornerRadius ?? 10.d,
                 isEnable),
             width: 154.d,

@@ -57,8 +57,8 @@ class MyGame extends BaseGame with TapDetector {
   RRect? _lineRect;
   List<Rect>? _rects;
   Paint _linePaint = Paint();
-  Paint _mainPaint = Paint()..color = Themes.swatch[TColors.black]![2];
-  Paint _zebraPaint = Paint()..color = Themes.swatch[TColors.black]![3];
+  Paint _mainPaint = Paint()..color = TColors.black.value[2];
+  Paint _zebraPaint = Paint()..color = TColors.black.value[3];
   FallingEffect? _fallingEffect;
   ColumnHint? _columnHint;
 
@@ -66,7 +66,7 @@ class MyGame extends BaseGame with TapDetector {
     Prefs.score = 0;
   }
   @override
-  Color backgroundColor() => Themes.swatch[TColors.black]![0];
+  Color backgroundColor() => TColors.black.value[0];
 
   void _addScore(int value) {
     if (_tutorMode) return;
@@ -91,7 +91,7 @@ class MyGame extends BaseGame with TapDetector {
     super.onAttach();
 
     instance = this;
-    _linePaint.color = Themes.swatch[TColors.black]![0];
+    _linePaint.color = TColors.black.value[0];
     var width = size.x - padding * 2;
     Cell.diameter = width / Cells.width;
     Cell.radius = Cell.diameter * 0.5;
@@ -179,7 +179,7 @@ class MyGame extends BaseGame with TapDetector {
     // Check end of game
     var row = _cells.length(_nextCell.column);
     if (row >= Cells.height) {
-      _linePaint.color = Themes.swatch[TColors.orange]![0];
+      _linePaint.color = TColors.orange.value[0];
       isPlaying = false;
       Sound.play("foul");
       debugPrint("game over!");
@@ -442,7 +442,7 @@ class MyGame extends BaseGame with TapDetector {
   }
 
   void revive() {
-    _linePaint.color = Themes.swatch[TColors.black]![0];
+    _linePaint.color = TColors.black.value[0];
     numRevives++;
     for (var i = 0; i < Cells.width; i++)
       for (var j = Cells.height - 3; j < Cells.height; j++)

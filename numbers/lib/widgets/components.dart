@@ -63,8 +63,7 @@ class Components {
     return Expanded(
         child: Container(
             padding: EdgeInsets.fromLTRB(10.d, 6.d, 10.d, 12.d),
-            decoration:
-                CustomDecoration(Themes.swatch[TColors.white]!, 12.d, true),
+            decoration: ButtonDecor(TColors.whiteFlat.value, 12.d, true, false),
             child: Column(mainAxisAlignment: MainAxisAlignment.end, children: [
               SVG.show(boost, 72.d),
               Text(title,
@@ -92,7 +91,7 @@ class Components {
                   child: Buttons.button(
                       cornerRadius: 8.d,
                       isEnable: !_has(boost) && Ads.isReady(),
-                      colors: Themes.swatch[TColors.orange],
+                      colors: TColors.orange.value,
                       content: Row(children: [
                         SVG.icon("0", theme, scale: 0.7),
                         Expanded(

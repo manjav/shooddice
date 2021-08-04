@@ -126,7 +126,7 @@ class Overlays {
                     isEnable: numRevive < 2 && Ads.isReady(),
                     onTap: () => _buttonsClick(context, "revive", 0,
                         adId: AdPlace.Rewarded),
-                    colors: Themes.swatch[TColors.orange],
+                    colors: TColors.orange.value,
                     content: Stack(alignment: Alignment.centerLeft, children: [
                       SVG.icon("0", theme),
                       Positioned(
@@ -190,9 +190,10 @@ class Overlays {
               child: Buttons.button(
                   cornerRadius: 16.d,
                   isEnable: Ads.isReady(),
-                  colors: Themes.swatch[TColors.orange],
-                  onTap: () =>
-                      _buttonsClick(context, "record", rewardCoef * reward, adId: AdPlace.Rewarded),
+                  colors: TColors.orange.value,
+                  onTap: () => _buttonsClick(
+                      context, "record", rewardCoef * reward,
+                      adId: AdPlace.Rewarded),
                   content: Stack(alignment: Alignment.centerLeft, children: [
                     SVG.icon("0", theme),
                     Positioned(
@@ -270,9 +271,10 @@ class Overlays {
               child: Buttons.button(
                   cornerRadius: 16.d,
                   isEnable: Ads.isReady(),
-                  colors: Themes.swatch[TColors.orange],
-                  onTap: () =>
-                      _buttonsClick(context, "big", reward * rewardCoef, adId: AdPlace.Rewarded),
+                  colors: TColors.orange.value,
+                  onTap: () => _buttonsClick(
+                      context, "big", reward * rewardCoef,
+                      adId: AdPlace.Rewarded),
                   content: Stack(alignment: Alignment.centerLeft, children: [
                     SVG.icon("0", theme),
                     Positioned(
@@ -315,7 +317,7 @@ class Overlays {
               left: 0,
               child: Buttons.button(
                   onTap: () => Navigator.of(context).pop("tutorReset"),
-                  colors: Themes.swatch[TColors.green],
+                  colors: TColors.green.value,
                   cornerRadius: 16.d,
                   content: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -330,7 +332,7 @@ class Overlays {
               right: 0,
               child: Buttons.button(
                   onTap: () => Navigator.of(context).pop("tutorFinish"),
-                  colors: Themes.swatch[TColors.blue],
+                  colors: TColors.blue.value,
                   cornerRadius: 16.d,
                   content: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -431,7 +433,7 @@ class Overlays {
                               child: Buttons.button(
                                   cornerRadius: 8.d,
                                   isEnable: Ads.isReady(),
-                                  colors: Themes.swatch[TColors.orange],
+                                  colors: TColors.orange.value,
                                   content: Row(children: [
                                     SVG.icon("0", theme, scale: 0.7),
                                     Expanded(
@@ -439,7 +441,8 @@ class Overlays {
                                             textAlign: TextAlign.center,
                                             style: theme.textTheme.headline5))
                                   ]),
-                                  onTap: () => _buttonsClick(context, type, 0, adId: AdPlace.Rewarded)))
+                                  onTap: () => _buttonsClick(context, type, 0,
+                                      adId: AdPlace.Rewarded)))
                         ])
                   ])))
     ]);

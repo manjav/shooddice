@@ -33,7 +33,7 @@ class _PauseOverlayState extends State<PauseOverlay> {
                 left: 0,
                 child: Buttons.button(
                     onTap: () => Navigator.of(context).pop("reset"),
-                    colors: Themes.swatch[TColors.green],
+                    colors: TColors.green.value,
                     cornerRadius: 16.d,
                     content: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -48,7 +48,7 @@ class _PauseOverlayState extends State<PauseOverlay> {
                 right: 0,
                 child: Buttons.button(
                     onTap: () => Navigator.of(context).pop("resume"),
-                    colors: Themes.swatch[TColors.blue],
+                    colors: TColors.blue.value,
                     cornerRadius: 16.d,
                     content: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -67,7 +67,7 @@ class _PauseOverlayState extends State<PauseOverlay> {
                           .set(Pref.isVibrateOff.value == 0 ? 1 : 0);
                       setState(() {});
                     },
-                    colors: Themes.swatch[TColors.orange],
+                    colors: TColors.orange.value,
                     cornerRadius: 16.d,
                     content: Center(
                         child: SVG.icon("${Pref.isVibrateOff.value + 6}", theme,
@@ -82,7 +82,7 @@ class _PauseOverlayState extends State<PauseOverlay> {
                       Pref.isMute.set(Pref.isMute.value == 0 ? 1 : 0);
                       setState(() {});
                     },
-                    colors: Themes.swatch[TColors.yellow],
+                    colors: TColors.yellow.value,
                     cornerRadius: 16.d,
                     content: Center(
                         child: SVG.icon("${Pref.isMute.value + 1}", theme,
