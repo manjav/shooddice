@@ -181,8 +181,9 @@ class MyGame extends BaseGame with TapDetector {
     if (row >= Cells.height) {
       _linePaint.color = Themes.swatch[TColors.orange]![0];
       isPlaying = false;
-      onGameEvent?.call(GameEvent.lose, 0);
+      Sound.play("foul");
       debugPrint("game over!");
+      onGameEvent?.call(GameEvent.lose, 0);
       return;
     }
     if (_tutorMode)
