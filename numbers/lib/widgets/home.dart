@@ -143,9 +143,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     Widget? _widget;
     switch (event) {
       case GameEvent.big:
-          GamesServices.submitScore(
-        score: Score(
-            androidLeaderboardID: "CgkIw9yXzt4XEAIQBg", value: value));
         _widget = Overlays.bigValue(context, value);
         break;
       case GameEvent.boost:

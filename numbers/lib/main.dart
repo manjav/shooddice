@@ -118,7 +118,6 @@ class _MainPageState extends State<MainPage> {
     if (Pref.numRuns.value > 1) return;
     DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
     AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
-    print('android version ${androidInfo.version.sdkInt}');
     if (androidInfo.version.sdkInt < 26) return;
     Smartlook.setupAndStartRecording(
         SetupOptionsBuilder('0c098e523024224cb6c534619b7d46df3d9b04b1')
