@@ -65,7 +65,10 @@ class Components {
             padding: EdgeInsets.fromLTRB(10.d, 6.d, 10.d, 12.d),
             decoration: ButtonDecor(TColors.whiteFlat.value, 12.d, true, false),
             child: Column(mainAxisAlignment: MainAxisAlignment.end, children: [
+              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               SVG.show(boost, 72.d),
+                _has(boost) ? SVG.show("accept", 24.d) : SizedBox()
+              ]),
               Text(title,
                   style: theme.textTheme.subtitle2,
                   textAlign: TextAlign.center),
