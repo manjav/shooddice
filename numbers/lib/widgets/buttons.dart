@@ -32,9 +32,11 @@ class _BumpedButtonState extends State<BumpedButton> {
 
   @override
   Widget build(BuildContext context) {
-    var enable = widget.isEnable?? true;
+    var enable = widget.isEnable ?? true;
     var padding = widget.padding ?? EdgeInsets.fromLTRB(10.d, 6.d, 10.d, 12.d);
-    if (_isPressed) padding = padding.copyWith(top: padding.top + 4);
+    if (_isPressed && enable)
+      padding = padding.copyWith(
+          top: padding.top + 2.d, bottom: padding.bottom - 2.d);
     return GestureDetector(
         onTap: () {
           if (enable) {
@@ -102,6 +104,7 @@ class _ButtonDecorationPainter extends BoxPainter {
   void paint(Canvas canvas, Offset offset, ImageConfiguration configuration) {
     var s = 0.8.d;
     var b = 2.0.d;
+    var pressed = isPressed && isEnable;
     var _cr = cornerRadius;
     var r = RRect.fromLTRBXY(
         offset.dx,
@@ -123,7 +126,7 @@ class _ButtonDecorationPainter extends BoxPainter {
 
     if (isEnable) canvas.drawRRect(sr, _shadowPaint);
     canvas.drawRRect(r, _backPaint);
-    if (!isPressed) canvas.drawRRect(mr, _mainPaint);
-    if (isEnable) canvas.drawRRect(isPressed ? mr : or, _overPaint);
+    if (!pressed) canvas.drawRRect(mr, _mainPaint);
+    if (isEnable) canvas.drawRRect(pressed ? mr : or, _overPaint);
   }
 }
