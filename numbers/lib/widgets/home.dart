@@ -38,7 +38,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         body: Stack(children: [
       GameWidget(game: _game!),
       Positioned(
-          top: _game!.bounds.top - 68.d,
+          top: _game!.bounds.top - 72.d,
           right: 28.d,
           child: Components.scores(theme, onTap: () {
             _pause();
@@ -66,7 +66,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       Pref.tutorMode.value == 0
           ? SizedBox()
           : Positioned(
-              bottom: 6.d,
+              top: _game!.bounds.bottom + 16.d,
               left: 20.d,
               width: 56.d,
               height: 65.d,
@@ -79,7 +79,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       _game!.removingMode == null
           ? SizedBox()
           : Positioned(
-              bottom: 4.d,
+              top: _game!.bounds.bottom + 10.d,
               right: 4.d,
               left: 4.d,
               height: 86.d,
@@ -110,8 +110,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       ThemeData theme, double right, String icon, Function() onPressed) {
     if (Pref.tutorMode.value == 0) return SizedBox();
     return Positioned(
+        top: _game!.bounds.bottom + 10.d,
         right: right,
-        bottom: 4.d,
         width: 72.d,
         height: 72.d,
         child: IconButton(icon: SVG.show(icon, 64.d), onPressed: onPressed));
@@ -120,7 +120,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   Widget _badge(ThemeData theme, double right, int value) {
     if (Pref.tutorMode.value == 0) return SizedBox();
     return Positioned(
-        bottom: 12.d,
+        top: _game!.bounds.bottom + 52.d,
         height: 22.d,
         right: right,
         child: Container(

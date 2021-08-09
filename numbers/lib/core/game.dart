@@ -33,7 +33,6 @@ enum GameEvent {
 class MyGame extends BaseGame with TapDetector {
   static final padding = 20.0;
   static final Random random = new Random();
-  static MyGame? instance;
   static int boostNextMode = 0;
   static bool boostBig = false;
   static bool isPlaying = false;
@@ -96,7 +95,7 @@ class MyGame extends BaseGame with TapDetector {
     var width = size.x - padding * 2;
     Cell.diameter = width / Cells.width;
     Cell.radius = Cell.diameter * 0.5;
-    var t = (size.y - ((Cells.height + 1) * Cell.diameter)) - 96;
+    var t = (size.y - ((Cells.height + 1.6) * Cell.diameter)) * 0.5;
     bounds = Rect.fromLTRB(padding, t, size.x - padding, t + Cell.diameter * 7);
     _bgRect = RRect.fromLTRBXY(bounds.left - 4, bounds.top - 4,
         bounds.right + 4, bounds.bottom + 4, 16, 16);
@@ -215,7 +214,7 @@ class MyGame extends BaseGame with TapDetector {
     if (_cells.last == null || _cells.last!.state != CellState.Float) return;
 
     if (_tutorMode) {
-      if (_cells.last!.y > 315) {
+      if (_cells.last!.y > bounds.top + Cell.diameter * 1.5) {
         isPlaying = false;
         var c = Cell.getNextColumn(_fallingsCount);
         _columnHint!.show(bounds.left + c * Cell.diameter + Cell.radius,
