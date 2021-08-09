@@ -40,15 +40,17 @@ class _BumpedButtonState extends State<BumpedButton> {
     return GestureDetector(
         onTap: () {
           if (enable) {
-            Sound.play("tap");
+            Sound.play("button-up");
             widget.onTap?.call();
           }
         },
         onTapDown: (details) {
+          if (enable) Sound.play("button-down");
           _isPressed = true;
           setState(() {});
         },
         onTapCancel: () {
+          if (enable) Sound.play("button-up");
           _isPressed = false;
           setState(() {});
         },
