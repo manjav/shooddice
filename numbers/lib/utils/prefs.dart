@@ -16,6 +16,15 @@ class Prefs {
       onInit();
     });
   }
+
+  static int getBig(int value) => _instance!.getInt("big_$value") ?? 0;
+  static void increaseBig(int value) {
+    var key = "big_$value";
+    if (_instance!.containsKey(key))
+      _instance!.setInt(key, _instance!.getInt(key)! + 1);
+    else
+      _instance!.setInt(key, 1);
+  }
 }
 
 enum Pref {

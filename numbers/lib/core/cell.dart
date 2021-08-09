@@ -39,7 +39,8 @@ class Cell extends PositionComponent with HasGameRef<MyGame> {
     PaletteEntry(Color(0xFFAC3674)),
     PaletteEntry(Color(0xFF8E7C58)),
     PaletteEntry(Color(0xFFE2DB21)),
-    PaletteEntry(Color(0xFF0070C0))
+    PaletteEntry(Color(0xFF0070C0)),
+    PaletteEntry(Color(0xFF00C0C0))
   ];
   static final scales = [0, 1, 0.9, 0.75, 0.65, 0.55];
   static double diameter = 64.0;

@@ -144,6 +144,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     switch (event) {
       case GameEvent.big:
         _widget = Overlays.bigValue(context, value);
+        Prefs.increaseBig(value);
         break;
       case GameEvent.boost:
         await _boost("next");
