@@ -66,7 +66,7 @@ class Components {
             decoration: ButtonDecor(TColors.whiteFlat.value, 12.d, true, false),
             child: Column(mainAxisAlignment: MainAxisAlignment.end, children: [
               Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-              SVG.show(boost, 72.d),
+                SVG.show(boost, 72.d),
                 _has(boost) ? SVG.show("accept", 24.d) : SizedBox()
               ]),
               Text(title,
@@ -93,6 +93,7 @@ class Components {
                   height: 40.d,
                   child: BumpedButton(
                       cornerRadius: 8.d,
+                      errorMessage: Ads.errorMessage(theme),
                       isEnable: !_has(boost) && Ads.isReady(),
                       colors: TColors.orange.value,
                       content: Row(children: [

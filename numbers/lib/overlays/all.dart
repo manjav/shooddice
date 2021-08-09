@@ -123,6 +123,7 @@ class Overlays {
                 right: 0,
                 child: BumpedButton(
                     cornerRadius: 16.d,
+                    errorMessage: Ads.errorMessage(theme),
                     isEnable: numRevive < 2 && Ads.isReady(),
                     onTap: () => _buttonsClick(context, "revive", 0,
                         adId: AdPlace.Rewarded),
@@ -191,6 +192,7 @@ class Overlays {
                   cornerRadius: 16.d,
                   isEnable: Ads.isReady(),
                   colors: TColors.orange.value,
+                  errorMessage: Ads.errorMessage(theme),
                   onTap: () => _buttonsClick(
                       context, "record", rewardCoef * reward,
                       adId: AdPlace.Rewarded),
@@ -272,6 +274,7 @@ class Overlays {
                   cornerRadius: 16.d,
                   isEnable: Ads.isReady(),
                   colors: TColors.orange.value,
+                  errorMessage: Ads.errorMessage(theme),
                   onTap: () => _buttonsClick(
                       context, "big", reward * rewardCoef,
                       adId: AdPlace.Rewarded),
@@ -434,6 +437,7 @@ class Overlays {
                                   cornerRadius: 8.d,
                                   isEnable: Ads.isReady(),
                                   colors: TColors.orange.value,
+                                  errorMessage: Ads.errorMessage(theme),
                                   content: Row(children: [
                                     SVG.icon("0", theme, scale: 0.7),
                                     Expanded(
@@ -481,5 +485,16 @@ class Overlays {
     }
     if (coin != 0) Pref.coin.increase(coin);
     Navigator.of(context).pop(type);
+  }
+
+  static Widget message(BuildContext context, Widget? content) {
+    return basic(context,
+        hasClose: false,
+        sfx: "merge-9",
+        coinButton: SizedBox(),
+        scoreButton: SizedBox(),
+        padding: EdgeInsets.fromLTRB(12, 4, 12, 8),
+        height: 54,
+        content: content);
   }
 }

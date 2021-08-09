@@ -151,6 +151,7 @@ class _ShopOverlayState extends State<ShopOverlay> {
                               cornerRadius: 16.d,
                               isEnable: Ads.isReady(),
                               colors: TColors.orange.value,
+                              errorMessage: Ads.errorMessage(theme),
                               onTap: _freeCoin,
                               content: Row(children: [
                                 SVG.icon("0", theme),

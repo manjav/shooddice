@@ -2,6 +2,7 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:numbers/overlays/all.dart';
 import 'package:numbers/utils/sounds.dart';
 import 'package:numbers/utils/themes.dart';
 import 'package:numbers/utils/utils.dart';
@@ -13,6 +14,7 @@ class BumpedButton extends StatefulWidget {
   final List<Color>? colors;
   final Function()? onTap;
   final double? cornerRadius;
+  final Widget? errorMessage;
 
   BumpedButton(
       {Key? key,
@@ -21,6 +23,7 @@ class BumpedButton extends StatefulWidget {
       this.content,
       this.padding,
       this.colors,
+      this.errorMessage,
       this.cornerRadius})
       : super(key: key);
   @override
@@ -42,6 +45,9 @@ class _BumpedButtonState extends State<BumpedButton> {
           if (enable) {
             Sound.play("button-up");
             widget.onTap?.call();
+          } else if (widget.errorMessage != null) {
+            Rout.push(context, Overlays.message(context, widget.errorMessage),
+                barrierDismissible: true);
           }
         },
         onTapDown: (details) {
