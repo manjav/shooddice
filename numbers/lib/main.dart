@@ -110,12 +110,12 @@ class _MainPageState extends State<MainPage> {
   }
 
   Future<void> _onStartCallback() async {
-    if (Pref.numRuns.value > 8) await Ads.show(AdPlace.Interstitial);
+    if (Pref.visitCount.value > 8) await Ads.show(AdPlace.Interstitial);
     setState(() => _loadingState = 2);
   }
 
   _recordApp() async {
-    if (Pref.numRuns.value > 1) return;
+    if (Pref.visitCount.value > 1) return;
     DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
     AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
     if (androidInfo.version.sdkInt < 26) return;

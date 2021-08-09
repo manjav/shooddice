@@ -6,13 +6,13 @@ class Prefs {
   static void init(Function onInit) {
     SharedPreferences.getInstance().then((SharedPreferences prefs) {
       _instance = prefs;
-      if (!prefs.containsKey("numRuns")) {
+      if (!prefs.containsKey("visitCount")) {
         Pref.noAds.set(0);
         Pref.coin.set(500);
         Pref.removeOne.set(3);
         Pref.removeColor.set(3);
       }
-      Pref.numRuns.increase(1);
+      Pref.visitCount.increase(1);
       onInit();
     });
   }
@@ -23,12 +23,12 @@ enum Pref {
   isMute,
   isVibrateOff,
   noAds,
-  numRuns,
   rate,
   record,
   removeOne,
   removeColor,
-  tutorMode
+  tutorMode,
+  visitCount
 }
 
 extension PrefExt on Pref {
@@ -40,8 +40,6 @@ extension PrefExt on Pref {
         return "isMute";
       case Pref.isVibrateOff:
         return "isVibrateOff";
-      case Pref.numRuns:
-        return "numRuns";
       case Pref.noAds:
         return "noAds";
       case Pref.rate:
@@ -54,8 +52,8 @@ extension PrefExt on Pref {
         return "removeColor";
       case Pref.tutorMode:
         return "tutorMode";
-      default:
-        return "";
+      case Pref.visitCount:
+        return "visitCount";
     }
   }
 
