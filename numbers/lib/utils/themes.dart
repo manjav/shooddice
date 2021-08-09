@@ -39,7 +39,7 @@ class Themes {
     return TextStyle(
         color: color,
         fontSize: fontSize,
-        fontFamily: font,
+        fontFamily: font ?? "quicksand",
         shadows: shadows ??
             [
               BoxShadow(
@@ -93,10 +93,10 @@ class Themes {
       //     cursorColor: primaries[500],
       //     selectionHandleColor: primaries[300],
       //     selectionColor: primaries[600]),
-      // snackBarTheme: SnackBarThemeData(
-      //     contentTextStyle: TextStyle(fontFamily: "quicksand", fontSize: 16),
-      //     backgroundColor: primaries[700],
-      //     actionTextColor: primaries[500]),
+      snackBarTheme: SnackBarThemeData(
+          contentTextStyle: textTheme.headline4,
+          // actionTextColor: primaries[500],
+          backgroundColor: TColors.orange.value[2]),
       // inputDecorationTheme:
       //     InputDecorationTheme(hintStyle: TextStyle(color: primaries[150])),
       fontFamily: "quicksand",
