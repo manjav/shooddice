@@ -90,7 +90,8 @@ class MyGame extends BaseGame with TapDetector {
   void onAttach() async {
     super.onAttach();
 
-    instance = this;
+    Pref.playCount.increase(1);
+
     _linePaint.color = TColors.black.value[0];
     var width = size.x - padding * 2;
     Cell.diameter = width / Cells.width;

@@ -23,6 +23,7 @@ enum Pref {
   isMute,
   isVibrateOff,
   noAds,
+  playCount,
   rate,
   record,
   removeOne,
@@ -42,6 +43,8 @@ extension PrefExt on Pref {
         return "isVibrateOff";
       case Pref.noAds:
         return "noAds";
+      case Pref.playCount:
+        return "playCount";
       case Pref.rate:
         return "rate";
       case Pref.record:
