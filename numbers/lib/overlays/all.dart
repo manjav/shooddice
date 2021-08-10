@@ -35,8 +35,8 @@ class Overlays {
     Sound.play(sfx ?? "pop");
     return Stack(alignment: Alignment.center, children: [
       Positioned(
-          top: 48.d,
-          right: 16.d,
+          top: 62.d,
+          right: 10.d,
           child: scoreButton ??
               Components.scores(theme,
                   onTap: () => GamesServices.showLeaderboards())),

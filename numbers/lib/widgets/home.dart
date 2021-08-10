@@ -39,12 +39,21 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         body: Stack(children: [
       GameWidget(game: _game!),
       Positioned(
-          top: _game!.bounds.top - 66.d,
+          top: _game!.bounds.top - 69.d,
           right: 20.d,
           child: Components.scores(theme, onTap: () {
             _pause();
             GamesServices.showLeaderboards();
           })),
+      Positioned(
+          top: _game!.bounds.top - 45.d,
+          right: 23.d,
+          child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+            Text(Prefs.score.format(),
+                style: theme.textTheme.headline5!.copyWith(letterSpacing: -1)),
+            SizedBox(width: 2.d),
+            SVG.show("cup", 22.d)
+          ])),
       Positioned(
           top: _game!.bounds.top - 70.d,
           left: 22.d,

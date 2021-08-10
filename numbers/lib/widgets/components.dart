@@ -18,14 +18,9 @@ class Components {
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
               Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-                Text(Prefs.score.format(), style: theme.textTheme.headline5),
-                SizedBox(width: 4.d),
-                SVG.show("cup", 24.d)
-              ]),
-              SizedBox(width: 4.d),
-              Row(mainAxisAlignment: MainAxisAlignment.end, children: [
                 Text("${Pref.record.value.format()}",
-                    style: theme.textTheme.headline6),
+                    style:
+                        theme.textTheme.headline5!.copyWith(letterSpacing: -1)),
                 SizedBox(width: 3.d),
                 SVG.show("record", 20.d),
                 SizedBox(width: 4.d),
@@ -40,7 +35,7 @@ class Components {
         child: SizedBox(
             width: 50,
             child: BumpedButton(
-                padding: EdgeInsets.fromLTRB(6, 4, 6, 9),
+                padding: EdgeInsets.fromLTRB(8, 4, 8, 10),
                 content: GestureDetector(
                     onTap: onTap, child: SVG.show("profile", 48.d)))));
   }
