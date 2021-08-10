@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:games_services/games_services.dart';
 import 'package:numbers/core/cell.dart';
 import 'package:numbers/overlays/shop.dart';
+import 'package:numbers/overlays/stats.dart';
 import 'package:numbers/utils/ads.dart';
 import 'package:numbers/utils/prefs.dart';
 import 'package:numbers/utils/sounds.dart';
@@ -25,6 +26,7 @@ class Overlays {
     Widget? content,
     Widget? scoreButton,
     Widget? coinButton,
+    Widget? statsButton,
     EdgeInsets? padding,
     bool hasChrome = true,
     bool hasClose = true,
@@ -34,14 +36,19 @@ class Overlays {
     return Stack(alignment: Alignment.center, children: [
       Positioned(
           top: 50.d,
-          right: 24.d,
+          right: 16.d,
           child: scoreButton ??
               Components.scores(theme,
                   onTap: () => GamesServices.showLeaderboards())),
       Positioned(
           top: 52.d,
-          left: 24.d,
+          left: 16.d,
           child: coinButton ?? Components.coins(context)),
+      Positioned(
+          top: 56.d,
+          left: 180.d,
+          child: statsButton ?? Components.stats(theme,
+              onTap: () => Rout.push(context, StatsOverlay()))),
       Column(mainAxisAlignment: MainAxisAlignment.center, children: [
         Padding(
             padding: EdgeInsets.fromLTRB(48.d, 64.d, 48.d, 20.d),

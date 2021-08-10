@@ -6,6 +6,7 @@ import 'package:numbers/core/game.dart';
 import 'package:numbers/overlays/all.dart';
 import 'package:numbers/overlays/pause.dart';
 import 'package:numbers/overlays/shop.dart';
+import 'package:numbers/overlays/stats.dart';
 import 'package:numbers/utils/prefs.dart';
 import 'package:numbers/utils/utils.dart';
 import 'package:numbers/widgets/components.dart';
@@ -43,6 +44,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           child: Components.scores(theme, onTap: () {
             _pause();
             GamesServices.showLeaderboards();
+          })),
+      Positioned(
+          top: _game!.bounds.top - 68.d,
+          left: 188.d,
+          child: Components.stats(theme, onTap: () {
+            _pause();
+            Rout.push(context, StatsOverlay());
           })),
       _coins = Positioned(
           top: _game!.bounds.top - 70.d,

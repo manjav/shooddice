@@ -30,6 +30,16 @@ class Components {
             ])));
   }
 
+  static Widget stats(ThemeData theme, {Function()? onTap}) {
+    if (Pref.tutorMode.value == 0) return SizedBox();
+    return Hero(
+        tag: "stats",
+        child: GestureDetector(
+          onTap: onTap,
+          child: SVG.show("record", 48.d),
+        ));
+  }
+
   static Widget coins(BuildContext context,
       {Function()? onTap, bool clickable = true}) {
     if (Pref.tutorMode.value == 0) return SizedBox();
