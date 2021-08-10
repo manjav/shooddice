@@ -4,14 +4,13 @@ import 'package:numbers/core/cell.dart';
 import 'package:numbers/utils/utils.dart';
 
 class Widgets {
-  static Widget cell(ThemeData theme, int value) {
+  static Widget cell(ThemeData theme, int value, {TextStyle? textStyle}) {
     return Container(
-      child: Center(
-          child: Text("${Cell.getScore(value)}",
-              style: value > 7
-                  ? theme.textTheme.headline4
-                  : theme.textTheme.headline2),
-          heightFactor: 0.1),
+      padding: EdgeInsets.only(bottom: 6.d),
+      alignment: Alignment.center,
+      child: Text("${Cell.getScore(value)}",
+          textAlign: TextAlign.center,
+          style: textStyle ?? theme.textTheme.headline4),
       decoration: CellDecoration(value),
       width: 154.d,
       height: 52.d,
