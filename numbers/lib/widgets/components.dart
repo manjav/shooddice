@@ -15,24 +15,22 @@ class Components {
         tag: "score",
         child: GestureDetector(
             onTap: onTap,
-            child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Row(children: [
-                    Text(Prefs.score.format(),
-                        style: theme.textTheme.headline4),
-                    SizedBox(width: 4.d),
-                    SVG.show("cup", 24.d)
-                  ]),
-                  SizedBox(width: 4.d),
-                  Row(children: [
-                    Text("${Pref.record.value.format()}",
-                        style: theme.textTheme.headline5),
-                    SizedBox(width: 3.d),
-                    SVG.show("record", 20.d),
-                    SizedBox(width: 4.d),
-                  ])
-                ])));
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
+              Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+                Text(Prefs.score.format(), style: theme.textTheme.headline5),
+                SizedBox(width: 4.d),
+                SVG.show("cup", 24.d)
+              ]),
+              SizedBox(width: 4.d),
+              Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+                Text("${Pref.record.value.format()}",
+                    style: theme.textTheme.headline6),
+                SizedBox(width: 3.d),
+                SVG.show("record", 20.d),
+                SizedBox(width: 4.d),
+              ])
+            ])));
   }
 
   static Widget stats(ThemeData theme, {Function()? onTap}) {
