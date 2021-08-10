@@ -65,7 +65,7 @@ class _BumpedButtonState extends State<BumpedButton> {
             child: widget.content ?? SizedBox(),
             decoration: ButtonDecor(widget.colors ?? TColors.white.value,
                 widget.cornerRadius ?? 10.d, enable, _isPressed),
-            width: 154.d,
+            width: 144.d,
             height: 52.d));
   }
 }

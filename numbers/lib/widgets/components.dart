@@ -39,10 +39,12 @@ class Components {
     if (Pref.tutorMode.value == 0) return SizedBox();
     return Hero(
         tag: "stats",
-        child: GestureDetector(
-          onTap: onTap,
-          child: SVG.show("record", 48.d),
-        ));
+        child: SizedBox(
+            width: 50,
+            child: BumpedButton(
+                padding: EdgeInsets.fromLTRB(6, 4, 6, 9),
+                content: GestureDetector(
+                    onTap: onTap, child: SVG.show("profile", 48.d)))));
   }
 
   static Widget coins(BuildContext context,

@@ -35,21 +35,21 @@ class Overlays {
     Sound.play(sfx ?? "pop");
     return Stack(alignment: Alignment.center, children: [
       Positioned(
-          top: 50.d,
+          top: 48.d,
           right: 16.d,
           child: scoreButton ??
               Components.scores(theme,
                   onTap: () => GamesServices.showLeaderboards())),
       Positioned(
-          top: 52.d,
+          top: 48.d,
           left: 16.d,
-          child: coinButton ?? Components.coins(context)),
-      Positioned(
-          top: 56.d,
-          left: 180.d,
           child: statsButton ??
               Components.stats(theme,
                   onTap: () => Rout.push(context, StatsOverlay()))),
+      Positioned(
+          top: 48.d,
+          left: 70.d,
+          child: coinButton ?? Components.coins(context)),
       Column(mainAxisAlignment: MainAxisAlignment.center, children: [
         Padding(
             padding: EdgeInsets.fromLTRB(48.d, 64.d, 48.d, 20.d),

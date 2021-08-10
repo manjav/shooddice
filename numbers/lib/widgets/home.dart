@@ -39,22 +39,22 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         body: Stack(children: [
       GameWidget(game: _game!),
       Positioned(
-          top: _game!.bounds.top - 72.d,
-          right: 28.d,
+          top: _game!.bounds.top - 66.d,
+          right: 20.d,
           child: Components.scores(theme, onTap: () {
             _pause();
             GamesServices.showLeaderboards();
           })),
       Positioned(
-          top: _game!.bounds.top - 68.d,
-          left: 188.d,
+          top: _game!.bounds.top - 70.d,
+          left: 22.d,
           child: Components.stats(theme, onTap: () {
             _pause();
             Rout.push(context, StatsOverlay());
           })),
       _coins = Positioned(
           top: _game!.bounds.top - 70.d,
-          left: 28.d,
+          left: 73.d,
           height: 52 - 5 * _rewardAnimation!.value,
           child: Components.coins(context, onTap: () async {
             MyGame.isPlaying = false;
@@ -65,7 +65,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       Pref.tutorMode.value == 0
           ? Positioned(
               top: _game!.bounds.top - 68.d,
-              right: 28.d,
+              right: 22.d,
               left: 28.d,
               child: Text("How to play?",
                   style: theme.textTheme.headline4,
