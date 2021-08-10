@@ -308,14 +308,10 @@ class Overlays {
     return basic(context,
         sfx: "win",
         title: "Good Job!",
-        height: 200,
-        width: 340,
+        height: 200.d,
+        width: 340.d,
         hasClose: false,
         content: Stack(alignment: Alignment.topCenter, children: [
-          // Center(
-          //     heightFactor: 0.52,
-          //     child: RiveAnimation.asset('anims/nums-record.riv',
-          //         stateMachines: ["machine"])),
           Positioned(
               top: 20.d,
               child: Text("Now lets try the next larg number.\nAre you ready?",
