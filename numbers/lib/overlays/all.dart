@@ -47,8 +47,9 @@ class Overlays {
       Positioned(
           top: 56.d,
           left: 180.d,
-          child: statsButton ?? Components.stats(theme,
-              onTap: () => Rout.push(context, StatsOverlay()))),
+          child: statsButton ??
+              Components.stats(theme,
+                  onTap: () => Rout.push(context, StatsOverlay()))),
       Column(mainAxisAlignment: MainAxisAlignment.center, children: [
         Padding(
             padding: EdgeInsets.fromLTRB(48.d, 64.d, 48.d, 20.d),
@@ -352,6 +353,7 @@ class Overlays {
   static start(BuildContext context, Function() callback, Function onUpdate) {
     var theme = Theme.of(context);
     return basic(context,
+        height: 348,
         hasClose: false,
         title: "Select Boost Items",
         padding: EdgeInsets.fromLTRB(12.d, 12.d, 12.d, 14.d),
@@ -366,7 +368,7 @@ class Overlays {
                 Components.startButton(context,
                     "Preview the next upcoming black!", "next", onUpdate)
               ])),
-          SizedBox(height: 4.d),
+          SizedBox(height: 10.d),
           Container(
               height: 76.d,
               child: BumpedButton(
