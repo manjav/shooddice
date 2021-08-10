@@ -24,6 +24,9 @@ dependencies:
   games_services: ^2.0.0-nullsafety.3
   in_app_purchase: ^1.0.6
   intl: ^0.17.0
+  path_provider: ^2.0.2
+  screenshot: ^1.2.3
+  share: ^2.0.4
   shared_preferences: ^2.0.6
   smartlook: ^2.0.1
   soundpool: ^2.1.0
