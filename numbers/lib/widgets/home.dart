@@ -39,92 +39,95 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
-    return Scaffold(
-        body: Stack(children: [
-      GameWidget(game: _game!),
-      Positioned(
-          top: _game!.bounds.top - 69.d,
-          right: 20.d,
-          child: Components.scores(theme, onTap: () {
-            _pause();
-            GamesServices.showLeaderboards();
-          })),
-      Positioned(
-          top: _game!.bounds.top - 45.d,
-          right: 23.d,
-          child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-            Text(Prefs.score.format(),
-                style: theme.textTheme.headline5!.copyWith(letterSpacing: -1)),
-            SizedBox(width: 2.d),
-            SVG.show("cup", 22.d)
-          ])),
-      Positioned(
-          top: _game!.bounds.top - 70.d,
-          left: 22.d,
-          child: Components.stats(theme, onTap: () {
-            _pause();
-            Rout.push(context, StatsOverlay());
-          })),
-      _coins = Positioned(
-          top: _game!.bounds.top - 70.d,
-          left: 73.d,
-          height: 52 - 5 * _rewardAnimation!.value,
-          child: Components.coins(context, onTap: () async {
-            MyGame.isPlaying = false;
-            await Rout.push(context, ShopOverlay());
-            MyGame.isPlaying = true;
-            setState(() {});
-          })),
-      Pref.tutorMode.value == 0
-          ? Positioned(
-              top: _game!.bounds.top - 68.d,
-              right: 22.d,
-              left: 28.d,
-              child: Text("How to play?",
-                  style: theme.textTheme.headline4,
-                  textAlign: TextAlign.center))
-          : SizedBox(),
-      Pref.tutorMode.value == 0
-          ? SizedBox()
-          : Positioned(
-              top: _game!.bounds.bottom + 16.d,
-              left: 20.d,
-              width: 56.d,
-              height: 65.d,
-              child:
-                  IconButton(icon: SVG.show("pause", 48.d), onPressed: _pause)),
-      _removeButton(theme, 20.d, "remove-one", () => _boost("one")),
-      _badge(theme, 60.d, Pref.removeOne.value),
-      _removeButton(theme, 96.d, "remove-color", () => _boost("color")),
-      _badge(theme, 136.d, Pref.removeColor.value),
-      _game!.removingMode == null
-          ? SizedBox()
-          : Positioned(
-              top: _game!.bounds.bottom + 10.d,
-              right: 4.d,
-              left: 4.d,
-              height: 86.d,
-              child: Container(
-                  padding: EdgeInsets.fromLTRB(32.d, 28.d, 32.d, 32.d),
-                  decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                            blurRadius: 3.d,
-                            color: Colors.black,
-                            offset: Offset(0.5.d, 2.d))
-                      ],
-                      color: theme.cardColor,
-                      shape: BoxShape.rectangle,
-                      borderRadius: BorderRadius.all(Radius.circular(16))),
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text("Select ${_game!.removingMode} to remove!"),
-                        GestureDetector(
-                            child: SVG.show("close", 32.d),
-                            onTap: _onRemoveBlock)
-                      ])))
-    ]));
+    return WillPopScope(
+        onWillPop: _onWillPop,
+        child: Scaffold(
+            body: Stack(children: [
+          GameWidget(game: _game!),
+          Positioned(
+              top: _game!.bounds.top - 69.d,
+              right: 20.d,
+              child: Components.scores(theme, onTap: () {
+                _pause();
+                GamesServices.showLeaderboards();
+              })),
+          Positioned(
+              top: _game!.bounds.top - 45.d,
+              right: 23.d,
+              child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+                Text(Prefs.score.format(),
+                    style:
+                        theme.textTheme.headline5!.copyWith(letterSpacing: -1)),
+                SizedBox(width: 2.d),
+                SVG.show("cup", 22.d)
+              ])),
+          Positioned(
+              top: _game!.bounds.top - 70.d,
+              left: 22.d,
+              child: Components.stats(theme, onTap: () {
+                _pause();
+                Rout.push(context, StatsOverlay());
+              })),
+          _coins = Positioned(
+              top: _game!.bounds.top - 70.d,
+              left: 73.d,
+              height: 52 - 5 * _rewardAnimation!.value,
+              child: Components.coins(context, onTap: () async {
+                MyGame.isPlaying = false;
+                await Rout.push(context, ShopOverlay());
+                MyGame.isPlaying = true;
+                setState(() {});
+              })),
+          Pref.tutorMode.value == 0
+              ? Positioned(
+                  top: _game!.bounds.top - 68.d,
+                  right: 22.d,
+                  left: 28.d,
+                  child: Text("How to play?",
+                      style: theme.textTheme.headline4,
+                      textAlign: TextAlign.center))
+              : SizedBox(),
+          Pref.tutorMode.value == 0
+              ? SizedBox()
+              : Positioned(
+                  top: _game!.bounds.bottom + 16.d,
+                  left: 20.d,
+                  width: 56.d,
+                  height: 65.d,
+                  child: IconButton(
+                      icon: SVG.show("pause", 48.d), onPressed: _pause)),
+          _removeButton(theme, 20.d, "remove-one", () => _boost("one")),
+          _badge(theme, 60.d, Pref.removeOne.value),
+          _removeButton(theme, 96.d, "remove-color", () => _boost("color")),
+          _badge(theme, 136.d, Pref.removeColor.value),
+          _game!.removingMode == null
+              ? SizedBox()
+              : Positioned(
+                  top: _game!.bounds.bottom + 10.d,
+                  right: 4.d,
+                  left: 4.d,
+                  height: 86.d,
+                  child: Container(
+                      padding: EdgeInsets.fromLTRB(32.d, 28.d, 32.d, 32.d),
+                      decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                                blurRadius: 3.d,
+                                color: Colors.black,
+                                offset: Offset(0.5.d, 2.d))
+                          ],
+                          color: theme.cardColor,
+                          shape: BoxShape.rectangle,
+                          borderRadius: BorderRadius.all(Radius.circular(16))),
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text("Select ${_game!.removingMode} to remove!"),
+                            GestureDetector(
+                                child: SVG.show("close", 32.d),
+                                onTap: _onRemoveBlock)
+                          ])))
+        ])));
   }
 
   Widget _removeButton(
@@ -277,5 +280,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     _game!.removingMode = null;
     MyGame.isPlaying = true;
     setState(() {});
+  }
+
+  Future<bool> _onWillPop() async {
+    _pause();
+    return true;
   }
 }
