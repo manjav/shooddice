@@ -350,43 +350,6 @@ class Overlays {
         ]));
   }
 
-  static start(BuildContext context, Function() callback, Function onUpdate) {
-    var theme = Theme.of(context);
-    return basic(context,
-        height: 348,
-        hasClose: false,
-        title: "Select Boost Items",
-        padding: EdgeInsets.fromLTRB(12.d, 12.d, 12.d, 14.d),
-        content:
-            Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-          Expanded(
-              child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                Components.startButton(
-                    context, "Start the game with black 512!", "512", onUpdate),
-                Components.startButton(context,
-                    "Preview the next upcoming black!", "next", onUpdate)
-              ])),
-          SizedBox(height: 10.d),
-          Container(
-              height: 76.d,
-              child: BumpedButton(
-                  colors: TColors.blue.value,
-                  onTap: callback,
-                  cornerRadius: 16.d,
-                  content: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SVG.icon("4", theme),
-                        SizedBox(width: 12.d),
-                        Text("Start",
-                            style: theme.textTheme.headline5,
-                            textAlign: TextAlign.center)
-                      ])))
-        ]));
-  }
-
   static callout(BuildContext context, String title, String type,
       {EdgeInsets? padding}) {
     var cost = 100;
