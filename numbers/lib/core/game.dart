@@ -37,10 +37,10 @@ class MyGame extends BaseGame with TapDetector {
   static bool boostBig = false;
   static bool isPlaying = false;
 
+  Rect bounds = Rect.fromLTRB(0, 0, 0, 0);
   Function(GameEvent, int)? onGameEvent;
   int numRevives = 0;
   String? removingMode;
-  Rect bounds = Rect.fromLTRB(0, 0, 0, 0);
 
   bool _recordChanged = false;
   bool _tutorMode = Pref.tutorMode.value == 0;
@@ -61,8 +61,10 @@ class MyGame extends BaseGame with TapDetector {
   FallingEffect? _fallingEffect;
   ColumnHint? _columnHint;
 
-  MyGame({this.onGameEvent}) : super() {
+  MyGame({bounds, onGameEvent}) : super() {
     Prefs.score = 0;
+    this.bounds = bounds;
+    this.onGameEvent = onGameEvent;
   }
   @override
   Color backgroundColor() => TColors.black.value[0];
@@ -95,8 +97,6 @@ class MyGame extends BaseGame with TapDetector {
     var width = size.x - padding * 2;
     Cell.diameter = width / Cells.width;
     Cell.radius = Cell.diameter * 0.5;
-    var t = (size.y - ((Cells.height + 1.6) * Cell.diameter)) * 0.5;
-    bounds = Rect.fromLTRB(padding, t, size.x - padding, t + Cell.diameter * 7);
     _bgRect = RRect.fromLTRBXY(bounds.left - 4, bounds.top - 4,
         bounds.right + 4, bounds.bottom + 4, 16, 16);
     _lineRect = RRect.fromLTRBXY(

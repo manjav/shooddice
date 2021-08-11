@@ -27,7 +27,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   void initState() {
     super.initState();
-    _game = MyGame(onGameEvent: _onGameEventHandler);
+    var t = (Device.size.height - ((Cells.height + 1.6) * Cell.diameter)) * 0.5;
+    var bounds = Rect.fromLTRB(MyGame.padding, t,
+        Device.size.width - MyGame.padding, t + Cell.diameter * 7);
+    _game = MyGame(bounds: bounds, onGameEvent: _onGameEventHandler);
     _rewardAnimation = AnimationController(vsync: this);
     _rewardAnimation!.addListener(() => setState(() {}));
   }
