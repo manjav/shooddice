@@ -54,9 +54,9 @@ class _MainPageState extends State<MainPage> {
   int _loadingState = 0;
   @override
   Widget build(BuildContext context) {
-    Device.ratio = MediaQuery.of(context).size.width / 360;
-    print(
-        "${MediaQuery.of(context).size} ${MediaQuery.of(context).devicePixelRatio}");
+    Device.size = MediaQuery.of(context).size;
+    Device.ratio = Device.size.width / 360;
+    print("${Device.size} ${MediaQuery.of(context).devicePixelRatio}");
     if (_loadingState == 0) {
       Ads.init();
       Sound.init();
