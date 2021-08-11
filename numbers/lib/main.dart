@@ -13,12 +13,10 @@ import 'package:numbers/utils/prefs.dart';
 import 'package:numbers/utils/sounds.dart';
 import 'package:numbers/utils/themes.dart';
 import 'package:numbers/utils/utils.dart';
-import 'package:numbers/widgets/home.dart';
 import 'package:smartlook/smartlook.dart';
 
-import 'core/cell.dart';
-import 'core/game.dart';
 import 'overlays/all.dart';
+import 'overlays/start.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -80,38 +78,15 @@ class _MainPageState extends State<MainPage> {
           registerOnDeepLinkingCallback: true);
     }
     return WillPopScope(
-        onWillPop: _onWillPop, child: Scaffold(body: _getPage()));
-  }
-
-  Widget _getPage() {
-    switch (_loadingState) {
-      case 1:
-        return Overlays.start(context, _onStartCallback, () => setState(() {}));
-      case 2:
-        return HomePage(_onHomeBack);
-      default:
-        return SizedBox();
-    }
-  }
-
-  void _onHomeBack() {
-    Cell.maxRandomValue = 3;
-    MyGame.boostNextMode = 0;
-    MyGame.boostBig = false;
-    setState(() => _loadingState = 1);
+        onWillPop: _onWillPop,
+        child:
+            Scaffold(body: _loadingState == 0 ? SizedBox() : StartOverlay()));
   }
 
   Future<bool> _onWillPop() async {
-    if (_loadingState == 2) MyGame.isPlaying = false;
     var result = await Rout.push(context, Overlays.quit(context),
         barrierDismissible: true);
-    MyGame.isPlaying = true;
     return result != null;
-  }
-
-  Future<void> _onStartCallback() async {
-    if (Pref.visitCount.value > 8) await Ads.show(AdPlace.Interstitial);
-    setState(() => _loadingState = 2);
   }
 
   _recordApp() async {

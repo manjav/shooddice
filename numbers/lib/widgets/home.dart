@@ -2,6 +2,8 @@ import 'package:flame/game.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:games_services/games_services.dart';
+import 'package:numbers/core/cell.dart';
+import 'package:numbers/core/cells.dart';
 import 'package:numbers/core/game.dart';
 import 'package:numbers/overlays/all.dart';
 import 'package:numbers/overlays/pause.dart';
@@ -12,8 +14,7 @@ import 'package:numbers/utils/utils.dart';
 import 'package:numbers/widgets/components.dart';
 
 class HomePage extends StatefulWidget {
-  final Function() onBack;
-  HomePage(this.onBack, {Key? key}) : super(key: key);
+  HomePage({Key? key}) : super(key: key);
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -199,7 +200,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     if (_widget != null) {
       var result = await Rout.push(context, _widget);
       if (event == GameEvent.lose) {
-        if (result == null) widget.onBack();
+        if (result == null) {
+          Navigator.of(context).pop();
+          return;
+        }
         _game!.revive();
         setState(() {});
         return;
@@ -222,7 +226,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   void _onPauseButtonsClick(String type) {
     switch (type) {
       case "reset":
-        widget.onBack();
+        Navigator.of(context).pop();
         break;
       case "resume":
         MyGame.isPlaying = true;

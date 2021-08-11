@@ -58,6 +58,11 @@ class _StartOverlayState extends State<StartOverlay> {
   }
 
   _onStart() async {
+    if (Pref.visitCount.value > 8) await Ads.show(AdPlace.Interstitial);
+    await Rout.push(context, HomePage());
+    Cell.maxRandomValue = 3;
+    MyGame.boostNextMode = 0;
+    MyGame.boostBig = false;
     _onUpdate();
   }
 
