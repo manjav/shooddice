@@ -27,56 +27,62 @@ class Overlays {
     Widget? scoreButton,
     Widget? coinButton,
     Widget? statsButton,
+    Function? onWillPop,
     EdgeInsets? padding,
     bool hasChrome = true,
     bool hasClose = true,
   }) {
     var theme = Theme.of(context);
     Sound.play(sfx ?? "pop");
-    return Stack(alignment: Alignment.center, children: [
-      Positioned(
-          top: 62.d,
-          right: 10.d,
-          child: scoreButton ??
-              Components.scores(theme,
-                  onTap: () => GamesServices.showLeaderboards())),
-      Positioned(
-          top: 48.d,
-          left: 16.d,
-          child: statsButton ??
-              Components.stats(theme,
-                  onTap: () => Rout.push(context, StatsOverlay()))),
-      Positioned(
-          top: 48.d,
-          left: 70.d,
-          child: coinButton ?? Components.coins(context)),
-      Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-        Padding(
-            padding: EdgeInsets.fromLTRB(48.d, 64.d, 48.d, 20.d),
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  title != null
-                      ? Text(title, style: theme.textTheme.headline4)
-                      : SizedBox(),
-                  if (hasClose)
-                    GestureDetector(
-                        child: SVG.show("close", 28.d),
-                        onTap: () => Navigator.of(context).pop())
-                ])),
-        Container(
-            width: width ?? 300.d,
-            height: height ?? 340.d,
-            padding: padding ?? EdgeInsets.fromLTRB(18.d, 12.d, 18.d, 28.d),
-            decoration: hasChrome
-                ? BoxDecoration(
-                    color: theme.dialogTheme.backgroundColor,
-                    shape: BoxShape.rectangle,
-                    borderRadius: BorderRadius.all(Radius.circular(24)))
-                : null,
-            child: content ?? SizedBox())
-      ])
-    ]);
+    return WillPopScope(
+        onWillPop: () async {
+          onWillPop?.call();
+          return true;
+        },
+        child: Stack(alignment: Alignment.center, children: [
+          Positioned(
+              top: 62.d,
+              right: 10.d,
+              child: scoreButton ??
+                  Components.scores(theme,
+                      onTap: () => GamesServices.showLeaderboards())),
+          Positioned(
+              top: 48.d,
+              left: 16.d,
+              child: statsButton ??
+                  Components.stats(theme,
+                      onTap: () => Rout.push(context, StatsOverlay()))),
+          Positioned(
+              top: 48.d,
+              left: 70.d,
+              child: coinButton ?? Components.coins(context)),
+          Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+            Padding(
+                padding: EdgeInsets.fromLTRB(48.d, 64.d, 48.d, 20.d),
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      title != null
+                          ? Text(title, style: theme.textTheme.headline4)
+                          : SizedBox(),
+                      if (hasClose)
+                        GestureDetector(
+                            child: SVG.show("close", 28.d),
+                            onTap: () => Navigator.of(context).pop())
+                    ])),
+            Container(
+                width: width ?? 300.d,
+                height: height ?? 340.d,
+                padding: padding ?? EdgeInsets.fromLTRB(18.d, 12.d, 18.d, 28.d),
+                decoration: hasChrome
+                    ? BoxDecoration(
+                        color: theme.dialogTheme.backgroundColor,
+                        shape: BoxShape.rectangle,
+                        borderRadius: BorderRadius.all(Radius.circular(24)))
+                    : null,
+                child: content ?? SizedBox())
+          ])
+        ]));
   }
 
   static revive(BuildContext context, int numRevive) {
@@ -159,6 +165,7 @@ class Overlays {
     var theme = Theme.of(context);
     return basic(context,
         sfx: "win",
+        onWillPop: () => _buttonsClick(context, "record", reward),
         content: Stack(alignment: Alignment.topCenter, children: [
           Center(
               heightFactor: 0.52,
@@ -230,6 +237,7 @@ class Overlays {
         height: 380.d,
         hasClose: false,
         title: "Big Block",
+        onWillPop: () => _buttonsClick(context, "big", reward),
         content: Stack(alignment: Alignment.topCenter, children: [
           Positioned(
               top: 0,
