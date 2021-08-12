@@ -167,6 +167,7 @@ class Overlays {
     var theme = Theme.of(context);
     return basic(context,
         sfx: "win",
+        hasClose: false,
         onWillPop: () => _buttonsClick(context, "record", reward),
         content: Stack(alignment: Alignment.topCenter, children: [
           Center(
