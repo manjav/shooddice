@@ -61,7 +61,7 @@ class _MainPageState extends State<MainPage> {
       Notifier.init();
       Prefs.init(() {
         _recordApp();
-        _loadingState = Pref.tutorMode.value == 0 ? 2 : 1;
+        _loadingState = 1;
         setState(() {});
       });
       GamesServices.signIn();
