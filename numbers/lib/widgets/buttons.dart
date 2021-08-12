@@ -49,6 +49,8 @@ class _BumpedButtonState extends State<BumpedButton> {
             Rout.push(context, Overlays.message(context, widget.errorMessage),
                 barrierDismissible: true);
           }
+          _isPressed = false;
+          setState(() {});
         },
         onTapDown: (details) {
           if (enable) Sound.play("button-down");
