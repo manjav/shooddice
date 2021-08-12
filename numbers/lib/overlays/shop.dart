@@ -84,8 +84,12 @@ class _ShopOverlayState extends State<ShopOverlay> {
     return Stack(children: [
       Overlays.basic(context,
           title: "Shop",
+          statsButton: SizedBox(),
           scoreButton: SizedBox(),
-          coinButton: Components.coins(context, clickable: false),
+          coinButton: Positioned(
+              top: 48.d,
+              left: 12.d,
+              child: Components.coins(context, clickable: false)),
           padding: EdgeInsets.fromLTRB(6.d, 0, 6.d, 16.d),
           height: 460.d,
           content: Column(

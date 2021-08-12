@@ -4,6 +4,7 @@ import 'package:numbers/utils/prefs.dart';
 import 'package:numbers/utils/themes.dart';
 import 'package:numbers/utils/utils.dart';
 import 'package:numbers/widgets/buttons.dart';
+import 'package:numbers/widgets/components.dart';
 import 'package:numbers/widgets/widgets.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:share/share.dart';
@@ -27,6 +28,8 @@ class _StatsOverlayState extends State<StatsOverlay> {
         title: "Stats",
         height: 460.d,
         statsButton: SizedBox(),
+        coinButton:
+            Positioned(top: 48.d, left: 12.d, child: Components.coins(context)),
         content: Screenshot(
             controller: _screenshotController,
             child: Column(children: [
