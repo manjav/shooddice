@@ -21,6 +21,10 @@ class StartOverlay extends StatefulWidget {
 class _StartOverlayState extends State<StartOverlay> {
   @override
   Widget build(BuildContext context) {
+    if (Pref.tutorMode.value == 0) {
+      _onStart(delay: 100);
+      return SizedBox();
+    }
     var theme = Theme.of(context);
     return Overlays.basic(context,
         height: 348.d,
@@ -57,8 +61,10 @@ class _StartOverlayState extends State<StartOverlay> {
         ]));
   }
 
-  _onStart() async {
-    if (Pref.visitCount.value > 8) await Ads.show(AdPlace.Interstitial);
+  _onStart({int delay = 0}) async {
+    if (Pref.visitCount.value > 10) await Ads.show(AdPlace.Interstitial);
+    if (delay > 0) await Future.delayed(Duration(milliseconds: delay));
+
     await Rout.push(context, HomePage());
     Cell.maxRandomValue = 3;
     MyGame.boostNextMode = 0;

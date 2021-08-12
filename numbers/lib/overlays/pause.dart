@@ -18,11 +18,11 @@ class _PauseOverlayState extends State<PauseOverlay> {
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
     return Overlays.basic(context,
-        title: "Pause",
-        hasChrome: false,
-        hasClose: false,
-        padding: EdgeInsets.only(top: 10.d),
         height: 180.d,
+        title: "Pause",
+        hasClose: false,
+        hasChrome: false,
+        padding: EdgeInsets.only(top: 10.d),
         content: Stack(
           alignment: Alignment.topCenter,
           children: [
