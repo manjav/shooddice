@@ -68,7 +68,10 @@ class Overlays {
                       if (hasClose)
                         GestureDetector(
                             child: SVG.show("close", 28.d),
-                            onTap: () => Navigator.of(context).pop())
+                            onTap: () {
+                              onWillPop?.call();
+                              Navigator.of(context).pop();
+                            })
                     ])),
             Container(
                 width: width ?? 300.d,
