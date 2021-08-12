@@ -189,7 +189,7 @@ class MyGame extends BaseGame with TapDetector {
     if (_tutorMode)
       _nextCell.init(_nextCell.column, 0, Cell.getNextValue(_fallingsCount),
           hiddenMode: boostNextMode + 1);
-    var reward = _numRewardCells > 0 || random.nextDouble() > 0.05 || _tutorMode
+    var reward = _numRewardCells > 0 || random.nextDouble() > 0.02 || _tutorMode
         ? 0
         : random.nextInt(_nextCell.value * 10);
     if (reward > 0) _numRewardCells++;
