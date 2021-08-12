@@ -467,12 +467,13 @@ class Overlays {
 
   static Widget message(BuildContext context, Widget? content) {
     return basic(context,
-        hasClose: false,
+        height: 54,
         sfx: "merge-9",
+        hasClose: false,
         coinButton: SizedBox(),
+        statsButton: SizedBox(),
         scoreButton: SizedBox(),
         padding: EdgeInsets.fromLTRB(12, 4, 12, 8),
-        height: 54,
         content: content);
   }
 }
