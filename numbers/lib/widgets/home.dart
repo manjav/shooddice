@@ -210,7 +210,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       }
       if (event == GameEvent.completeTutorial) {
         if (result == "tutorFinish") Pref.tutorMode.set(1);
-        _game = MyGame(onGameEvent: _onGameEventHandler);
+        MyGame.boostNextMode = 1;
+        _createGame();
       }
     }
     _onPauseButtonsClick("resume");
