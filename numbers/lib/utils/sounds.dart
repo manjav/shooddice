@@ -1,6 +1,7 @@
 import 'package:flutter/services.dart';
 import 'package:numbers/utils/prefs.dart';
 import 'package:soundpool/soundpool.dart';
+import 'package:vibration/vibration.dart';
 
 class Sound {
   static Map<String, int> map = Map();
@@ -29,5 +30,10 @@ class Sound {
     if (Pref.isMute.value == 1) return 0;
     if (map.isEmpty) return 0;
     return await pool.play(map[name]!);
+  }
+
+  static void vibrate(int duration) {
+    if (Pref.isVibrateOff.value > 0) return;
+    Vibration.vibrate(duration: duration);
   }
 }

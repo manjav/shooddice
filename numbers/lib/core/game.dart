@@ -182,6 +182,7 @@ class MyGame extends BaseGame with TapDetector {
       _linePaint.color = TColors.orange.value[0];
       isPlaying = false;
       Sound.play("foul");
+      Sound.vibrate(100);
       debugPrint("game over!");
       onGameEvent?.call(GameEvent.lose, 0);
       return;
@@ -392,8 +393,7 @@ class MyGame extends BaseGame with TapDetector {
     if (merges > 0) {
       _mergesCount++;
       Sound.play("merge-$_mergesCount");
-      if (Pref.isVibrateOff.value == 0)
-        Vibration.vibrate(duration: 3 + 4 * _mergesCount);
+      Sound.vibrate(3 + 4 * _mergesCount);
     }
     return merges;
   }
