@@ -258,7 +258,7 @@ class Overlays {
               )),
           Positioned(
               top: 170.d,
-              child: Text("Congnratulation.\nYou made ${Cell.getScore(value)}!",
+              child: Text("Congratulations.\nYou made ${Cell.getScore(value)}!",
                   style: theme.textTheme.caption, textAlign: TextAlign.center)),
           Positioned(
               top: 225.d,
@@ -326,7 +326,7 @@ class Overlays {
         content: Stack(alignment: Alignment.topCenter, children: [
           Positioned(
               top: 20.d,
-              child: Text("Now lets try the next larg number.\nAre you ready?",
+              child: Text("Now lets try the next large number.\nAre you ready?",
                   style: theme.textTheme.caption)),
           Positioned(
               height: 76.d,
