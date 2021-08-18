@@ -16,7 +16,6 @@ import 'package:numbers/core/cells.dart';
 import 'package:numbers/utils/prefs.dart';
 import 'package:numbers/utils/sounds.dart';
 import 'package:numbers/utils/themes.dart';
-import 'package:vibration/vibration.dart';
 
 enum GameEvent {
   big,
