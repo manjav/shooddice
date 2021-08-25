@@ -34,6 +34,8 @@ enum Pref {
   noAds,
   playCount,
   rate,
+  ratedBefore,
+  rateTarget,
   record,
   removeOne,
   removeColor,
@@ -54,8 +56,12 @@ extension PrefExt on Pref {
         return "noAds";
       case Pref.playCount:
         return "playCount";
+      case Pref.rateTarget:
+        return "rateTarget";
       case Pref.rate:
         return "rate";
+      case Pref.ratedBefore:
+        return "ratedBefore";
       case Pref.record:
         return "record";
       case Pref.removeOne:
