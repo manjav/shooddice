@@ -38,9 +38,9 @@ class _StartOverlayState extends State<StartOverlay> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                 Components.startButton(context,
-                    "Start the game with black 512!", "512", _onUpdate),
+                    "Start the game with block 512!", "512", _onUpdate),
                 Components.startButton(context,
-                    "Preview the next upcoming black!", "next", _onUpdate)
+                    "Preview the next upcoming block!", "next", _onUpdate)
               ])),
           SizedBox(height: 10.d),
           Container(
