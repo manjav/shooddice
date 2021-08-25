@@ -75,7 +75,7 @@ class Overlays {
                     ])),
             Container(
                 width: width ?? 300.d,
-                height: height ?? 340.d,
+                height: height == null ? 340.d : (height == 0 ? null : height),
                 padding: padding ?? EdgeInsets.fromLTRB(18.d, 12.d, 18.d, 28.d),
                 decoration: hasChrome
                     ? BoxDecoration(
