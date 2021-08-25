@@ -16,6 +16,28 @@ class RateOverlay extends StatefulWidget {
         "Rating rate: ${Pref.rate.value}, playCount: ${Pref.playCount.value}, rateTarget: ${Pref.rateTarget.value}");
     // Send to store
     if (Pref.rate.value == 5) {
+      // if (Configs.instance.buildConfig!.target == "cafebazaar") {
+      //   if (Platform.isAndroid) {
+      //     AndroidIntent intent = AndroidIntent(
+      //         data: 'bazaar://details?id=com.gerantech.muslim.holy.quran',
+      //         action: 'android.intent.action.EDIT',
+      //         package: 'com.farsitel.bazaar');
+      //     await intent.launch();
+      //   }
+      //   Pref.rate.set(6);
+      //   return;
+      // }
+
+      final InAppReview inAppReview = InAppReview.instance;
+      if (await inAppReview.isAvailable()) {
+        if (Pref.ratedBefore.value == 0) {
+          inAppReview.requestReview();
+          Pref.ratedBefore.set(1);
+          return true;
+        }
+        inAppReview.openStoreListing();
+        Pref.rate.set(6);
+      }
       return true;
     }
 
