@@ -62,7 +62,9 @@ class _StartOverlayState extends State<StartOverlay> {
   }
 
   _onStart({int delay = 0}) async {
-    if (Pref.visitCount.value > 10) await Ads.show(AdPlace.Interstitial);
+    var shown = await RateOverlay.showRating(context);
+    if (!shown && Pref.visitCount.value > 10)
+      await Ads.show(AdPlace.Interstitial);
     if (delay > 0) await Future.delayed(Duration(milliseconds: delay));
     await Rout.push(context, HomePage());
     Cell.maxRandomValue = 3;

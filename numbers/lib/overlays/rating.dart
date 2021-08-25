@@ -11,17 +11,17 @@ import 'package:numbers/widgets/buttons.dart';
 import 'all.dart';
 
 class RateOverlay extends StatefulWidget {
-  static showRating(BuildContext context) async {
+  static Future<bool> showRating(BuildContext context) async {
     print(
         "Rating rate: ${Pref.rate.value}, playCount: ${Pref.playCount.value}, rateTarget: ${Pref.rateTarget.value}");
     // Send to store
     if (Pref.rate.value == 5) {
-      return;
+      return true;
     }
 
     // Repeat rating request
     if (Pref.rate.value >= 5 || Pref.playCount.value < Pref.rateTarget.value)
-      return; // Already 5 rating or pending to reach target play count
+      return false; // Already 5 rating or pending to reach target play count
     int rating =
         await Rout.push(context, RateOverlay(), barrierDismissible: true);
     Pref.rate.set(rating);
@@ -30,6 +30,7 @@ class RateOverlay extends StatefulWidget {
     String comment = "";
     if (rating > 0) {
     print("Rating rate: ${Pref.rate.value} rating: $rating comment: $comment");
+    return true;
   }
 
   final initialRating;
