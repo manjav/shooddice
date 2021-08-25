@@ -44,8 +44,7 @@ class RateOverlay extends StatefulWidget {
     // Repeat rating request
     if (Pref.rate.value >= 5 || Pref.playCount.value < Pref.rateTarget.value)
       return false; // Already 5 rating or pending to reach target play count
-    int rating =
-        await Rout.push(context, RateOverlay(), barrierDismissible: true);
+    int rating = await Rout.push(context, RateOverlay());
     Pref.rate.set(rating);
     Pref.rateTarget.set(Pref.rateTarget.value + 10);
 
@@ -61,6 +60,11 @@ class RateOverlay extends StatefulWidget {
                       style: Theme.of(context).textTheme.headline5))),
           barrierDismissible: true);
     }
+    MyApp.analytics.logEvent(name: 'rate', parameters: <String, dynamic>{
+      'numRuns': Pref.visitCount.value,
+      'rating': rating,
+      'comment': comment
+    });
     print("Rating rate: ${Pref.rate.value} rating: $rating comment: $comment");
     return true;
   }
@@ -120,6 +124,7 @@ class _RateOverlayState extends State<RateOverlay> {
             ])));
   }
 }
+
 class ReviewDialog extends StatefulWidget {
   @override
   State<ReviewDialog> createState() => ReviewDialogState();
