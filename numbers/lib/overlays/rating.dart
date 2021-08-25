@@ -51,6 +51,16 @@ class RateOverlay extends StatefulWidget {
 
     String comment = "";
     if (rating > 0) {
+      if (rating < 5) comment = await Rout.push(context, ReviewDialog());
+      await Rout.push(
+          context,
+          Overlays.message(
+              context,
+              Center(
+                  child: Text("Thanks a lot.",
+                      style: Theme.of(context).textTheme.headline5))),
+          barrierDismissible: true);
+    }
     print("Rating rate: ${Pref.rate.value} rating: $rating comment: $comment");
     return true;
   }
@@ -110,4 +120,56 @@ class _RateOverlayState extends State<RateOverlay> {
             ])));
   }
 }
+class ReviewDialog extends StatefulWidget {
+  @override
+  State<ReviewDialog> createState() => ReviewDialogState();
+}
+
+class ReviewDialogState extends State<ReviewDialog> {
+  final _commentController = TextEditingController();
+  @override
+  void initState() {
+    super.initState();
+    _commentController.addListener(() {
+      setState(() {});
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    var theme = Theme.of(context);
+    return Scaffold(
+        body: Overlays.basic(context,
+            height: 0,
+            width: 320.d,
+            title: "Review",
+            closeOnBack: false,
+            padding: EdgeInsets.all(16.d),
+            content: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  TextField(
+                      autofocus: true,
+                      controller: _commentController,
+                      textInputAction: TextInputAction.newline,
+                      minLines: 1,
+                      maxLines: 5,
+                      decoration: InputDecoration(
+                          hintText: "Tell us your comments...")),
+                  const SizedBox(height: 15),
+                  BumpedButton(
+                      errorMessage: Center(
+                          child: Text("Insert your comment !",
+                              style: theme.textTheme.headline5)),
+                      isEnable: _commentController.text != "",
+                      colors: TColors.orange.value,
+                      content: Center(
+                          child:
+                              Text("Send", style: theme.textTheme.headline5)),
+                      onTap: () =>
+                          Navigator.pop(context, _commentController.text))
+                ])));
+  }
     }
