@@ -164,7 +164,7 @@ class ReviewDialogState extends State<ReviewDialog> {
                           child: Text("Insert your comment !",
                               style: theme.textTheme.headline5)),
                       isEnable: _commentController.text != "",
-                      colors: TColors.orange.value,
+                      colors: TColors.green.value,
                       content: Center(
                           child:
                               Text("Send", style: theme.textTheme.headline5)),
