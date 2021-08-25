@@ -31,13 +31,14 @@ class Overlays {
     EdgeInsets? padding,
     bool hasChrome = true,
     bool hasClose = true,
+    bool closeOnBack = true,
   }) {
     var theme = Theme.of(context);
     Sound.play(sfx ?? "pop");
     return WillPopScope(
         onWillPop: () async {
           onWillPop?.call();
-          return true;
+          return closeOnBack;
         },
         child: Stack(alignment: Alignment.center, children: [
           scoreButton ??
