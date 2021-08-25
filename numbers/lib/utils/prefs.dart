@@ -11,6 +11,7 @@ class Prefs {
         Pref.coin.set(500);
         Pref.removeOne.set(3);
         Pref.removeColor.set(3);
+        Pref.rateTarget.set(5);
       }
       Pref.visitCount.increase(1);
       onInit();
