@@ -21,12 +21,23 @@ class Prefs {
     });
   }
 
+  static void _set(String key, int value, bool backup) {
+    _instance!.setInt(key, value);
+    if (backup) _backup();
+  }
+
   static int getBig(int value) => _instance!.getInt("big_$value") ?? 0;
   static void increaseBig(int value) {
     var key = "big_$value";
     if (_instance!.containsKey(key))
-      _instance!.setInt(key, _instance!.getInt(key)! + 1);
+      _set(key, _instance!.getInt(key)! + 1, true);
     else
+      _set(key, 1, true);
+  }
+
+  static Future<bool> _backup() async {
+    return false;
+  }
 
   static _initPlayService() async {
     SigninResult result = await PlayGames.signIn(scopeSnapshot: true);
