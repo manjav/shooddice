@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
@@ -56,16 +57,21 @@ class Prefs {
     }
   }
 
-  static Future<bool> _backup() async {
-    var keys = _instance!.getKeys();
-    var data = Map<String, int>();
-    for (var key in keys) {
-      var value = _instance!.getInt(key) ?? -1;
-      if (value > -1) data[key] = value;
-    }
-    var result = await PlayGames.saveSnapshot('prefs', json.encode(data));
-    // PlayGames.openSnapshot('prefs');
-    return result ?? false;
+  static Timer? _wakeupTimer;
+  static _backup() async {
+    _wakeupTimer?.cancel();
+    _wakeupTimer = Timer(Duration(seconds: 5), () {
+      var keys = _instance!.getKeys();
+      var data = Map<String, int>();
+      for (var key in keys) {
+        var value = _instance!.getInt(key) ?? -1;
+        if (value > -1) data[key] = value;
+      }
+      var saveData = json.encode(data);
+      debugPrint(saveData);
+      PlayGames.saveSnapshot('prefs', saveData);
+      // PlayGames.openSnapshot('prefs');
+    });
   }
 
   static _initPlayService() async {
