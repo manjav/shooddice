@@ -2,11 +2,11 @@ import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:games_services/games_services.dart';
 import 'package:numbers/core/cell.dart';
 import 'package:numbers/overlays/shop.dart';
 import 'package:numbers/overlays/stats.dart';
 import 'package:numbers/utils/ads.dart';
+import 'package:numbers/utils/gemeservice.dart';
 import 'package:numbers/utils/prefs.dart';
 import 'package:numbers/utils/sounds.dart';
 import 'package:numbers/utils/themes.dart';
@@ -46,7 +46,8 @@ class Overlays {
                   top: 62.d,
                   right: 10.d,
                   child: Components.scores(theme,
-                      onTap: () => GamesServices.showLeaderboards())),
+                      onTap: () =>
+                          PlayGames.showLeaderboard("CgkIw9yXzt4XEAIQAQ"))),
           statsButton ??
               Positioned(
                   top: 48.d,

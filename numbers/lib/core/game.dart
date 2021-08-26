@@ -9,13 +9,13 @@ import 'package:flame/palette.dart';
 import 'package:flame_svg/svg.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:games_services/games_services.dart';
 import 'package:numbers/core/achieves.dart';
 import 'package:numbers/core/cell.dart';
 import 'package:numbers/core/cells.dart';
 import 'package:numbers/utils/prefs.dart';
 import 'package:numbers/utils/sounds.dart';
 import 'package:numbers/utils/themes.dart';
+import 'package:numbers/utils/gemeservice.dart';
 
 enum GameEvent {
   big,
@@ -72,11 +72,9 @@ class MyGame extends BaseGame with TapDetector {
     if (_tutorMode) return;
     var _new = Prefs.score += Cell.getScore(value);
     onGameEvent?.call(GameEvent.score, _new);
-    GamesServices.submitScore(
-        score: Score(
-            androidLeaderboardID: "CgkIw9yXzt4XEAIQAQ", value: Prefs.score));
+    PlayGames.submitScoreById("CgkIw9yXzt4XEAIQAQ", Prefs.score);
     if (Pref.record.value >= Prefs.score) return;
-    Pref.record.set(Prefs.score);
+    Pref.record.set(Prefs.score, false);
     if (Prefs.score > Cell.firstRecord) {
       if (!_recordChanged) {
         isPlaying = false;

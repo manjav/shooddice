@@ -1,7 +1,6 @@
 import 'package:flame/game.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:games_services/games_services.dart';
 import 'package:numbers/core/cell.dart';
 import 'package:numbers/core/cells.dart';
 import 'package:numbers/core/game.dart';
@@ -12,6 +11,7 @@ import 'package:numbers/overlays/stats.dart';
 import 'package:numbers/utils/prefs.dart';
 import 'package:numbers/utils/utils.dart';
 import 'package:numbers/widgets/components.dart';
+import 'package:numbers/utils/gemeservice.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
@@ -46,7 +46,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               right: 20.d,
               child: Components.scores(theme, onTap: () {
                 _pause();
-                GamesServices.showLeaderboards();
+                PlayGames.showLeaderboard("CgkIw9yXzt4XEAIQAQ");
               })),
           Positioned(
               top: _game!.bounds.top - 45.d,

@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+import 'package:numbers/utils/gemeservice.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Prefs {
@@ -6,6 +8,7 @@ class Prefs {
   static void init(Function onInit) {
     SharedPreferences.getInstance().then((SharedPreferences prefs) {
       _instance = prefs;
+      _initPlayService();
       if (!prefs.containsKey("visitCount")) {
         Pref.noAds.set(0);
         Pref.coin.set(500);
@@ -24,7 +27,15 @@ class Prefs {
     if (_instance!.containsKey(key))
       _instance!.setInt(key, _instance!.getInt(key)! + 1);
     else
-      _instance!.setInt(key, 1);
+
+  static _initPlayService() async {
+    SigninResult result = await PlayGames.signIn(scopeSnapshot: true);
+    if (result.success) {
+      // await PlayGames.setPopupOptions();
+      debugPrint("======${result.account!.displayName} ${result.account!.email}");
+    } else {
+      debugPrint(result.message);
+    }
   }
 }
 
