@@ -12,6 +12,9 @@ import 'all.dart';
 
 class RateOverlay extends StatefulWidget {
   static Future<bool> showRating(BuildContext context) async {
+    // Pref.rate.set(0);
+    // Pref.ratedBefore.set(0);
+    // Pref.rateTarget.set(5);
     print(
         "Rating rate: ${Pref.rate.value}, playCount: ${Pref.playCount.value}, rateTarget: ${Pref.rateTarget.value}");
     // Send to store
@@ -46,7 +49,7 @@ class RateOverlay extends StatefulWidget {
       return false; // Already 5 rating or pending to reach target play count
     int rating = await Rout.push(context, RateOverlay());
     Pref.rate.set(rating);
-    Pref.rateTarget.set(Pref.rateTarget.value + 10);
+    Pref.rateTarget.increase(10);
 
     String comment = "";
     if (rating > 0) {
@@ -84,6 +87,7 @@ class _RateOverlayState extends State<RateOverlay> {
         onWillPop: () async => false,
         child: Overlays.basic(context,
             height: 280.d,
+            hasClose: false,
             title: "Rate Us",
             padding: EdgeInsets.fromLTRB(22.d, 18.d, 22.d, 22.d),
             content: Stack(alignment: Alignment.topRight, children: <Widget>[
@@ -178,4 +182,4 @@ class ReviewDialogState extends State<ReviewDialog> {
                           Navigator.pop(context, _commentController.text))
                 ])));
   }
-    }
+}
