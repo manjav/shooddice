@@ -8,15 +8,19 @@ class Prefs {
   static int score = 0;
   static SharedPreferences? _instance;
   static void init(Function onInit) {
-    SharedPreferences.getInstance().then((SharedPreferences prefs) {
+    SharedPreferences.getInstance().then((SharedPreferences prefs) async {
       _instance = prefs;
-      _initPlayService();
       if (!prefs.containsKey("visitCount")) {
-        Pref.noAds.set(0);
-        Pref.coin.set(500);
-        Pref.removeOne.set(3);
-        Pref.removeColor.set(3);
-        Pref.rateTarget.set(5);
+        await _restore();
+        if (!prefs.containsKey("visitCount")) {
+          Pref.noAds.set(0);
+          Pref.coin.set(500);
+          Pref.removeOne.set(3);
+          Pref.removeColor.set(3);
+          Pref.rateTarget.set(5);
+        }
+      } else {
+        _initPlayService();
       }
       Pref.visitCount.increase(1);
       onInit();
@@ -35,6 +39,21 @@ class Prefs {
       _set(key, _instance!.getInt(key)! + 1, true);
     else
       _set(key, 1, true);
+  }
+
+  static Future<void> _restore() async {
+    await _initPlayService();
+    try {
+      var save = await PlayGames.openSnapshot('prefs');
+      if (save.content == null || save.content!.isEmpty)
+        return; // default value when there is no save
+      // var content =
+      //     '{"playCount":32,"big_14":1,"removeColor":3,"big_11":1,"big_10":1,"big_13":1,"big_12":1,"visitCount":17,"record":148284,"rate":3,"rateTarget":35,"noAds":0,"big_9":2,"coin":2404,"tutorMode":1,"ratedBefore":0,"removeOne":3,"isMute":1,"isVibrateOff":1}';
+      var data = json.decode(save.content!);
+      for (var entry in data.entries) _instance!.setInt(entry.key, entry.value);
+    } catch (e) {
+      print(e.toString());
+    }
   }
 
   static Future<bool> _backup() async {
