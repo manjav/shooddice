@@ -72,9 +72,9 @@ class MyGame extends BaseGame with TapDetector {
     if (_tutorMode) return;
     var _new = Prefs.score += Cell.getScore(value);
     onGameEvent?.call(GameEvent.score, _new);
-    PlayGames.submitScoreById("CgkIw9yXzt4XEAIQAQ", Prefs.score);
     if (Pref.record.value >= Prefs.score) return;
-    Pref.record.set(Prefs.score, false);
+    PlayGames.submitScoreById("CgkIw9yXzt4XEAIQAQ", Prefs.score);
+    Pref.record.set(Prefs.score);
     if (Prefs.score > Cell.firstRecord) {
       if (!_recordChanged) {
         isPlaying = false;
