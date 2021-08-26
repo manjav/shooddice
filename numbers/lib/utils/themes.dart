@@ -51,7 +51,7 @@ class Themes {
 
   static ThemeData get darkData {
     var textTheme = TextTheme(
-        caption: TextStyle(color: Colors.yellow, fontSize: 16),
+        caption: TextStyle(color: TColors.white.value[2], fontSize: 16),
         button: _style(TColors.black.value[0], 24, shadows: []),
         bodyText1: _style(TColors.black.value[0], 22, shadows: []),
         bodyText2: _style(TColors.black.value[0], 20, shadows: []),
@@ -89,16 +89,15 @@ class Themes {
       //             fontFamily: "quicksand",
       //             fontSize: 18,
       //             fontWeight: FontWeight.bold)))),
-      // textSelectionTheme: TextSelectionThemeData(
-      //     cursorColor: primaries[500],
-      //     selectionHandleColor: primaries[300],
-      //     selectionColor: primaries[600]),
+      textSelectionTheme: TextSelectionThemeData(
+          cursorColor: TColors.blue.value[0],
+          selectionHandleColor: TColors.blue.value[0],
+          selectionColor: TColors.blue.value[2]),
       snackBarTheme: SnackBarThemeData(
-          contentTextStyle: textTheme.headline4,
+          contentTextStyle: textTheme.headline5,
           // actionTextColor: primaries[500],
-          backgroundColor: TColors.orange.value[2]),
-      // inputDecorationTheme:
-      //     InputDecorationTheme(hintStyle: TextStyle(color: primaries[150])),
+          backgroundColor: TColors.blue.value[2]),
+      inputDecorationTheme: InputDecorationTheme(hintStyle: textTheme.caption),
       fontFamily: "quicksand",
       dialogBackgroundColor: TColors.black.value[1],
       // accentColor: primaries[0],
@@ -109,7 +108,7 @@ class Themes {
       cardColor: TColors.white.value[0],
       // primaryColor: primaries[700],
       // focusColor: primaries[750],
-      // textTheme: textTheme,
+      // canvasColor: TColors.orange.value[2],
       colorScheme: ColorScheme.dark(
           // primary: primaries[700],
           // onPrimary: Colors.white,

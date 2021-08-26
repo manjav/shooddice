@@ -161,6 +161,7 @@ class ReviewDialogState extends State<ReviewDialog> {
                       textInputAction: TextInputAction.newline,
                       minLines: 1,
                       maxLines: 5,
+                      style: theme.textTheme.headline6,
                       decoration: InputDecoration(
                           hintText: "Tell us your comments...")),
                   const SizedBox(height: 15),
