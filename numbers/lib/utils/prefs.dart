@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:numbers/utils/gemeservice.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -36,14 +38,23 @@ class Prefs {
   }
 
   static Future<bool> _backup() async {
-    return false;
+    var keys = _instance!.getKeys();
+    var data = Map<String, int>();
+    for (var key in keys) {
+      var value = _instance!.getInt(key) ?? -1;
+      if (value > -1) data[key] = value;
+    }
+    var result = await PlayGames.saveSnapshot('prefs', json.encode(data));
+    // PlayGames.openSnapshot('prefs');
+    return result ?? false;
   }
 
   static _initPlayService() async {
     SigninResult result = await PlayGames.signIn(scopeSnapshot: true);
     if (result.success) {
       // await PlayGames.setPopupOptions();
-      debugPrint("======${result.account!.displayName} ${result.account!.email}");
+      debugPrint(
+          "======${result.account!.displayName} ${result.account!.email}");
     } else {
       debugPrint(result.message);
     }
@@ -102,8 +113,8 @@ extension PrefExt on Pref {
     return Prefs._instance!.getInt(name) ?? 0;
   }
 
-  int set(int value) {
-    Prefs._instance!.setInt(name, value);
+  int set(int value, [bool backup = true]) {
+    Prefs._set(name, value, backup);
     return value;
   }
 
