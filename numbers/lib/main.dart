@@ -53,6 +53,7 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     Device.size = MediaQuery.of(context).size;
     Device.ratio = Device.size.width / 360;
+    Device.aspectRatio = Device.size.width / Device.size.height;
     print("${Device.size} ${MediaQuery.of(context).devicePixelRatio}");
     if (_loadingState == 0) {
       Ads.init();
