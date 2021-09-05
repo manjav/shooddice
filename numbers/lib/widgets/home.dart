@@ -68,7 +68,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           _coins = Positioned(
               top: _game!.bounds.top - 70.d,
               left: 73.d,
-              height: 52 - 5 * _rewardAnimation!.value,
+              height: 52.d - 5 * _rewardAnimation!.value,
               child: Components.coins(context, onTap: () async {
                 MyGame.isPlaying = false;
                 await Rout.push(context, ShopOverlay());
