@@ -30,7 +30,6 @@ enum GameEvent {
 }
 
 class MyGame extends BaseGame with TapDetector {
-  static final padding = 20.0;
   static final Random random = new Random();
   static int boostNextMode = 0;
   static bool boostBig = false;
@@ -91,9 +90,6 @@ class MyGame extends BaseGame with TapDetector {
     Pref.playCount.increase(1);
 
     _linePaint.color = TColors.black.value[0];
-    var width = size.x - padding * 2;
-    Cell.diameter = width / Cells.width;
-    Cell.radius = Cell.diameter * 0.5;
     _bgRect = RRect.fromLTRBXY(bounds.left - 4, bounds.top - 4,
         bounds.right + 4, bounds.bottom + 4, 16, 16);
     _lineRect = RRect.fromLTRBXY(
