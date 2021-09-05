@@ -33,7 +33,7 @@ class Components {
     return Hero(
         tag: "stats",
         child: SizedBox(
-            width: 50,
+            width: 50.d,
             child: BumpedButton(
                 padding: EdgeInsets.fromLTRB(8, 4, 8, 10),
                 content: GestureDetector(
@@ -54,7 +54,7 @@ class Components {
                   child: Text(text,
                       textAlign: TextAlign.center,
                       style: theme.textTheme.bodyText2!
-                          .copyWith(fontSize: text.length > 5 ? 17 : 22))),
+                          .copyWith(fontSize: text.length > 5 ? 17.d : 22.d))),
               clickable
                   ? Text("+  ",
                       textAlign: TextAlign.center,
