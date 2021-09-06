@@ -29,7 +29,7 @@ class _StatsOverlayState extends State<StatsOverlay> {
         height: 460.d,
         statsButton: SizedBox(),
         coinButton:
-            Positioned(top: 48.d, left: 12.d, child: Components.coins(context)),
+            Positioned(top: 38.d, left: 12.d, child: Components.coins(context)),
         content: Screenshot(
             controller: _screenshotController,
             child: Column(children: [

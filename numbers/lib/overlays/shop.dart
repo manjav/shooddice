@@ -87,7 +87,7 @@ class _ShopOverlayState extends State<ShopOverlay> {
           statsButton: SizedBox(),
           scoreButton: SizedBox(),
           coinButton: Positioned(
-              top: 48.d,
+              top: 38.d,
               left: 12.d,
               child: Components.coins(context, clickable: false)),
           padding: EdgeInsets.fromLTRB(6.d, 0, 6.d, 16.d),
@@ -106,7 +106,7 @@ class _ShopOverlayState extends State<ShopOverlay> {
                         coins.length, (i) => _itemBuilder(theme, coins[i])),
                   )),
               Container(
-                  height: 76,
+                  height: 76.d,
                   padding: EdgeInsets.fromLTRB(10.d, 6.d, 10.d, 12.d),
                   decoration:
                       ButtonDecor(TColors.whiteFlat.value, 12.d, true, false),

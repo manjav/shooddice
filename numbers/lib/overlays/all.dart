@@ -43,20 +43,20 @@ class Overlays {
         child: Stack(alignment: Alignment.center, children: [
           scoreButton ??
               Positioned(
-                  top: 62.d,
+                  top: 52.d,
                   right: 10.d,
                   child: Components.scores(theme,
                       onTap: () =>
                           PlayGames.showLeaderboard("CgkIw9yXzt4XEAIQAQ"))),
           statsButton ??
               Positioned(
-                  top: 48.d,
+                  top: 38.d,
                   left: 12.d,
                   child: Components.stats(theme,
                       onTap: () => Rout.push(context, StatsOverlay()))),
           coinButton ??
               Positioned(
-                  top: 48.d, left: 66.d, child: Components.coins(context)),
+                  top: 38.d, left: 66.d, child: Components.coins(context)),
           Column(mainAxisAlignment: MainAxisAlignment.center, children: [
             Padding(
                 padding: EdgeInsets.fromLTRB(48.d, 64.d, 48.d, 20.d),
