@@ -14,7 +14,6 @@ class Prefs {
       if (!prefs.containsKey("visitCount")) {
         await _restore();
         if (!prefs.containsKey("visitCount")) {
-          Pref.noAds.set(0);
           Pref.coin.set(500);
           Pref.removeOne.set(3);
           Pref.removeColor.set(3);
