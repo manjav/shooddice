@@ -35,11 +35,12 @@ extension TColorsExt on TColors {
 }
 
 class Themes {
-  static _style(Color color, double fontSize,
+  static style(Color color, double fontSize,
       {String? font, List<Shadow>? shadows}) {
     return TextStyle(
         color: color,
         fontSize: fontSize,
+        decoration: TextDecoration.none,
         fontFamily: font ?? "quicksand",
         shadows: shadows ??
             [
@@ -53,18 +54,18 @@ class Themes {
   static ThemeData get darkData {
     var textTheme = TextTheme(
         caption: TextStyle(color: TColors.white.value[2], fontSize: 16.d),
-        button: _style(TColors.black.value[0], 24.d, shadows: []),
-        bodyText1: _style(TColors.black.value[0], 22.d, shadows: []),
-        bodyText2: _style(TColors.black.value[0], 20.d, shadows: []),
-        subtitle1: _style(TColors.black.value[0], 16.d, shadows: []),
-        subtitle2: _style(TColors.black.value[0], 14.d, shadows: []),
-        headline1: _style(TColors.white.value[3], 56.d),
-        headline2: _style(TColors.white.value[3], 36.d),
-        headline3: _style(TColors.white.value[3], 30.d),
-        headline4: _style(TColors.white.value[3], 24.d),
-        headline5: _style(TColors.white.value[3], 20.d),
-        headline6: _style(TColors.white.value[3], 16.d),
-        overline: _style(TColors.white.value[3], 32.d, font: "icons"));
+        button: style(TColors.black.value[0], 24.d, shadows: []),
+        bodyText1: style(TColors.black.value[0], 22.d, shadows: []),
+        bodyText2: style(TColors.black.value[0], 20.d, shadows: []),
+        subtitle1: style(TColors.black.value[0], 16.d, shadows: []),
+        subtitle2: style(TColors.black.value[0], 14.d, shadows: []),
+        headline1: style(TColors.white.value[3], 56.d),
+        headline2: style(TColors.white.value[3], 36.d),
+        headline3: style(TColors.white.value[3], 30.d),
+        headline4: style(TColors.white.value[3], 24.d),
+        headline5: style(TColors.white.value[3], 20.d),
+        headline6: style(TColors.white.value[3], 16.d),
+        overline: style(TColors.white.value[3], 32.d, font: "icons"));
 
     // var iconTheme = IconThemeData(color: primaries[50]);
     return ThemeData(

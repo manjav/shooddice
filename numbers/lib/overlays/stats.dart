@@ -78,10 +78,11 @@ class _StatsOverlayState extends State<StatsOverlay> {
   Widget _bigRecordItem(ThemeData theme, int i) {
     return Row(children: [
       SizedBox(
-          width: 56,
-          height: 56,
-          child: Widgets.cell(theme, i, textStyle: theme.textTheme.headline6)),
-      Text(" x ${Prefs.getBig(i)}", style: theme.textTheme.headline4)
+              textStyle: Themes.style(
+                  TColors.white.value[3],
+                  26.d *
+                      Cell.scales[
+                          score.length.clamp(0, Cell.scales.length - 1)]))),
     ]);
   }
 
