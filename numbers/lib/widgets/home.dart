@@ -40,7 +40,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         onWillPop: _onWillPop,
         child: Scaffold(
             body: Stack(children: [
-          GameWidget(game: _game!),
+          _game == null ? SizedBox() : GameWidget(game: _game!),
           Positioned(
               top: _game!.bounds.top - 69.d,
               right: 20.d,

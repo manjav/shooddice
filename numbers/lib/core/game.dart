@@ -522,7 +522,7 @@ class ColumnHint extends PositionComponent with HasGameRef<MyGame> {
     if (appearanceState == 0)
       alpha -= 15;
     else if (appearanceState == 2) alpha += 15;
-    _arrow!.renderPosition(canvas, _arrowPos, _arrowSize);
+    _arrow?.renderPosition(canvas, _arrowPos, _arrowSize);
   }
 
   show(double x, int direction) async {
