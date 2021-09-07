@@ -16,10 +16,12 @@ import 'package:numbers/utils/prefs.dart';
 enum CellState { Init, Float, Falling, Fell, Fixed }
 
 class Cell extends PositionComponent with HasGameRef<MyGame> {
+  static double minSpeed = 0.01;
+  static double maxSpeed = 0.8;
+  static double round = 7.0;
   static final minSpeed = 0.01;
   static final maxSpeed = 0.8;
   static final border = 1.8;
-  static final round = 7.0;
   static final firstRecord = 2048;
   static final firstBigRecord = 8;
   static int maxRandomValue = 3;
