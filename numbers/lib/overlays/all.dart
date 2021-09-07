@@ -82,7 +82,7 @@ class Overlays {
                     ? BoxDecoration(
                         color: theme.dialogTheme.backgroundColor,
                         shape: BoxShape.rectangle,
-                        borderRadius: BorderRadius.all(Radius.circular(24)))
+                        borderRadius: BorderRadius.all(Radius.circular(24.d)))
                     : null,
                 child: content ?? SizedBox())
           ])
@@ -255,9 +255,8 @@ class Overlays {
               width: 80.d,
               height: 80.d,
               child: RotationTransition(
-                turns: AlwaysStoppedAnimation(-0.02),
-                child: Widgets.cell(theme, value),
-              )),
+                  turns: AlwaysStoppedAnimation(-0.02),
+                  child: Widgets.cell(theme, value))),
           Positioned(
               top: 170.d,
               child: Text("Congratulations.\nYou made ${Cell.getScore(value)}!",

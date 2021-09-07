@@ -9,7 +9,7 @@ extension TColorsExt on TColors {
       case TColors.black:
         return [
           Color(0xFF2c3134),
-          Color(0x8B000000),
+          Color(0xBB000000),
           Color(0xFF1F2326),
           Color(0xFF23272A),
         ];
