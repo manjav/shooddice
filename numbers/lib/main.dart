@@ -23,21 +23,35 @@ Future<void> main() async {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   static FirebaseAnalytics analytics = FirebaseAnalytics();
   static FirebaseAnalyticsObserver observer =
       FirebaseAnalyticsObserver(analytics: analytics);
+
+  @override
+  AppState createState() => AppState();
+  static AppState? of(BuildContext context) =>
+      context.findAncestorStateOfType<AppState>();
+}
+
+class AppState extends State<MyApp> {
+  ThemeData _themeData = Themes.darkData;
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations(
         [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
     return MaterialApp(
-        navigatorObservers: <NavigatorObserver>[observer],
-        theme: Themes.darkData,
+        navigatorObservers: <NavigatorObserver>[MyApp.observer],
+        theme: _themeData,
         builder: (BuildContext context, Widget? child) => MediaQuery(
             data: MediaQuery.of(context).copyWith(textScaleFactor: 1),
             child: child!),
         home: MainPage());
+  }
+
+  void updateTheme() {
+    _themeData = Themes.darkData;
+    setState(() {});
   }
 }
 
@@ -53,12 +67,14 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     Device.size = MediaQuery.of(context).size;
     Device.ratio = Device.size.width / 360;
+    Device.aspectRatio = Device.size.width / Device.size.height;
     print("${Device.size} ${MediaQuery.of(context).devicePixelRatio}");
     if (_loadingState == 0) {
       Ads.init();
       Sound.init();
       Notifier.init();
       Prefs.init(() {
+        MyApp.of(context)!.updateTheme();
         _recordApp();
         _loadingState = 1;
         setState(() {});

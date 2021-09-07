@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:numbers/core/achieves.dart';
 import 'package:numbers/core/cell.dart';
 import 'package:numbers/core/cells.dart';
+import 'package:numbers/utils/utils.dart';
 import 'package:numbers/utils/prefs.dart';
 import 'package:numbers/utils/sounds.dart';
 import 'package:numbers/utils/themes.dart';
@@ -30,7 +31,6 @@ enum GameEvent {
 }
 
 class MyGame extends BaseGame with TapDetector {
-  static final padding = 20.0;
   static final Random random = new Random();
   static int boostNextMode = 0;
   static bool boostBig = false;
@@ -64,6 +64,10 @@ class MyGame extends BaseGame with TapDetector {
     Prefs.score = 0;
     this.bounds = bounds;
     this.onGameEvent = onGameEvent;
+    Cell.thickness = 4.6.d;
+    Cell.minSpeed = 0.01.d;
+    Cell.maxSpeed = 0.8.d;
+    Cell.round = 7.0.d;
   }
   @override
   Color backgroundColor() => TColors.black.value[0];
@@ -72,9 +76,9 @@ class MyGame extends BaseGame with TapDetector {
     if (_tutorMode) return;
     var _new = Prefs.score += Cell.getScore(value);
     onGameEvent?.call(GameEvent.score, _new);
-    PlayGames.submitScoreById("CgkIw9yXzt4XEAIQAQ", Prefs.score);
     if (Pref.record.value >= Prefs.score) return;
-    Pref.record.set(Prefs.score, false);
+    PlayGames.submitScoreById("CgkIw9yXzt4XEAIQAQ", Prefs.score);
+    Pref.record.set(Prefs.score);
     if (Prefs.score > Cell.firstRecord) {
       if (!_recordChanged) {
         isPlaying = false;
@@ -91,9 +95,6 @@ class MyGame extends BaseGame with TapDetector {
     Pref.playCount.increase(1);
 
     _linePaint.color = TColors.black.value[0];
-    var width = size.x - padding * 2;
-    Cell.diameter = width / Cells.width;
-    Cell.radius = Cell.diameter * 0.5;
     _bgRect = RRect.fromLTRBXY(bounds.left - 4, bounds.top - 4,
         bounds.right + 4, bounds.bottom + 4, 16, 16);
     _lineRect = RRect.fromLTRBXY(
@@ -521,7 +522,7 @@ class ColumnHint extends PositionComponent with HasGameRef<MyGame> {
     if (appearanceState == 0)
       alpha -= 15;
     else if (appearanceState == 2) alpha += 15;
-    _arrow!.renderPosition(canvas, _arrowPos, _arrowSize);
+    _arrow?.renderPosition(canvas, _arrowPos, _arrowSize);
   }
 
   show(double x, int direction) async {

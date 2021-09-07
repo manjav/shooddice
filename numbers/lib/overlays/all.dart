@@ -43,20 +43,20 @@ class Overlays {
         child: Stack(alignment: Alignment.center, children: [
           scoreButton ??
               Positioned(
-                  top: 62.d,
+                  top: 52.d,
                   right: 10.d,
                   child: Components.scores(theme,
                       onTap: () =>
                           PlayGames.showLeaderboard("CgkIw9yXzt4XEAIQAQ"))),
           statsButton ??
               Positioned(
-                  top: 48.d,
+                  top: 38.d,
                   left: 12.d,
                   child: Components.stats(theme,
                       onTap: () => Rout.push(context, StatsOverlay()))),
           coinButton ??
               Positioned(
-                  top: 48.d, left: 66.d, child: Components.coins(context)),
+                  top: 38.d, left: 66.d, child: Components.coins(context)),
           Column(mainAxisAlignment: MainAxisAlignment.center, children: [
             Padding(
                 padding: EdgeInsets.fromLTRB(48.d, 64.d, 48.d, 20.d),
@@ -82,7 +82,7 @@ class Overlays {
                     ? BoxDecoration(
                         color: theme.dialogTheme.backgroundColor,
                         shape: BoxShape.rectangle,
-                        borderRadius: BorderRadius.all(Radius.circular(24)))
+                        borderRadius: BorderRadius.all(Radius.circular(24.d)))
                     : null,
                 child: content ?? SizedBox())
           ])
@@ -255,9 +255,8 @@ class Overlays {
               width: 80.d,
               height: 80.d,
               child: RotationTransition(
-                turns: AlwaysStoppedAnimation(-0.02),
-                child: Widgets.cell(theme, value),
-              )),
+                  turns: AlwaysStoppedAnimation(-0.02),
+                  child: Widgets.cell(theme, value))),
           Positioned(
               top: 170.d,
               child: Text("Congratulations.\nYou made ${Cell.getScore(value)}!",
@@ -439,8 +438,8 @@ class Overlays {
         hasClose: false,
         coinButton: SizedBox(),
         scoreButton: SizedBox(),
-        padding: EdgeInsets.fromLTRB(16, 4, 16, 8),
-        height: 54,
+        padding: EdgeInsets.fromLTRB(16.d, 4.d, 16.d, 8.d),
+        height: 54.d,
         title: "Quit",
         content:
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
@@ -470,13 +469,13 @@ class Overlays {
 
   static Widget message(BuildContext context, Widget? content) {
     return basic(context,
-        height: 54,
+        height: 54.d,
         sfx: "merge-9",
         hasClose: false,
         coinButton: SizedBox(),
         statsButton: SizedBox(),
         scoreButton: SizedBox(),
-        padding: EdgeInsets.fromLTRB(12, 4, 12, 8),
+        padding: EdgeInsets.fromLTRB(12.d, 4.d, 12.d, 8.d),
         content: content);
   }
 }

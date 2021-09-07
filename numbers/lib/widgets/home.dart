@@ -40,7 +40,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         onWillPop: _onWillPop,
         child: Scaffold(
             body: Stack(children: [
-          GameWidget(game: _game!),
+          _game == null ? SizedBox() : GameWidget(game: _game!),
           Positioned(
               top: _game!.bounds.top - 69.d,
               right: 20.d,
@@ -68,7 +68,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           _coins = Positioned(
               top: _game!.bounds.top - 70.d,
               left: 73.d,
-              height: 52 - 5 * _rewardAnimation!.value,
+              height: 52.d - 5 * _rewardAnimation!.value,
               child: Components.coins(context, onTap: () async {
                 MyGame.isPlaying = false;
                 await Rout.push(context, ShopOverlay());
@@ -275,9 +275,14 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   }
 
   void _createGame() {
-    var t = (Device.size.height - ((Cells.height + 1.6) * Cell.diameter)) * 0.5;
-    var bounds = Rect.fromLTRB(MyGame.padding, t,
-        Device.size.width - MyGame.padding, t + Cell.diameter * 7);
+    var padding = 24.d + (Device.size.aspectRatio - 0.5) * 200.d;
+    var width = Device.size.width - padding * 2;
+    Cell.diameter = width / Cells.width;
+    Cell.radius = Cell.diameter * 0.5;
+
+    var t = (Device.size.height - ((Cells.height + 1) * Cell.diameter)) * 0.5;
+    var bounds = Rect.fromLTRB(
+        padding, t, Device.size.width - padding, t + Cell.diameter * 7);
     _game = MyGame(bounds: bounds, onGameEvent: _onGameEventHandler);
   }
 

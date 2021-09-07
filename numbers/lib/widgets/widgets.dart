@@ -6,15 +6,14 @@ import 'package:numbers/utils/utils.dart';
 class Widgets {
   static Widget cell(ThemeData theme, int value, {TextStyle? textStyle}) {
     return Container(
-      padding: EdgeInsets.only(bottom: 6.d),
-      alignment: Alignment.center,
-      child: Text("${Cell.getScore(value)}",
-          textAlign: TextAlign.center,
-          style: textStyle ?? theme.textTheme.headline4),
-      decoration: CellDecoration(value),
-      width: 154.d,
-      height: 52.d,
-    );
+        padding: EdgeInsets.only(bottom: 6.d),
+        alignment: Alignment.center,
+        child: Text("${Cell.getScore(value)}",
+            textAlign: TextAlign.center,
+            style: textStyle ?? theme.textTheme.headline4),
+        decoration: CellDecoration(value),
+        width: 154.d,
+        height: 52.d);
   }
 }
 

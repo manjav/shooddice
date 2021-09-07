@@ -87,26 +87,28 @@ class _ShopOverlayState extends State<ShopOverlay> {
           statsButton: SizedBox(),
           scoreButton: SizedBox(),
           coinButton: Positioned(
-              top: 48.d,
+              top: 38.d,
               left: 12.d,
               child: Components.coins(context, clickable: false)),
-          padding: EdgeInsets.fromLTRB(6.d, 0, 6.d, 16.d),
-          height: 460.d,
+          padding: EdgeInsets.all(8.d),
+          width: 310.d,
+          height: Device.size.aspectRatio > 0.6 ? 390.d : 410.d,
           content: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               SizedBox(
-                  height: 240.d,
+                  height: 200.d,
                   child: GridView.count(
+                    padding: EdgeInsets.zero,
                     crossAxisCount: 3,
                     crossAxisSpacing: 3.d,
                     mainAxisSpacing: 2.d,
-                    childAspectRatio: 0.94,
+                    childAspectRatio: 1,
                     children: List.generate(
                         coins.length, (i) => _itemBuilder(theme, coins[i])),
                   )),
               Container(
-                  height: 76,
+                  height: Device.size.aspectRatio > 0.6 ? 56.d : 72.d,
                   padding: EdgeInsets.fromLTRB(10.d, 6.d, 10.d, 12.d),
                   decoration:
                       ButtonDecor(TColors.whiteFlat.value, 12.d, true, false),
@@ -132,7 +134,7 @@ class _ShopOverlayState extends State<ShopOverlay> {
                     SizedBox(height: 4.d)
                   ])),
               Container(
-                  height: 44.d,
+                  height: 32.d,
                   alignment: Alignment.center,
                   child: Container(
                       width: 48.d,

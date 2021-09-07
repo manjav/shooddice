@@ -98,7 +98,7 @@ class _RateOverlayState extends State<RateOverlay> {
               Center(
                   child: RatingBar.builder(
                       initialRating: widget.initialRating.toDouble(),
-                      itemSize: 36,
+                      itemSize: 36.d,
                       minRating: 1.0,
                       allowHalfRating: false,
                       glowColor: Colors.amber,
