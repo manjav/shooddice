@@ -19,8 +19,7 @@ class Cell extends PositionComponent with HasGameRef<MyGame> {
   static double minSpeed = 0.01;
   static double maxSpeed = 0.8;
   static double round = 7.0;
-  static final minSpeed = 0.01;
-  static final maxSpeed = 0.8;
+  static double thickness = 4.6;
   static final border = 1.8;
   static final firstRecord = 2048;
   static final firstBigRecord = 8;
@@ -75,7 +74,7 @@ class Cell extends PositionComponent with HasGameRef<MyGame> {
   static final RRect _sideRect = RRect.fromLTRBXY(strock - radius,
       strock - radius, radius - strock, radius - strock, round, round);
   static final RRect _overRect = RRect.fromLTRBXY(strock - radius,
-      strock - radius, radius - strock, radius - strock - 4.6, round, round);
+      strock - radius, radius - strock, radius - strock - thickness, round, round);
 
   static final Paint _backPaint = colors[0].paint();
 

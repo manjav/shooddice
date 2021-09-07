@@ -64,6 +64,7 @@ class MyGame extends BaseGame with TapDetector {
     Prefs.score = 0;
     this.bounds = bounds;
     this.onGameEvent = onGameEvent;
+    Cell.thickness = 4.6.d;
     Cell.minSpeed = 0.01.d;
     Cell.maxSpeed = 0.8.d;
     Cell.round = 7.0.d;
