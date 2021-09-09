@@ -215,11 +215,11 @@ class MyGame extends BaseGame with TapDetector {
     if (_cells.last == null || _cells.last!.state != CellState.Float) return;
 
     if (_tutorMode && _cells.last!.y > bounds.top + Cell.diameter * 1.54) {
-        isPlaying = false;
-        var c = Cell.getNextColumn(_fallingsCount);
+      isPlaying = false;
+      var c = Cell.getNextColumn(_fallingsCount);
       _columnHint!.show(
           bounds.left + c * Cell.diameter + Cell.radius, c - _nextCell.column);
-      }
+    }
 
     // Check reach to target
     if (_cells.last!.y < _cells.target!) {
@@ -512,7 +512,7 @@ class ColumnHint extends PositionComponent with HasGameRef<MyGame> {
 
   Svg? _arrow;
   Vector2 _arrowPos = Vector2.all(0);
-  Vector2 _arrowSize = Vector2.all(48);
+  Vector2 _arrowSize = Vector2.all(32.d);
 
   ColumnHint(this.rect) : super();
 
@@ -531,9 +531,10 @@ class ColumnHint extends PositionComponent with HasGameRef<MyGame> {
     _arrow = await Svg.load('images/arrow-$side.svg');
     alpha = 1;
     rect = RRect.fromLTRBXY(
-        x - Cell.radius, rect.top, x + Cell.radius, rect.bottom, 8, 8);
+        x - Cell.radius, rect.top, x + Cell.radius, rect.bottom, 8.d, 8.d);
     _arrowPos.x = rect.center.dx - _arrowSize.x * 0.5;
-    _arrowPos.y = rect.center.dy - _arrowSize.y * (direction == 0 ? 2.5 : 3);
+    _arrowPos.y =
+        rect.top + Cell.radius * (direction == 0 ? 2.1 : 0.9);
     appearanceState = 2;
   }
 
