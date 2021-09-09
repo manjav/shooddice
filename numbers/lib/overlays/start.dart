@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:numbers/core/cell.dart';
@@ -20,10 +22,11 @@ class StartOverlay extends StatefulWidget {
 }
 
 class _StartOverlayState extends State<StartOverlay> {
+  Timer? _startTimer;
   @override
   Widget build(BuildContext context) {
     if (Pref.tutorMode.value == 0) {
-      _onStart(delay: 100);
+      _onStart(delay: 1000);
       return SizedBox();
     }
     var theme = Theme.of(context);
@@ -63,15 +66,18 @@ class _StartOverlayState extends State<StartOverlay> {
   }
 
   _onStart({int delay = 0}) async {
+    _startTimer?.cancel();
     var shown = await RateOverlay.showRating(context);
     if (!shown && Pref.visitCount.value > 10)
       await Ads.show(AdPlace.Interstitial);
-    if (delay > 0) await Future.delayed(Duration(milliseconds: delay));
-    await Rout.push(context, HomePage());
-    Cell.maxRandomValue = 3;
-    MyGame.boostNextMode = 0;
-    MyGame.boostBig = false;
-    _onUpdate();
+    _startTimer = Timer(Duration(milliseconds: delay), () async {
+      print("++++++++++++ HomePage");
+      await Rout.push(context, HomePage());
+      Cell.maxRandomValue = 3;
+      MyGame.boostNextMode = 0;
+      MyGame.boostBig = false;
+      _onUpdate();
+    });
   }
 
   _onUpdate() => setState(() {});
