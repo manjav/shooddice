@@ -71,7 +71,6 @@ class _StartOverlayState extends State<StartOverlay> {
     if (!shown && Pref.visitCount.value > 10)
       await Ads.show(AdPlace.Interstitial);
     _startTimer = Timer(Duration(milliseconds: delay), () async {
-      print("++++++++++++ HomePage");
       await Rout.push(context, HomePage());
       Cell.maxRandomValue = 3;
       MyGame.boostNextMode = 0;
