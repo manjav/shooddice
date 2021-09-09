@@ -59,7 +59,7 @@ class Overlays {
                   top: 38.d, left: 66.d, child: Components.coins(context)),
           Column(mainAxisAlignment: MainAxisAlignment.center, children: [
             Padding(
-                padding: EdgeInsets.fromLTRB(48.d, 64.d, 48.d, 20.d),
+                padding: EdgeInsets.fromLTRB(48.d, 80.d, 48.d, 20.d),
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -437,6 +437,7 @@ class Overlays {
     return basic(context,
         hasClose: false,
         coinButton: SizedBox(),
+        statsButton: SizedBox(),
         scoreButton: SizedBox(),
         padding: EdgeInsets.fromLTRB(16.d, 4.d, 16.d, 8.d),
         height: 54.d,
