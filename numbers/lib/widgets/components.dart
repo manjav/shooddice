@@ -76,13 +76,13 @@ class Components {
             decoration: ButtonDecor(TColors.whiteFlat.value, 12.d, true, false),
             child: Column(mainAxisAlignment: MainAxisAlignment.end, children: [
               Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                SVG.show(boost, 72.d),
+                SVG.show(boost, 68.d),
                 _has(boost) ? SVG.show("accept", 24.d) : SizedBox()
               ]),
               Text(title,
                   style: theme.textTheme.subtitle2,
                   textAlign: TextAlign.center),
-              SizedBox(height: 12.d),
+              SizedBox(height: 10.d),
               SizedBox(
                   width: 92.d,
                   height: 40.d,
@@ -97,7 +97,7 @@ class Components {
                                 style: theme.textTheme.bodyText2))
                       ]),
                       onTap: () => _onStartTap(context, boost, 100, onSelect))),
-              SizedBox(height: 8.d),
+              SizedBox(height: 6.d),
               SizedBox(
                   width: 92.d,
                   height: 40.d,
