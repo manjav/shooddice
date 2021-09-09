@@ -20,7 +20,7 @@ class Cell extends PositionComponent with HasGameRef<MyGame> {
   static double maxSpeed = 0.8;
   static double round = 7.0;
   static double thickness = 4.6;
-  static final border = 1.8;
+  static double border = 1.8;
   static final firstRecord = 2048;
   static final firstBigRecord = 8;
   static int maxRandomValue = 3;

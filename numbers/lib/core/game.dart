@@ -68,6 +68,7 @@ class MyGame extends BaseGame with TapDetector {
     Cell.minSpeed = 0.01.d;
     Cell.maxSpeed = 0.8.d;
     Cell.round = 7.0.d;
+    Cell.border = 1.8.d;
   }
   @override
   Color backgroundColor() => TColors.black.value[0];
