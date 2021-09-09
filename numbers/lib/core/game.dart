@@ -42,7 +42,7 @@ class MyGame extends BaseGame with TapDetector {
   String? removingMode;
 
   bool _recordChanged = false;
-  bool _tutorMode = Pref.tutorMode.value == 0;
+  bool _tutorMode = false;
   int _numRewardCells = 0;
   int _mergesCount = 0;
   int _valueRecord = 0;
@@ -93,6 +93,7 @@ class MyGame extends BaseGame with TapDetector {
   void onAttach() async {
     super.onAttach();
 
+    _tutorMode = Pref.tutorMode.value == 0;
     Pref.playCount.increase(1);
 
     _linePaint.color = TColors.black.value[0];
@@ -213,14 +214,13 @@ class MyGame extends BaseGame with TapDetector {
     if (!isPlaying) return;
     if (_cells.last == null || _cells.last!.state != CellState.Float) return;
 
-    if (_tutorMode) {
-      if (_cells.last!.y > bounds.top + Cell.diameter * 1.5) {
+    if (_tutorMode && _cells.last!.y > bounds.top + Cell.diameter * 1.54) {
         isPlaying = false;
         var c = Cell.getNextColumn(_fallingsCount);
-        _columnHint!.show(bounds.left + c * Cell.diameter + Cell.radius,
-            c - _nextCell.column);
+      _columnHint!.show(
+          bounds.left + c * Cell.diameter + Cell.radius, c - _nextCell.column);
       }
-    }
+
     // Check reach to target
     if (_cells.last!.y < _cells.target!) {
       _speed = (_speed + 0.01).clamp(Cell.minSpeed, Cell.maxSpeed);
