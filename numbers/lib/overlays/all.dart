@@ -94,7 +94,8 @@ class Overlays {
     var cost = 100 * pow(2, numRevive).round();
     return basic(context,
         sfx: "lose",
-        title: "Revive",
+        title: Device.aspectRatio < 0.7 ? "Revive" : null,
+        height: 300.d,
         content: Stack(
           alignment: Alignment.topCenter,
           children: [
@@ -115,7 +116,7 @@ class Overlays {
                     stateMachines: ["machine"])),
             Positioned(
                 height: 76.d,
-                width: 124.d,
+                width: 120.d,
                 bottom: 0,
                 left: 0,
                 child: BumpedButton(
@@ -136,7 +137,7 @@ class Overlays {
                     ]))),
             Positioned(
                 height: 76.d,
-                width: 124.d,
+                width: 120.d,
                 bottom: 0,
                 right: 0,
                 child: BumpedButton(
