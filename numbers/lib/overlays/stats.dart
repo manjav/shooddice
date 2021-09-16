@@ -27,7 +27,7 @@ class _StatsOverlayState extends State<StatsOverlay> {
     var theme = Theme.of(context);
     return Overlays.basic(context,
         title: "Stats",
-        height: 320.d,
+        height: 300.d,
         statsButton: SizedBox(),
         padding: EdgeInsets.all(12.d),
         coinButton:
@@ -45,9 +45,9 @@ class _StatsOverlayState extends State<StatsOverlay> {
                   style: theme.textTheme.headline6),
               SizedBox(
                 width: 270.d,
-                height: 172.d,
+                height: 164.d,
                 child: GridView.count(
-                    padding: EdgeInsets.only(top: 12.d),
+                    padding: EdgeInsets.only(top: 8.d, left: 8.d),
                     crossAxisCount: 3,
                     crossAxisSpacing: 3.d,
                     mainAxisSpacing: 2.d,
@@ -55,10 +55,10 @@ class _StatsOverlayState extends State<StatsOverlay> {
                     children:
                         List.generate(9, (i) => _bigRecordItem(theme, 9 + i))),
               ),
-              SizedBox(height: 16.d),
+              SizedBox(height: 10.d),
               shareMode
                   ? Padding(
-                      padding: EdgeInsets.all(10.d),
+                      padding: EdgeInsets.all(4.d),
                       child: Text(
                           "This is my record. Are you ready to compete with me?",
                           style: theme.textTheme.headline6))
@@ -78,8 +78,8 @@ class _StatsOverlayState extends State<StatsOverlay> {
     var score = Cell.getScore(i).toString();
     return Row(children: [
       SizedBox(
-          width: 48.d,
-          height: 48.d,
+          width: 44.d,
+          height: 44.d,
           child: Widgets.cell(theme, i,
               textStyle: Themes.style(
                   TColors.white.value[3],
