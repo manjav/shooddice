@@ -509,12 +509,22 @@ class ColumnHint extends PositionComponent with HasGameRef<MyGame> {
     ..strokeWidth = 2
     ..style = PaintingStyle.stroke;
   int alpha = 0;
+  double _scale = 0.99;
 
+  Svg? _hand;
   Svg? _arrow;
   Vector2 _arrowPos = Vector2.all(0);
   Vector2 _arrowSize = Vector2.all(32.d);
+  Vector2 _handPos = Vector2.all(0);
+  Vector2 _handSize = Vector2.all(96.d);
 
-  ColumnHint(this.rect) : super();
+  ColumnHint(this.rect) : super() {
+    _create();
+  }
+
+  Future<void> _create() async {
+    _hand = await Svg.load('images/hand.svg');
+  }
 
   void render(Canvas canvas) {
     if (alpha <= 0) return;
@@ -523,6 +533,12 @@ class ColumnHint extends PositionComponent with HasGameRef<MyGame> {
     if (appearanceState == 0)
       alpha -= 15;
     else if (appearanceState == 2) alpha += 15;
+
+    if (_handSize.x < 88.d)
+      _scale = 1.003;
+    else if (_handSize.x > 96.d) _scale = 0.992;
+    _handSize.scale(_scale);
+    if (alpha >= 1000) _hand?.renderPosition(canvas, _handPos, _handSize);
     _arrow?.renderPosition(canvas, _arrowPos, _arrowSize);
   }
 
@@ -532,9 +548,10 @@ class ColumnHint extends PositionComponent with HasGameRef<MyGame> {
     alpha = 1;
     rect = RRect.fromLTRBXY(
         x - Cell.radius, rect.top, x + Cell.radius, rect.bottom, 8.d, 8.d);
+    _handPos.x = rect.center.dx - 2.d;
+    _handPos.y = rect.center.dy + 4.d;
     _arrowPos.x = rect.center.dx - _arrowSize.x * 0.5;
-    _arrowPos.y =
-        rect.top + Cell.radius * (direction == 0 ? 2.1 : 0.9);
+    _arrowPos.y = rect.top + Cell.radius * (direction == 0 ? 2.1 : 0.9);
     appearanceState = 2;
   }
 
