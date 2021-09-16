@@ -59,7 +59,7 @@ class Overlays {
                   top: 32.d, left: 66.d, child: Components.coins(context)),
           Column(mainAxisAlignment: MainAxisAlignment.center, children: [
             Padding(
-                padding: EdgeInsets.fromLTRB(48.d, 80.d, 48.d, 20.d),
+                padding: EdgeInsets.fromLTRB(48.d, 80.d, 48.d, 10.d),
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -77,7 +77,7 @@ class Overlays {
             Container(
                 width: width ?? 300.d,
                 height: height == null ? 340.d : (height == 0 ? null : height),
-                padding: padding ?? EdgeInsets.fromLTRB(18.d, 12.d, 18.d, 28.d),
+                padding: padding ?? EdgeInsets.fromLTRB(18.d, 12.d, 18.d, 18.d),
                 decoration: hasChrome
                     ? BoxDecoration(
                         color: theme.dialogTheme.backgroundColor,
@@ -92,9 +92,10 @@ class Overlays {
   static revive(BuildContext context, int numRevive) {
     var theme = Theme.of(context);
     var cost = 100 * pow(2, numRevive).round();
+    var isTall = Device.aspectRatio < 0.7;
     return basic(context,
         sfx: "lose",
-        title: Device.aspectRatio < 0.7 ? "Revive" : null,
+        title: isTall ? "Revive" : null,
         height: 300.d,
         content: Stack(
           alignment: Alignment.topCenter,
@@ -171,6 +172,8 @@ class Overlays {
     return basic(context,
         sfx: "win",
         hasClose: false,
+        height: 310.d,
+        padding: EdgeInsets.fromLTRB(18.d, 0.d, 18.d, 18.d),
         onWillPop: () => _buttonsClick(context, "record", reward),
         content: Stack(alignment: Alignment.topCenter, children: [
           Center(
@@ -240,32 +243,31 @@ class Overlays {
     var theme = Theme.of(context);
     return basic(context,
         sfx: "win",
-        height: 380.d,
+        height: 330.d,
         hasClose: false,
-        title: "Big Block",
+        padding: EdgeInsets.fromLTRB(18.d, 0.d, 18.d, 18.d),
+        title: Device.aspectRatio < 0.7 ? "Big Block" : null,
         onWillPop: () => _buttonsClick(context, "big", reward),
         content: Stack(alignment: Alignment.topCenter, children: [
           Positioned(
               top: 0,
-              width: 200.d,
-              height: 200.d,
+              width: 180.d,
+              height: 180.d,
               child: RiveAnimation.asset('anims/nums-shine.riv',
                   stateMachines: ["machine"])),
           Positioned(
-              top: 58.d,
+              top: 48.d,
               width: 80.d,
               height: 80.d,
               child: RotationTransition(
                   turns: AlwaysStoppedAnimation(-0.02),
                   child: Widgets.cell(theme, value))),
           Positioned(
-              top: 170.d,
-              child: Text("Congratulations.\nYou made ${Cell.getScore(value)}!",
-                  style: theme.textTheme.caption, textAlign: TextAlign.center)),
-          Positioned(
-              top: 225.d,
-              child:
-                  Text("Earn more reward?", style: theme.textTheme.headline6)),
+              top: 140.d,
+              child: Text(
+                  "Congratulations.\nYou made ${Cell.getScore(value)}!\n\nEarn more reward?",
+                  style: theme.textTheme.caption,
+                  textAlign: TextAlign.center)),
           Positioned(
               height: 76.d,
               width: 124.d,
@@ -278,12 +280,12 @@ class Overlays {
                     SVG.show("coin", 36.d),
                     Positioned(
                         top: 5.d,
-                        left: 40.d,
+                        left: 36.d,
                         child: Text(reward.format(),
                             style: theme.textTheme.button)),
                     Positioned(
                         bottom: 7.d,
-                        left: 40.d,
+                        left: 36.d,
                         child: Text("Claim", style: theme.textTheme.subtitle2)),
                   ]))),
           Positioned(
