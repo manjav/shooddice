@@ -31,7 +31,7 @@ class _StartOverlayState extends State<StartOverlay> {
     }
     var theme = Theme.of(context);
     return Overlays.basic(context,
-        height: 330.d,
+        height: 300.d,
         hasClose: false,
         title: "Select Boost Items",
         padding: EdgeInsets.fromLTRB(12.d, 12.d, 12.d, 14.d),
@@ -43,12 +43,13 @@ class _StartOverlayState extends State<StartOverlay> {
                   children: [
                 Components.startButton(context,
                     "Start the game with block 512!", "512", _onUpdate),
+                SizedBox(width: 2.d),
                 Components.startButton(context,
                     "Preview the next upcoming block!", "next", _onUpdate)
               ])),
           SizedBox(height: 10.d),
           Container(
-              height: 72.d,
+              height: 64.d,
               child: BumpedButton(
                   colors: TColors.blue.value,
                   onTap: _onStart,
