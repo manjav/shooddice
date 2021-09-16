@@ -87,7 +87,7 @@ class _ShopOverlayState extends State<ShopOverlay> {
           statsButton: SizedBox(),
           scoreButton: SizedBox(),
           coinButton: Positioned(
-              top: 38.d,
+              top: 32.d,
               left: 12.d,
               child: Components.coins(context, clickable: false)),
           padding: EdgeInsets.all(8.d),
