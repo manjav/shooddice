@@ -92,10 +92,9 @@ class Overlays {
   static revive(BuildContext context, int numRevive) {
     var theme = Theme.of(context);
     var cost = 100 * pow(2, numRevive).round();
-    var isTall = Device.aspectRatio < 0.7;
     return basic(context,
         sfx: "lose",
-        title: isTall ? "Revive" : null,
+        title: Device.aspectRatio < 0.7 ? "Revive" : null,
         height: 300.d,
         content: Stack(
           alignment: Alignment.topCenter,
