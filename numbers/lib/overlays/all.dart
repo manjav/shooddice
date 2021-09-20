@@ -399,8 +399,8 @@ class Overlays {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           SizedBox(
-                              width: 98,
-                              height: 40,
+                              width: 98.d,
+                              height: 40.d,
                               child: BumpedButton(
                                   cornerRadius: 8.d,
                                   content: Row(children: [
