@@ -69,7 +69,7 @@ class _StartOverlayState extends State<StartOverlay> {
   _onStart({int delay = 0}) async {
     _startTimer?.cancel();
     var shown = await RateOverlay.showRating(context);
-    if (!shown && Pref.visitCount.value > 10)
+    if (!shown && Pref.playCount.value > 10)
       await Ads.show(AdPlace.Interstitial);
     _startTimer = Timer(Duration(milliseconds: delay), () async {
       await Rout.push(context, HomePage());
