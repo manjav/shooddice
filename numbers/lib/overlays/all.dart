@@ -238,9 +238,11 @@ class Overlays {
         ]));
   }
 
-  static bigValue(BuildContext context, int value) {
+  static bigValue(
+      BuildContext context, int value, ConfettiController confettiController) {
     var reward = value * 20;
     var theme = Theme.of(context);
+    Timer(Duration(milliseconds: 500), () => confettiController.play());
     return basic(context,
         sfx: "win",
         height: 330.d,
@@ -249,19 +251,6 @@ class Overlays {
         title: Device.aspectRatio < 0.7 ? "Big Block" : null,
         onWillPop: () => _buttonsClick(context, "big", reward),
         content: Stack(alignment: Alignment.topCenter, children: [
-          Positioned(
-              top: 0,
-              width: 180.d,
-              height: 180.d,
-              child: RiveAnimation.asset('anims/nums-shine.riv',
-                  stateMachines: ["machine"])),
-          Positioned(
-              top: 48.d,
-              width: 80.d,
-              height: 80.d,
-              child: RotationTransition(
-                  turns: AlwaysStoppedAnimation(-0.02),
-                  child: Widgets.cell(theme, value))),
           Positioned(
               top: 140.d,
               child: Text(
@@ -313,7 +302,23 @@ class Overlays {
                           SVG.show("coin", 22.d),
                           Text("x$rewardCoef", style: theme.textTheme.headline6)
                         ])),
-              ]))
+              ])),
+          Center(
+              heightFactor: 0.52,
+              child: Components.confetty(confettiController)),
+          Positioned(
+              top: 0,
+              width: 180.d,
+              height: 180.d,
+              child: RiveAnimation.asset('anims/nums-shine.riv',
+                  stateMachines: ["machine"])),
+          Positioned(
+              top: 48.d,
+              width: 80.d,
+              height: 80.d,
+              child: RotationTransition(
+                  turns: AlwaysStoppedAnimation(-0.02),
+                  child: Widgets.cell(theme, value)))
         ]));
   }
 
