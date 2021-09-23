@@ -196,7 +196,6 @@ class MyGame extends BaseGame with TapDetector {
     _cells.target =
         bounds.top + Cell.diameter * (Cells.height - row) + Cell.radius;
     add(cell);
-    _mergesCount = 0;
     if (!_tutorMode)
       _nextCell.init(_nextCell.column, 0, Cell.getNextValue(_fallingsCount),
           hiddenMode: boostNextMode + 1);
@@ -339,7 +338,11 @@ class MyGame extends BaseGame with TapDetector {
     });
     if (hasFloat) return;
     // Check all matchs after falling animation
-    if (!_findMatchs()) _spawn();
+    if (!_findMatchs()) {
+      _celebrate();
+      _mergesCount = 0;
+      _spawn();
+    }
   }
 
   bool _findMatchs() {
@@ -466,6 +469,33 @@ class MyGame extends BaseGame with TapDetector {
           onGameEvent?.call(GameEvent.rewarded, 0);
         }));
     add(r);
+  }
+
+  Future<void> _celebrate() async {
+    var limit = 3;
+    if (_mergesCount < limit) return;
+    var sprite = await Sprite.load(
+        'celebration-${(_mergesCount - limit).clamp(0, 3)}.png');
+    var celebration = SpriteComponent(
+        position: Vector2(_bgRect!.center.dx, _bgRect!.center.dy),
+        size: Vector2.zero(),
+        sprite: sprite);
+    celebration.anchor = Anchor.center;
+    var _size = Vector2(bounds.width, bounds.width * 0.2);
+    var start =
+        ScaleEffect(size: _size, duration: 0.3, curve: Curves.easeInExpo);
+    var idle1 = ScaleEffect(
+        size: _size * 1.05, duration: 0.4, curve: Curves.easeOutExpo);
+    var idle2 = ScaleEffect(size: _size * 1.0, duration: 0.6);
+    var end = ScaleEffect(
+        size: Vector2(_size.x, 0), duration: 0.2, curve: Curves.easeInBack);
+    celebration.addEffect(SequenceEffect(
+        effects: [start, idle1, idle2, end],
+        onComplete: () {
+          remove(celebration);
+          onGameEvent?.call(GameEvent.rewarded, 0);
+        }));
+    add(celebration);
   }
 }
 
