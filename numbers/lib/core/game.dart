@@ -389,7 +389,7 @@ class MyGame extends BaseGame with TapDetector {
       // debugPrint("match $c len:${matchs.length}");
     }
     if (merges > 0) {
-      _mergesCount++;
+      _mergesCount = (_mergesCount + 1).clamp(1, 6);
       Sound.play("merge-$_mergesCount");
       Sound.vibrate(3 + 4 * _mergesCount);
     }
