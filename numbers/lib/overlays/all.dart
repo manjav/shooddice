@@ -322,8 +322,10 @@ class Overlays {
         ]));
   }
 
-  static Widget? endTutorial(BuildContext context) {
+  static Widget? endTutorial(
+      BuildContext context, ConfettiController confettiController) {
     var theme = Theme.of(context);
+    Timer(Duration(milliseconds: 1), () => confettiController.play());
     return basic(context,
         sfx: "win",
         title: "Good Job!",
@@ -365,6 +367,7 @@ class Overlays {
                         SVG.icon("4", theme),
                         Text("Ok", style: theme.textTheme.headline5)
                       ]))),
+          Center(child: Components.confetty(confettiController))
         ]));
   }
 

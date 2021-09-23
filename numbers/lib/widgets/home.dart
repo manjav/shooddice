@@ -179,7 +179,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         _confettiController!.play();
         return;
       case GameEvent.completeTutorial:
-        _widget = Overlays.endTutorial(context);
+        _widget = Overlays.endTutorial(context, _confettiController!);
         break;
       case GameEvent.lose:
         await Future.delayed(Duration(seconds: 1));
