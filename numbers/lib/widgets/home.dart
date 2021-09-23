@@ -175,6 +175,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       case GameEvent.boost:
         await _boost("next");
         break;
+      case GameEvent.celebrate:
+        _confettiController!.play();
+        return;
       case GameEvent.completeTutorial:
         _widget = Overlays.endTutorial(context);
         break;

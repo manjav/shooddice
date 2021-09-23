@@ -21,6 +21,7 @@ import 'package:numbers/utils/gemeservice.dart';
 enum GameEvent {
   big,
   boost,
+  celebrate,
   completeTutorial,
   lose,
   record,
@@ -498,6 +499,7 @@ class MyGame extends BaseGame with TapDetector {
     add(celebration);
     await Future.delayed(Duration(milliseconds: 200));
     Sound.play("merge-end");
+    onGameEvent?.call(GameEvent.celebrate, 0);
   }
 }
 
