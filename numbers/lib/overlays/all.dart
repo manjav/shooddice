@@ -164,9 +164,10 @@ class Overlays {
   }
 
   static int rewardCoef = 2;
-  static record(BuildContext context) {
+  static record(BuildContext context, ConfettiController confettiController) {
     var reward = 100;
     var theme = Theme.of(context);
+    Timer(Duration(milliseconds: 500), () => confettiController.play());
     return basic(context,
         sfx: "win",
         hasClose: false,
@@ -174,10 +175,6 @@ class Overlays {
         padding: EdgeInsets.fromLTRB(18.d, 0.d, 18.d, 18.d),
         onWillPop: () => _buttonsClick(context, "record", reward),
         content: Stack(alignment: Alignment.topCenter, children: [
-          Center(
-              heightFactor: 0.52,
-              child: RiveAnimation.asset('anims/nums-record.riv',
-                  stateMachines: ["machine"])),
           Positioned(
               top: 152.d,
               child: Text("New Record", style: theme.textTheme.caption)),
@@ -230,7 +227,14 @@ class Overlays {
                           SVG.show("coin", 22.d),
                           Text("x$rewardCoef", style: theme.textTheme.headline6)
                         ])),
-              ]))
+              ])),
+          Center(
+              heightFactor: 0.52,
+              child: Components.confetty(confettiController)),
+          Center(
+              heightFactor: 0.52,
+              child: RiveAnimation.asset('anims/nums-record.riv',
+                  stateMachines: ["machine"])),
         ]));
   }
 

@@ -186,7 +186,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         _widget = Overlays.revive(context, _game!.numRevives);
         break;
       case GameEvent.record:
-        _widget = Overlays.record(context);
+        _widget = Overlays.record(context, _confettiController!);
         break;
       case GameEvent.remove:
         _onRemoveBlock();
