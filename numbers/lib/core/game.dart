@@ -64,11 +64,6 @@ class MyGame extends BaseGame with TapDetector {
     Prefs.score = 0;
     this.bounds = bounds;
     this.onGameEvent = onGameEvent;
-    Cell.thickness = 4.6.d;
-    Cell.minSpeed = 0.01.d;
-    Cell.maxSpeed = 0.8.d;
-    Cell.round = 7.0.d;
-    Cell.border = 1.8.d;
   }
   @override
   Color backgroundColor() => TColors.black.value[0];
@@ -127,9 +122,9 @@ class MyGame extends BaseGame with TapDetector {
     if (_tutorMode) {
       add(_columnHint = ColumnHint(RRect.fromLTRBXY(
           0,
-          _bgRect!.top + Cell.diameter + Cell.border * 3,
+          _bgRect!.top + Cell.diameter + Cell.padding * 3,
           0,
-          _bgRect!.bottom - Cell.border * 2,
+          _bgRect!.bottom - Cell.padding * 2,
           8,
           8)));
     }
@@ -300,8 +295,8 @@ class MyGame extends BaseGame with TapDetector {
               _cells.last!.y + Cell.diameter,
               _x + Cell.radius,
               bounds.bottom - row * Cell.diameter,
-              Cell.round,
-              Cell.round),
+              Cell.roundness,
+              Cell.roundness),
           Cell.colors[_cells.last!.value].color);
     }
     _fallAll();

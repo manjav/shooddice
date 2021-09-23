@@ -277,9 +277,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   void _createGame() {
     var padding = 24.d + (Device.size.aspectRatio - 0.5) * 200.d;
     var width = Device.size.width - padding * 2;
-    Cell.diameter = width / Cells.width;
-    Cell.radius = Cell.diameter * 0.5;
-
+    Cell.updateSizes(width / Cells.width);
     var t = (Device.size.height - ((Cells.height + 1) * Cell.diameter)) * 0.5;
     var bounds = Rect.fromLTRB(
         padding, t, Device.size.width - padding, t + Cell.diameter * 7);
