@@ -496,6 +496,8 @@ class MyGame extends BaseGame with TapDetector {
           onGameEvent?.call(GameEvent.rewarded, 0);
         }));
     add(celebration);
+    await Future.delayed(Duration(milliseconds: 200));
+    Sound.play("merge-end");
   }
 }
 
