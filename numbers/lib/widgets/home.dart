@@ -1,3 +1,4 @@
+import 'package:confetti/confetti.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,10 +9,10 @@ import 'package:numbers/overlays/all.dart';
 import 'package:numbers/overlays/pause.dart';
 import 'package:numbers/overlays/shop.dart';
 import 'package:numbers/overlays/stats.dart';
+import 'package:numbers/utils/gemeservice.dart';
 import 'package:numbers/utils/prefs.dart';
 import 'package:numbers/utils/utils.dart';
 import 'package:numbers/widgets/components.dart';
-import 'package:numbers/utils/gemeservice.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
@@ -25,12 +26,15 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   Positioned? _coins;
   AnimationController? _rewardAnimation;
+  ConfettiController? _confettiController;
 
   void initState() {
     super.initState();
     _createGame();
     _rewardAnimation = AnimationController(vsync: this);
     _rewardAnimation!.addListener(() => setState(() {}));
+    _confettiController =
+        ConfettiController(duration: const Duration(milliseconds: 100));
   }
 
   @override
@@ -123,7 +127,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                             GestureDetector(
                                 child: SVG.show("close", 32.d),
                                 onTap: _onRemoveBlock)
-                          ])))
+                          ]))),
+          Center(child: Components.confetty(_confettiController!))
         ])));
   }
 
@@ -293,5 +298,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   Future<bool> _onWillPop() async {
     _pause();
     return true;
+  }
+
+  @override
+  void dispose() {
+    _confettiController!.dispose();
+    super.dispose();
   }
 }
