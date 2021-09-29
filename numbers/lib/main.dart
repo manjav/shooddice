@@ -24,10 +24,8 @@ Future<void> main() async {
 }
 
 class MyApp extends StatefulWidget {
-  static FirebaseAnalytics analytics = FirebaseAnalytics();
-  static FirebaseAnalyticsObserver observer =
-      FirebaseAnalyticsObserver(analytics: analytics);
-
+  FirebaseAnalytics analytics = FirebaseAnalytics();
+  FirebaseAnalyticsObserver? observer;
   @override
   AppState createState() => AppState();
   static AppState? of(BuildContext context) =>
@@ -38,15 +36,16 @@ class AppState extends State<MyApp> {
   ThemeData _themeData = Themes.darkData;
   @override
   Widget build(BuildContext context) {
+    widget.observer = FirebaseAnalyticsObserver(analytics: widget.analytics);
     SystemChrome.setPreferredOrientations(
         [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
     return MaterialApp(
-        navigatorObservers: <NavigatorObserver>[MyApp.observer],
+        navigatorObservers: <NavigatorObserver>[widget.observer!],
         theme: _themeData,
         builder: (BuildContext context, Widget? child) => MediaQuery(
             data: MediaQuery.of(context).copyWith(textScaleFactor: 1),
             child: child!),
-        home: MainPage());
+        home: MainPage(analytics: widget.analytics, observer: widget.observer!));
   }
 
   void updateTheme() {
@@ -56,7 +55,11 @@ class AppState extends State<MyApp> {
 }
 
 class MainPage extends StatefulWidget {
-  MainPage({Key? key}) : super(key: key);
+  final FirebaseAnalytics analytics;
+  final FirebaseAnalyticsObserver observer;
+
+  MainPage({Key? key, required this.analytics, required this.observer})
+      : super(key: key);
   @override
   _MainPageState createState() => _MainPageState();
 }
@@ -73,6 +76,7 @@ class _MainPageState extends State<MainPage> {
       Ads.init();
       Sound.init();
       Notifier.init();
+      Analytics.init(widget.analytics, widget.observer);
       Prefs.init(() {
         MyApp.of(context)!.updateTheme();
         _recordApp();
