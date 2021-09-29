@@ -230,9 +230,7 @@ class Overlays {
                       Text("x$rewardCoef", style: theme.textTheme.headline6)
                     ])),
               ])),
-          Center(
-              heightFactor: 0.52,
-              child: Components.confetty(confettiController)),
+          Positioned(top: 60, child: Components.confetty(confettiController)),
           Center(
               heightFactor: 0.52,
               child: RiveAnimation.asset('anims/nums-record.riv',
@@ -305,9 +303,7 @@ class Overlays {
                       Text("x$rewardCoef", style: theme.textTheme.headline6)
                     ])),
               ])),
-          Center(
-              heightFactor: 0.52,
-              child: Components.confetty(confettiController)),
+          Positioned(top: 90, child: Components.confetty(confettiController)),
           Positioned(
               top: 0,
               width: 180.d,
