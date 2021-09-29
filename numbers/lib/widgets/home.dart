@@ -169,6 +169,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     Widget? _widget;
     switch (event) {
       case GameEvent.big:
+        await Future.delayed(Duration(milliseconds: 250));
         _widget = Overlays.bigValue(context, value, _confettiController!);
         Prefs.increaseBig(value);
         break;
