@@ -48,7 +48,8 @@ class AppState extends State<MyApp> {
         home: MainPage(analytics: widget.analytics, observer: widget.observer!));
   }
 
-  void updateTheme() {
+  updateTheme() async {
+    await Future.delayed(const Duration(milliseconds: 1));
     _themeData = Themes.darkData;
     setState(() {});
   }
@@ -68,17 +69,21 @@ class _MainPageState extends State<MainPage> {
   int _loadingState = 0;
   @override
   Widget build(BuildContext context) {
+    if (Device.size == Size.zero) {
     Device.size = MediaQuery.of(context).size;
     Device.ratio = Device.size.width / 360;
     Device.aspectRatio = Device.size.width / Device.size.height;
     print("${Device.size} ${MediaQuery.of(context).devicePixelRatio}");
+      MyApp.of(context)!.updateTheme();
+      return SizedBox();
+    }
+
     if (_loadingState == 0) {
       Ads.init();
       Sound.init();
       Notifier.init();
       Analytics.init(widget.analytics, widget.observer);
       Prefs.init(() {
-        MyApp.of(context)!.updateTheme();
         _recordApp();
         _loadingState = 1;
         setState(() {});
