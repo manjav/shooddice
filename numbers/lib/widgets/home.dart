@@ -9,6 +9,7 @@ import 'package:numbers/overlays/all.dart';
 import 'package:numbers/overlays/pause.dart';
 import 'package:numbers/overlays/shop.dart';
 import 'package:numbers/overlays/stats.dart';
+import 'package:numbers/utils/Analytics.dart';
 import 'package:numbers/utils/gemeservice.dart';
 import 'package:numbers/utils/prefs.dart';
 import 'package:numbers/utils/utils.dart';
@@ -212,6 +213,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 context, Overlays.record(context, _confettiController!));
             await Future.delayed(Duration(milliseconds: 150));
           }
+
+          Analytics.endProgress("main", Pref.playCount.value,
+              Pref.record.value, _game!.numRevives);
+              
           Navigator.of(context).pop();
           return;
         }

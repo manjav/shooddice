@@ -85,6 +85,8 @@ class MyGame extends BaseGame with TapDetector {
 
     _tutorMode = Pref.tutorMode.value == 0;
     Pref.playCount.increase(1);
+    Analytics.startProgress("main", Pref.playCount.value,
+        "big $boostBig next $boostNextMode");
 
     _linePaint.color = TColors.black.value[0];
     _bgRect = RRect.fromLTRBXY(bounds.left - 4, bounds.top - 4,

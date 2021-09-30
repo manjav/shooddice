@@ -79,4 +79,23 @@ class Analytics {
     });
   }
 
+  static void startProgress(String name, int round, String boost) {
+    GameAnalytics.addProgressionEvent({
+      "progressionStatus": GAProgressionStatus.Start,
+      "progression01": name,
+      "progression02": "round $round",
+      "boost": boost
+    });
+  }
+
+  static void endProgress(String name, int round, int score, int revives) {
+    GameAnalytics.addProgressionEvent({
+      "progressionStatus": GAProgressionStatus.Complete,
+      "progression01": name,
+      "progression02": "round $round",
+      "score": score,
+      "revives": revives
+    });
+  }
+
   }
