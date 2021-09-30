@@ -72,13 +72,13 @@ class RateOverlay extends StatefulWidget {
   }
 
   final initialRating;
-  RateOverlay({this.initialRating = 5});
+  RateOverlay({this.initialRating = 1});
   @override
   _RateOverlayState createState() => _RateOverlayState();
 }
 
 class _RateOverlayState extends State<RateOverlay> {
-  int _response = 5;
+  int _response = 1;
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
