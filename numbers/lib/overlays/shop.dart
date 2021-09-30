@@ -20,8 +20,8 @@ class ShopOverlay extends StatefulWidget {
 
 class _ShopOverlayState extends State<ShopOverlay> {
   String _message = "Please Wait...";
-  static List<ProductDetails> coins = [];
-  static List<ProductDetails> others = [];
+  var coins = Map<String, ProductDetails>();
+  var others = Map<String, ProductDetails>();
 
   @override
   void initState() {
@@ -48,13 +48,13 @@ class _ShopOverlayState extends State<ShopOverlay> {
     Set<String> skus = {"no_ads"};
     for (var i = 0; i < 6; i++) skus.add("coin_$i");
     var response = await InAppPurchase.instance.queryProductDetails(skus);
-    coins = [];
-    others = [];
+    coins = Map<String, ProductDetails>();
+    others = Map<String, ProductDetails>();
     for (var product in response.productDetails) {
       if (product.isConsumable)
-        coins.add(product);
+        coins[product.id] = product;
       else
-        others.add(product);
+        others[product.id] = product;
     }
     setState(() => _message = "");
   }
@@ -81,6 +81,7 @@ class _ShopOverlayState extends State<ShopOverlay> {
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
+    var items = coins.values.toList();
     return Stack(children: [
       Overlays.basic(context,
           title: "Shop",
@@ -104,8 +105,8 @@ class _ShopOverlayState extends State<ShopOverlay> {
                     crossAxisSpacing: 3.d,
                     mainAxisSpacing: 2.d,
                     childAspectRatio: 1,
-                    children: List.generate(
-                        coins.length, (i) => _itemBuilder(theme, coins[i])),
+                    children: List.generate(items.length,
+                        (i) => _itemBuilder(theme, items[i])),
                   )),
               Device.size.aspectRatio > 0.6
                   ? SizedBox()
@@ -129,9 +130,9 @@ class _ShopOverlayState extends State<ShopOverlay> {
                               colors: TColors.green.value,
                               content: Center(
                                   child: Text(
-                                      "${others.length > 0 ? others[0].price : 0}",
+                                      "${others.length > 0 ? others["no_ads"]!.price : 0}",
                                       style: theme.textTheme.headline5)),
-                              onTap: () => _onShopItemTap(others[0]),
+                              onTap: () => _onShopItemTap(others["no_ads"]!),
                             )),
                         SizedBox(height: 4.d)
                       ])),
@@ -201,6 +202,12 @@ class _ShopOverlayState extends State<ShopOverlay> {
           )),
       _overlay(theme)
     ]);
+  }
+
+  ProductDetails? _findProduct(String id) {
+    if (coins.containsKey(id)) return coins[id];
+    if (others.containsKey(id)) return others[id];
+    return null;
   }
 
   _overlay(ThemeData theme) {
@@ -277,6 +284,7 @@ class _ShopOverlayState extends State<ShopOverlay> {
   }
 
   _deliverProduct(PurchaseDetails purchaseDetails) {
+    var p = _findProduct(purchaseDetails.productID);
     if (purchaseDetails.productID == "no_ads") {
       Pref.noAds.set(1);
     } else {
