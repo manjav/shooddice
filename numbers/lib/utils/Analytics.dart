@@ -49,4 +49,23 @@ class Analytics {
     });
   }
 
+  static Future<void> ad(int action, int adType, String placementID,
+      [String sdkName = "unityads"]) async {
+    _firebaseAnalytics.logEvent(
+      name: 'ad_${action.toString()}',
+      parameters: <String, dynamic>{
+        'adType': adType.toString(),
+        'placementID': placementID,
+        'sdkName': sdkName,
+      },
+    );
+
+    GameAnalytics.addAdEvent({
+      "adAction": action,
+      "adType": adType,
+      "adSdkName": sdkName,
+      "adPlacement": placementID
+    });
+  }
+
   }
