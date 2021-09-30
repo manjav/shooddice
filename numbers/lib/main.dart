@@ -6,6 +6,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:in_app_purchase_android/in_app_purchase_android.dart';
+import 'package:numbers/utils/Analytics.dart';
 import 'package:numbers/utils/ads.dart';
 import 'package:numbers/utils/notification.dart';
 import 'package:numbers/utils/prefs.dart';
@@ -20,12 +21,15 @@ import 'overlays/start.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(MyApp());
+  var analytics = FirebaseAnalytics();
+  var observer = FirebaseAnalyticsObserver(analytics: analytics);
+  runApp(MyApp(FirebaseAnalytics(), observer));
 }
 
 class MyApp extends StatefulWidget {
-  FirebaseAnalytics analytics = FirebaseAnalytics();
-  FirebaseAnalyticsObserver? observer;
+  final analytics;
+  final observer;
+  MyApp(this.analytics, this.observer);
   @override
   AppState createState() => AppState();
   static AppState? of(BuildContext context) =>
@@ -36,7 +40,6 @@ class AppState extends State<MyApp> {
   ThemeData _themeData = Themes.darkData;
   @override
   Widget build(BuildContext context) {
-    widget.observer = FirebaseAnalyticsObserver(analytics: widget.analytics);
     SystemChrome.setPreferredOrientations(
         [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
     return MaterialApp(
@@ -45,7 +48,8 @@ class AppState extends State<MyApp> {
         builder: (BuildContext context, Widget? child) => MediaQuery(
             data: MediaQuery.of(context).copyWith(textScaleFactor: 1),
             child: child!),
-        home: MainPage(analytics: widget.analytics, observer: widget.observer!));
+        home:
+            MainPage(analytics: widget.analytics, observer: widget.observer!));
   }
 
   updateTheme() async {
@@ -70,10 +74,10 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     if (Device.size == Size.zero) {
-    Device.size = MediaQuery.of(context).size;
-    Device.ratio = Device.size.width / 360;
-    Device.aspectRatio = Device.size.width / Device.size.height;
-    print("${Device.size} ${MediaQuery.of(context).devicePixelRatio}");
+      Device.size = MediaQuery.of(context).size;
+      Device.ratio = Device.size.width / 360;
+      Device.aspectRatio = Device.size.width / Device.size.height;
+      print("${Device.size} ${MediaQuery.of(context).devicePixelRatio}");
       MyApp.of(context)!.updateTheme();
       return SizedBox();
     }
