@@ -35,6 +35,7 @@ dependencies:
   soundpool: ^2.1.0
   rive: ^0.7.22
   unity_ads_plugin: ^0.2.2
+  url_launcher: ^6.0.12
   vibration: ^1.7.4-nullsafety.0
 
 dev_dependencies:

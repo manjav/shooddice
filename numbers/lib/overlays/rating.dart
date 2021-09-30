@@ -7,6 +7,7 @@ import 'package:numbers/utils/prefs.dart';
 import 'package:numbers/utils/themes.dart';
 import 'package:numbers/utils/utils.dart';
 import 'package:numbers/widgets/buttons.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'all.dart';
 
@@ -32,13 +33,21 @@ class RateOverlay extends StatefulWidget {
       // }
 
       final InAppReview inAppReview = InAppReview.instance;
-      if (await inAppReview.isAvailable() ) {
+      if (await inAppReview.isAvailable()) {
         if (Pref.ratedBefore.value == 0) {
           inAppReview.requestReview();
           Pref.ratedBefore.set(1);
           return true;
         }
         inAppReview.openStoreListing();
+      } else {
+        const url =
+            'https://play.google.com/store/apps/details?id=game.block.puzzle.drop.the.number.merge';
+        if (await canLaunch(url)) {
+          await launch(url);
+        } else {
+          throw 'Could not launch $url';
+        }
       }
       return true;
     }
