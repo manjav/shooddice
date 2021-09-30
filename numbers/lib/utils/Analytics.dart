@@ -102,4 +102,9 @@ class Analytics {
     _firebaseAnalytics.logEvent(name: name, parameters: parameters);
   }
 
+  static Future<void> share(String contentType, String itemId) async {
+    await _firebaseAnalytics.logShare(
+        contentType: contentType, itemId: itemId, method: "");
+  }
+
   }

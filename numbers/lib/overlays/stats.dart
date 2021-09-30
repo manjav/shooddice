@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:numbers/core/cell.dart';
+import 'package:numbers/utils/Analytics.dart';
 import 'package:numbers/utils/prefs.dart';
 import 'package:numbers/utils/themes.dart';
 import 'package:numbers/utils/utils.dart';
@@ -101,6 +102,7 @@ class _StatsOverlayState extends State<StatsOverlay> {
               "https://play.google.com/apps/testing/game.block.puzzle.drop.the.number.merge",
           subject: "Drop Number 2048 - Merge Block Puzzle");
     shareMode = false;
+    Analytics.share("image", "stats");
     setState(() {});
   }
 }
