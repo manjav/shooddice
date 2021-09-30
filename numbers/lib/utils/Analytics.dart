@@ -107,4 +107,25 @@ class Analytics {
         contentType: contentType, itemId: itemId, method: "");
   }
 
+  // static Future<void> setUserId(String id) async {
+  //   await _firebaseAnalytics.setUserId(id);
+  //   GameAnalytics.configureUserId(id);
+  // }
+
+  // static Future<void> setUserProperty(String name, String value) async {
+  //   await _firebaseAnalytics.setUserProperty(name: name, value: value);
+  // }
+
+  // static Future<void> tutorialBegin() async {
+  //   await _firebaseAnalytics.logTutorialBegin();
+  // }
+
+  // static Future<void> tutorialComplete() async {
+  //   await _firebaseAnalytics.logTutorialComplete();
+  // }
+  // Future<void> _testSetAnalyticsCollectionEnabled() async {
+  //   await analytics.setAnalyticsCollectionEnabled(false);
+  //   await analytics.setAnalyticsCollectionEnabled(true);
+  //   setMessage('setAnalyticsCollectionEnabled succeeded');
+  // }
   }
