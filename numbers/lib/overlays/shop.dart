@@ -291,6 +291,8 @@ class _ShopOverlayState extends State<ShopOverlay> {
       var product = coins.firstWhere((p) => p.id == purchaseDetails.productID);
       Pref.coin.increase(product.amount);
     }
+    Analytics.purchase(p!.currencyCode, p.rawPrice, p.id, type,
+        purchaseDetails.purchaseID!, purchaseDetails.verificationData.source);
   }
 
   double _getHeight() {

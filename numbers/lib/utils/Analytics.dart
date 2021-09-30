@@ -27,4 +27,26 @@ class Analytics {
         "275843fe2b762882e938a16d6b095d7661670ee9");
   }
 
+  static Future<void> purchase(String currency, double amount, String itemId,
+      String itemType, String receipt, String signature) async {
+    // if (iOS) {
+    //   await _firebaseAnalytics.logEcommercePurchase(
+    //       currency: currency,
+    //       value: amount,
+    //       transactionId: signature,
+    //       origin: itemId,
+    //       coupon: receipt);
+    // }
+
+    GameAnalytics.addBusinessEvent({
+      "currency": currency,
+      "amount": (amount * 100),
+      "itemType": itemType,
+      "itemId": itemId,
+      "cartType": "end_of_level",
+      "receipt": receipt,
+      "signature": signature,
+    });
+  }
+
   }
