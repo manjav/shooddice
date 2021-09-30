@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:numbers/core/achieves.dart';
 import 'package:numbers/core/cell.dart';
 import 'package:numbers/core/cells.dart';
+import 'package:numbers/utils/Analytics.dart';
 import 'package:numbers/utils/utils.dart';
 import 'package:numbers/utils/prefs.dart';
 import 'package:numbers/utils/sounds.dart';
@@ -459,7 +460,7 @@ class MyGame extends BaseGame with TapDetector {
         effects: [start, ScaleEffect(size: Vector2(1, 1), duration: 0.3), end],
         onComplete: () {
           remove(r);
-          Pref.coin.increase(value);
+          Pref.coin.increase(value, itemType: "game", itemId: "random");
           onGameEvent?.call(GameEvent.rewarded, 0);
         }));
     add(r);

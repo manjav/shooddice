@@ -12,6 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
   appsflyer_sdk: ^6.2.4+4-nullsafety
+  confetti: ^0.6.0
   cupertino_icons: ^1.0.3
   device_info: ^2.0.2
   flame: ^1.0.0-rc13
@@ -22,7 +23,7 @@ dependencies:
   flutter_local_notifications: ^6.0.0
   flutter_rating_bar: ^4.0.0
   flutter_svg: ^0.22.0
-  confetti: ^0.6.0
+  gameanalytics_sdk: ^1.0.6
   in_app_purchase: ^1.0.6
   in_app_review: ^2.0.2
   intl: ^0.17.0

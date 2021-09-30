@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
+import 'package:numbers/utils/Analytics.dart';
 import 'package:numbers/utils/ads.dart';
 import 'package:numbers/utils/prefs.dart';
 import 'package:numbers/utils/themes.dart';
@@ -278,19 +279,21 @@ class _ShopOverlayState extends State<ShopOverlay> {
   _freeCoin() async {
     var complete = await Ads.show();
     if (complete) {
-      Pref.coin.increase(100);
+      Pref.coin.increase(100, itemType: "shop", itemId: "ad");
       setState(() {});
     }
   }
 
   _deliverProduct(PurchaseDetails purchaseDetails) {
     var p = _findProduct(purchaseDetails.productID);
+    var type = "no_ads";
     if (purchaseDetails.productID == "no_ads") {
       Pref.noAds.set(1);
     } else {
-      var product = coins.firstWhere((p) => p.id == purchaseDetails.productID);
-      Pref.coin.increase(product.amount);
+      type = "coin";
+      Pref.coin.increase(p!.amount, itemType: "shop", itemId: purchaseDetails.productID);
     }
+
     Analytics.purchase(p!.currencyCode, p.rawPrice, p.id, type,
         purchaseDetails.purchaseID!, purchaseDetails.verificationData.source);
   }

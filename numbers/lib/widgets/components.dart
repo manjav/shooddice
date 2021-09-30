@@ -132,7 +132,7 @@ class Components {
       var complete = await Ads.show();
       if (!complete) return;
     }
-    Pref.coin.increase(-cost);
+    Pref.coin.increase(-cost, itemType: "start", itemId: boost);
 
     if (boost == "next") MyGame.boostNextMode = 1;
     if (boost == "512") MyGame.boostBig = true;

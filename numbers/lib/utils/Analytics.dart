@@ -68,4 +68,15 @@ class Analytics {
     });
   }
 
+  static Future<void> resource(int type, String currency, int amount,
+      String itemType, String itemId) async {
+    GameAnalytics.addResourceEvent({
+      "flowType": type,
+      "currency": currency, //"Gems",
+      "amount": amount,
+      "itemType": itemType, //"IAP",
+      "itemId": itemId //"Coins400"
+    });
+  }
+
   }

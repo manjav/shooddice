@@ -411,7 +411,7 @@ class Overlays {
                                   content: Row(children: [
                                     SVG.show("coin", 24.d),
                                     Expanded(
-                                        child: Text("100",
+                                        child: Text("$cost",
                                             textAlign: TextAlign.center,
                                             style: theme.textTheme.bodyText2))
                                   ]),
@@ -472,7 +472,7 @@ class Overlays {
         return;
       }
     }
-    if (coin != 0) Pref.coin.increase(coin);
+    if (coin != 0) Pref.coin.increase(coin, itemType: "confirm", itemId: type);
     Navigator.of(context).pop(type);
   }
 
