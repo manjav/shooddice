@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:in_app_review/in_app_review.dart';
-import 'package:numbers/main.dart';
+import 'package:numbers/utils/Analytics.dart';
 import 'package:numbers/utils/prefs.dart';
 import 'package:numbers/utils/themes.dart';
 import 'package:numbers/utils/utils.dart';
@@ -76,7 +76,7 @@ class RateOverlay extends StatefulWidget {
                       style: Theme.of(context).textTheme.headline5))),
           barrierDismissible: true);
     }
-    MyApp.analytics.logEvent(name: 'rate', parameters: <String, dynamic>{
+    Analytics.log('rate', <String, dynamic>{
       'numRuns': Pref.visitCount.value,
       'rating': rating,
       'comment': comment

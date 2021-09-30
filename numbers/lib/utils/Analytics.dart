@@ -98,4 +98,8 @@ class Analytics {
     });
   }
 
+  static Future<void> log(String name, Map<String, dynamic> parameters) async {
+    _firebaseAnalytics.logEvent(name: name, parameters: parameters);
+  }
+
   }
