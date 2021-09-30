@@ -55,7 +55,12 @@ class RateOverlay extends StatefulWidget {
     // Repeat rating request
     if (Pref.rate.value >= 5 || Pref.playCount.value < Pref.rateTarget.value)
       return false; // Already 5 rating or pending to reach target play count
-    int rating = await Rout.push(context, RateOverlay());
+    int rating = 0;
+    try {
+      rating = await Rout.push(context, RateOverlay());
+    } catch (e) {
+      return false;
+    }
     Pref.rate.set(rating);
     Pref.rateTarget.increase(10);
 
