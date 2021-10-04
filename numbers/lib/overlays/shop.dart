@@ -84,7 +84,7 @@ class _ShopOverlayState extends State<ShopOverlay> {
     var theme = Theme.of(context);
     var items = coins.values.toList();
     return Stack(children: [
-      Overlays.basic(context,
+      Overlays.basic(context, "shop",
           title: "Shop",
           statsButton: SizedBox(),
           scoreButton: SizedBox(),
@@ -106,8 +106,8 @@ class _ShopOverlayState extends State<ShopOverlay> {
                     crossAxisSpacing: 3.d,
                     mainAxisSpacing: 2.d,
                     childAspectRatio: 1,
-                    children: List.generate(items.length,
-                        (i) => _itemBuilder(theme, items[i])),
+                    children: List.generate(
+                        items.length, (i) => _itemBuilder(theme, items[i])),
                   )),
               Device.size.aspectRatio > 0.6
                   ? SizedBox()
@@ -291,7 +291,8 @@ class _ShopOverlayState extends State<ShopOverlay> {
       Pref.noAds.set(1);
     } else {
       type = "coin";
-      Pref.coin.increase(p!.amount, itemType: "shop", itemId: purchaseDetails.productID);
+      Pref.coin.increase(p!.amount,
+          itemType: "shop", itemId: purchaseDetails.productID);
     }
 
     Analytics.purchase(p!.currencyCode, p.rawPrice, p.id, type,

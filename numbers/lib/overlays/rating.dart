@@ -98,7 +98,7 @@ class _RateOverlayState extends State<RateOverlay> {
     var theme = Theme.of(context);
     return WillPopScope(
         onWillPop: () async => false,
-        child: Overlays.basic(context,
+        child: Overlays.basic(context, "rating",
             height: 280.d,
             hasClose: false,
             title: "Rate Us",
@@ -161,7 +161,7 @@ class ReviewDialogState extends State<ReviewDialog> {
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
     return Scaffold(
-        body: Overlays.basic(context,
+        body: Overlays.basic(context, "review",
             height: 0,
             width: 320.d,
             title: "Review",

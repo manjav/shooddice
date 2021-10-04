@@ -31,7 +31,7 @@ class _StartOverlayState extends State<StartOverlay> {
   Widget build(BuildContext context) {
     if (Pref.tutorMode.value == 0) return SizedBox();
     var theme = Theme.of(context);
-    return Overlays.basic(context,
+    return Overlays.basic(context, "start",
         height: 300.d,
         hasClose: false,
         title: "Select Boost Items",
@@ -71,11 +71,11 @@ class _StartOverlayState extends State<StartOverlay> {
     var shown = await RateOverlay.showRating(context);
     if (!shown && Pref.playCount.value > 5)
       await Ads.show(AdPlace.Interstitial);
-      await Rout.push(context, HomePage());
-      Cell.maxRandomValue = 3;
-      MyGame.boostNextMode = 0;
-      MyGame.boostBig = false;
-      _onUpdate();
+    await Rout.push(context, HomePage());
+    Cell.maxRandomValue = 3;
+    MyGame.boostNextMode = 0;
+    MyGame.boostBig = false;
+    _onUpdate();
   }
 
   _onUpdate() => setState(() {});

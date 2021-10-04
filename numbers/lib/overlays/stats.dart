@@ -26,7 +26,7 @@ class _StatsOverlayState extends State<StatsOverlay> {
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
-    return Overlays.basic(context,
+    return Overlays.basic(context, "stats",
         title: "Stats",
         height: 300.d,
         statsButton: SizedBox(),
