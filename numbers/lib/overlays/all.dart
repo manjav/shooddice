@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:numbers/core/cell.dart';
 import 'package:numbers/overlays/shop.dart';
 import 'package:numbers/overlays/stats.dart';
+import 'package:numbers/utils/Analytics.dart';
 import 'package:numbers/utils/ads.dart';
 import 'package:numbers/utils/gemeservice.dart';
 import 'package:numbers/utils/prefs.dart';
@@ -39,6 +40,7 @@ class Overlays {
   }) {
     var theme = Theme.of(context);
     Sound.play(sfx ?? "pop");
+    Analytics.setScreen(tag);
     return WillPopScope(
         key: Key(tag),
         onWillPop: () async {

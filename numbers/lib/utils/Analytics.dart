@@ -107,6 +107,10 @@ class Analytics {
         contentType: contentType, itemId: itemId, method: "");
   }
 
+  static Future<void> setScreen(String screenName) async {
+    await _firebaseAnalytics.setCurrentScreen(screenName: screenName);
+  }
+
   // static Future<void> setUserId(String id) async {
   //   await _firebaseAnalytics.setUserId(id);
   //   GameAnalytics.configureUserId(id);
