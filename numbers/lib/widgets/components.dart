@@ -117,7 +117,7 @@ class Components {
                                 style: theme.textTheme.headline5))
                       ]),
                       onTap: () => _onStartTap(context, boost, 0, onSelect))),
-              SizedBox(height: 4.d)
+              SizedBox(height: 6.d)
             ])));
   }
 
