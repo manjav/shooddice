@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:numbers/core/cell.dart';
@@ -69,7 +68,7 @@ class _StartOverlayState extends State<StartOverlay> {
 
   _onStart() async {
     var shown = await RateOverlay.showRating(context);
-    if (!shown && Pref.playCount.value > 5)
+    if (!shown && Pref.playCount.value > 7)
       await Ads.show(AdPlace.Interstitial);
     await Rout.push(context, HomePage());
     Cell.maxRandomValue = 3;
