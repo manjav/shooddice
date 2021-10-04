@@ -21,15 +21,11 @@ import 'overlays/start.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  var analytics = FirebaseAnalytics();
-  var observer = FirebaseAnalyticsObserver(analytics: analytics);
-  runApp(MyApp(FirebaseAnalytics(), observer));
+  runApp(MyApp());
 }
 
 class MyApp extends StatefulWidget {
-  final analytics;
-  final observer;
-  MyApp(this.analytics, this.observer);
+  MyApp();
   @override
   AppState createState() => AppState();
   static AppState? of(BuildContext context) =>
@@ -42,14 +38,15 @@ class AppState extends State<MyApp> {
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations(
         [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+    var analytics = FirebaseAnalytics();
     return MaterialApp(
-        navigatorObservers: <NavigatorObserver>[widget.observer!],
+        navigatorObservers: <NavigatorObserver>[FirebaseAnalyticsObserver(analytics: analytics)],
         theme: _themeData,
         builder: (BuildContext context, Widget? child) => MediaQuery(
             data: MediaQuery.of(context).copyWith(textScaleFactor: 1),
             child: child!),
         home:
-            MainPage(analytics: widget.analytics, observer: widget.observer!));
+            MainPage(analytics: analytics));
   }
 
   updateTheme() async {
@@ -61,9 +58,7 @@ class AppState extends State<MyApp> {
 
 class MainPage extends StatefulWidget {
   final FirebaseAnalytics analytics;
-  final FirebaseAnalyticsObserver observer;
-
-  MainPage({Key? key, required this.analytics, required this.observer})
+  MainPage({Key? key, required this.analytics})
       : super(key: key);
   @override
   _MainPageState createState() => _MainPageState();
@@ -86,7 +81,7 @@ class _MainPageState extends State<MainPage> {
       Ads.init();
       Sound.init();
       Notifier.init();
-      Analytics.init(widget.analytics, widget.observer);
+      Analytics.init(widget.analytics);
       Prefs.init(() {
         _recordApp();
         _loadingState = 1;

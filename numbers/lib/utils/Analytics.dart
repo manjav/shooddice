@@ -1,16 +1,12 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:firebase_analytics/observer.dart';
 import 'package:gameanalytics_sdk/gameanalytics.dart';
 import 'dart:async';
 
 class Analytics {
   static late FirebaseAnalytics _firebaseAnalytics;
-  static late FirebaseAnalyticsObserver _observer;
 
-  static Future<void> init(
-      FirebaseAnalytics analytics, FirebaseAnalyticsObserver observer) async {
+  static Future<void> init(FirebaseAnalytics analytics) async {
     _firebaseAnalytics = analytics;
-    _observer = observer;
 
     GameAnalytics.setEnabledInfoLog(false);
     GameAnalytics.setEnabledVerboseLog(false);
@@ -132,4 +128,4 @@ class Analytics {
   //   await analytics.setAnalyticsCollectionEnabled(true);
   //   setMessage('setAnalyticsCollectionEnabled succeeded');
   // }
-  }
+}
