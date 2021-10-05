@@ -449,7 +449,12 @@ class Overlays {
         hasClose: false,
         coinButton: SizedBox(),
         statsButton: SizedBox(),
-        scoreButton: SizedBox(),
+        scoreButton: Positioned(
+            right: 10.d,
+            width: 120.d,
+            height: 120.d,
+            child: RiveAnimation.asset('anims/nums-character.riv',
+                stateMachines: ["unhappy"])),
         padding: EdgeInsets.fromLTRB(16.d, 4.d, 16.d, 8.d),
         height: 54.d,
         title: "Quit",
