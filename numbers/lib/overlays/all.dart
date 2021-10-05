@@ -470,6 +470,52 @@ class Overlays {
             onTap: () => _buttonsClick(context, "quit", 0)));
   }
 
+  static Widget confirm(BuildContext context, String message,
+      {String? acceptText, String? declineText}) {
+    var theme = Theme.of(context);
+    return basic(context, "confirm",
+        hasClose: false,
+        coinButton: SizedBox(),
+        statsButton: SizedBox(),
+        scoreButton: SizedBox(),
+        padding: EdgeInsets.fromLTRB(16.d, 0, 16.d, 16.d),
+        height: 0,
+        content: Column(children: [
+          SizedBox(
+              width: 120.d,
+              height: 120.d,
+              child: RiveAnimation.asset('anims/nums-character.riv',
+                  stateMachines: ["happy"])),
+          SizedBox(height: 8.d),
+          Text(message, style: theme.textTheme.headline5),
+          SizedBox(height: 16.d),
+          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            declineText == null
+                ? SizedBox()
+                : SizedBox(
+                    width: 100.d,
+                    child: BumpedButton(
+                        onTap: () => Navigator.of(context).pop(false),
+                        colors: TColors.orange.value,
+                        cornerRadius: 12.d,
+                        content: Center(
+                            child: Text(declineText,
+                                style: theme.textTheme.headline5)))),
+            acceptText == null
+                ? SizedBox()
+                : SizedBox(
+                    width: 158.d,
+                    child: BumpedButton(
+                        onTap: () => Navigator.of(context).pop(true),
+                        colors: TColors.blue.value,
+                        cornerRadius: 12.d,
+                        content: Center(
+                            child: Text(acceptText,
+                                style: theme.textTheme.headline5))))
+          ])
+        ]));
+  }
+
   static _buttonsClick(BuildContext context, String type, int coin,
       {AdPlace? adId}) async {
     if (coin < 0 && Pref.coin.value < -coin) {
