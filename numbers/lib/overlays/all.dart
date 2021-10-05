@@ -462,7 +462,9 @@ class Overlays {
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Are you sure?", style: theme.textTheme.headline5),
+                  Expanded(
+                      child: Text("Are you sure?",
+                          style: theme.textTheme.headline5)),
                   SVG.show("accept", 28.d)
                 ]),
             onTap: () => _buttonsClick(context, "quit", 0)));
