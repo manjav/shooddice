@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:numbers/core/cell.dart';
 import 'package:numbers/overlays/shop.dart';
 import 'package:numbers/overlays/stats.dart';
-import 'package:numbers/utils/Analytics.dart';
+import 'package:numbers/utils/analytics.dart';
 import 'package:numbers/utils/ads.dart';
 import 'package:numbers/utils/gemeservice.dart';
 import 'package:numbers/utils/prefs.dart';
