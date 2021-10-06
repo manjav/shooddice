@@ -256,9 +256,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         break;
       case GameEvent.reward:
         _game!.showReward(
-            value, Vector2(_coins!.left! + 24.d, _coins!.top! + 16.d));
+            value,
+            Vector2(_game!.bounds.center.dx, _game!.bounds.bottom + 8.d),
+            GameEvent.rewarded);
         return;
       case GameEvent.rewarded:
+        var dailyCoins = Pref.coinPiggy.value + value;
+        Pref.coinPiggy.set(dailyCoins.clamp(0, Cell.maxDailyCoins));
         _rewardAnimation!.value = 1;
         _rewardAnimation!.animateTo(0,
             duration: Duration(milliseconds: 200), curve: Curves.easeOutSine);

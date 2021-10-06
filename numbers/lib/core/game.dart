@@ -449,7 +449,7 @@ class MyGame extends BaseGame with TapDetector {
     });
   }
 
-  void showReward(int value, Vector2 destination) {
+  void showReward(int value, Vector2 destination, GameEvent event) {
     Sound.play("coin");
     var r = Reward(value, size.x * 0.5, size.y * 0.6);
     var start = ScaleEffect(
@@ -462,8 +462,7 @@ class MyGame extends BaseGame with TapDetector {
         effects: [start, ScaleEffect(size: Vector2(1, 1), duration: 0.3), end],
         onComplete: () {
           remove(r);
-          Pref.coin.increase(value, itemType: "game", itemId: "random");
-          onGameEvent?.call(GameEvent.rewarded, 0);
+          onGameEvent?.call(event, value);
         }));
     add(r);
   }
