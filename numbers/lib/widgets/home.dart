@@ -104,6 +104,16 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                           iconSize: 56.d,
                           onPressed: _pause),
                       Expanded(child: SizedBox()),
+                        _button(theme, 20.d, "piggy",
+                            () => _boost(rewardAvailble ? "daily" : ""),
+                            width: 96.d,
+                            badge: _slider(
+                                theme,
+                                12,
+                                100),
+                            colors: rewardAvailble
+                                ? TColors.orange.value
+                                : null)
                       _button(
                           theme, 96.d, "remove-color", () => _boost("color"),
                           badge: _badge(theme, Pref.removeColor.value)),
