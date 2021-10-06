@@ -64,6 +64,15 @@ class Analytics {
 
   static Future<void> resource(int type, String currency, int amount,
       String itemType, String itemId) async {
+    _firebaseAnalytics
+        .logEvent(name: "resource_change", parameters: <String, dynamic>{
+      "flowType": getResourceType(type),
+      "currency": currency, //"Gems",
+      "amount": amount,
+      "itemType": itemType, //"IAP",
+      "itemId": itemId //"Coins400"
+    });
+
     GameAnalytics.addResourceEvent({
       "flowType": type,
       "currency": currency, //"Gems",
@@ -158,6 +167,15 @@ class Analytics {
         return "OfferWall";
       default:
         return "Banner";
+    }
+  }
+
+  static String getResourceType(int type) {
+    switch (type) {
+      case GAResourceFlowType.Sink:
+        return "Sink";
+      default:
+        return "Source";
     }
   }
 }
