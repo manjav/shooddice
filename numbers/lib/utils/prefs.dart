@@ -149,9 +149,10 @@ extension PrefExt on Pref {
 
   int set(int value, {bool backup = true, String? itemType, String? itemId}) {
     if (this == Pref.coin) {
-      var type =
-          value > this.value ? GAResourceFlowType.Source : GAResourceFlowType.Sink;
-      Analytics.resource(type, name, value, itemType!, itemId!);
+      var type = value > this.value
+          ? GAResourceFlowType.Source
+          : GAResourceFlowType.Sink;
+      Analytics.resource(type, name, value.abs(), itemType!, itemId!);
     }
     Prefs._set(name, value, backup);
     return value;
