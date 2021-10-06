@@ -12,7 +12,9 @@ import 'package:numbers/overlays/stats.dart';
 import 'package:numbers/utils/analytics.dart';
 import 'package:numbers/utils/gemeservice.dart';
 import 'package:numbers/utils/prefs.dart';
+import 'package:numbers/utils/themes.dart';
 import 'package:numbers/utils/utils.dart';
+import 'package:numbers/widgets/buttons.dart';
 import 'package:numbers/widgets/components.dart';
 
 class HomePage extends StatefulWidget {
@@ -41,6 +43,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
+    var rewardAvailble = Pref.coinDaily.value >= Cell.maxDailyCoins;
     return WillPopScope(
         onWillPop: _onWillPop,
         child: Scaffold(
@@ -109,11 +112,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                             width: 96.d,
                             badge: _slider(
                                 theme,
-                                12,
-                                100),
+                                    _rewardLineAnimation!.value.round(),
+                                    Cell.maxDailyCoins),
                             colors: rewardAvailble
                                 ? TColors.orange.value
-                                : null)
+                                    : null))
+                      ]),
+                      SizedBox(width: 4.d),
                       _button(
                           theme, 96.d, "remove-color", () => _boost("color"),
                           badge: _badge(theme, Pref.removeColor.value)),
@@ -185,6 +190,34 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 style: theme.textTheme.headline6),
             decoration: _badgeDecoration()));
   }
+
+  Widget _slider(ThemeData theme, int value, int maxValue) {
+    var label = value >= maxValue ? "Collect" : "$value / $maxValue";
+    return Positioned(
+        height: 32.d,
+        bottom: 0,
+        left: 0,
+        right: 6.d,
+        child: Stack(alignment: Alignment.centerLeft, children: [
+          Positioned(
+              height: 20.d,
+              left: 26.d,
+              right: 0,
+              child: Container(
+                  child: ClipRRect(
+                      borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(12.d),
+                          bottomRight: Radius.circular(12.d)),
+                      child: LinearProgressIndicator(value: value / maxValue)),
+                  decoration: _badgeDecoration())),
+          SVG.show("coin", 32.d),
+          Positioned(
+              left: 32.d,
+              right: 4.d,
+              child: Text(label, style: TextStyle(fontSize: 12.d))),
+        ]));
+  }
+
   Decoration _badgeDecoration({double? cornerRadius}) {
     return BoxDecoration(
                 boxShadow: [
@@ -283,6 +316,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   }
 
   _boost(String type) async {
+    if (type == "") return;
     MyGame.isPlaying = false;
 
     if (type == "one" && Pref.removeOne.value > 0 ||
@@ -291,6 +325,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       return;
     }
     var title = "";
+    var hasCoinButton = true;
     EdgeInsets padding = EdgeInsets.only(right: 16, bottom: 80);
     switch (type) {
       case "next":
@@ -303,6 +338,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       case "color":
         title = "Select color for remove!";
         break;
+      case "daily":
+        break;
     }
     var result = await Rout.push(
         context, Overlays.callout(context, title, type, padding: padding),
@@ -310,6 +347,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     if (result != null) {
       if (type == "next") {
         _game!.boostNext();
+        return;
+      }
+      if (type == "daily") {
         return;
       }
       if (type == "one") Pref.removeOne.set(1);
