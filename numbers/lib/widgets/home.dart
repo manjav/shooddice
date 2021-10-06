@@ -93,15 +93,25 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               ? SizedBox()
               : Positioned(
                   top: _game!.bounds.bottom + 16.d,
-                  left: 20.d,
-                  width: 56.d,
-                  height: 65.d,
-                  child: IconButton(
-                      icon: SVG.show("pause", 48.d), onPressed: _pause)),
-          _removeButton(theme, 20.d, "remove-one", () => _boost("one")),
-          _badge(theme, 60.d, Pref.removeOne.value),
-          _removeButton(theme, 96.d, "remove-color", () => _boost("color")),
-          _badge(theme, 136.d, Pref.removeColor.value),
+                  right: 24.d,
+                  left: 24.d,
+                  height: 68.d,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      IconButton(
+                          icon: SVG.show("pause", 48.d),
+                          iconSize: 56.d,
+                          onPressed: _pause),
+                      Expanded(child: SizedBox()),
+                      _button(
+                          theme, 96.d, "remove-color", () => _boost("color"),
+                          badge: _badge(theme, Pref.removeColor.value)),
+                      SizedBox(width: 4.d),
+                      _button(theme, 20.d, "remove-one", () => _boost("one"),
+                          badge: _badge(theme, Pref.removeOne.value)),
+                    ],
+                  )),
           _game!.removingMode == null
               ? SizedBox()
               : Positioned(
@@ -133,37 +143,47 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         ])));
   }
 
-  Widget _removeButton(
-      ThemeData theme, double right, String icon, Function() onPressed) {
+  Widget _button(
+      ThemeData theme, double right, String icon, Function() onPressed,
+      {double? width, Widget? badge, List<Color>? colors}) {
     if (Pref.tutorMode.value == 0) return SizedBox();
-    return Positioned(
-        top: _game!.bounds.bottom + 10.d,
-        right: right,
-        width: 72.d,
-        height: 72.d,
-        child: IconButton(icon: SVG.show(icon, 64.d), onPressed: onPressed));
+    return SizedBox(
+        width: width ?? 64.d,
+        child: BumpedButton(
+            colors: colors ?? TColors.whiteFlat.value,
+            padding: EdgeInsets.fromLTRB(4.d, 0, 0, 4.d),
+            content: Stack(children: [
+              Positioned(
+                  bottom: 20.d,
+                  left: 6.d,
+                  top: 6.d,
+                  right: 1.d,
+                  child: SVG.show(icon, 12.d)),
+              badge ?? SizedBox()
+            ]),
+            onTap: onPressed));
   }
 
-  Widget _badge(ThemeData theme, double right, int value) {
-    if (Pref.tutorMode.value == 0) return SizedBox();
+  Widget _badge(ThemeData theme, int value) {
     return Positioned(
-        top: _game!.bounds.bottom + 52.d,
         height: 22.d,
-        right: right,
+        bottom: 2.d,
+        left: 0,
         child: Container(
             padding: EdgeInsets.symmetric(horizontal: 8.d),
             child: Text(value == 0 ? "free" : "$value",
                 style: theme.textTheme.headline6),
-            decoration: BoxDecoration(
+            decoration: _badgeDecoration()));
+  }
+  Decoration _badgeDecoration({double? cornerRadius}) {
+    return BoxDecoration(
                 boxShadow: [
                   BoxShadow(
-                      blurRadius: 4.d,
-                      color: Colors.black,
-                      offset: Offset(0.5.d, 0.5.d))
+              blurRadius: 3.d, color: Colors.black, offset: Offset(0.5.d, 1.d))
                 ],
                 color: Colors.pink[700],
                 shape: BoxShape.rectangle,
-                borderRadius: BorderRadius.all(Radius.circular(12)))));
+        borderRadius: BorderRadius.all(Radius.circular(cornerRadius ?? 12.d)));
   }
 
   void _onGameEventHandler(GameEvent event, int value) async {
