@@ -43,7 +43,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
-    var rewardAvailble = Pref.coinDaily.value >= Cell.maxDailyCoins;
+    var rewardAvailble = Pref.coinPiggy.value >= Cell.maxDailyCoins;
     return WillPopScope(
         onWillPop: _onWillPop,
         child: Scaffold(
@@ -107,8 +107,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                           iconSize: 56.d,
                           onPressed: _pause),
                       Expanded(child: SizedBox()),
-                        _button(theme, 20.d, "piggy",
-                            () => _boost(rewardAvailble ? "daily" : ""),
+                        Expanded(
+                            child: _button(theme, 20.d, "piggy",
+                                () => _boost(rewardAvailble ? "piggy" : ""),
                             width: 96.d,
                             badge: _slider(
                                 theme,
@@ -338,7 +339,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       case "color":
         title = "Select color for remove!";
         break;
-      case "daily":
+      case "piggy":
+        title = "Piggy Bank give reward!";
         break;
     }
     var result = await Rout.push(

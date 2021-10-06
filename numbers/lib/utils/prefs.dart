@@ -26,6 +26,7 @@ class Prefs {
         _initPlayService();
         allowsBackup = true;
       }
+      Pref.coinPiggy.set(0);
       Pref.visitCount.increase(1);
       onInit();
     });
@@ -97,6 +98,7 @@ class Prefs {
 
 enum Pref {
   coin,
+  coinPiggy,
   isMute,
   isVibrateOff,
   noAds,
@@ -116,6 +118,8 @@ extension PrefExt on Pref {
     switch (this) {
       case Pref.coin:
         return "coin";
+      case Pref.coinPiggy:
+        return "coinPiggy";
       case Pref.isMute:
         return "isMute";
       case Pref.isVibrateOff:
