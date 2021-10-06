@@ -29,6 +29,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   Positioned? _coins;
   AnimationController? _rewardAnimation;
+  AnimationController? _rewardLineAnimation;
   ConfettiController? _confettiController;
 
   void initState() {
@@ -36,6 +37,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     _createGame();
     _rewardAnimation = AnimationController(vsync: this);
     _rewardAnimation!.addListener(() => setState(() {}));
+    _rewardLineAnimation = AnimationController(
+        vsync: this,
+        upperBound: Cell.maxDailyCoins * 1.0,
+        value: Pref.coinPiggy.value * 1.0);
+    _rewardLineAnimation!.addListener(() => setState(() {}));
     _confettiController =
         ConfettiController(duration: const Duration(milliseconds: 100));
   }
@@ -265,7 +271,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         Pref.coinPiggy.set(dailyCoins.clamp(0, Cell.maxDailyCoins));
         _rewardAnimation!.value = 1;
         _rewardAnimation!.animateTo(0,
-            duration: Duration(milliseconds: 200), curve: Curves.easeOutSine);
+        _rewardLineAnimation!.animateTo(Pref.coinPiggy.value * 1.0,
+            duration: const Duration(seconds: 1), curve: Curves.easeInOutSine);
         return;
       case GameEvent.score:
         setState(() {});
