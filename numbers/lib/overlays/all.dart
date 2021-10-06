@@ -377,7 +377,7 @@ class Overlays {
   }
 
   static callout(BuildContext context, String title, String type,
-      {EdgeInsets? padding}) {
+      {EdgeInsets? padding, bool hasCoinButton = true}) {
     var cost = 100;
     Sound.play("pop");
     var theme = Theme.of(context);
@@ -413,17 +413,20 @@ class Overlays {
                           SizedBox(
                               width: 98.d,
                               height: 40.d,
-                              child: BumpedButton(
-                                  cornerRadius: 8.d,
-                                  content: Row(children: [
-                                    SVG.show("coin", 24.d),
-                                    Expanded(
-                                        child: Text("$cost",
-                                            textAlign: TextAlign.center,
-                                            style: theme.textTheme.bodyText2))
-                                  ]),
-                                  onTap: () =>
-                                      _buttonsClick(context, type, -cost))),
+                              child: hasCoinButton
+                                  ? BumpedButton(
+                                      cornerRadius: 8.d,
+                                      content: Row(children: [
+                                        SVG.show("coin", 24.d),
+                                        Expanded(
+                                            child: Text("$cost",
+                                                textAlign: TextAlign.center,
+                                                style:
+                                                    theme.textTheme.bodyText2))
+                                      ]),
+                                      onTap: () =>
+                                          _buttonsClick(context, type, -cost))
+                                  : SizedBox()),
                           SizedBox(
                               width: 98.d,
                               height: 40.d,

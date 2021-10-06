@@ -344,18 +344,23 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         title = "Select color for remove!";
         break;
       case "piggy":
+        hasCoinButton = false;
         title = "Piggy Bank give reward!";
         break;
     }
     var result = await Rout.push(
-        context, Overlays.callout(context, title, type, padding: padding),
-        barrierColor: Colors.transparent, barrierDismissible: true);
+        context,
+        Overlays.callout(context, title, type,
+            padding: padding, hasCoinButton: hasCoinButton),
+        barrierColor: Colors.transparent,
+        barrierDismissible: true);
     if (result != null) {
       if (type == "next") {
         _game!.boostNext();
         return;
       }
-      if (type == "daily") {
+      if (type == "piggy") {
+        MyGame.isPlaying = true;
         return;
       }
       if (type == "one") Pref.removeOne.set(1);

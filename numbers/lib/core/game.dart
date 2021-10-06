@@ -23,7 +23,7 @@ enum GameEvent {
   big,
   boost,
   celebrate,
-  openPiggy,
+  coinEarned,
   completeTutorial,
   lose,
   remove,
@@ -497,6 +497,7 @@ class MyGame extends BaseGame with TapDetector {
     add(celebration);
     await Future.delayed(Duration(milliseconds: 200));
     Sound.play("merge-end");
+
     onGameEvent?.call(GameEvent.celebrate, 0);
   }
 }
