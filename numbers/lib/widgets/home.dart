@@ -402,7 +402,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   @override
   void dispose() {
+    _rewardAnimation!.dispose();
     _confettiController!.dispose();
+    _rewardLineAnimation!.dispose();
     super.dispose();
   }
 }
