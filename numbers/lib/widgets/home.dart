@@ -40,7 +40,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     _rewardLineAnimation = AnimationController(
         vsync: this,
         upperBound: Cell.maxDailyCoins * 1.0,
-        value: Pref.coinDaily.value * 1.0);
+        value: Pref.coinPiggy.value * 1.0);
     _rewardLineAnimation!.addListener(() => setState(() {}));
     _confettiController =
         ConfettiController(duration: const Duration(milliseconds: 100));
@@ -49,7 +49,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
-    var rewardAvailble = Pref.coinDaily.value >= Cell.maxDailyCoins;
+    var rewardAvailble = Pref.coinPiggy.value >= Cell.maxDailyCoins;
     return WillPopScope(
         onWillPop: _onWillPop,
         child: Scaffold(
@@ -117,7 +117,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                         SizedBox(height: 5 * _rewardAnimation!.value),
                         Expanded(
                             child: _button(theme, 20.d, "piggy",
-                                () => _boost(rewardAvailble ? "daily" : ""),
+                                () => _boost(rewardAvailble ? "piggy" : ""),
                                 width: 96.d,
                                 badge: _slider(
                                     theme,
@@ -252,12 +252,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       case GameEvent.celebrate:
         _confettiController!.play();
         return;
-      case GameEvent.coinEarned:
-        Pref.coinDaily.set(0);
-        Pref.coin.increase(value, itemType: "game", itemId: "random");
-        _rewardLineAnimation!
-            .animateTo(0, duration: const Duration(milliseconds: 400));
-        return;
       case GameEvent.completeTutorial:
         _widget = Overlays.endTutorial(context, _confettiController!);
         break;
@@ -265,6 +259,12 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         await Future.delayed(Duration(seconds: 1));
         _widget = Overlays.revive(context, _game!.numRevives);
         break;
+      case GameEvent.openPiggy:
+        Pref.coinPiggy.set(0);
+        Pref.coin.increase(value, itemType: "game", itemId: "random");
+        _rewardLineAnimation!
+            .animateTo(0, duration: const Duration(milliseconds: 400));
+        return;
       case GameEvent.remove:
         _onRemoveBlock();
         break;
@@ -275,13 +275,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             GameEvent.rewarded);
         return;
       case GameEvent.rewarded:
-        var dailyCoins = Pref.coinDaily.value + value;
-        Pref.coinDaily.set(dailyCoins.clamp(0, Cell.maxDailyCoins));
+        var dailyCoins = Pref.coinPiggy.value + value;
+        Pref.coinPiggy.set(dailyCoins.clamp(0, Cell.maxDailyCoins));
         _rewardAnimation!.value = 1;
         _rewardAnimation!.animateTo(0,
             duration: const Duration(milliseconds: 200),
             curve: Curves.easeOutSine);
-        _rewardLineAnimation!.animateTo(Pref.coinDaily.value * 1.0,
+        _rewardLineAnimation!.animateTo(Pref.coinPiggy.value * 1.0,
             duration: const Duration(seconds: 1), curve: Curves.easeInOutSine);
         return;
       case GameEvent.score:
@@ -360,9 +360,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       case "color":
         title = "Select color for remove!";
         break;
-      case "daily":
+      case "piggy":
         hasCoinButton = false;
-        title = "Collect your reward!";
+        title = "Piggy Bank give reward!";
         break;
     }
     var result = await Rout.push(
@@ -376,12 +376,12 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         _game!.boostNext();
         return;
       }
-      if (type == "daily") {
+      if (type == "piggy") {
         MyGame.isPlaying = true;
         _game!.showReward(
             Cell.maxDailyCoins,
             Vector2(_coins!.top!, _coins!.left! + 8.d),
-            GameEvent.coinEarned);
+            GameEvent.openPiggy);
         return;
       }
       if (type == "one") Pref.removeOne.set(1);
