@@ -362,7 +362,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         break;
       case "piggy":
         hasCoinButton = false;
-        title = "Piggy Bank give reward!";
+        title = "Get Piggy Bank reward!";
         break;
     }
     var result = await Rout.push(
@@ -378,10 +378,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       }
       if (type == "piggy") {
         MyGame.isPlaying = true;
-        _game!.showReward(
-            Cell.maxDailyCoins,
-            Vector2(_coins!.top!, _coins!.left! + 8.d),
-            GameEvent.openPiggy);
+        _game!.showReward(Cell.maxDailyCoins,
+            Vector2(_coins!.top!, _coins!.left! + 8.d), GameEvent.openPiggy);
         return;
       }
       if (type == "one") Pref.removeOne.set(1);
