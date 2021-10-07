@@ -82,7 +82,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           _coins = Positioned(
               top: _game!.bounds.top - 70.d,
               left: 73.d,
-              height: 52.d - 5 * _rewardAnimation!.value,
+              height: 52.d,
               child: Components.coins(context, onTap: () async {
                 MyGame.isPlaying = false;
                 await Rout.push(context, ShopOverlay());
@@ -113,6 +113,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                           iconSize: 56.d,
                           onPressed: _pause),
                       Expanded(child: SizedBox()),
+                      Column(children: [
+                        SizedBox(height: 5 * _rewardAnimation!.value),
                         Expanded(
                             child: _button(theme, 20.d, "piggy",
                                 () => _boost(rewardAvailble ? "piggy" : ""),
@@ -271,6 +273,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         Pref.coinPiggy.set(dailyCoins.clamp(0, Cell.maxDailyCoins));
         _rewardAnimation!.value = 1;
         _rewardAnimation!.animateTo(0,
+            duration: const Duration(milliseconds: 200),
+            curve: Curves.easeOutSine);
         _rewardLineAnimation!.animateTo(Pref.coinPiggy.value * 1.0,
             duration: const Duration(seconds: 1), curve: Curves.easeInOutSine);
         return;
