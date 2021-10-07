@@ -40,7 +40,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     _rewardLineAnimation = AnimationController(
         vsync: this,
         upperBound: Cell.maxDailyCoins * 1.0,
-        value: Pref.coinPiggy.value * 1.0);
+        value: Pref.coinDaily.value * 1.0);
     _rewardLineAnimation!.addListener(() => setState(() {}));
     _confettiController =
         ConfettiController(duration: const Duration(milliseconds: 100));
@@ -49,7 +49,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
-    var rewardAvailble = Pref.coinPiggy.value >= Cell.maxDailyCoins;
+    var rewardAvailble = Pref.coinDaily.value >= Cell.maxDailyCoins;
     return WillPopScope(
         onWillPop: _onWillPop,
         child: Scaffold(
@@ -117,14 +117,14 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                         SizedBox(height: 5 * _rewardAnimation!.value),
                         Expanded(
                             child: _button(theme, 20.d, "piggy",
-                                () => _boost(rewardAvailble ? "piggy" : ""),
-                            width: 96.d,
-                            badge: _slider(
-                                theme,
+                                () => _boost(rewardAvailble ? "daily" : ""),
+                                width: 96.d,
+                                badge: _slider(
+                                    theme,
                                     _rewardLineAnimation!.value.round(),
                                     Cell.maxDailyCoins),
-                            colors: rewardAvailble
-                                ? TColors.orange.value
+                                colors: rewardAvailble
+                                    ? TColors.orange.value
                                     : null))
                       ]),
                       SizedBox(width: 4.d),
@@ -229,12 +229,12 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   Decoration _badgeDecoration({double? cornerRadius}) {
     return BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
+        boxShadow: [
+          BoxShadow(
               blurRadius: 3.d, color: Colors.black, offset: Offset(0.5.d, 1.d))
-                ],
-                color: Colors.pink[700],
-                shape: BoxShape.rectangle,
+        ],
+        color: Colors.pink[700],
+        shape: BoxShape.rectangle,
         borderRadius: BorderRadius.all(Radius.circular(cornerRadius ?? 12.d)));
   }
 
@@ -251,6 +251,12 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         break;
       case GameEvent.celebrate:
         _confettiController!.play();
+        return;
+      case GameEvent.coinEarned:
+        Pref.coinDaily.set(0);
+        Pref.coin.increase(value, itemType: "game", itemId: "random");
+        _rewardLineAnimation!
+            .animateTo(0, duration: const Duration(milliseconds: 400));
         return;
       case GameEvent.completeTutorial:
         _widget = Overlays.endTutorial(context, _confettiController!);
@@ -269,13 +275,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             GameEvent.rewarded);
         return;
       case GameEvent.rewarded:
-        var dailyCoins = Pref.coinPiggy.value + value;
-        Pref.coinPiggy.set(dailyCoins.clamp(0, Cell.maxDailyCoins));
+        var dailyCoins = Pref.coinDaily.value + value;
+        Pref.coinDaily.set(dailyCoins.clamp(0, Cell.maxDailyCoins));
         _rewardAnimation!.value = 1;
         _rewardAnimation!.animateTo(0,
             duration: const Duration(milliseconds: 200),
             curve: Curves.easeOutSine);
-        _rewardLineAnimation!.animateTo(Pref.coinPiggy.value * 1.0,
+        _rewardLineAnimation!.animateTo(Pref.coinDaily.value * 1.0,
             duration: const Duration(seconds: 1), curve: Curves.easeInOutSine);
         return;
       case GameEvent.score:
@@ -354,9 +360,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       case "color":
         title = "Select color for remove!";
         break;
-      case "piggy":
+      case "daily":
         hasCoinButton = false;
-        title = "Piggy Bank give reward!";
+        title = "Collect your reward!";
         break;
     }
     var result = await Rout.push(
@@ -370,8 +376,12 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         _game!.boostNext();
         return;
       }
-      if (type == "piggy") {
+      if (type == "daily") {
         MyGame.isPlaying = true;
+        _game!.showReward(
+            Cell.maxDailyCoins,
+            Vector2(_coins!.top!, _coins!.left! + 8.d),
+            GameEvent.coinEarned);
         return;
       }
       if (type == "one") Pref.removeOne.set(1);
