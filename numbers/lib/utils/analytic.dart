@@ -7,6 +7,7 @@ class Analytics {
 
   static void init(FirebaseAnalytics analytics) {
     _firebaseAnalytics = analytics;
+    print("==> analytics init");
 
     GameAnalytics.setEnabledInfoLog(false);
     GameAnalytics.setEnabledVerboseLog(false);
@@ -114,10 +115,14 @@ class Analytics {
   static Future<void> share(String contentType, String itemId) async {
     await _firebaseAnalytics.logShare(
         contentType: contentType, itemId: itemId, method: "");
+
+    GameAnalytics.addDesignEvent({"eventId": "share:$contentType:$itemId"});
   }
 
   static Future<void> setScreen(String screenName) async {
     await _firebaseAnalytics.setCurrentScreen(screenName: screenName);
+
+    GameAnalytics.addDesignEvent({"eventId": "screen:$screenName"});
   }
 
   // static Future<void> setUserId(String id) async {
