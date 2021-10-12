@@ -9,7 +9,7 @@ import 'package:numbers/overlays/all.dart';
 import 'package:numbers/overlays/pause.dart';
 import 'package:numbers/overlays/shop.dart';
 import 'package:numbers/overlays/stats.dart';
-import 'package:numbers/utils/analytics.dart';
+import 'package:numbers/utils/analytic.dart';
 import 'package:numbers/utils/gemeservice.dart';
 import 'package:numbers/utils/prefs.dart';
 import 'package:numbers/utils/themes.dart';
@@ -59,7 +59,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               top: _game!.bounds.top - 69.d,
               right: 20.d,
               child: Components.scores(theme, onTap: () {
-                _pause();
+                _pause("record");
+                Analytics.design('guiClick:record:home');
                 PlayGames.showLeaderboard("CgkIw9yXzt4XEAIQAQ");
               })),
           Positioned(
@@ -76,14 +77,15 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               top: _game!.bounds.top - 70.d,
               left: 22.d,
               child: Components.stats(theme, onTap: () {
-                _pause();
+                _pause("stats");
+                Analytics.design('guiClick:stats:home');
                 Rout.push(context, StatsOverlay());
               })),
           _coins = Positioned(
               top: _game!.bounds.top - 70.d,
               left: 73.d,
               height: 52.d,
-              child: Components.coins(context, onTap: () async {
+              child: Components.coins(context, "home", onTap: () async {
                 MyGame.isPlaying = false;
                 await Rout.push(context, ShopOverlay());
                 MyGame.isPlaying = true;
@@ -111,7 +113,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                       IconButton(
                           icon: SVG.show("pause", 48.d),
                           iconSize: 56.d,
-                          onPressed: _pause),
+                          onPressed: () => _pause("tap")),
                       Expanded(child: SizedBox()),
                       Column(children: [
                         SizedBox(height: 5 * _rewardAnimation!.value),
@@ -184,7 +186,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   child: SVG.show(icon, 48.d)),
               badge ?? SizedBox()
             ]),
-            onTap: onPressed));
+            onTap: () {
+              Analytics.design('guiClick:$icon:game');
+              onPressed();
+            }));
   }
 
   Widget _badge(ThemeData theme, int value) {
@@ -317,8 +322,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     _onPauseButtonsClick("resume");
   }
 
-  void _pause({bool showMenu = true}) async {
+  void _pause(String source, {bool showMenu = true}) async {
     MyGame.isPlaying = false;
+    Analytics.design('guiClick:pause:$source');
     if (!showMenu) return;
     var result = await Rout.push(context, PauseOverlay());
     _onPauseButtonsClick(result ?? "resume");
@@ -407,7 +413,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   }
 
   Future<bool> _onWillPop() async {
-    _pause();
+    _pause("back");
     return true;
   }
 

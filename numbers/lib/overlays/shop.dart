@@ -91,7 +91,7 @@ class _ShopOverlayState extends State<ShopOverlay> {
           coinButton: Positioned(
               top: 32.d,
               left: 12.d,
-              child: Components.coins(context, clickable: false)),
+              child: Components.coins(context, "shop", clickable: false)),
           padding: EdgeInsets.all(8.d),
           width: 310.d,
           height: _getHeight(),
