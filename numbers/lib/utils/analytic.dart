@@ -7,7 +7,6 @@ class Analytics {
 
   static void init(FirebaseAnalytics analytics) {
     _firebaseAnalytics = analytics;
-    print("==> analytics init");
 
     GameAnalytics.setEnabledInfoLog(false);
     GameAnalytics.setEnabledVerboseLog(false);
@@ -108,8 +107,6 @@ class Analytics {
 
     var value = parameters == null ? "" : parameters.values.first;
     GameAnalytics.addDesignEvent({"eventId": name, "value": value});
-
-    print("design event ==> $name $value  $parameters");
   }
 
   static Future<void> share(String contentType, String itemId) async {
