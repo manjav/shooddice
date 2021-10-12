@@ -13,6 +13,7 @@ import 'package:unity_ads_plugin/unity_ads.dart';
 class Ads {
   static LinkedHashSet<String> _placementIds = new LinkedHashSet();
 
+  static Function? onAdsReady;
   static UnityAdState? _lastAdState;
 
   static String platform = "Android";
@@ -24,7 +25,8 @@ class Ads {
           AdPlace place = _getPlacement(data['placementId']);
           if (state == UnityAdState.ready) {
             Analytics.ad(GAAdAction.Loaded, place.type, place.name);
-            _placementIds.add(data['placementId']);
+              _placementIds.add(data['placementId']);
+              onAdsReady?.call();
           } else if (state == UnityAdState.complete ||
               state == UnityAdState.skipped) {
             Analytics.ad(GAAdAction.RewardReceived, place.type, place.name);
