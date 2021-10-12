@@ -178,11 +178,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             padding: EdgeInsets.fromLTRB(4.d, 0, 0, 4.d),
             content: Stack(children: [
               Positioned(
-                  bottom: 20.d,
-                  left: 6.d,
-                  top: 6.d,
-                  right: 1.d,
-                  child: SVG.show(icon, 12.d)),
+                  height: 46.d,
+                  top: 4.d,
+                  right: 2.d,
+                  child: SVG.show(icon, 48.d)),
               badge ?? SizedBox()
             ]),
             onTap: onPressed));
