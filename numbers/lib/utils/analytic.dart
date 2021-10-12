@@ -5,7 +5,7 @@ import 'dart:async';
 class Analytics {
   static late FirebaseAnalytics _firebaseAnalytics;
 
-  static Future<void> init(FirebaseAnalytics analytics) async {
+  static void init(FirebaseAnalytics analytics) {
     _firebaseAnalytics = analytics;
 
     GameAnalytics.setEnabledInfoLog(false);
@@ -101,7 +101,6 @@ class Analytics {
     });
   }
 
-  static Future<void> log(String name, Map<String, dynamic> parameters) async {
     _firebaseAnalytics.logEvent(name: name, parameters: parameters);
   }
 

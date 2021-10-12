@@ -1,16 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:numbers/core/cell.dart';
-import 'package:numbers/utils/Analytics.dart';
+import 'package:numbers/utils/analytic.dart';
 import 'package:numbers/utils/prefs.dart';
 import 'package:numbers/utils/themes.dart';
 import 'package:numbers/utils/utils.dart';
 import 'package:numbers/widgets/buttons.dart';
 import 'package:numbers/widgets/components.dart';
 import 'package:numbers/widgets/widgets.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:share/share.dart';
-import 'package:path_provider/path_provider.dart';
 
 import 'all.dart';
 
