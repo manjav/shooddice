@@ -4,6 +4,7 @@ import 'package:numbers/core/cell.dart';
 import 'package:numbers/core/game.dart';
 import 'package:numbers/overlays/rating.dart';
 import 'package:numbers/utils/ads.dart';
+import 'package:numbers/utils/localization.dart';
 import 'package:numbers/utils/prefs.dart';
 import 'package:numbers/utils/themes.dart';
 import 'package:numbers/utils/utils.dart';
@@ -34,7 +35,7 @@ class _StartOverlayState extends State<StartOverlay> {
     return Overlays.basic(context, "start",
         height: 300.d,
         hasClose: false,
-        title: "Select Boost Items",
+        title: "start_title".l(),
         padding: EdgeInsets.fromLTRB(12.d, 12.d, 12.d, 14.d),
         content:
             Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
@@ -42,11 +43,11 @@ class _StartOverlayState extends State<StartOverlay> {
               child: Row(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                Components.startButton(context,
-                    "Start the game with block 512!", "512", _onUpdate),
+                Components.startButton(
+                    context, "start_big".l(), "512", _onUpdate),
                 SizedBox(width: 2.d),
-                Components.startButton(context,
-                    "Preview the next upcoming block!", "next", _onUpdate)
+                Components.startButton(
+                    context, "start_next".l(), "next", _onUpdate)
               ])),
           SizedBox(height: 10.d),
           Container(
@@ -60,7 +61,7 @@ class _StartOverlayState extends State<StartOverlay> {
                       children: [
                         SVG.icon("4", theme),
                         SizedBox(width: 12.d),
-                        Text("Start",
+                        Text("start_l".l(),
                             style: theme.textTheme.headline5,
                             textAlign: TextAlign.center)
                       ])))

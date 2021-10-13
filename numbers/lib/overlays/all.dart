@@ -10,6 +10,7 @@ import 'package:numbers/overlays/stats.dart';
 import 'package:numbers/utils/ads.dart';
 import 'package:numbers/utils/analytic.dart';
 import 'package:numbers/utils/gemeservice.dart';
+import 'package:numbers/utils/localization.dart';
 import 'package:numbers/utils/prefs.dart';
 import 'package:numbers/utils/sounds.dart';
 import 'package:numbers/utils/themes.dart';
@@ -107,7 +108,7 @@ class Overlays {
     var cost = 100 * pow(2, numRevive).round();
     return basic(context, "revive",
         sfx: "lose",
-        title: Device.aspectRatio < 0.7 ? "Revive" : null,
+        title: Device.aspectRatio < 0.7 ? "revive_l".l() : null,
         width: 310.d,
         height: 300.d,
         content: Stack(
@@ -146,8 +147,8 @@ class Overlays {
                       Positioned(
                           bottom: 7.d,
                           left: 40.d,
-                          child:
-                              Text("Revive", style: theme.textTheme.subtitle1)),
+                          child: Text("revive_l".l(),
+                              style: theme.textTheme.subtitle1)),
                     ]))),
             PunchButton(
                 height: 76.d,
@@ -165,11 +166,13 @@ class Overlays {
                   Positioned(
                       top: 5.d,
                       left: 40.d,
-                      child: Text("Free", style: theme.textTheme.headline4)),
+                      child:
+                          Text("free_l".l(), style: theme.textTheme.headline4)),
                   Positioned(
                       bottom: 7.d,
                       left: 40.d,
-                      child: Text("Revive", style: theme.textTheme.headline6)),
+                      child: Text("revive_l".l(),
+                          style: theme.textTheme.headline6)),
                 ]))
           ],
         ));
@@ -189,7 +192,7 @@ class Overlays {
         content: Stack(alignment: Alignment.topCenter, children: [
           Positioned(
               top: 152.d,
-              child: Text("New Record", style: theme.textTheme.caption)),
+              child: Text("record_l".l(), style: theme.textTheme.caption)),
           Positioned(
               top: 166.d,
               child:
@@ -212,7 +215,8 @@ class Overlays {
                     Positioned(
                         bottom: 7.d,
                         left: 40.d,
-                        child: Text("Claim", style: theme.textTheme.subtitle2)),
+                        child: Text("claim_l".l(),
+                            style: theme.textTheme.subtitle2)),
                   ]))),
           PunchButton(
               height: 76.d,
@@ -258,15 +262,13 @@ class Overlays {
         height: 330.d,
         hasClose: false,
         padding: EdgeInsets.fromLTRB(18.d, 0.d, 18.d, 18.d),
-        title: Device.aspectRatio < 0.7 ? "Big Block" : null,
+        title: Device.aspectRatio < 0.7 ? "Big_l".l() : null,
         onWillPop: () => _buttonsClick(context, "big", reward),
         content: Stack(alignment: Alignment.topCenter, children: [
           Positioned(
               top: 140.d,
-              child: Text(
-                  "Congratulations.\nYou made ${Cell.getScore(value)}!\n\nEarn more reward?",
-                  style: theme.textTheme.caption,
-                  textAlign: TextAlign.center)),
+              child: Text("big_message".l([Cell.getScore(value).toString()]),
+                  style: theme.textTheme.caption, textAlign: TextAlign.center)),
           Positioned(
               height: 76.d,
               width: 110.d,
@@ -285,7 +287,8 @@ class Overlays {
                     Positioned(
                         bottom: 7.d,
                         left: 36.d,
-                        child: Text("Claim", style: theme.textTheme.subtitle2)),
+                        child: Text("claim_l".l(),
+                            style: theme.textTheme.subtitle2)),
                   ]))),
           PunchButton(
               height: 76.d,
@@ -336,15 +339,14 @@ class Overlays {
     Timer(Duration(milliseconds: 1), () => confettiController.play());
     return basic(context, "endTutorial",
         sfx: "win",
-        title: "Good Job!",
+        title: "tutor_title".l(),
         height: 200.d,
         width: 340.d,
         hasClose: false,
         content: Stack(alignment: Alignment.topCenter, children: [
           Positioned(
               top: 20.d,
-              child: Text("Now lets try the next large number.\nAre you ready?",
-                  style: theme.textTheme.caption)),
+              child: Text("tutor_message".l(), style: theme.textTheme.caption)),
           Positioned(
               height: 76.d,
               width: 140.d,
@@ -373,7 +375,7 @@ class Overlays {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         SVG.icon("4", theme),
-                        Text("Ok", style: theme.textTheme.headline5)
+                        Text("ok_l".l(), style: theme.textTheme.headline5)
                       ]))),
           Center(child: Components.confetty(confettiController))
         ]));
@@ -441,7 +443,7 @@ class Overlays {
                                   content: Row(children: [
                                     SVG.icon("0", theme, scale: 0.7),
                                     Expanded(
-                                        child: Text("Free",
+                                        child: Text("free_l".l(),
                                             textAlign: TextAlign.center,
                                             style: theme.textTheme.headline5))
                                   ]),
@@ -466,13 +468,13 @@ class Overlays {
                 stateMachines: ["unhappy"])),
         padding: EdgeInsets.fromLTRB(16.d, 4.d, 16.d, 8.d),
         height: 54.d,
-        title: "Quit",
+        title: "quit_l".l(),
         content: GestureDetector(
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Expanded(
-                      child: Text("Are you sure?",
+                      child: Text("quit_message".l(),
                           style: theme.textTheme.headline5)),
                   SVG.show("accept", 28.d)
                 ]),

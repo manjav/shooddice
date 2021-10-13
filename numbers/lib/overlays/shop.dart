@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:numbers/utils/ads.dart';
 import 'package:numbers/utils/analytic.dart';
+import 'package:numbers/utils/localization.dart';
 import 'package:numbers/utils/prefs.dart';
 import 'package:numbers/utils/themes.dart';
 import 'package:numbers/utils/utils.dart';
@@ -20,7 +21,7 @@ class ShopOverlay extends StatefulWidget {
 }
 
 class _ShopOverlayState extends State<ShopOverlay> {
-  String _message = "Please Wait...";
+  String _message = "wait_l".l();
   var coins = Map<String, ProductDetails>();
   var others = Map<String, ProductDetails>();
 
@@ -33,7 +34,7 @@ class _ShopOverlayState extends State<ShopOverlay> {
   Future<void> _initShop() async {
     var available = await InAppPurchase.instance.isAvailable();
     if (!available) {
-      setState(() => _message = "Shop is inavalable!");
+      setState(() => _message = "shop_unavailable");
       return;
     }
     if (coins.length > 0) {
@@ -85,7 +86,7 @@ class _ShopOverlayState extends State<ShopOverlay> {
     var items = coins.values.toList();
     return Stack(children: [
       Overlays.basic(context, "shop",
-          title: "Shop",
+          title: "shop_l".l(),
           statsButton: SizedBox(),
           scoreButton: SizedBox(),
           coinButton: Positioned(
@@ -95,65 +96,64 @@ class _ShopOverlayState extends State<ShopOverlay> {
           padding: EdgeInsets.all(8.d),
           width: 310.d,
           height: _getHeight(),
-          content: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              SizedBox(
-                  height: 200.d,
-                  child: GridView.count(
-                    padding: EdgeInsets.zero,
-                    crossAxisCount: 3,
-                    crossAxisSpacing: 3.d,
-                    mainAxisSpacing: 2.d,
-                    childAspectRatio: 1,
-                    children: List.generate(
-                        items.length, (i) => _itemBuilder(theme, items[i])),
-                  )),
-              Device.size.aspectRatio > 0.6
-                  ? SizedBox()
-                  : Container(
-                      height: 72.d,
-                      padding: EdgeInsets.fromLTRB(10.d, 6.d, 10.d, 12.d),
-                      decoration: ButtonDecor(
-                          TColors.whiteFlat.value, 12.d, true, false),
-                      child: Row(children: [
-                        SizedBox(width: 8.d),
-                        SVG.show("noads", 48),
-                        SizedBox(width: 24.d),
-                        Expanded(
-                            child: Text("No Ads",
-                                style: theme.textTheme.bodyText2)),
-                        SizedBox(
-                            width: 92.d,
-                            height: 40.d,
-                            child: BumpedButton(
-                              cornerRadius: 8.d,
-                              colors: TColors.green.value,
-                              content: Center(
-                                  child: Text(
-                                      "${others.length > 0 ? others["no_ads"]!.price : 0}",
-                                      style: theme.textTheme.headline5)),
-                              onTap: () => _onShopItemTap(others["no_ads"]!),
-                            )),
-                        SizedBox(height: 4.d)
-                      ])),
-              Device.size.aspectRatio > 0.6
-                  ? SizedBox()
-                  : Container(
-                      height: 32.d,
-                      alignment: Alignment.center,
-                      child: Container(
-                          width: 48.d,
-                          height: 7.d,
-                          decoration: BoxDecoration(
-                              color: Colors.grey,
-                              shape: BoxShape.rectangle,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(24.d))))),
-              Container(
-                  height: 80.d,
-                  padding: EdgeInsets.symmetric(horizontal: 8.d),
-                  child: Row(
+          content:
+              Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+            SizedBox(
+                height: 200.d,
+                child: GridView.count(
+                  padding: EdgeInsets.zero,
+                  crossAxisCount: 3,
+                  crossAxisSpacing: 3.d,
+                  mainAxisSpacing: 2.d,
+                  childAspectRatio: 1,
+                  children: List.generate(
+                      items.length, (i) => _itemBuilder(theme, items[i])),
+                )),
+            Device.size.aspectRatio > 0.6
+                ? SizedBox()
+                : Container(
+                    height: 72.d,
+                    padding: EdgeInsets.fromLTRB(10.d, 6.d, 10.d, 12.d),
+                    decoration:
+                        ButtonDecor(TColors.whiteFlat.value, 12.d, true, false),
+                    child: Row(children: [
+                      SizedBox(width: 8.d),
+                      SVG.show("noads", 48),
+                      SizedBox(width: 24.d),
+                      Expanded(
+                          child: Text("shop_noads".l(),
+                              style: theme.textTheme.bodyText2)),
+                      SizedBox(
+                          width: 92.d,
+                          height: 40.d,
+                          child: BumpedButton(
+                            cornerRadius: 8.d,
+                            colors: TColors.green.value,
+                            content: Center(
+                                child: Text(
+                                    "${others.length > 0 ? others["no_ads"]!.price : 0}",
+                                    style: theme.textTheme.headline5)),
+                            onTap: () => _onShopItemTap(others["no_ads"]!),
+                          )),
+                      SizedBox(height: 4.d)
+                    ])),
+            Device.size.aspectRatio > 0.6
+                ? SizedBox()
+                : Container(
+                    height: 32.d,
+                    alignment: Alignment.center,
+                    child: Container(
+                        width: 48.d,
+                        height: 7.d,
+                        decoration: BoxDecoration(
+                            color: Colors.grey,
+                            shape: BoxShape.rectangle,
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(24.d))))),
+            Container(
+                height: 80.d,
+                padding: EdgeInsets.symmetric(horizontal: 8.d),
+                child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
@@ -172,7 +172,7 @@ class _ShopOverlayState extends State<ShopOverlay> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Text("Free",
+                                    Text("free_l".l(),
                                         style: theme.textTheme.headline5),
                                     Row(
                                       children: [
@@ -193,14 +193,12 @@ class _ShopOverlayState extends State<ShopOverlay> {
                               content: Row(children: [
                                 SVG.icon("5", theme),
                                 SizedBox(width: 12.d),
-                                Text("Restore\nPurchase",
+                                Text("shop_restore".l(),
                                     overflow: TextOverflow.ellipsis,
                                     style: theme.textTheme.headline6)
-                              ]))),
-                    ],
-                  ))
-            ],
-          )),
+                              ])))
+                    ]))
+          ])),
       _overlay(theme)
     ]);
   }
@@ -220,11 +218,11 @@ class _ShopOverlayState extends State<ShopOverlay> {
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
           Text(_message, style: theme.textTheme.headline4),
           SizedBox(height: 32.d),
-          _message == "Please Wait..."
+          _message == "wait_l".l()
               ? CircularProgressIndicator()
               : TextButton(
                   onPressed: () {
-                    if (_message == "Shop is inavalable!")
+                    if (_message == "shop_unavailable".l())
                       Navigator.of(context).pop();
                     else
                       setState(() => _message = "");
@@ -262,7 +260,7 @@ class _ShopOverlayState extends State<ShopOverlay> {
   }
 
   _onShopItemTap(ProductDetails product) {
-    setState(() => _message = "Please Wait...");
+    setState(() => _message = "wait_l".l());
     var purchaseParam = PurchaseParam(productDetails: product);
     if (product.isConsumable) {
       InAppPurchase.instance.buyConsumable(purchaseParam: purchaseParam);

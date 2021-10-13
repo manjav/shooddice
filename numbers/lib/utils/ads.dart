@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:gameanalytics_sdk/gameanalytics.dart';
 import 'package:numbers/utils/analytic.dart';
+import 'package:numbers/utils/localization.dart';
 import 'package:numbers/utils/prefs.dart';
 import 'package:numbers/utils/utils.dart';
 import 'package:unity_ads_plugin/unity_ads.dart';
@@ -54,7 +55,8 @@ class Ads {
       Analytics.ad(GAAdAction.FailedShow, placement.type, placement.name);
       return false;
     }
-    Analytics.ad(GAAdAction.Show, placement.type, placement.name);
+    Analytics.ad(GAAdAction.Show, placement.type,
+        placement.name); // where is this from?????
     _lastAdState = UnityAdState.started;
     _placementIds.remove(placement.name);
     UnityAds.showVideoAd(placementId: placement.name);
@@ -67,7 +69,7 @@ class Ads {
     return Row(children: [
       SVG.icon("0", theme),
       SizedBox(width: 8.d),
-      Text("Ad is not available!", style: theme.textTheme.headline4)
+      Text("ads_unavailable".l(), style: theme.textTheme.headline4)
     ]);
   }
 

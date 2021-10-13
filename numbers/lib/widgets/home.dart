@@ -11,6 +11,7 @@ import 'package:numbers/overlays/shop.dart';
 import 'package:numbers/overlays/stats.dart';
 import 'package:numbers/utils/analytic.dart';
 import 'package:numbers/utils/gemeservice.dart';
+import 'package:numbers/utils/localization.dart';
 import 'package:numbers/utils/prefs.dart';
 import 'package:numbers/utils/themes.dart';
 import 'package:numbers/utils/utils.dart';
@@ -96,7 +97,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   top: _game!.bounds.top - 68.d,
                   right: 22.d,
                   left: 28.d,
-                  child: Text("How to play?",
+                  child: Text("home_tutor".l(),
                       style: theme.textTheme.headline4,
                       textAlign: TextAlign.center))
               : SizedBox(),
@@ -160,7 +161,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                       child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text("Select ${_game!.removingMode} to remove!"),
+                            Text("home_rm_${_game!.removingMode!}".l()),
                             GestureDetector(
                                 child: SVG.show("close", 32.d),
                                 onTap: _onRemoveBlock)
@@ -199,13 +200,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         left: 0,
         child: Container(
             padding: EdgeInsets.symmetric(horizontal: 8.d),
-            child: Text(value == 0 ? "free" : "$value",
+            child: Text(value == 0 ? "free_l".l() : "$value",
                 style: theme.textTheme.headline6),
             decoration: _badgeDecoration()));
   }
 
   Widget _slider(ThemeData theme, int value, int maxValue) {
-    var label = value >= maxValue ? "Collect" : "$value / $maxValue";
+    var label = value >= maxValue ? "collect_l".l() : "$value / $maxValue";
     return Positioned(
         height: 32.d,
         bottom: 0,
@@ -351,29 +352,14 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       setState(() => _game!.removingMode = type);
       return;
     }
-    var title = "";
-    var hasCoinButton = true;
     EdgeInsets padding = EdgeInsets.only(right: 16, bottom: 80);
-    switch (type) {
-      case "next":
-        title = "Show next upcomming block!";
-        padding = EdgeInsets.only(left: 32, top: _game!.bounds.top + 68);
-        break;
-      case "one":
-        title = "Remove one block!";
-        break;
-      case "color":
-        title = "Select color for remove!";
-        break;
-      case "piggy":
-        hasCoinButton = false;
-        title = "Get Piggy Bank reward!";
-        break;
-    }
+    if (type == "next")
+      padding = EdgeInsets.only(left: 32, top: _game!.bounds.top + 68);
+
     var result = await Rout.push(
         context,
-        Overlays.callout(context, title, type,
-            padding: padding, hasCoinButton: hasCoinButton),
+        Overlays.callout(context, "callout_$type".l(), type,
+            padding: padding, hasCoinButton: type == "piggy"),
         barrierColor: Colors.transparent,
         barrierDismissible: true);
     if (result != null) {

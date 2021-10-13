@@ -7,6 +7,7 @@ import 'package:numbers/core/game.dart';
 import 'package:numbers/overlays/shop.dart';
 import 'package:numbers/utils/ads.dart';
 import 'package:numbers/utils/analytic.dart';
+import 'package:numbers/utils/localization.dart';
 import 'package:numbers/utils/prefs.dart';
 import 'package:numbers/utils/themes.dart';
 import 'package:numbers/utils/utils.dart';
@@ -118,7 +119,7 @@ class Components {
                       content: Row(children: [
                         SVG.icon("0", theme, scale: 0.7),
                         Expanded(
-                            child: Text("Free",
+                            child: Text("free_l".l(),
                                 textAlign: TextAlign.center,
                                 style: theme.textTheme.headline5))
                       ]),

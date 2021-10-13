@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:in_app_review/in_app_review.dart';
 import 'package:numbers/utils/analytic.dart';
+import 'package:numbers/utils/localization.dart';
 import 'package:numbers/utils/prefs.dart';
 import 'package:numbers/utils/themes.dart';
 import 'package:numbers/utils/utils.dart';
@@ -41,8 +42,7 @@ class RateOverlay extends StatefulWidget {
         }
         inAppReview.openStoreListing();
       } else {
-        const url =
-            'https://play.google.com/store/apps/details?id=game.block.puzzle.drop.the.number.merge';
+        var url = "app_url".l();
         if (await canLaunch(url)) {
           await launch(url);
         } else {
@@ -72,7 +72,7 @@ class RateOverlay extends StatefulWidget {
           Overlays.message(
               context,
               Center(
-                  child: Text("Thanks a lot.",
+                  child: Text("thanks_l".l(),
                       style: Theme.of(context).textTheme.headline5))),
           barrierDismissible: true);
     }
@@ -101,11 +101,10 @@ class _RateOverlayState extends State<RateOverlay> {
         child: Overlays.basic(context, "rating",
             height: 280.d,
             hasClose: false,
-            title: "Rate Us",
+            title: "rate_title".l(),
             padding: EdgeInsets.fromLTRB(22.d, 18.d, 22.d, 22.d),
             content: Stack(alignment: Alignment.topRight, children: <Widget>[
-              Text(
-                  "If you injoy playing, please take a moment to rate it.\n\nThanks for your support!",
+              Text("rate_message".l(),
                   textAlign: TextAlign.justify,
                   style: theme.textTheme.headline6),
               Center(
@@ -130,13 +129,13 @@ class _RateOverlayState extends State<RateOverlay> {
                   left: 48.d,
                   child: BumpedButton(
                       errorMessage: Center(
-                          child: Text("First rate us !",
+                          child: Text("rate_error".l(),
                               style: theme.textTheme.headline5)),
                       isEnable: _response > 0,
                       colors: TColors.blue.value,
                       content: Center(
                           child:
-                              Text("Rate", style: theme.textTheme.headline5)),
+                              Text("rate_l".l(), style: theme.textTheme.headline5)),
                       onTap: () => Navigator.pop(context, _response)))
             ])));
   }
@@ -164,7 +163,7 @@ class ReviewDialogState extends State<ReviewDialog> {
         body: Overlays.basic(context, "review",
             height: 0,
             width: 320.d,
-            title: "Review",
+            title: "review_l".l(),
             closeOnBack: false,
             padding: EdgeInsets.all(16.d),
             content: Column(
@@ -179,18 +178,17 @@ class ReviewDialogState extends State<ReviewDialog> {
                       minLines: 1,
                       maxLines: 5,
                       style: theme.textTheme.headline6,
-                      decoration: InputDecoration(
-                          hintText: "Tell us your comments...")),
+                      decoration: InputDecoration(hintText: "review_hint".l())),
                   const SizedBox(height: 15),
                   BumpedButton(
                       errorMessage: Center(
-                          child: Text("Insert your comment !",
+                          child: Text("review_error".l(),
                               style: theme.textTheme.headline5)),
                       isEnable: _commentController.text != "",
                       colors: TColors.green.value,
                       content: Center(
-                          child:
-                              Text("Send", style: theme.textTheme.headline5)),
+                          child: Text("send_l".l(),
+                              style: theme.textTheme.headline5)),
                       onTap: () =>
                           Navigator.pop(context, _commentController.text))
                 ])));

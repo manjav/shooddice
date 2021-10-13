@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:numbers/utils/localization.dart';
 import 'package:numbers/utils/prefs.dart';
 import 'package:numbers/utils/themes.dart';
 import 'package:numbers/utils/utils.dart';
@@ -19,7 +20,7 @@ class _PauseOverlayState extends State<PauseOverlay> {
     var theme = Theme.of(context);
     return Overlays.basic(context, "pause",
         height: 180.d,
-        title: "Pause",
+        title: "pause_l".l(),
         hasClose: false,
         hasChrome: false,
         padding: EdgeInsets.only(top: 10.d),
@@ -39,7 +40,8 @@ class _PauseOverlayState extends State<PauseOverlay> {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           SVG.icon("5", theme),
-                          Text("Restart", style: theme.textTheme.headline5)
+                          Text("restart_l".l(),
+                              style: theme.textTheme.headline5)
                         ]))),
             Positioned(
                 height: 76.d,
@@ -54,7 +56,8 @@ class _PauseOverlayState extends State<PauseOverlay> {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           SVG.icon("4", theme),
-                          Text("Continue", style: theme.textTheme.headline5)
+                          Text("continue_l".l(),
+                              style: theme.textTheme.headline5)
                         ]))),
             Positioned(
                 height: 76.d,

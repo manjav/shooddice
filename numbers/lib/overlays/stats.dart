@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:numbers/core/cell.dart';
 import 'package:numbers/utils/analytic.dart';
+import 'package:numbers/utils/localization.dart';
 import 'package:numbers/utils/prefs.dart';
 import 'package:numbers/utils/themes.dart';
 import 'package:numbers/utils/utils.dart';
@@ -27,12 +28,12 @@ class _StatsOverlayState extends State<StatsOverlay> {
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
     return Overlays.basic(context, "stats",
-        title: "Stats",
+        title: "stats_l".l(),
         height: 300.d,
         statsButton: SizedBox(),
         padding: EdgeInsets.all(12.d),
-        coinButton:
-            Positioned(top: 32.d, left: 12.d, child: Components.coins(context, "stats")),
+        coinButton: Positioned(
+            top: 32.d, left: 12.d, child: Components.coins(context, "stats")),
         content: Screenshot(
             controller: _screenshotController,
             child: Column(children: [
@@ -42,7 +43,7 @@ class _StatsOverlayState extends State<StatsOverlay> {
                     style: theme.textTheme.headline5)
               ]),
               SizedBox(height: 4.d),
-              Text("Games Played: ${Pref.playCount.value}",
+              Text("stats_plays".l([Pref.playCount.value.toString()]),
                   style: theme.textTheme.headline6),
               SizedBox(
                 width: 270.d,
@@ -60,8 +61,7 @@ class _StatsOverlayState extends State<StatsOverlay> {
               shareMode
                   ? Padding(
                       padding: EdgeInsets.all(4.d),
-                      child: Text(
-                          "This is my record. Are you ready to compete with me?",
+                      child: Text("stats_share".l(),
                           style: theme.textTheme.headline6))
                   : BumpedButton(
                       onTap: _share,
@@ -70,7 +70,8 @@ class _StatsOverlayState extends State<StatsOverlay> {
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             SVG.icon("8", theme),
-                            Text("Share", style: theme.textTheme.headline5)
+                            Text("share_l".l(),
+                                style: theme.textTheme.headline5)
                           ]))
             ])));
   }
@@ -98,9 +99,7 @@ class _StatsOverlayState extends State<StatsOverlay> {
     var imagePath = await _screenshotController.captureAndSave(directory.path);
     if (imagePath != null)
       await Share.shareFiles([imagePath],
-          text:
-              "https://play.google.com/apps/testing/game.block.puzzle.drop.the.number.merge",
-          subject: "Drop Number 2048 - Merge Block Puzzle");
+          text: "app_url".l(), subject: "app_title".l());
     shareMode = false;
     Analytics.share("image", "stats");
     setState(() {});
