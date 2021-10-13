@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:in_app_purchase_android/in_app_purchase_android.dart';
 import 'package:numbers/utils/ads.dart';
 import 'package:numbers/utils/analytic.dart';
+import 'package:numbers/utils/localization.dart';
 import 'package:numbers/utils/notification.dart';
 import 'package:numbers/utils/prefs.dart';
 import 'package:numbers/utils/sounds.dart';
@@ -80,7 +81,8 @@ class _MainPageState extends State<MainPage> {
       Sound.init();
       Notifier.init();
       Analytics.init(widget.analytics);
-      Prefs.init(() {
+      Prefs.init(() async {
+        await Localization.init();
         _recordApp();
         _loadingState = 1;
         setState(() {});
