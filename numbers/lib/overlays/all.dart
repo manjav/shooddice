@@ -179,9 +179,9 @@ class Overlays {
         ));
   }
 
-  static int rewardCoef = 2;
+  static int rewardCoef = 3;
   static record(BuildContext context, ConfettiController confettiController) {
-    var reward = 100;
+    var reward = 50;
     var theme = Theme.of(context);
     Timer(Duration(milliseconds: 500), () => confettiController.play());
     return basic(context, "record",
@@ -239,7 +239,7 @@ class Overlays {
                     child: Text((rewardCoef * reward).format(),
                         style: theme.textTheme.headline4)),
                 Positioned(
-                    bottom: 7.d,
+                    bottom: 4.d,
                     left: 44.d,
                     child: Row(children: [
                       SVG.show("coin", 22.d),
@@ -256,7 +256,7 @@ class Overlays {
 
   static bigValue(
       BuildContext context, int value, ConfettiController confettiController) {
-    var reward = value * 20;
+    var reward = value * 10;
     var theme = Theme.of(context);
     Timer(Duration(milliseconds: 500), () => confettiController.play());
     return basic(context, "bigValue",
@@ -264,7 +264,7 @@ class Overlays {
         height: 330.d,
         hasClose: false,
         padding: EdgeInsets.fromLTRB(18.d, 0.d, 18.d, 18.d),
-        title: Device.aspectRatio < 0.7 ? "Big_l".l() : null,
+        title: Device.aspectRatio < 0.7 ? "big_l".l() : null,
         onWillPop: () => _buttonsClick(context, "big", reward),
         content: Stack(alignment: Alignment.topCenter, children: [
           Positioned(
@@ -312,7 +312,7 @@ class Overlays {
                     child: Text((reward * rewardCoef).format(),
                         style: theme.textTheme.headline4)),
                 Positioned(
-                    bottom: 7.d,
+                    bottom: 4.d,
                     left: 44.d,
                     child: Row(children: [
                       SVG.show("coin", 22.d),
@@ -444,7 +444,7 @@ class Overlays {
                                   colors: TColors.orange.value,
                                   errorMessage: Overlays.message(
                                       context, "ads_unavailable".l(),
-                                      icon: "0"),
+                                      monoIcon: "0"),
                                   content: Row(children: [
                                     SVG.icon("0", theme, scale: 0.7),
                                     Expanded(

@@ -165,7 +165,7 @@ class _ShopOverlayState extends State<ShopOverlay> {
                               colors: TColors.orange.value,
                               errorMessage: Overlays.message(
                                   context, "ads_unavailable".l(),
-                                  icon: "0"),
+                                  monoIcon: "0"),
                               onTap: _freeCoin,
                               content: Row(children: [
                                 SVG.icon("0", theme),
