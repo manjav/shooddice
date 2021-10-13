@@ -6,9 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:gameanalytics_sdk/gameanalytics.dart';
 import 'package:numbers/utils/analytic.dart';
-import 'package:numbers/utils/localization.dart';
 import 'package:numbers/utils/prefs.dart';
-import 'package:numbers/utils/utils.dart';
 import 'package:unity_ads_plugin/unity_ads.dart';
 
 class Ads {
@@ -63,14 +61,6 @@ class Ads {
     const d = Duration(milliseconds: 500);
     while (_lastAdState == UnityAdState.started) await Future.delayed(d);
     return _lastAdState == UnityAdState.complete;
-  }
-
-  static Widget errorMessage(ThemeData theme) {
-    return Row(children: [
-      SVG.icon("0", theme),
-      SizedBox(width: 8.d),
-      Text("ads_unavailable".l(), style: theme.textTheme.headline4)
-    ]);
   }
 
   static AdPlace _getPlacement(String id) {

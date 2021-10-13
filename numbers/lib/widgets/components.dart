@@ -4,6 +4,7 @@ import 'package:confetti/confetti.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:numbers/core/game.dart';
+import 'package:numbers/overlays/all.dart';
 import 'package:numbers/overlays/shop.dart';
 import 'package:numbers/utils/ads.dart';
 import 'package:numbers/utils/analytic.dart';
@@ -113,7 +114,9 @@ class Components {
                   height: 39.d,
                   child: BumpedButton(
                       cornerRadius: 8.d,
-                      errorMessage: Ads.errorMessage(theme),
+                      errorMessage: Overlays.message(
+                          context, "ads_unavailable".l(),
+                          monoIcon: "0"),
                       isEnable: !_has(boost) && Ads.isReady(),
                       colors: TColors.orange.value,
                       content: Row(children: [

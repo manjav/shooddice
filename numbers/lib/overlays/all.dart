@@ -156,7 +156,8 @@ class Overlays {
                 bottom: 4.d,
                 right: 4.d,
                 cornerRadius: 16.d,
-                errorMessage: Ads.errorMessage(theme),
+                errorMessage: Overlays.message(context, "ads_unavailable".l(),
+                    monoIcon: "0"),
                 isEnable: numRevive < 2 && Ads.isReady(),
                 onTap: () =>
                     _buttonsClick(context, "revive", 0, adId: AdPlace.Rewarded),
@@ -226,7 +227,8 @@ class Overlays {
               cornerRadius: 16.d,
               isEnable: Ads.isReady(),
               colors: TColors.orange.value,
-              errorMessage: Ads.errorMessage(theme),
+              errorMessage: Overlays.message(context, "ads_unavailable".l(),
+                  monoIcon: "0"),
               onTap: () => _buttonsClick(context, "record", rewardCoef * reward,
                   adId: AdPlace.Rewarded),
               content: Stack(alignment: Alignment.centerLeft, children: [
@@ -298,7 +300,8 @@ class Overlays {
               cornerRadius: 16.d,
               isEnable: Ads.isReady(),
               colors: TColors.orange.value,
-              errorMessage: Ads.errorMessage(theme),
+              errorMessage: Overlays.message(context, "ads_unavailable".l(),
+                  monoIcon: "0"),
               onTap: () => _buttonsClick(context, "big", reward * rewardCoef,
                   adId: AdPlace.Rewarded),
               content: Stack(alignment: Alignment.centerLeft, children: [
@@ -439,7 +442,9 @@ class Overlays {
                                   cornerRadius: 8.d,
                                   isEnable: Ads.isReady(),
                                   colors: TColors.orange.value,
-                                  errorMessage: Ads.errorMessage(theme),
+                                  errorMessage: Overlays.message(
+                                      context, "ads_unavailable".l(),
+                                      icon: "0"),
                                   content: Row(children: [
                                     SVG.icon("0", theme, scale: 0.7),
                                     Expanded(
@@ -544,7 +549,19 @@ class Overlays {
     Navigator.of(context).pop(type);
   }
 
-  static Widget message(BuildContext context, Widget? content) {
+  static Widget message(BuildContext context, String text,
+      {String? icon, String? monoIcon}) {
+    var theme = Theme.of(context);
+    var iconWidget = <Widget>[];
+    if (monoIcon != null) {
+      iconWidget.add(SVG.icon(monoIcon, theme));
+      iconWidget.add(SizedBox(width: 8.d));
+    }
+    if (icon != null) {
+      iconWidget.add(SVG.show(icon, 32.d));
+      iconWidget.add(SizedBox(width: 8.d));
+    }
+    iconWidget.add(Text(text, style: Theme.of(context).textTheme.headline5));
     return basic(context, "message",
         height: 54.d,
         sfx: "merge-9",
@@ -553,6 +570,6 @@ class Overlays {
         statsButton: SizedBox(),
         scoreButton: SizedBox(),
         padding: EdgeInsets.fromLTRB(12.d, 4.d, 12.d, 8.d),
-        content: content);
+        content: Row(children: iconWidget));
   }
 }

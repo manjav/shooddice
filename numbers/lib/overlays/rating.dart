@@ -67,13 +67,7 @@ class RateOverlay extends StatefulWidget {
     String comment = "";
     if (rating > 0) {
       if (rating < 5) comment = await Rout.push(context, ReviewDialog());
-      await Rout.push(
-          context,
-          Overlays.message(
-              context,
-              Center(
-                  child: Text("thanks_l".l(),
-                      style: Theme.of(context).textTheme.headline5))),
+      await Rout.push(context, Overlays.message(context, "thanks_l".l()),
           barrierDismissible: true);
     }
     Analytics.design('rate', parameters: <String, dynamic>{
@@ -128,14 +122,13 @@ class _RateOverlayState extends State<RateOverlay> {
                   right: 48.d,
                   left: 48.d,
                   child: BumpedButton(
-                      errorMessage: Center(
-                          child: Text("rate_error".l(),
-                              style: theme.textTheme.headline5)),
+                      errorMessage: Overlays.message(context, "rate_error".l(),
+                          icon: "ice"),
                       isEnable: _response > 0,
                       colors: TColors.blue.value,
                       content: Center(
-                          child:
-                              Text("rate_l".l(), style: theme.textTheme.headline5)),
+                          child: Text("rate_l".l(),
+                              style: theme.textTheme.headline5)),
                       onTap: () => Navigator.pop(context, _response)))
             ])));
   }
@@ -181,9 +174,8 @@ class ReviewDialogState extends State<ReviewDialog> {
                       decoration: InputDecoration(hintText: "review_hint".l())),
                   const SizedBox(height: 15),
                   BumpedButton(
-                      errorMessage: Center(
-                          child: Text("review_error".l(),
-                              style: theme.textTheme.headline5)),
+                      errorMessage: Overlays.message(
+                          context, "review_error".l(), icon: "ice"),
                       isEnable: _commentController.text != "",
                       colors: TColors.green.value,
                       content: Center(

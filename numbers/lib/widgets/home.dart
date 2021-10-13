@@ -347,7 +347,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     MyGame.isPlaying = false;
     if (type == "") {
       await Rout.push(context,
-          Overlays.message(context, "clt_piggy_error".l()));
+          Overlays.message(context, "clt_piggy_error".l(), icon: "coin"),
+          barrierDismissible: true);
       MyGame.isPlaying = true;
       return;
     }
