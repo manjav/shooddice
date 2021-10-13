@@ -344,8 +344,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   }
 
   _boost(String type) async {
-    if (type == "") return;
     MyGame.isPlaying = false;
+    if (type == "") {
+      await Rout.push(context,
+          Overlays.message(context, "clt_piggy_error".l()));
+      MyGame.isPlaying = true;
+      return;
+    }
 
     if (type == "one" && Pref.removeOne.value > 0 ||
         type == "color" && Pref.removeColor.value > 0) {
@@ -358,8 +363,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
     var result = await Rout.push(
         context,
-        Overlays.callout(context, "callout_$type".l(), type,
-            padding: padding, hasCoinButton: type == "piggy"),
+        Overlays.callout(context, "clt_${type}_text".l(), type,
+            padding: padding, hasCoinButton: type != "piggy"),
         barrierColor: Colors.transparent,
         barrierDismissible: true);
     if (result != null) {
