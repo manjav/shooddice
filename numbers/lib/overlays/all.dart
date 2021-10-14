@@ -183,9 +183,11 @@ class Overlays {
   static record(BuildContext context, ConfettiController confettiController) {
     var reward = 50;
     var theme = Theme.of(context);
-    Timer(Duration(milliseconds: 500), () => confettiController.play());
+    Timer(Duration(milliseconds: 500), () {
+      confettiController.play();
+      Sound.play("win");
+    });
     return basic(context, "record",
-        sfx: "win",
         hasClose: false,
         height: 310.d,
         padding: EdgeInsets.fromLTRB(18.d, 0.d, 18.d, 18.d),
@@ -258,9 +260,11 @@ class Overlays {
       BuildContext context, int value, ConfettiController confettiController) {
     var reward = value * 10;
     var theme = Theme.of(context);
-    Timer(Duration(milliseconds: 500), () => confettiController.play());
+    Timer(Duration(milliseconds: 500), () {
+      confettiController.play();
+      Sound.play("win");
+    });
     return basic(context, "bigValue",
-        sfx: "win",
         height: 330.d,
         hasClose: false,
         padding: EdgeInsets.fromLTRB(18.d, 0.d, 18.d, 18.d),

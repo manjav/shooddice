@@ -13,6 +13,7 @@ import 'package:numbers/utils/analytic.dart';
 import 'package:numbers/utils/gemeservice.dart';
 import 'package:numbers/utils/localization.dart';
 import 'package:numbers/utils/prefs.dart';
+import 'package:numbers/utils/sounds.dart';
 import 'package:numbers/utils/themes.dart';
 import 'package:numbers/utils/utils.dart';
 import 'package:numbers/widgets/buttons.dart';
@@ -377,6 +378,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         MyGame.isPlaying = true;
         _game!.showReward(Cell.maxDailyCoins,
             Vector2(_coins!.top!, _coins!.left! + 8.d), GameEvent.openPiggy);
+        Sound.play("win");
         return;
       }
       if (type == "one") Pref.removeOne.set(1);
