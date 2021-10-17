@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
+import 'package:numbers/dialogs/dialogs.dart';
+import 'package:numbers/dialogs/toast.dart';
 import 'package:numbers/utils/ads.dart';
 import 'package:numbers/utils/analytic.dart';
 import 'package:numbers/utils/localization.dart';
@@ -12,15 +14,30 @@ import 'package:numbers/utils/utils.dart';
 import 'package:numbers/widgets/buttons.dart';
 import 'package:numbers/widgets/components.dart';
 
-import 'all.dart';
-
-class ShopOverlay extends StatefulWidget {
-  ShopOverlay({Key? key}) : super(key: key);
+// ignore: must_be_immutable
+class ShopDialog extends AbstractDialog {
+  ShopDialog()
+      : super(DialogMode.shop,
+            title: "shop_l".l(),
+            padding: EdgeInsets.all(8.d),
+            width: 310.d,
+            height: _getHeight(),
+            statsButton: SizedBox(),
+            scoreButton: SizedBox());
   @override
-  _ShopOverlayState createState() => _ShopOverlayState();
+  _ShopDialogState createState() => _ShopDialogState();
+
+  static double _getHeight() {
+    if (Device.size.aspectRatio > 0.7)
+      return 310.d;
+    else if (Device.size.aspectRatio > 0.6)
+      return 390.d;
+    else
+      return 410.d;
+  }
 }
 
-class _ShopOverlayState extends State<ShopOverlay> {
+class _ShopDialogState extends AbstractDialogState<ShopDialog> {
   String _message = "wait_l".l();
   var coins = Map<String, ProductDetails>();
   var others = Map<String, ProductDetails>();
@@ -84,125 +101,118 @@ class _ShopOverlayState extends State<ShopOverlay> {
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
     var items = coins.values.toList();
-    return Stack(children: [
-      Overlays.basic(context, "shop",
-          title: "shop_l".l(),
-          statsButton: SizedBox(),
-          scoreButton: SizedBox(),
-          coinButton: Positioned(
-              top: 32.d,
-              left: 12.d,
-              child: Components.coins(context, "shop", clickable: false)),
-          padding: EdgeInsets.all(8.d),
-          width: 310.d,
-          height: _getHeight(),
-          content:
-              Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-            SizedBox(
-                height: 200.d,
-                child: GridView.count(
-                  padding: EdgeInsets.zero,
-                  crossAxisCount: 3,
-                  crossAxisSpacing: 3.d,
-                  mainAxisSpacing: 2.d,
-                  childAspectRatio: 1,
-                  children: List.generate(
-                      items.length, (i) => _itemBuilder(theme, items[i])),
-                )),
-            Device.size.aspectRatio > 0.6
-                ? SizedBox()
-                : Container(
-                    height: 72.d,
-                    padding: EdgeInsets.fromLTRB(10.d, 6.d, 10.d, 12.d),
-                    decoration:
-                        ButtonDecor(TColors.whiteFlat.value, 12.d, true, false),
-                    child: Row(children: [
-                      SizedBox(width: 8.d),
-                      SVG.show("noads", 48),
-                      SizedBox(width: 24.d),
-                      Expanded(
-                          child: Text("shop_noads".l(),
-                              style: theme.textTheme.bodyText2)),
-                      SizedBox(
-                          width: 92.d,
-                          height: 40.d,
-                          child: BumpedButton(
-                            cornerRadius: 8.d,
-                            colors: TColors.green.value,
-                            content: Center(
-                                child: Text(
-                                    "${others.length > 0 ? others["no_ads"]!.price : 0}",
-                                    style: theme.textTheme.headline5)),
-                            onTap: () => _onShopItemTap(others["no_ads"]!),
-                          )),
-                      SizedBox(height: 4.d)
-                    ])),
-            Device.size.aspectRatio > 0.6
-                ? SizedBox()
-                : Container(
-                    height: 32.d,
-                    alignment: Alignment.center,
-                    child: Container(
-                        width: 48.d,
-                        height: 7.d,
-                        decoration: BoxDecoration(
-                            color: Colors.grey,
-                            shape: BoxShape.rectangle,
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(24.d))))),
-            Container(
-                height: 80.d,
-                padding: EdgeInsets.symmetric(horizontal: 8.d),
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      SizedBox(
-                          width: 124.d,
-                          child: BumpedButton(
-                              cornerRadius: 16.d,
-                              isEnable: Ads.isReady(),
-                              colors: TColors.orange.value,
-                              errorMessage: Overlays.message(
-                                  context, "ads_unavailable".l(),
-                                  monoIcon: "0"),
-                              onTap: _freeCoin,
-                              content: Row(children: [
-                                SVG.icon("0", theme),
-                                SizedBox(width: 8.d),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.center,
+    widget.coinButton = Positioned(
+        top: 32.d,
+        left: 12.d,
+        child: Components.coins(context, "shop", clickable: false));
+    widget.child = Stack(children: [
+      Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+        SizedBox(
+            height: 200.d,
+            child: GridView.count(
+              padding: EdgeInsets.zero,
+              crossAxisCount: 3,
+              crossAxisSpacing: 3.d,
+              mainAxisSpacing: 2.d,
+              childAspectRatio: 1,
+              children: List.generate(
+                  items.length, (i) => _itemBuilder(theme, items[i])),
+            )),
+        Device.size.aspectRatio > 0.6
+            ? SizedBox()
+            : Container(
+                height: 72.d,
+                padding: EdgeInsets.fromLTRB(10.d, 6.d, 10.d, 12.d),
+                decoration:
+                    ButtonDecor(TColors.whiteFlat.value, 12.d, true, false),
+                child: Row(children: [
+                  SizedBox(width: 8.d),
+                  SVG.show("noads", 48),
+                  SizedBox(width: 24.d),
+                  Expanded(
+                      child: Text("shop_noads".l(),
+                          style: theme.textTheme.bodyText2)),
+                  SizedBox(
+                      width: 92.d,
+                      height: 40.d,
+                      child: BumpedButton(
+                        cornerRadius: 8.d,
+                        colors: TColors.green.value,
+                        content: Center(
+                            child: Text(
+                                "${others.length > 0 ? others["no_ads"]!.price : 0}",
+                                style: theme.textTheme.headline5)),
+                        onTap: () => _onShopItemTap(others["no_ads"]!),
+                      )),
+                  SizedBox(height: 4.d)
+                ])),
+        Device.size.aspectRatio > 0.6
+            ? SizedBox()
+            : Container(
+                height: 32.d,
+                alignment: Alignment.center,
+                child: Container(
+                    width: 48.d,
+                    height: 7.d,
+                    decoration: BoxDecoration(
+                        color: Colors.grey,
+                        shape: BoxShape.rectangle,
+                        borderRadius:
+                            BorderRadius.all(Radius.circular(24.d))))),
+        Container(
+            height: 80.d,
+            padding: EdgeInsets.symmetric(horizontal: 8.d),
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  SizedBox(
+                      width: 124.d,
+                      child: BumpedButton(
+                          cornerRadius: 16.d,
+                          isEnable: Ads.isReady(),
+                          colors: TColors.orange.value,
+                          errorMessage:
+                              Toast("ads_unavailable".l(), monoIcon: "0"),
+                          onTap: _freeCoin,
+                          content: Row(children: [
+                            SVG.icon("0", theme),
+                            SizedBox(width: 8.d),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text("free_l".l(),
+                                    style: theme.textTheme.headline5),
+                                Row(
                                   children: [
-                                    Text("free_l".l(),
-                                        style: theme.textTheme.headline5),
-                                    Row(
-                                      children: [
-                                        SVG.show("coin", 24.d),
-                                        Text("+100",
-                                            style: theme.textTheme.headline6)
-                                      ],
-                                    )
+                                    SVG.show("coin", 24.d),
+                                    Text("+100",
+                                        style: theme.textTheme.headline6)
                                   ],
                                 )
-                              ]))),
-                      SizedBox(
-                          width: 140.d,
-                          child: BumpedButton(
-                              onTap: _restorePurchases,
-                              colors: TColors.green.value,
-                              cornerRadius: 16.d,
-                              content: Row(children: [
-                                SVG.icon("5", theme),
-                                SizedBox(width: 12.d),
-                                Text("shop_restore".l(),
-                                    overflow: TextOverflow.ellipsis,
-                                    style: theme.textTheme.headline6)
-                              ])))
-                    ]))
-          ])),
+                              ],
+                            )
+                          ]))),
+                  SizedBox(
+                      width: 140.d,
+                      child: BumpedButton(
+                          onTap: _restorePurchases,
+                          colors: TColors.green.value,
+                          cornerRadius: 16.d,
+                          content: Row(children: [
+                            SVG.icon("5", theme),
+                            SizedBox(width: 12.d),
+                            Text("shop_restore".l(),
+                                overflow: TextOverflow.ellipsis,
+                                style: theme.textTheme.headline6)
+                          ])))
+                ]))
+      ]),
       _overlay(theme)
     ]);
+
+    return super.build(context);
   }
 
   ProductDetails? _findProduct(String id) {
@@ -297,15 +307,6 @@ class _ShopOverlayState extends State<ShopOverlay> {
 
     Analytics.purchase(p!.currencyCode, p.rawPrice, p.id, type,
         purchaseDetails.purchaseID!, purchaseDetails.verificationData.source);
-  }
-
-  double _getHeight() {
-    if (Device.size.aspectRatio > 0.7)
-      return 310.d;
-    else if (Device.size.aspectRatio > 0.6)
-      return 390.d;
-    else
-      return 410.d;
   }
 }
 

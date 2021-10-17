@@ -5,10 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:numbers/core/cell.dart';
 import 'package:numbers/core/cells.dart';
 import 'package:numbers/core/game.dart';
-import 'package:numbers/overlays/all.dart';
-import 'package:numbers/overlays/pause.dart';
-import 'package:numbers/overlays/shop.dart';
-import 'package:numbers/overlays/stats.dart';
+import 'package:numbers/dialogs/big.dart';
+import 'package:numbers/dialogs/callout.dart';
+import 'package:numbers/dialogs/confirms.dart';
+import 'package:numbers/dialogs/record.dart';
+import 'package:numbers/dialogs/revive.dart';
+import 'package:numbers/dialogs/toast.dart';
+import 'package:numbers/dialogs/pause.dart';
+import 'package:numbers/dialogs/shop.dart';
+import 'package:numbers/dialogs/stats.dart';
 import 'package:numbers/utils/analytic.dart';
 import 'package:numbers/utils/gemeservice.dart';
 import 'package:numbers/utils/localization.dart';
@@ -81,7 +86,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               child: Components.stats(theme, onTap: () {
                 _pause("stats");
                 Analytics.design('guiClick:stats:home');
-                Rout.push(context, StatsOverlay());
+                Rout.push(context, StatsDialog());
               })),
           _coins = Positioned(
               top: _game!.bounds.top - 70.d,
@@ -89,7 +94,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               height: 52.d,
               child: Components.coins(context, "home", onTap: () async {
                 MyGame.isPlaying = false;
-                await Rout.push(context, ShopOverlay());
+                await Rout.push(context, ShopDialog());
                 MyGame.isPlaying = true;
                 setState(() {});
               })),
@@ -249,7 +254,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     switch (event) {
       case GameEvent.big:
         await Future.delayed(Duration(milliseconds: 250));
-        _widget = Overlays.bigValue(context, value, _confettiController!);
+        _widget = BigBlockDialog(value, _confettiController!);
         Prefs.increaseBig(value);
         break;
       case GameEvent.boost:
@@ -259,11 +264,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         _confettiController!.play();
         return;
       case GameEvent.completeTutorial:
-        _widget = Overlays.endTutorial(context, _confettiController!);
+        _widget = ConfirmDialog(_confettiController!);
         break;
       case GameEvent.lose:
         await Future.delayed(Duration(seconds: 1));
-        _widget = Overlays.revive(context, _game!.numRevives);
+        _widget = ReviveDialog(_game!.numRevives);
         break;
       case GameEvent.openPiggy:
         Pref.coinPiggy.set(0);
@@ -300,8 +305,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       if (event == GameEvent.lose) {
         if (result == null) {
           if (value > 0) {
-            await Rout.push(
-                context, Overlays.record(context, _confettiController!));
+            await Rout.push(context, RecordDialog(_confettiController!));
             await Future.delayed(Duration(milliseconds: 150));
           }
 
@@ -328,7 +332,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     MyGame.isPlaying = false;
     Analytics.design('guiClick:pause:$source');
     if (!showMenu) return;
-    var result = await Rout.push(context, PauseOverlay());
+    var result = await Rout.push(context, PauseDialog());
     _onPauseButtonsClick(result ?? "resume");
   }
 
@@ -347,8 +351,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   _boost(String type) async {
     MyGame.isPlaying = false;
     if (type == "") {
-      await Rout.push(context,
-          Overlays.message(context, "clt_piggy_error".l(), icon: "coin"),
+      await Rout.push(context, Toast("clt_piggy_error".l(), icon: "coin"),
           barrierDismissible: true);
       MyGame.isPlaying = true;
       return;
@@ -365,7 +368,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
     var result = await Rout.push(
         context,
-        Overlays.callout(context, "clt_${type}_text".l(), type,
+        Callout("clt_${type}_text".l(), type,
             padding: padding, hasCoinButton: type != "piggy"),
         barrierColor: Colors.transparent,
         barrierDismissible: true);

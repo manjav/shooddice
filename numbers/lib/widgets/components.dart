@@ -4,8 +4,8 @@ import 'package:confetti/confetti.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:numbers/core/game.dart';
-import 'package:numbers/overlays/all.dart';
-import 'package:numbers/overlays/shop.dart';
+import 'package:numbers/dialogs/toast.dart';
+import 'package:numbers/dialogs/shop.dart';
 import 'package:numbers/utils/ads.dart';
 import 'package:numbers/utils/analytic.dart';
 import 'package:numbers/utils/localization.dart';
@@ -73,7 +73,7 @@ class Components {
                 if (onTap != null)
                   onTap();
                 else
-                  Rout.push(context, ShopOverlay());
+                  Rout.push(context, ShopDialog());
               }
             }));
   }
@@ -114,9 +114,7 @@ class Components {
                   height: 39.d,
                   child: BumpedButton(
                       cornerRadius: 8.d,
-                      errorMessage: Overlays.message(
-                          context, "ads_unavailable".l(),
-                          monoIcon: "0"),
+                      errorMessage: Toast("ads_unavailable".l(), monoIcon: "0"),
                       isEnable: !_has(boost) && Ads.isReady(),
                       colors: TColors.orange.value,
                       content: Row(children: [
@@ -135,7 +133,7 @@ class Components {
       context, String boost, int cost, Function? onSelect) async {
     if (cost > 0) {
       if (Pref.coin.value < cost) {
-        Rout.push(context, ShopOverlay());
+        Rout.push(context, ShopDialog());
         return;
       }
     } else {
