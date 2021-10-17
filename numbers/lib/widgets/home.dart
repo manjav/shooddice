@@ -8,9 +8,9 @@ import 'package:numbers/core/game.dart';
 import 'package:numbers/dialogs/big.dart';
 import 'package:numbers/dialogs/callout.dart';
 import 'package:numbers/dialogs/confirms.dart';
+import 'package:numbers/dialogs/piggy.dart';
 import 'package:numbers/dialogs/record.dart';
 import 'package:numbers/dialogs/revive.dart';
-import 'package:numbers/dialogs/toast.dart';
 import 'package:numbers/dialogs/pause.dart';
 import 'package:numbers/dialogs/shop.dart';
 import 'package:numbers/dialogs/stats.dart';
@@ -56,7 +56,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
-    var rewardAvailble = Pref.coinPiggy.value >= Cell.maxDailyCoins;
     return WillPopScope(
         onWillPop: _onWillPop,
         child: Scaffold(
@@ -125,16 +124,17 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                       Column(children: [
                         SizedBox(height: 5 * _rewardAnimation!.value),
                         Expanded(
-                            child: _button(theme, 20.d, "piggy",
-                                () => _boost(rewardAvailble ? "piggy" : ""),
+                            child: _button(
+                                theme, 20.d, "piggy", () => _boost("piggy"),
                                 width: 96.d,
                                 badge: _slider(
                                     theme,
                                     _rewardLineAnimation!.value.round(),
                                     Cell.maxDailyCoins),
-                                colors: rewardAvailble
-                                    ? TColors.orange.value
-                                    : null))
+                                colors:
+                                    Pref.coinPiggy.value >= Cell.maxDailyCoins
+                                        ? TColors.orange.value
+                                        : null))
                       ]),
                       SizedBox(width: 4.d),
                       _button(
@@ -275,6 +275,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         Pref.coin.increase(value, itemType: "game", itemId: "random");
         _rewardLineAnimation!
             .animateTo(0, duration: const Duration(milliseconds: 400));
+        Sound.play("win");
+        setState(() {});
         return;
       case GameEvent.remove:
         _onRemoveBlock();
@@ -350,9 +352,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   _boost(String type) async {
     MyGame.isPlaying = false;
-    if (type == "") {
-      await Rout.push(context, Toast("clt_piggy_error".l(), icon: "coin"),
-          barrierDismissible: true);
+    if (type == "piggy") {
+      var result = await Rout.push(context, PiggyDialog());
+      if (result != null && result != "") {
+        MyGame.isPlaying = true;
+        _game!.showReward(Cell.maxDailyCoins,
+            Vector2(_coins!.top!, _coins!.left! + 8.d), GameEvent.openPiggy);
+      }
       MyGame.isPlaying = true;
       return;
     }
@@ -367,21 +373,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       padding = EdgeInsets.only(left: 32, top: _game!.bounds.top + 68);
 
     var result = await Rout.push(
-        context,
-        Callout("clt_${type}_text".l(), type,
-            padding: padding, hasCoinButton: type != "piggy"),
-        barrierColor: Colors.transparent,
-        barrierDismissible: true);
+        context, Callout("clt_${type}_text".l(), type, padding: padding),
+        barrierColor: Colors.transparent, barrierDismissible: true);
     if (result != null) {
       if (type == "next") {
         _game!.boostNext();
-        return;
-      }
-      if (type == "piggy") {
-        MyGame.isPlaying = true;
-        _game!.showReward(Cell.maxDailyCoins,
-            Vector2(_coins!.top!, _coins!.left! + 8.d), GameEvent.openPiggy);
-        Sound.play("win");
         return;
       }
       if (type == "one") Pref.removeOne.set(1);

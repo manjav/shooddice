@@ -148,6 +148,8 @@ enum DialogMode {
   confirm,
   confirmDialog,
   pause,
+  piggy,
+  quit,
   rating,
   record,
   review,
@@ -155,8 +157,7 @@ enum DialogMode {
   shop,
   start,
   stats,
-  toast,
-  quit
+  toast
 }
 
 extension DialogName on DialogMode {
@@ -172,6 +173,10 @@ extension DialogName on DialogMode {
         return "confirm";
       case DialogMode.pause:
         return "pause";
+      case DialogMode.piggy:
+        return "piggy";
+      case DialogMode.quit:
+        return "quit";
       case DialogMode.rating:
         return "record";
       case DialogMode.record:
@@ -188,8 +193,6 @@ extension DialogName on DialogMode {
         return "stats";
       case DialogMode.toast:
         return "toast";
-      case DialogMode.quit:
-        return "quit";
     }
   }
 }
