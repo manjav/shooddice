@@ -1,4 +1,3 @@
-import 'package:appsflyer_sdk/appsflyer_sdk.dart';
 import 'package:device_info/device_info.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
@@ -87,17 +86,7 @@ class _MainPageState extends State<MainPage> {
         _loadingState = 1;
         setState(() {});
       });
-      InAppPurchaseAndroidPlatformAddition.enablePendingPurchases();
-
-      var appsflyerSdk = AppsflyerSdk({
-        "afDevKey": "YBThmUqaiHZYpiSwZ3GQz4",
-        "afAppId": "game.block.puzzle.drop.the.number.merge",
-        "isDebug": false
-      });
-      appsflyerSdk.initSdk(
-          registerConversionDataCallback: true,
-          registerOnAppOpenAttributionCallback: true,
-          registerOnDeepLinkingCallback: true);
+      InAppPurchaseAndroidPlatformAddition.enablePendingPurchases(); 
     }
     return WillPopScope(
         onWillPop: _onWillPop,
