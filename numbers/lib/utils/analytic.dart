@@ -59,12 +59,13 @@ class Analytics {
 
   static Future<void> ad(int action, int type, String placementID,
       [String sdkName = "unityads"]) async {
-    _firebaseAnalytics.logEvent(name: "ads", parameters: <String, dynamic>{
+    var map = <String, dynamic>{
       'adAction': getAdActionName(action),
       'adType': getAdTypeName(type),
       'adPlacement': placementID,
       'adSdkName': sdkName,
-    });
+    };
+    _firebaseAnalytics.logEvent(name: "ads", parameters: map);
 
     GameAnalytics.addAdEvent({
       "adAction": action,
@@ -72,6 +73,8 @@ class Analytics {
       "adSdkName": sdkName,
       "adPlacement": placementID
     });
+
+    appsflyerSdk.logEvent("ads", map);
   }
 
   static Future<void> resource(int type, String currency, int amount,
