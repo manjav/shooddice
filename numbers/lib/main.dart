@@ -68,7 +68,7 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     if (Device.size == Size.zero) {
       Device.size = MediaQuery.of(context).size;
-      Device.ratio = Device.size.width / 360;
+      Device.ratio = Device.size.height / 764;
       Device.aspectRatio = Device.size.width / Device.size.height;
       print("${Device.size} ${MediaQuery.of(context).devicePixelRatio}");
       MyApp.of(context)!.updateTheme();
@@ -86,11 +86,17 @@ class _MainPageState extends State<MainPage> {
         _loadingState = 1;
         setState(() {});
       });
-      InAppPurchaseAndroidPlatformAddition.enablePendingPurchases(); 
+      InAppPurchaseAndroidPlatformAddition.enablePendingPurchases();
     }
     return WillPopScope(
         onWillPop: _onWillPop,
-        child: Scaffold(body: _loadingState == 0 ? SizedBox() : StartDialog()));
+        child: Scaffold(
+            body: _loadingState == 0
+                ? SizedBox()
+                : SizedBox(
+                    width: Device.size.width,
+                    height: Device.size.height,
+                    child: StartDialog())));
   }
 
   Future<bool> _onWillPop() async {

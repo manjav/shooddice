@@ -20,7 +20,6 @@ class StatsDialog extends AbstractDialog {
   StatsDialog()
       : super(
           DialogMode.stats,
-          height: 300.d,
           title: "stats_l".l(),
           statsButton: SizedBox(),
           padding: EdgeInsets.all(12.d),
@@ -39,15 +38,16 @@ class _StatsDialogState extends AbstractDialogState<StatsDialog> {
         top: 32.d, left: 12.d, child: Components.coins(context, "stats"));
     widget.child = Screenshot(
         controller: _screenshotController,
-        child: Column(children: [
+        child:
+            Column(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
           Row(mainAxisAlignment: MainAxisAlignment.center, children: [
             SVG.show("record", 24.d),
             Text(" ${Pref.record.value.format()}",
                 style: theme.textTheme.headline5)
           ]),
-          SizedBox(height: 4.d),
           Text("stats_plays".l([Pref.playCount.value.toString()]),
               style: theme.textTheme.headline6),
+          SizedBox(height: 8.d),
           SizedBox(
             width: 270.d,
             height: 164.d,

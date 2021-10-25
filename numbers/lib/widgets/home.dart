@@ -374,10 +374,12 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       setState(() => _game!.removingMode = type);
       return;
     }
-    EdgeInsets padding = EdgeInsets.only(right: 16, bottom: 80);
+    EdgeInsets padding = EdgeInsets.only(
+        right: _game!.bounds.left, top: _game!.bounds.bottom - 78.d);
     if (type == "next")
-      padding = EdgeInsets.only(left: 32, top: _game!.bounds.top + 68);
-
+      padding = EdgeInsets.only(
+          left: (Device.size.width - Callout.chromeWidth) * 0.5,
+          top: _game!.bounds.top + 68.d);
     var result = await Rout.push(
         context, Callout("clt_${type}_text".l(), type, padding: padding),
         barrierColor: Colors.transparent, barrierDismissible: true);
@@ -396,12 +398,12 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   void _createGame() {
     Analytics.setScreen("game");
-    var padding = 24.d + (Device.size.aspectRatio - 0.5) * 200.d;
-    var width = Device.size.width - padding * 2;
-    Cell.updateSizes(width / Cells.width);
-    var t = (Device.size.height - ((Cells.height + 1) * Cell.diameter)) * 0.5;
+    var top = 140.d;
+    var bottom = 180.d;
+    Cell.updateSizes((Device.size.height - top - bottom) / (Cells.height + 1));
+    var padding = (Device.size.width - (Cells.width * Cell.diameter)) * 0.5;
     var bounds = Rect.fromLTRB(
-        padding, t, Device.size.width - padding, t + Cell.diameter * 7);
+        padding, top, Device.size.width - padding, Device.size.height - bottom);
     _game = MyGame(bounds: bounds, onGameEvent: _onGameEventHandler);
   }
 

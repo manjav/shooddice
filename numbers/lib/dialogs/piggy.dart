@@ -35,8 +35,7 @@ class _PiggyDialogState extends AbstractDialogState<PiggyDialog> {
     if (widget.playApplaud ?? false)
       Timer(Duration(milliseconds: 600), () => Sound.play("win"));
     widget.closeButton = GestureDetector(
-        child:
-            Column(children: [SVG.show("close", 14.d), SizedBox(height: 8.d)]),
+        child: SVG.show("close", 14.d),
         onTap: () {
           widget.onWillPop?.call();
           Navigator.of(context).pop();
