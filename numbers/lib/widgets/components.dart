@@ -156,7 +156,7 @@ class Components {
     return ConfettiWidget(
         gravity: 0.5,
         maxBlastForce: 50,
-        numberOfParticles: 30,
+        numberOfParticles: 20,
         emissionFrequency: 0.05,
         confettiController: controller,
         blastDirectionality: BlastDirectionality.explosive,
