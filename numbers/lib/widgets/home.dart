@@ -60,7 +60,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     return WillPopScope(
         onWillPop: _onWillPop,
         child: Scaffold(
-            body: Stack(children: [
+            body: Stack(alignment: Alignment.bottomCenter, children: [
           _game == null ? SizedBox() : GameWidget(game: _game!),
           Positioned(
               top: _game!.bounds.top - 69.d,
@@ -74,8 +74,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               child: _getFooter(theme)),
           Positioned(
               bottom: 0,
-              left: 0,
-              right: 0,
               child: UnityBannerAd(
                   placementId: AdPlace.Banner.name,
                   listener: (state, args) {
