@@ -14,6 +14,7 @@ import 'package:numbers/dialogs/revive.dart';
 import 'package:numbers/dialogs/pause.dart';
 import 'package:numbers/dialogs/shop.dart';
 import 'package:numbers/dialogs/stats.dart';
+import 'package:numbers/utils/ads.dart';
 import 'package:numbers/utils/analytic.dart';
 import 'package:numbers/utils/gemeservice.dart';
 import 'package:numbers/utils/localization.dart';
@@ -23,6 +24,7 @@ import 'package:numbers/utils/themes.dart';
 import 'package:numbers/utils/utils.dart';
 import 'package:numbers/widgets/buttons.dart';
 import 'package:numbers/widgets/components.dart';
+import 'package:unity_ads_plugin/ad/unity_banner_ad.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
@@ -63,117 +65,125 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           _game == null ? SizedBox() : GameWidget(game: _game!),
           Positioned(
               top: _game!.bounds.top - 69.d,
-              right: 20.d,
-              child: Components.scores(theme, onTap: () {
-                _pause("record");
-                Analytics.design('guiClick:record:home');
-                PlayGames.showLeaderboard("CgkIw9yXzt4XEAIQAQ");
-              })),
+              left: _game!.bounds.left,
+              right: _game!.bounds.left,
+              child: _getHeader(theme)),
           Positioned(
-              top: _game!.bounds.top - 45.d,
-              right: 23.d,
-              child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-                Text(Prefs.score.format(),
-                    style:
-                        theme.textTheme.headline5!.copyWith(letterSpacing: -1)),
-                SizedBox(width: 2.d),
-                SVG.show("cup", 22.d)
-              ])),
+              top: _game!.bounds.bottom + 10.d,
+              left: _game!.bounds.left - 22.d,
+              right: _game!.bounds.left,
+              child: _getFooter(theme)),
           Positioned(
-              top: _game!.bounds.top - 70.d,
-              left: 22.d,
-              child: Components.stats(theme, onTap: () {
-                _pause("stats");
-                Analytics.design('guiClick:stats:home');
-                Rout.push(context, StatsDialog());
-              })),
-          _coins = Positioned(
-              top: _game!.bounds.top - 70.d,
-              left: 73.d,
-              height: 52.d,
-              child: Components.coins(context, "home", onTap: () async {
-                MyGame.isPlaying = false;
-                await Rout.push(context, ShopDialog());
-                MyGame.isPlaying = true;
-                setState(() {});
-              })),
-          Pref.tutorMode.value == 0
-              ? Positioned(
-                  top: _game!.bounds.top - 68.d,
-                  right: 22.d,
-                  left: 28.d,
-                  child: Text("home_tutor".l(),
-                      style: theme.textTheme.headline4,
-                      textAlign: TextAlign.center))
-              : SizedBox(),
-          Pref.tutorMode.value == 0
-              ? SizedBox()
-              : Positioned(
-                  top: _game!.bounds.bottom + 16.d,
-                  right: 24.d,
-                  left: 24.d,
-                  height: 68.d,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      IconButton(
-                          icon: SVG.show("pause", 48.d),
-                          iconSize: 56.d,
-                          onPressed: () => _pause("tap")),
-                      Expanded(child: SizedBox()),
-                      Column(children: [
-                        SizedBox(height: 5 * _rewardAnimation!.value),
-                        Expanded(
-                            child: _button(
-                                theme, 20.d, "piggy", () => _boost("piggy"),
-                                width: 96.d,
-                                badge: _slider(
-                                    theme,
-                                    _rewardLineAnimation!.value.round(),
-                                    PiggyDialog.capacity),
-                                colors:
-                                    Pref.coinPiggy.value >= PiggyDialog.capacity
-                                        ? TColors.orange.value
-                                        : null))
-                      ]),
-                      SizedBox(width: 4.d),
-                      _button(
-                          theme, 96.d, "remove-color", () => _boost("color"),
-                          badge: _badge(theme, Pref.removeColor.value)),
-                      SizedBox(width: 4.d),
-                      _button(theme, 20.d, "remove-one", () => _boost("one"),
-                          badge: _badge(theme, Pref.removeOne.value)),
-                    ],
-                  )),
-          _game!.removingMode == null
-              ? SizedBox()
-              : Positioned(
-                  top: _game!.bounds.bottom + 10.d,
-                  right: 4.d,
-                  left: 4.d,
-                  height: 86.d,
-                  child: Container(
-                      padding: EdgeInsets.fromLTRB(32.d, 28.d, 32.d, 32.d),
-                      decoration: BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                                blurRadius: 3.d,
-                                color: Colors.black,
-                                offset: Offset(0.5.d, 2.d))
-                          ],
-                          color: theme.cardColor,
-                          shape: BoxShape.rectangle,
-                          borderRadius: BorderRadius.all(Radius.circular(16))),
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text("home_rm_${_game!.removingMode!}".l()),
-                            GestureDetector(
-                                child: SVG.show("close", 32.d),
-                                onTap: _onRemoveBlock)
-                          ]))),
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: UnityBannerAd(
+                  placementId: AdPlace.Banner.name,
+                  listener: (state, args) {
+                    print('== Banner Listener: $state => $args');
+                  })),
           Center(child: Components.confetty(_confettiController!))
         ])));
+  }
+
+  Widget _getHeader(ThemeData theme) {
+    if (Pref.tutorMode.value == 0) {
+      return Center(
+          child: Text("home_tutor".l(), style: theme.textTheme.headline4));
+    }
+    return SizedBox(
+        height: 56.d,
+        child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+          Components.stats(theme, onTap: () {
+            _pause("stats");
+            Analytics.design('guiClick:stats:home');
+            Rout.push(context, StatsDialog());
+          }),
+          Components.coins(context, "home", onTap: () async {
+            MyGame.isPlaying = false;
+            await Rout.push(context, ShopDialog());
+            MyGame.isPlaying = true;
+            setState(() {});
+          }),
+          Expanded(
+              child:
+                  Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
+            SizedBox(height: 4.d),
+            Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+              Text(Prefs.score.format(),
+                  style:
+                      theme.textTheme.headline5!.copyWith(letterSpacing: -1)),
+              SizedBox(width: 2.d),
+              SVG.show("cup", 22.d)
+            ]),
+            Components.scores(theme, onTap: () {
+              _pause("record");
+              Analytics.design('guiClick:record:home');
+              PlayGames.showLeaderboard("CgkIw9yXzt4XEAIQAQ");
+            })
+          ]))
+        ]));
+  }
+
+  Widget _getFooter(ThemeData theme) {
+    if (Pref.tutorMode.value == 0) return SizedBox();
+    if (_game!.removingMode != null) {
+      return Padding(
+          padding: EdgeInsets.only(left: 22.d),
+          child: Container(
+              padding: EdgeInsets.fromLTRB(24.d, 18.d, 24.d, 20.d),
+              decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                        blurRadius: 3.d,
+                        color: Colors.black,
+                        offset: Offset(0.5.d, 2.d))
+                  ],
+                  color: theme.cardColor,
+                  shape: BoxShape.rectangle,
+                  borderRadius: BorderRadius.all(Radius.circular(16))),
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("home_rm_${_game!.removingMode!}".l()),
+                    GestureDetector(
+                        child: SVG.show("close", 32.d), onTap: _onRemoveBlock)
+                  ])));
+    }
+    return SizedBox(
+        height: 68.d,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            IconButton(
+                icon: SVG.show("pause", 48.d),
+                iconSize: 72.d,
+                onPressed: () => _pause("tap")),
+            Expanded(
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                  SizedBox(height: 5 * _rewardAnimation!.value),
+                  Expanded(
+                      child: _button(
+                          theme, 20.d, "piggy", () => _boost("piggy"),
+                          // width: 96.d,
+                          badge: _slider(
+                              theme,
+                              _rewardLineAnimation!.value.round(),
+                              PiggyDialog.capacity),
+                          colors: Pref.coinPiggy.value >= PiggyDialog.capacity
+                              ? TColors.orange.value
+                              : null))
+                ])),
+            SizedBox(width: 4.d),
+            _button(theme, 96.d, "remove-color", () => _boost("color"),
+                badge: _badge(theme, Pref.removeColor.value)),
+            SizedBox(width: 4.d),
+            _button(theme, 20.d, "remove-one", () => _boost("one"),
+                badge: _badge(theme, Pref.removeOne.value)),
+          ],
+        ));
   }
 
   Widget _button(
@@ -234,7 +244,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           Positioned(
               left: 32.d,
               right: 4.d,
-              child: Text(label, style: TextStyle(fontSize: 12.d))),
+              child: Text(label,
+                  style: TextStyle(fontSize: 10.d),
+                  textAlign: TextAlign.center)),
         ]));
   }
 
