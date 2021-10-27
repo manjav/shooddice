@@ -69,7 +69,7 @@ class _StartDialogState extends AbstractDialogState<StartDialog> {
 
   _onStart() async {
     var shown = await RatingDialog.showRating(context);
-    if (!shown && Pref.playCount.value > 7)
+    if (!shown && Pref.playCount.value > AdPlace.Interstitial.threshold)
       await Ads.show(AdPlace.Interstitial);
     await Rout.push(context, HomePage());
     Cell.maxRandomValue = 3;

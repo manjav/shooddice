@@ -99,6 +99,7 @@ class AbstractDialogState<T extends AbstractDialog> extends State<T> {
   }
 
   Widget bannerAdsFactory() {
+    if (Pref.playCount.value < AdPlace.Banner.threshold) return SizedBox();
     return Positioned(
         bottom: 0, child: UnityBannerAd(placementId: AdPlace.Banner.name));
   }
