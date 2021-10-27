@@ -98,8 +98,10 @@ class AbstractDialogState<T extends AbstractDialog> extends State<T> {
     Navigator.of(context).pop(type);
   }
 
-  Widget bottomAdsFactory() => Positioned(
-      bottom: 0, child: UnityBannerAd(placementId: AdPlace.Banner.name));
+  Widget bannerAdsFactory() {
+    return Positioned(
+        bottom: 0, child: UnityBannerAd(placementId: AdPlace.Banner.name));
+  }
 
   Widget rankButtonFactory(ThemeData theme) {
     return widget.scoreButton ??
