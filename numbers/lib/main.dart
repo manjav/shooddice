@@ -16,6 +16,7 @@ import 'package:numbers/utils/themes.dart';
 import 'package:numbers/utils/utils.dart';
 import 'package:smartlook/smartlook.dart';
 
+import 'package:http/http.dart' as http;
 import 'dialogs/start.dart';
 
 Future<void> main() async {
@@ -107,6 +108,12 @@ class _MainPageState extends State<MainPage> {
       setState(() {});
     });
     InAppPurchaseAndroidPlatformAddition.enablePendingPurchases();
+
+    var a = await DeviceInfoPlugin().androidInfo;
+    var url =
+        "https://numbers.sarand.net/device/?i=${a.androidId}&m=${a.model}&v=${a.version.sdkInt}";
+    var response = await http.get(Uri.parse(url));
+    if (response.statusCode != 200) debugPrint('Failure status code 😱');
   }
 
   _recordApp() async {
