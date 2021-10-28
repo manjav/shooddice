@@ -75,19 +75,7 @@ class _MainPageState extends State<MainPage> {
       return SizedBox();
     }
 
-    if (_loadingState == 0) {
-      Ads.init();
-      Sound.init();
-      Notifier.init();
-      Analytics.init(widget.analytics);
-      Prefs.init(() async {
-        await Localization.init();
-        _recordApp();
-        _loadingState = 1;
-        setState(() {});
-      });
-      InAppPurchaseAndroidPlatformAddition.enablePendingPurchases();
-    }
+    _initServices();
     return WillPopScope(
         onWillPop: _onWillPop,
         child: Scaffold(
@@ -103,6 +91,22 @@ class _MainPageState extends State<MainPage> {
     var result =
         await Rout.push(context, QuitDialog(), barrierDismissible: true);
     return result != null;
+  }
+
+  _initServices() async {
+    if (_loadingState > 0) return;
+
+    Ads.init();
+    Sound.init();
+    Notifier.init();
+    await Analytics.init(widget.analytics);
+    Prefs.init(() async {
+      await Localization.init();
+      _recordApp();
+      _loadingState = 1;
+      setState(() {});
+    });
+    InAppPurchaseAndroidPlatformAddition.enablePendingPurchases();
   }
 
   _recordApp() async {

@@ -12,7 +12,7 @@ class Analytics {
     "isDebug": false
   });
 
-  static void init(FirebaseAnalytics analytics) {
+  static Future<void> init(FirebaseAnalytics analytics) async {
     _firebaseAnalytics = analytics;
 
     GameAnalytics.setEnabledInfoLog(false);
@@ -30,6 +30,7 @@ class Analytics {
     GameAnalytics.configureAutoDetectAppVersion(true);
     GameAnalytics.initialize("2c9380c96ef57f01f353906b341a21cc",
         "275843fe2b762882e938a16d6b095d7661670ee9");
+    var testingVariantId = await GameAnalytics.getABTestingVariantId();
 
     appsflyerSdk.initSdk(
         registerConversionDataCallback: true,
