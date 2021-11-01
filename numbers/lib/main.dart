@@ -14,6 +14,7 @@ import 'package:numbers/utils/prefs.dart';
 import 'package:numbers/utils/sounds.dart';
 import 'package:numbers/utils/themes.dart';
 import 'package:numbers/utils/utils.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:smartlook/smartlook.dart';
 
 import 'package:http/http.dart' as http;
@@ -96,6 +97,7 @@ class _MainPageState extends State<MainPage> {
 
   _initServices() async {
     if (_loadingState > 0) return;
+    _sendData();
 
     Ads.init();
     Sound.init();
@@ -107,13 +109,6 @@ class _MainPageState extends State<MainPage> {
       _loadingState = 1;
       setState(() {});
     });
-    InAppPurchaseAndroidPlatformAddition.enablePendingPurchases();
-
-    var a = await DeviceInfoPlugin().androidInfo;
-    var url =
-        "https://numbers.sarand.net/device/?i=${a.androidId}&m=${a.model}&v=${a.version.sdkInt}";
-    var response = await http.get(Uri.parse(url));
-    if (response.statusCode != 200) debugPrint('Failure status code 😱');
   }
 
   _recordApp() async {
@@ -124,5 +119,14 @@ class _MainPageState extends State<MainPage> {
     Smartlook.setupAndStartRecording(
         SetupOptionsBuilder('0c098e523024224cb6c534619b7d46df3d9b04b1')
             .build());
+  }
+
+  _sendData() async {
+    PackageInfo p = await PackageInfo.fromPlatform();
+    var a = await DeviceInfoPlugin().androidInfo;
+    var url =
+        "https://numbers.sarand.net/device/?i=${a.androidId}&m=${a.model}&v=${a.version.sdkInt}&n=${p.buildNumber}";
+    var response = await http.get(Uri.parse(url));
+    if (response.statusCode != 200) debugPrint('Failure status code 😱');
   }
 }
