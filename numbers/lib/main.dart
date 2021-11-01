@@ -103,7 +103,7 @@ class _MainPageState extends State<MainPage> {
     Ads.init();
     Sound.init();
     Notifier.init();
-    await Analytics.init(widget.analytics);
+    Analytics.init(widget.analytics);
     Prefs.init(() async {
       await Localization.init();
       _recordApp();
