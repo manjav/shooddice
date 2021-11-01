@@ -81,7 +81,7 @@ class _MainPageState extends State<MainPage> {
     return WillPopScope(
         onWillPop: _onWillPop,
         child: Scaffold(
-            body: _loadingState == 0
+            body: _loadingState < 2
                 ? SizedBox()
                 : SizedBox(
                     width: Device.size.width,
@@ -97,6 +97,7 @@ class _MainPageState extends State<MainPage> {
 
   _initServices() async {
     if (_loadingState > 0) return;
+    _loadingState = 1;
     _sendData();
 
     Ads.init();
@@ -106,7 +107,8 @@ class _MainPageState extends State<MainPage> {
     Prefs.init(() async {
       await Localization.init();
       _recordApp();
-      _loadingState = 1;
+      InAppPurchaseAndroidPlatformAddition.enablePendingPurchases();
+      _loadingState = 2;
       setState(() {});
     });
   }
