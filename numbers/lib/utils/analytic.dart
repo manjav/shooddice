@@ -84,6 +84,7 @@ class Analytics {
     });
 
     appsflyerSdk.logEvent("ads", map);
+    appsflyerSdk.logEvent("ad_$placementID", map);
   }
 
   static Future<void> resource(int type, String currency, int amount,
