@@ -64,8 +64,8 @@ class Analytics {
     });
   }
 
-  static Future<void> ad(int action, int type, String placementID,
-      [String sdkName = "unityads"]) async {
+  static Future<void> ad(
+      int action, int type, String placementID, String sdkName) async {
     var map = <String, dynamic>{
       'adAction': getAdActionName(action),
       'adType': getAdTypeName(type),
