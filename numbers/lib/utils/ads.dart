@@ -48,15 +48,16 @@ class Ads {
       UnityAds.init(
           gameId: "4230791",
           listener: (UnityAdState state, data) {
-            AdPlace place = _getPlacement(data['placementId']);
+            AdPlace adPlace = _getPlacement(data['placementId']);
             if (state == UnityAdState.ready) {
-              Analytics.ad(GAAdAction.Loaded, place.type, place.name);
-              // _placementIds.add(place);
-              // onAdsReady?.call();
+              Analytics.ad(
+                  GAAdAction.Loaded, adPlace.type, adPlace.name, "unityads");
+              _updateState(adPlace, AdState.Loaded);
             } else if (state == UnityAdState.complete ||
                 state == UnityAdState.skipped) {
-              Analytics.ad(GAAdAction.RewardReceived, place.type, place.name);
-              // _lastAdState = state;
+              Analytics.ad(GAAdAction.RewardReceived, adPlace.type,
+                  adPlace.name, "unityads");
+              _updateState(adPlace, AdState.Closed);
             }
             debugPrint("Ads state =====> $state : $data");
           });
@@ -152,6 +153,8 @@ class Ads {
       else
         _rewardedAd!.load();
     }
+    var action = _getAction(event);
+    if (action > 0) Analytics.ad(action, adPlace.type, adPlace.name, "admob");
     debugPrint("=====> $adPlace ${event.toString()} $args");
   }
 
@@ -160,20 +163,22 @@ class Ads {
     onUpdate?.call(adPlace, state);
   }
 
-  // static AdState _getState(AdmobAdEvent event) {
-  //   switch (event) {
-  //     case AdmobAdEvent.loaded:
-  //       return AdState.Loaded;
-  //     case AdmobAdEvent.started:
-  //       return AdState.Started;
-  //     case AdmobAdEvent.opened:
-  //       return AdState.Opened;
-  //     case AdmobAdEvent.rewarded:
-  //       return AdState.Rewarded;
-  //     default:
-  //       return AdState.Closed;
-  //   }
-  // }
+  static int _getAction(AdmobAdEvent event) {
+    switch (event) {
+      case AdmobAdEvent.loaded:
+        return GAAdAction.Loaded;
+      case AdmobAdEvent.started:
+        return GAAdAction.Show;
+      case AdmobAdEvent.rewarded:
+        return GAAdAction.RewardReceived;
+      case AdmobAdEvent.clicked:
+        return GAAdAction.Clicked;
+      case AdmobAdEvent.failedToLoad:
+        return GAAdAction.FailedShow;
+      default:
+        return 0;
+    }
+  }
 }
 
 enum AdState { Loaded, Opened, Closed }

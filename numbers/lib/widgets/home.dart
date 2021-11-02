@@ -25,7 +25,6 @@ import 'package:numbers/utils/themes.dart';
 import 'package:numbers/utils/utils.dart';
 import 'package:numbers/widgets/buttons.dart';
 import 'package:numbers/widgets/components.dart';
-import 'package:unity_ads_plugin/ad/unity_banner_ad.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
