@@ -30,7 +30,6 @@ class _StartDialogState extends AbstractDialogState<StartDialog> {
   @override
   void initState() {
     if (Pref.tutorMode.value == 0) _onStart();
-    Ads.onAdsReady = _onAdsReady;
     super.initState();
   }
 
@@ -70,7 +69,7 @@ class _StartDialogState extends AbstractDialogState<StartDialog> {
   _onStart() async {
     var shown = await RatingDialog.showRating(context);
     if (!shown && Pref.playCount.value > AdPlace.Interstitial.threshold)
-      await Ads.show(AdPlace.Interstitial);
+      await Ads.showInterstitial();
     await Rout.push(context, HomePage());
     Cell.maxRandomValue = 3;
     MyGame.boostNextMode = 0;
@@ -79,12 +78,4 @@ class _StartDialogState extends AbstractDialogState<StartDialog> {
   }
 
   _onUpdate() => setState(() {});
-
-  _onAdsReady() => setState(() {});
-
-  @override
-  void dispose() {
-    super.dispose();
-    Ads.onAdsReady = null;
-  }
 }

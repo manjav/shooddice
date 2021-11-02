@@ -51,6 +51,11 @@ class AbstractDialog extends StatefulWidget {
 
 class AbstractDialogState<T extends AbstractDialog> extends State<T> {
   List<Widget> stepChildren = <Widget>[];
+  @override
+  void initState() {
+    Ads.onUpdate = _onAdsUpdate;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -173,6 +178,17 @@ class AbstractDialogState<T extends AbstractDialog> extends State<T> {
                 borderRadius: BorderRadius.all(Radius.circular(24.d)))
             : null,
         child: widget.child ?? SizedBox());
+  }
+
+  _onAdsUpdate(AdPlace placement, AdState state) {
+    if (placement == AdPlace.Rewarded && state != AdState.Closed)
+      setState(() {});
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    Ads.onUpdate = null;
   }
 }
 
