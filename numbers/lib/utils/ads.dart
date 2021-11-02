@@ -40,8 +40,13 @@ class Ads {
     }
   }
 
+  static Widget getBanner({AdmobBannerSize? size}) {
+    if (Pref.playCount.value < AdPlace.Banner.threshold) return SizedBox();
   static bool isReady([AdPlace? id]) =>
       _placementIds.contains(id == null ? AdPlace.Rewarded.name : id.name);
+    return UnityBannerAd(placementId: AdPlace.Banner.name);
+  }
+
 
   static Future<bool> show([AdPlace? id]) async {
     var placement = id ?? AdPlace.Rewarded;

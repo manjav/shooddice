@@ -9,7 +9,6 @@ import 'package:numbers/utils/prefs.dart';
 import 'package:numbers/utils/sounds.dart';
 import 'package:numbers/utils/utils.dart';
 import 'package:numbers/widgets/components.dart';
-import 'package:unity_ads_plugin/ad/unity_banner_ad.dart';
 
 // ignore: must_be_immutable
 class AbstractDialog extends StatefulWidget {
@@ -99,9 +98,11 @@ class AbstractDialogState<T extends AbstractDialog> extends State<T> {
   }
 
   Widget bannerAdsFactory() {
-    if (Pref.playCount.value < AdPlace.Banner.threshold) return SizedBox();
     return Positioned(
-        bottom: 0, child: UnityBannerAd(placementId: AdPlace.Banner.name));
+        bottom: 8.d,
+        child: ClipRRect(
+            borderRadius: BorderRadius.all(Radius.circular(16.d)),
+            child: Ads.getBanner()));
   }
 
   Widget rankButtonFactory(ThemeData theme) {

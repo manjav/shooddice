@@ -72,15 +72,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               left: _game!.bounds.left - 22.d,
               right: _game!.bounds.left,
               child: _getFooter(theme)),
-          Pref.playCount.value < AdPlace.Banner.threshold
-              ? SizedBox()
-              : Positioned(
-                  bottom: 0,
-                  child: UnityBannerAd(
-                      placementId: AdPlace.Banner.name,
-                      listener: (state, args) {
-                        print('== Banner Listener: $state => $args');
-                      })),
+          Positioned(
+              bottom: 2.d,
+              child: ClipRRect(
+                  borderRadius: BorderRadius.all(Radius.circular(8.d)),
+                  child: Ads.getBanner(size: AdmobBannerSize.BANNER))),
           Center(child: Components.confetty(_confettiController!))
         ])));
   }
