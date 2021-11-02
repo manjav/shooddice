@@ -86,14 +86,13 @@ class AbstractDialogState<T extends AbstractDialog> extends State<T> {
         child: Stack(alignment: Alignment.center, children: children));
   }
 
-  buttonsClick(BuildContext context, String type, int coin,
-      {AdPlace? adId}) async {
+  buttonsClick(BuildContext context, String type, int coin, bool showAd) async {
     if (coin < 0 && Pref.coin.value < -coin) {
       Rout.push(context, ShopDialog());
       return;
     }
-    if (adId != null) {
-      var complete = await Ads.show(adId);
+    if (showAd) {
+      var complete = await Ads.showRewarded();
       if (!complete) {
         return;
       }
