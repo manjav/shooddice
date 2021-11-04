@@ -24,7 +24,7 @@ class Ads {
   static AdmobReward? _rewardedAd;
   static bool _hasReward = false;
 
-  static var prefix = "ca-app-pub-3940256099942544/";
+  static var prefix = "ca-app-pub-5018637481206902/";
 
   static init() async {
     if (isSupportAdMob) {
@@ -203,11 +203,11 @@ extension AdExt on AdPlace {
   String get id {
     switch (this) {
       case AdPlace.Banner:
-        return "${Ads.prefix}6300978111";
+        return "${Ads.prefix}9761457956";
       case AdPlace.Interstitial:
-        return "${Ads.prefix}1033173712";
+        return "${Ads.prefix}4317559580";
       case AdPlace.Rewarded:
-        return "${Ads.prefix}5224354917";
+        return "${Ads.prefix}2812906224";
     }
   }
 
