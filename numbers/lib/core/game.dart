@@ -23,12 +23,13 @@ enum GameEvent {
   big,
   boost,
   celebrate,
-  openPiggy,
   completeTutorial,
+  freeCoins,
   lose,
   remove,
   reward,
   rewarded,
+  openPiggy,
   score
 }
 

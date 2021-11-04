@@ -17,8 +17,8 @@ class Ads {
 
   static Function(AdPlace, AdState)? onUpdate;
   static String platform = Platform.isAndroid ? "Android" : "iOS";
-  static final isSupportUnity = false;
   static final isSupportAdMob = true;
+  static final isSupportUnity = false;
 
   static AdmobInterstitial? _interstitialAd;
   static AdmobReward? _rewardedAd;

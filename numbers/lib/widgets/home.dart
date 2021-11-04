@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:math';
+
 import 'package:admob_flutter/admob_flutter.dart';
 import 'package:confetti/confetti.dart';
 import 'package:flame/game.dart';
@@ -9,6 +12,7 @@ import 'package:numbers/core/game.dart';
 import 'package:numbers/dialogs/big.dart';
 import 'package:numbers/dialogs/callout.dart';
 import 'package:numbers/dialogs/confirms.dart';
+import 'package:numbers/dialogs/freecoins.dart';
 import 'package:numbers/dialogs/piggy.dart';
 import 'package:numbers/dialogs/record.dart';
 import 'package:numbers/dialogs/revive.dart';
@@ -25,6 +29,7 @@ import 'package:numbers/utils/themes.dart';
 import 'package:numbers/utils/utils.dart';
 import 'package:numbers/widgets/buttons.dart';
 import 'package:numbers/widgets/components.dart';
+import 'package:rive/rive.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
@@ -39,6 +44,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   AnimationController? _rewardAnimation;
   AnimationController? _rewardLineAnimation;
   ConfettiController? _confettiController;
+
+  bool _animationTime = false;
+  Timer? _timer;
 
   void initState() {
     super.initState();
@@ -72,11 +80,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               left: _game!.bounds.left - 22.d,
               right: _game!.bounds.left,
               child: _getFooter(theme)),
-          Positioned(
-              bottom: 2.d,
-              child: ClipRRect(
-                  borderRadius: BorderRadius.all(Radius.circular(8.d)),
-                  child: Ads.getBanner(size: AdmobBannerSize.BANNER))),
+          _bottomChange(),
           Center(child: Components.confetty(_confettiController!))
         ])));
   }
@@ -245,13 +249,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         ]));
   }
 
-  Decoration _badgeDecoration({double? cornerRadius}) {
+  Decoration _badgeDecoration({double? cornerRadius, Color? color}) {
     return BoxDecoration(
         boxShadow: [
           BoxShadow(
               blurRadius: 3.d, color: Colors.black, offset: Offset(0.5.d, 1.d))
         ],
-        color: Colors.pink[700],
+        color: color ?? Colors.pink[700],
         shape: BoxShape.rectangle,
         borderRadius: BorderRadius.all(Radius.circular(cornerRadius ?? 12.d)));
   }
@@ -278,7 +282,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         _widget = ReviveDialog(_game!.numRevives);
         break;
       case GameEvent.openPiggy:
-        Pref.coinPiggy.set(0);
+      case GameEvent.freeCoins:
+        if (event == GameEvent.openPiggy) Pref.coinPiggy.set(0);
         Pref.coin.increase(value, itemType: "game", itemId: "random");
         _rewardLineAnimation!
             .animateTo(0, duration: const Duration(milliseconds: 400));
@@ -429,9 +434,60 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   @override
   void dispose() {
+    _timer!.cancel();
     _rewardAnimation!.dispose();
     _confettiController!.dispose();
     _rewardLineAnimation!.dispose();
     super.dispose();
+  }
+
+  _bottomChange() {
+    if (_timer == null) {
+      var duration = Duration(
+          milliseconds:
+              _animationTime ? 2500 : 30000 + Random().nextInt(30000));
+      _timer = Timer(duration, () {
+        _animationTime = !_animationTime;
+        _timer = null;
+        setState(() {});
+      });
+    }
+
+    if (!_animationTime)
+      return Positioned(
+          bottom: 2.d,
+          child: ClipRRect(
+              borderRadius: BorderRadius.all(Radius.circular(8.d)),
+              child: Ads.getBanner(size: AdmobBannerSize.BANNER)));
+    return Positioned(
+        left: 0,
+        bottom: 0.d,
+        height: 120.d,
+        child: GestureDetector(
+            onTap: () async {
+              MyGame.isPlaying = false;
+              var result = await Rout.push(context, FreeCoinsDialog());
+              if (result != null && result != "") {
+                MyGame.isPlaying = true;
+                _game!.showReward(
+                    FreeCoinsDialog.reward,
+                    Vector2(_game!.bounds.top, Device.size.width * 0.5),
+                    GameEvent.freeCoins);
+              }
+              MyGame.isPlaying = true;
+            },
+            child:
+                Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
+              SizedBox(
+                  width: 80.d,
+                  child: RiveAnimation.asset('anims/nums-character.riv',
+                      stateMachines: ["runState"])),
+              Container(
+                  height: 44.d,
+                  alignment: Alignment.center,
+                  padding: EdgeInsets.symmetric(horizontal: 12.d),
+                  child: Text("freecoins_catch".l()),
+                  decoration: _badgeDecoration(color: Colors.white)),
+            ])));
   }
 }
