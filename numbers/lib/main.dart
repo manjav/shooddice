@@ -98,7 +98,6 @@ class _MainPageState extends State<MainPage> {
   _initServices() async {
     if (_loadingState > 0) return;
     _loadingState = 1;
-    _sendData();
 
     Ads.init();
     Sound.init();
@@ -121,14 +120,5 @@ class _MainPageState extends State<MainPage> {
     Smartlook.setupAndStartRecording(
         SetupOptionsBuilder('0c098e523024224cb6c534619b7d46df3d9b04b1')
             .build());
-  }
-
-  _sendData() async {
-    PackageInfo p = await PackageInfo.fromPlatform();
-    var a = await DeviceInfoPlugin().androidInfo;
-    var url =
-        "https://numbers.sarand.net/device/?i=${a.androidId}&m=${a.model}&v=${a.version.sdkInt}&n=${p.buildNumber}";
-    var response = await http.get(Uri.parse(url));
-    if (response.statusCode != 200) debugPrint('Failure status code 😱');
   }
 }
