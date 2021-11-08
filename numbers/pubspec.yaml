@@ -12,7 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
   admob_flutter: ^2.0.0-nullsafety.1
-  appsflyer_sdk: ^6.2.4+4-nullsafety
+  appsflyer_sdk: ^6.4.0+1
   confetti: ^0.6.0
   cupertino_icons: ^1.0.3
   device_info: ^2.0.2
