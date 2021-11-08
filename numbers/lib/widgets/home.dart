@@ -80,7 +80,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               left: _game!.bounds.left - 22.d,
               right: _game!.bounds.left,
               child: _getFooter(theme)),
-          _bottomChange(),
+          _underFooter(),
           Center(child: Components.confetty(_confettiController!))
         ])));
   }
@@ -183,6 +183,57 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 badge: _badge(theme, Pref.removeOne.value)),
           ],
         ));
+  }
+
+  _underFooter() {
+    var isAdsReady = Ads.isReady();
+    if (isAdsReady && _timer == null) {
+      var duration = Duration(
+          milliseconds:
+              _animationTime ? 2500 : 30000 + Random().nextInt(30000));
+      _timer = Timer(duration, () {
+        _animationTime = !_animationTime;
+        _timer = null;
+        setState(() {});
+      });
+    }
+
+    if (!_animationTime)
+      return Positioned(
+          bottom: 2.d,
+          child: ClipRRect(
+              borderRadius: BorderRadius.all(Radius.circular(8.d)),
+              child: Ads.getBanner(size: AdmobBannerSize.BANNER)));
+    return Positioned(
+        left: 0,
+        bottom: 0.d,
+        height: 120.d,
+        child: GestureDetector(
+            onTap: () async {
+              MyGame.isPlaying = false;
+              var result = await Rout.push(context, FreeCoinsDialog());
+              if (result != null && result != "") {
+                MyGame.isPlaying = true;
+                _game!.showReward(
+                    FreeCoinsDialog.reward,
+                    Vector2(_game!.bounds.top, Device.size.width * 0.5),
+                    GameEvent.freeCoins);
+              }
+              MyGame.isPlaying = true;
+            },
+            child:
+                Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
+              SizedBox(
+                  width: 80.d,
+                  child: RiveAnimation.asset('anims/nums-character.riv',
+                      stateMachines: ["runState"])),
+              Container(
+                  height: 44.d,
+                  alignment: Alignment.center,
+                  padding: EdgeInsets.symmetric(horizontal: 12.d),
+                  child: Text("freecoins_catch".l()),
+                  decoration: _badgeDecoration(color: Colors.white)),
+            ])));
   }
 
   Widget _button(
@@ -439,55 +490,5 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     _confettiController!.dispose();
     _rewardLineAnimation!.dispose();
     super.dispose();
-  }
-
-  _bottomChange() {
-    if (_timer == null) {
-      var duration = Duration(
-          milliseconds:
-              _animationTime ? 2500 : 30000 + Random().nextInt(30000));
-      _timer = Timer(duration, () {
-        _animationTime = !_animationTime;
-        _timer = null;
-        setState(() {});
-      });
-    }
-
-    if (!_animationTime)
-      return Positioned(
-          bottom: 2.d,
-          child: ClipRRect(
-              borderRadius: BorderRadius.all(Radius.circular(8.d)),
-              child: Ads.getBanner(size: AdmobBannerSize.BANNER)));
-    return Positioned(
-        left: 0,
-        bottom: 0.d,
-        height: 120.d,
-        child: GestureDetector(
-            onTap: () async {
-              MyGame.isPlaying = false;
-              var result = await Rout.push(context, FreeCoinsDialog());
-              if (result != null && result != "") {
-                MyGame.isPlaying = true;
-                _game!.showReward(
-                    FreeCoinsDialog.reward,
-                    Vector2(_game!.bounds.top, Device.size.width * 0.5),
-                    GameEvent.freeCoins);
-              }
-              MyGame.isPlaying = true;
-            },
-            child:
-                Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
-              SizedBox(
-                  width: 80.d,
-                  child: RiveAnimation.asset('anims/nums-character.riv',
-                      stateMachines: ["runState"])),
-              Container(
-                  height: 44.d,
-                  alignment: Alignment.center,
-                  padding: EdgeInsets.symmetric(horizontal: 12.d),
-                  child: Text("freecoins_catch".l()),
-                  decoration: _badgeDecoration(color: Colors.white)),
-            ])));
   }
 }

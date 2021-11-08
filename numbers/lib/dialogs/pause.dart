@@ -14,10 +14,11 @@ class PauseDialog extends AbstractDialog {
   PauseDialog()
       : super(
           DialogMode.pause,
+          height: 0,
           hasChrome: false,
           title: "pause_l".l(),
           showCloseButton: false,
-          padding: EdgeInsets.only(top: 10.d),
+          padding: EdgeInsets.all(0),
         );
   @override
   _PauseDialogState createState() => _PauseDialogState();
