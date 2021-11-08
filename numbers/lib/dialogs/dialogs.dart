@@ -102,6 +102,7 @@ class AbstractDialogState<T extends AbstractDialog> extends State<T> {
   }
 
   Widget bannerAdsFactory() {
+    if (!Ads.isReady(AdPlace.Banner)) return SizedBox();
     return Positioned(
         bottom: 8.d,
         child: ClipRRect(

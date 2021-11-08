@@ -118,7 +118,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             Components.scores(theme, onTap: () {
               _pause("record");
               Analytics.design('guiClick:record:home');
-              PlayGames.showLeaderboard("CgkIw9yXzt4XEAIQAQ");
+              GamesServices.showLeaderboards();
             })
           ]))
         ]));
@@ -310,7 +310,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             duration: const Duration(seconds: 1), curve: Curves.easeInOutSine);
         if (dailyCoins >= PiggyDialog.capacity) {
           ++PiggyDialog.autoAppearance;
-          if (PiggyDialog.autoAppearance % 4 == 1)
+          if (Ads.isReady() && PiggyDialog.autoAppearance % 4 == 0)
             await _boost("piggy", playApplaud: true);
         }
         return;

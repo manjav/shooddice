@@ -81,7 +81,9 @@ class Ads {
         adSize: size ?? AdmobBannerSize.LARGE_BANNER,
         adUnitId: AdPlace.Banner.id,
         listener: (AdmobAdEvent event, Map<String, dynamic>? args) {},
-        onBannerCreated: (AdmobBannerController controller) {},
+        onBannerCreated: (AdmobBannerController controller) {
+          _updateState(AdPlace.Banner, AdState.Loaded);
+        },
       );
     return UnityBannerAd(placementId: AdPlace.Banner.name);
   }
@@ -92,7 +94,7 @@ class Ads {
       bool loaded = false;
       loaded = (await _interstitialAd!.isLoaded)!;
       if (!loaded) return;
-        _interstitialAd!.show();
+      _interstitialAd!.show();
       await _waitForClose(AdPlace.Interstitial);
     }
   }

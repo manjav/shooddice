@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:numbers/utils/ads.dart';
 import 'package:numbers/utils/localization.dart';
 import 'package:numbers/utils/prefs.dart';
 import 'package:numbers/utils/themes.dart';
@@ -29,7 +30,7 @@ class _PauseDialogState extends AbstractDialogState<PauseDialog> {
     widget.child =
         Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
       bannerAdsFactory(),
-      SizedBox(height: 16.d),
+      SizedBox(height: Ads.isReady(AdPlace.Banner) ? 16.d : 0),
       SizedBox(
           height: 76.d,
           child: Row(

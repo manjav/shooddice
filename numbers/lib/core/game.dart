@@ -14,10 +14,10 @@ import 'package:numbers/core/achieves.dart';
 import 'package:numbers/core/cell.dart';
 import 'package:numbers/core/cells.dart';
 import 'package:numbers/utils/analytic.dart';
-import 'package:numbers/utils/utils.dart';
 import 'package:numbers/utils/prefs.dart';
 import 'package:numbers/utils/sounds.dart';
 import 'package:numbers/utils/themes.dart';
+import 'package:numbers/utils/utils.dart';
 
 enum GameEvent {
   big,
