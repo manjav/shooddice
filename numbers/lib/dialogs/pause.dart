@@ -93,4 +93,12 @@ class _PauseDialogState extends AbstractDialogState<PauseDialog> {
     ]);
     return super.build(context);
   }
+
+  @override
+  Widget bannerAdsFactory() {
+    if (!Ads.isReady(AdPlace.Banner)) return SizedBox();
+    return ClipRRect(
+        borderRadius: BorderRadius.all(Radius.circular(16.d)),
+        child: Ads.getBanner());
+  }
 }

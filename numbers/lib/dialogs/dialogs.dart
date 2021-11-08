@@ -54,6 +54,8 @@ class AbstractDialogState<T extends AbstractDialog> extends State<T> {
   @override
   void initState() {
     Ads.onUpdate = _onAdsUpdate;
+    Sound.play(widget.sfx ?? "pop");
+    Analytics.setScreen(widget.mode.name);
     super.initState();
   }
 
@@ -61,9 +63,6 @@ class AbstractDialogState<T extends AbstractDialog> extends State<T> {
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
     var width = widget.width ?? 300.d;
-
-    Sound.play(widget.sfx ?? "pop");
-    Analytics.setScreen(widget.mode.name);
 
     var children = <Widget>[];
     children.add(rankButtonFactory(theme));
