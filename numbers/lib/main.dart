@@ -4,6 +4,7 @@ import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:games_services/games_services.dart';
 import 'package:in_app_purchase_android/in_app_purchase_android.dart';
 import 'package:numbers/dialogs/quit.dart';
 import 'package:numbers/utils/ads.dart';
@@ -14,10 +15,8 @@ import 'package:numbers/utils/prefs.dart';
 import 'package:numbers/utils/sounds.dart';
 import 'package:numbers/utils/themes.dart';
 import 'package:numbers/utils/utils.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 import 'package:smartlook/smartlook.dart';
 
-import 'package:http/http.dart' as http;
 import 'dialogs/start.dart';
 
 Future<void> main() async {
@@ -102,6 +101,7 @@ class _MainPageState extends State<MainPage> {
     Ads.init();
     Sound.init();
     Notifier.init();
+    GamesServices.signIn();
     Analytics.init(widget.analytics);
     Prefs.init(() async {
       await Localization.init();

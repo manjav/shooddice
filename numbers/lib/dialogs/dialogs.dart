@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:games_services/games_services.dart';
 import 'package:numbers/dialogs/shop.dart';
 import 'package:numbers/dialogs/stats.dart';
 import 'package:numbers/utils/ads.dart';
 import 'package:numbers/utils/analytic.dart';
-import 'package:numbers/utils/gemeservice.dart';
 import 'package:numbers/utils/prefs.dart';
 import 'package:numbers/utils/sounds.dart';
 import 'package:numbers/utils/utils.dart';
@@ -116,7 +116,7 @@ class AbstractDialogState<T extends AbstractDialog> extends State<T> {
             right: 10.d,
             child: Components.scores(theme, onTap: () {
               Analytics.design('guiClick:record:${widget.mode.name}');
-              PlayGames.showLeaderboard("CgkIw9yXzt4XEAIQAQ");
+              GamesServices.showLeaderboards();
             }));
   }
 
