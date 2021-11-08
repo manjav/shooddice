@@ -91,10 +91,9 @@ class Ads {
     if (isSupportAdMob) {
       bool loaded = false;
       loaded = (await _interstitialAd!.isLoaded)!;
-      if (loaded) {
+      if (!loaded) return;
         _interstitialAd!.show();
-        return;
-      }
+      await _waitForClose(AdPlace.Interstitial);
     }
   }
 
@@ -104,10 +103,7 @@ class Ads {
       bool loaded = (await _rewardedAd!.isLoaded);
       if (!loaded) return false;
       _rewardedAd!.show();
-      _placements[AdPlace.Rewarded] = AdState.Opened;
-      const d = Duration(milliseconds: 300);
-      while (_placements[AdPlace.Rewarded] != AdState.Closed)
-        await Future.delayed(d);
+      await _waitForClose(AdPlace.Rewarded);
       return _hasReward;
     }
     return false;
@@ -161,6 +157,12 @@ class Ads {
   static void _updateState(AdPlace adPlace, AdState state) {
     _placements[adPlace] = state;
     onUpdate?.call(adPlace, state);
+  }
+
+  static _waitForClose(AdPlace adPlace) async {
+    _placements[adPlace] = AdState.Opened;
+    const d = Duration(milliseconds: 300);
+    while (_placements[adPlace] != AdState.Closed) await Future.delayed(d);
   }
 
   static int _getAction(AdmobAdEvent event) {
