@@ -419,6 +419,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       var result =
           await Rout.push(context, PiggyDialog(playApplaud: playApplaud));
       if (result != null && result != "") {
+        PiggyDialog.autoAppearance = -1;
         MyGame.isPlaying = true;
         _game!.showReward(
             PiggyDialog.capacity,
