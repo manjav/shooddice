@@ -71,7 +71,7 @@ class Ads {
 
   static bool isReady([AdPlace? id]) {
     var _id = id ?? AdPlace.Rewarded;
-    if (id == AdPlace.Banner && Pref.noAds.value > 0) return false;
+    if (id != AdPlace.Rewarded && Pref.noAds.value > 0) return false;
     return _placements.containsKey(_id) && _placements[_id] == AdState.Loaded;
   }
 
