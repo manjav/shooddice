@@ -363,7 +363,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             duration: const Duration(seconds: 1), curve: Curves.easeInOutSine);
         if (dailyCoins >= PiggyDialog.capacity) {
           ++PiggyDialog.autoAppearance;
-          if (Ads.isReady() && PiggyDialog.autoAppearance % 4 == 0)
+          if (Pref.noAds.value == 0 && Ads.isReady() && PiggyDialog.autoAppearance % 4 == 0)
             await _boost("piggy", playApplaud: true);
         }
         return;
