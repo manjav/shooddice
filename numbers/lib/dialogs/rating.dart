@@ -17,13 +17,8 @@ import 'dialogs.dart';
 // ignore: must_be_immutable
 class RatingDialog extends AbstractDialog {
   static Future<bool> showRating(BuildContext context) async {
-    // Pref.rate.set(0);
-    // Pref.ratedBefore.set(0);
-    // Pref.rateTarget.set(5);
     print(
-        "Rating rate: ${Pref.rate.value}, playCount: ${Pref.playCount.value}, rateTarget: ${Pref.rateTarget.value}");
-    var reviewd = await _requestReview();
-    if (reviewd) return true;
+        "Rate:${Pref.rate.value}, plays:${Pref.playCount.value}, target:${Pref.rateTarget.value}");
     // Repeat rating request
     if (Pref.rate.value >= 5 || Pref.playCount.value < Pref.rateTarget.value)
       return false; // Already 5 rating or pending to reach target play count
