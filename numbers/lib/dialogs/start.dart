@@ -71,7 +71,7 @@ class _StartDialogState extends AbstractDialogState<StartDialog> {
     if (!shown && Pref.playCount.value > AdPlace.Interstitial.threshold)
       await Ads.showInterstitial();
     await Rout.push(context, HomePage());
-    Cell.maxRandomValue = 3;
+    Cell.maxRandomValue = 4;
     MyGame.boostNextMode = 0;
     MyGame.boostBig = false;
     _onUpdate();
