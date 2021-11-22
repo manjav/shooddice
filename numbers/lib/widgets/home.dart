@@ -39,6 +39,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   MyGame? _game;
+  GameWidget? _gameWidget;
   int loadingState = 0;
 
   AnimationController? _rewardAnimation;
@@ -69,7 +70,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         onWillPop: _onWillPop,
         child: Scaffold(
             body: Stack(alignment: Alignment.bottomCenter, children: [
-          _game == null ? SizedBox() : GameWidget(game: _game!),
+          _game == null ? SizedBox() : _gameWidget!,
           Positioned(
               top: _game!.bounds.top - 69.d,
               left: _game!.bounds.left,
@@ -466,6 +467,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     var bounds = Rect.fromLTRB(
         padding, top, Device.size.width - padding, Device.size.height - bottom);
     _game = MyGame(bounds: bounds, onGameEvent: _onGameEventHandler);
+    _gameWidget = GameWidget(game: _game!);
   }
 
   _showFreeCoinsDialog() async {
