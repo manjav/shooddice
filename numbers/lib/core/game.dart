@@ -10,6 +10,7 @@ import 'package:flame_svg/svg.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:games_services/games_services.dart';
+import 'package:numbers/animations/animate.dart';
 import 'package:numbers/core/achieves.dart';
 import 'package:numbers/core/cell.dart';
 import 'package:numbers/core/cells.dart';
@@ -70,6 +71,7 @@ class MyGame extends BaseGame with TapDetector {
     this.bounds = bounds;
     this.onGameEvent = onGameEvent;
   }
+
   @override
   Color backgroundColor() => TColors.black.value[0];
 
@@ -326,9 +328,8 @@ class MyGame extends BaseGame with TapDetector {
         MoveEffect(path: [Vector2(c.x, dy)], duration: time),
         ScaleEffect(size: Vector2(1, 1), duration: time)
       ]);
-      c.addEffect(SequenceEffect(
-          effects: [s1, s2],
-          onComplete: () => fallingComplete(c, dy, hasDistance)));
+      Animate(c, [s1, s2],
+          onComplete: () => fallingComplete(c, dy, hasDistance));
     }, state: CellState.Float, startFrom: _lastFallingColumn);
   }
 
@@ -467,12 +468,11 @@ class MyGame extends BaseGame with TapDetector {
       MoveEffect(path: [destination], duration: 0.3),
       ScaleEffect(size: Vector2(0.3, 0.3), duration: 0.3)
     ]);
-    r.addEffect(SequenceEffect(
-        effects: [start, ScaleEffect(size: Vector2(1, 1), duration: 0.3), end],
+    Animate(r, [start, SizeEffect(size: Vector2(1, 1), duration: 0.3), end],
         onComplete: () {
           remove(r);
           onGameEvent?.call(event, value);
-        }));
+    });
     add(r);
   }
 
@@ -497,11 +497,8 @@ class MyGame extends BaseGame with TapDetector {
     var idle2 = ScaleEffect(size: _size * 1.0, duration: 0.6);
     var end = ScaleEffect(
         size: Vector2(_size.x, 0), duration: 0.2, curve: Curves.easeInBack);
-    celebration.addEffect(SequenceEffect(
-        effects: [start, idle1, idle2, end],
-        onComplete: () {
-          remove(celebration);
-        }));
+    Animate(celebration, [start, idle1, idle2, end],
+        onComplete: () => remove(celebration));
     add(celebration);
     await Future.delayed(Duration(milliseconds: 200));
     Sound.play("merge-end");

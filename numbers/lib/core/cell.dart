@@ -57,6 +57,7 @@ class Cell extends PositionComponent with HasGameRef<MyGame> {
     var min = seed.min(1).max((maxRandomValue * 0.4).ceil());
     return min + MyGame.random.nextInt(maxRandomValue - min);
   }
+
   static int getNextColumn(int seed) => Pref.tutorMode.value == 0
       ? [2, 0, 3, 2, 1, 1, 2][seed]
       : MyGame.random.nextInt(Cells.width);
