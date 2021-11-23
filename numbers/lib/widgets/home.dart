@@ -314,10 +314,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         break;
       case GameEvent.celebrate:
         _confettiController!.play();
-        if (FreeCoinsDialog.allSuperMatchAppears && Ads.isReady()) {
-          await Future.delayed(Duration(milliseconds: 1300));
-          _showFreeCoinsDialog();
-        }
         return;
       case GameEvent.completeTutorial:
         _widget = ConfirmDialog(_confettiController!);

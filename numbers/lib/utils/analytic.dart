@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:appsflyer_sdk/appsflyer_sdk.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:gameanalytics_sdk/gameanalytics.dart';
-import 'package:numbers/dialogs/freecoins.dart';
 
 class Analytics {
   static late FirebaseAnalytics _firebaseAnalytics;
@@ -35,8 +34,6 @@ class Analytics {
     GameAnalytics.configureAutoDetectAppVersion(true);
     GameAnalytics.initialize("2c9380c96ef57f01f353906b341a21cc",
         "275843fe2b762882e938a16d6b095d7661670ee9");
-    var testingVariantId = await GameAnalytics.getABTestingVariantId();
-    FreeCoinsDialog.allSuperMatchAppears = testingVariantId == "2";
 
     appsflyerSdk.initSdk(
         registerConversionDataCallback: true,
