@@ -190,10 +190,6 @@ enum AdState { Loaded, Opened, Closed }
 enum AdPlace { Rewarded, Interstitial, Banner }
 
 extension AdExt on AdPlace {
-  AdPlace parse(String name) {
-    return AdPlace.Banner;
-  }
-
   String get name {
     switch (this) {
       case AdPlace.Banner:
