@@ -32,6 +32,8 @@ class _ShopDialogState extends AbstractDialogState<ShopDialog> {
   String _message = "wait_l".l();
   var coins = Map<String, ProductDetails>();
   var others = Map<String, ProductDetails>();
+  final InAppPurchase _inAppPurchase = InAppPurchase.instance;
+  late StreamSubscription<List<PurchaseDetails>> _subscription;
 
   @override
   void initState() {
@@ -49,11 +51,12 @@ class _ShopDialogState extends AbstractDialogState<ShopDialog> {
       setState(() => _message = "");
       return;
     }
-    StreamSubscription<List<PurchaseDetails>>? _subscription;
-    _subscription =
-        InAppPurchase.instance.purchaseStream.listen((purchaseDetailsList) {
+
+    final Stream<List<PurchaseDetails>> purchaseUpdated =
+        _inAppPurchase.purchaseStream;
+    _subscription = purchaseUpdated.listen((purchaseDetailsList) {
       _listenToPurchaseUpdated(purchaseDetailsList);
-    }, onDone: () => _subscription!.cancel(), onError: (error) => print(error));
+    }, onDone: () => _subscription.cancel(), onError: (error) => print(error));
 
     Set<String> skus = {"no_ads"};
     for (var i = 0; i < 6; i++) skus.add("coin_$i");

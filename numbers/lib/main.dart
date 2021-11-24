@@ -106,7 +106,6 @@ class _MainPageState extends State<MainPage> {
     Prefs.init(() async {
       await Localization.init();
       _recordApp();
-      InAppPurchaseAndroidPlatformAddition.enablePendingPurchases();
       _loadingState = 2;
       setState(() {});
     });
