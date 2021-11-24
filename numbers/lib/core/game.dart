@@ -4,7 +4,7 @@ import 'dart:ui' as ui;
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flame/game.dart';
-import 'package:flame/gestures.dart';
+import 'package:flame/input.dart';
 import 'package:flame/palette.dart';
 import 'package:flame_svg/svg.dart';
 import 'package:flutter/cupertino.dart';
@@ -34,7 +34,7 @@ enum GameEvent {
   score
 }
 
-class MyGame extends BaseGame with TapDetector {
+class MyGame extends FlameGame with TapDetector {
   static final Random random = new Random();
   static int boostNextMode = 0;
   static bool boostBig = false;
@@ -91,8 +91,8 @@ class MyGame extends BaseGame with TapDetector {
   }
 
   @override
-  void onAttach() async {
-    super.onAttach();
+  Future<void> onLoad() async {
+    await super.onLoad();
 
     _tutorMode = Pref.tutorMode.value == 0;
     Pref.playCount.increase(1);
@@ -286,7 +286,7 @@ class MyGame extends BaseGame with TapDetector {
       // Change column
       if (_nextCell.column != col) {
         _nextCell.column = col;
-        _nextCell.addEffect(MoveEffect(
+        _nextCell.add(MoveEffect(
             duration: 0.3,
             path: [Vector2(_x, _nextCell.y)],
             curve: Curves.easeInOutQuad));
@@ -322,11 +322,11 @@ class MyGame extends BaseGame with TapDetector {
       var s1 = CombinedEffect(effects: [
         MoveEffect(
             path: [Vector2(c.x, dy + Cell.radius * coef)], duration: time),
-        ScaleEffect(size: Vector2(1, 1 - coef), duration: time)
+        SizeEffect(size: Vector2(1, 1 - coef), duration: time)
       ]);
       var s2 = CombinedEffect(effects: [
         MoveEffect(path: [Vector2(c.x, dy)], duration: time),
-        ScaleEffect(size: Vector2(1, 1), duration: time)
+        SizeEffect(size: Vector2(1, 1), duration: time)
       ]);
       Animate(c, [s1, s2],
           onComplete: () => fallingComplete(c, dy, hasDistance));
@@ -382,7 +382,7 @@ class MyGame extends BaseGame with TapDetector {
       for (var m in matchs) {
         _cells.accumulateColumn(m.column, m.row);
         _collectReward(m);
-        m.addEffect(MoveEffect(
+        m.add(MoveEffect(
             duration: 0.1, path: [c.position], onComplete: () => remove(m)));
       }
 
@@ -462,11 +462,11 @@ class MyGame extends BaseGame with TapDetector {
   void showReward(int value, Vector2 destination, GameEvent event) {
     Sound.play("coin");
     var r = Reward(value, size.x * 0.5, size.y * 0.6);
-    var start = ScaleEffect(
+    var start = SizeEffect(
         size: Vector2(1, 1), duration: 0.3, curve: Curves.easeOutBack);
     var end = CombinedEffect(effects: [
       MoveEffect(path: [destination], duration: 0.3),
-      ScaleEffect(size: Vector2(0.3, 0.3), duration: 0.3)
+      SizeEffect(size: Vector2(0.3, 0.3), duration: 0.3)
     ]);
     Animate(r, [start, SizeEffect(size: Vector2(1, 1), duration: 0.3), end],
         onComplete: () {
@@ -491,11 +491,11 @@ class MyGame extends BaseGame with TapDetector {
     celebration.anchor = Anchor.center;
     var _size = Vector2(bounds.width, bounds.width * 0.2);
     var start =
-        ScaleEffect(size: _size, duration: 0.3, curve: Curves.easeInExpo);
-    var idle1 = ScaleEffect(
+        SizeEffect(size: _size, duration: 0.3, curve: Curves.easeInExpo);
+    var idle1 = SizeEffect(
         size: _size * 1.05, duration: 0.4, curve: Curves.easeOutExpo);
-    var idle2 = ScaleEffect(size: _size * 1.0, duration: 0.6);
-    var end = ScaleEffect(
+    var idle2 = SizeEffect(size: _size * 1.0, duration: 0.6);
+    var end = SizeEffect(
         size: Vector2(_size.x, 0), duration: 0.2, curve: Curves.easeInBack);
     Animate(celebration, [start, idle1, idle2, end],
         onComplete: () => remove(celebration));
@@ -506,7 +506,7 @@ class MyGame extends BaseGame with TapDetector {
   }
 }
 
-class FallingEffect extends PositionComponent with HasGameRef<MyGame> {
+class FallingEffect extends PositionComponent {
   RRect? _rect;
   Color? _color;
   int _alpha = 0;
@@ -534,7 +534,7 @@ class FallingEffect extends PositionComponent with HasGameRef<MyGame> {
   }
 }
 
-class ColumnHint extends PositionComponent with HasGameRef<MyGame> {
+class ColumnHint extends PositionComponent {
   int appearanceState = 0;
   RRect rect;
   static final Paint _paint = PaletteEntry(Color(0xAAAADDFF)).paint()
