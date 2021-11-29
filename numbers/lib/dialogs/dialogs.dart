@@ -102,11 +102,15 @@ class AbstractDialogState<T extends AbstractDialog> extends State<T> {
 
   Widget bannerAdsFactory() {
     if (!Ads.isReady(AdPlace.Banner)) return SizedBox();
+    var ad = Ads.getBanner();
     return Positioned(
         bottom: 8.d,
+        child: SizedBox(
+            width: ad.size.width.toDouble(),
+            height: ad.size.height.toDouble(),
         child: ClipRRect(
             borderRadius: BorderRadius.all(Radius.circular(16.d)),
-            child: Ads.getBanner()));
+                child: AdWidget(ad: ad))));
   }
 
   Widget rankButtonFactory(ThemeData theme) {

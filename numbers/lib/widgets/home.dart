@@ -1,12 +1,12 @@
 import 'dart:async';
 import 'dart:math';
 
-import 'package:admob_flutter/admob_flutter.dart';
 import 'package:confetti/confetti.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:games_services/games_services.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:numbers/core/cell.dart';
 import 'package:numbers/core/cells.dart';
 import 'package:numbers/core/game.dart';
@@ -199,12 +199,17 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       });
     }
 
-    if (!_animationTime)
+    if (!_animationTime) {
+      var ad = Ads.getBanner(size: AdSize.banner);
       return Positioned(
           bottom: 2.d,
           child: ClipRRect(
               borderRadius: BorderRadius.all(Radius.circular(8.d)),
-              child: Ads.getBanner(size: AdmobBannerSize.BANNER)));
+              child: SizedBox(
+                  width: ad.size.width.toDouble(),
+                  height: ad.size.height.toDouble(),
+                  child: AdWidget(ad: ad))));
+    }
     return Positioned(
         left: 0,
         bottom: 0.d,
