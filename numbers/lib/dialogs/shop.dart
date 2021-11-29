@@ -275,8 +275,8 @@ class _ShopDialogState extends AbstractDialogState<ShopDialog> {
   }
 
   _freeCoin() async {
-    var complete = await Ads.showRewarded();
-    if (complete) {
+    var reward = await Ads.showRewarded();
+    if (reward != null) {
       Pref.coin.increase(100, itemType: "shop", itemId: "ad");
       setState(() {});
     }
