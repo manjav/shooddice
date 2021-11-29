@@ -21,6 +21,7 @@ class Ads {
   static final isSupportUnity = false;
 
   static final AdRequest _request = AdRequest(nonPersonalizedAds: false);
+  static Map<String, BannerAd> _banners = Map();
   static InterstitialAd? _interstitialAd;
   static RewardedAd? _rewardedAd;
   static RewardItem? reward;
@@ -63,18 +64,16 @@ class Ads {
     }
   }
 
-  static BannerAd getBanner({AdSize? size}) {
+  static BannerAd getBanner(String type, {AdSize? size}) {
     var place = AdPlace.Banner;
+    if (_banners.containsKey(type)) return _banners[type]!;
     var _listener = BannerAdListener(
         onAdLoaded: (ad) => _adListener(place, AdState.Loaded, ad),
         onAdFailedToLoad: (ad, error) {
           _adListener(place, AdState.FailedLoad, ad, error);
           ad.dispose();
         },
-        onAdOpened: (ad) => _adListener(place, AdState.Clicked, ad),
-        onAdClosed: (ad) => _adListener(place, AdState.Closed, ad),
-        onAdImpression: (ad) => _adListener(place, AdState.Impression, ad));
-    return BannerAd(
+    return _banners[type] = BannerAd(
         size: size ?? AdSize.largeBanner,
         adUnitId: place.id,
         listener: _listener,

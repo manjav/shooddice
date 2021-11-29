@@ -99,9 +99,9 @@ class AbstractDialogState<T extends AbstractDialog> extends State<T> {
     Navigator.of(context).pop(type);
   }
 
-  Widget bannerAdsFactory() {
+  Widget bannerAdsFactory(String type) {
     if (!Ads.isReady(AdPlace.Banner)) return SizedBox();
-    var ad = Ads.getBanner();
+    var ad = Ads.getBanner(type);
     return Positioned(
         bottom: 8.d,
         child: SizedBox(

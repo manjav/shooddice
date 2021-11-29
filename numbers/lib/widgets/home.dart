@@ -200,7 +200,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     }
 
     if (!_animationTime) {
-      var ad = Ads.getBanner(size: AdSize.banner);
+      var ad = Ads.getBanner("game", size: AdSize.banner);
       return Positioned(
           bottom: 2.d,
           child: ClipRRect(

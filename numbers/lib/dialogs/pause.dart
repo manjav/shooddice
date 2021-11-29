@@ -93,7 +93,7 @@ class _PauseDialogState extends AbstractDialogState<PauseDialog> {
 
     children.add(
         Column(mainAxisAlignment: MainAxisAlignment.center, children: rows));
-    children.add(bannerAdsFactory());
+    children.add(bannerAdsFactory("pause"));
 
     return WillPopScope(
         key: Key(widget.mode.name),

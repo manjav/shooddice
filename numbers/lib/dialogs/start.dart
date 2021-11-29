@@ -40,7 +40,7 @@ class _StartDialogState extends AbstractDialogState<StartDialog> {
     if (Pref.tutorMode.value == 0) return SizedBox();
     var theme = Theme.of(context);
     stepChildren.clear();
-    stepChildren.add(bannerAdsFactory());
+    stepChildren.add(bannerAdsFactory("start"));
     widget.child =
         Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
       Expanded(
