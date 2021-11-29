@@ -134,6 +134,7 @@ class Ads {
       debugPrint("Ads ==> attempt to show ${place.name} before loaded.");
       return;
     }
+    if (!isReady(place)) return;
     var _ad = _ads[place.name] as InterstitialAd;
     _ad.fullScreenContentCallback = FullScreenContentCallback(
         onAdDismissedFullScreenContent: (InterstitialAd ad) {
@@ -292,8 +293,8 @@ extension AdPlaceExt on AdPlace {
   }
 
   int get threshold {
-    if (this == AdPlace.Interstitial || this == AdPlace.InterstitialVideo)
-      return 7;
+    if (this == AdPlace.Interstitial) return 3;
+    if (this == AdPlace.InterstitialVideo) return 7;
     if (this == AdPlace.Banner) return 10;
     return 0;
   }
