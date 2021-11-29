@@ -7,7 +7,6 @@ import 'package:gameanalytics_sdk/gameanalytics.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:numbers/utils/analytic.dart';
 import 'package:numbers/utils/prefs.dart';
-import 'package:unity_ads_plugin/unity_ads.dart';
 
 class Ads {
   static Map<AdPlace, AdState> _placements = Map();
@@ -35,7 +34,7 @@ class Ads {
       _getRewarded();
     }
 
-    if (isSupportUnity) {
+    /* if (isSupportUnity) {
       UnityAds.init(
           gameId: "4230791",
           listener: (UnityAdState state, data) {
@@ -52,12 +51,12 @@ class Ads {
             }
             debugPrint("Ads ==> state: $state, $data");
           });
-    }
+    } 
 
     for (var id in AdPlace.values) {
       var ready = await UnityAds.isReady(placementId: id.name);
       if (ready ?? false) _placements[id] = AdState.Loaded;
-    }
+    }*/
   }
 
   static BannerAd getBanner(String type, {AdSize? size}) {
@@ -119,13 +118,14 @@ class Ads {
         }));
   }
 
-  static bool isReady([AdPlace? id]) {
-    var _id = id ?? AdPlace.Rewarded;
-    if (_id != AdPlace.Rewarded) {
-      if (Pref.playCount.value < _id.threshold) return false;
+  static bool isReady([AdPlace? place]) {
+    var _place = place ?? AdPlace.Rewarded;
+    if (_place != AdPlace.Rewarded) {
+      if (Pref.playCount.value < _place.threshold) return false;
       if (Pref.noAds.value > 0) return false;
     }
-    return _placements.containsKey(_id) && _placements[_id] == AdState.Loaded;
+    return _placements.containsKey(_place) &&
+        _placements[_place] == AdState.Loaded;
   }
 
   static showInterstitial(AdPlace place) async {
@@ -199,19 +199,19 @@ class Ads {
     const d = Duration(milliseconds: 500);
     while (_lastAdState == UnityAdState.started) await Future.delayed(d);
     return _lastAdState == UnityAdState.complete;
-  } */
+  } 
 
   static AdPlace _getPlacement(String id) {
     if (id.contains("Banner")) return AdPlace.Banner;
     if (id.contains("Interstitial")) return AdPlace.Interstitial;
+    if (id.contains("InterstitialVideo")) return AdPlace.InterstitialVideo;
     return AdPlace.Rewarded;
-  }
+  }*/
 
   static void _updateState(AdPlace place, AdState state,
       [Ad? ad, AdError? error]) {
     _placements[place] = state;
     onUpdate?.call(place, state);
-    print("Ads ==> ${state.order}");
     if (state.order > 0)
       Analytics.ad(state.order, place.type, place.name, "admob");
     debugPrint("Ads ==> $place ${state.toString()} ${error ?? ''}");
@@ -249,7 +249,7 @@ extension AdExt on AdState {
   }
 }
 
-enum AdPlace { Rewarded, Interstitial, Banner }
+enum AdPlace { Rewarded, Interstitial, InterstitialVideo, Banner }
 
 extension AdPlaceExt on AdPlace {
   String get name {
@@ -258,6 +258,8 @@ extension AdPlaceExt on AdPlace {
         return "Banner_${Ads.platform}";
       case AdPlace.Interstitial:
         return "Interstitial_${Ads.platform}";
+      case AdPlace.InterstitialVideo:
+        return "InterstitialVideo_${Ads.platform}";
       case AdPlace.Rewarded:
         return "Rewarded_${Ads.platform}";
     }
@@ -268,6 +270,8 @@ extension AdPlaceExt on AdPlace {
       case AdPlace.Banner:
         return "${Ads.prefix}9761457956";
       case AdPlace.Interstitial:
+        return "${Ads.prefix}6937186747";
+      case AdPlace.InterstitialVideo:
         return "${Ads.prefix}4317559580";
       case AdPlace.Rewarded:
         return "${Ads.prefix}2812906224";
@@ -279,6 +283,8 @@ extension AdPlaceExt on AdPlace {
       case AdPlace.Rewarded:
         return GAAdType.RewardedVideo;
       case AdPlace.Interstitial:
+        return GAAdType.OfferWall;
+      case AdPlace.InterstitialVideo:
         return GAAdType.Interstitial;
       case AdPlace.Banner:
         return GAAdType.Banner;
@@ -286,7 +292,8 @@ extension AdPlaceExt on AdPlace {
   }
 
   int get threshold {
-    if (this == AdPlace.Interstitial) return 7;
+    if (this == AdPlace.Interstitial || this == AdPlace.InterstitialVideo)
+      return 7;
     if (this == AdPlace.Banner) return 10;
     return 0;
   }
