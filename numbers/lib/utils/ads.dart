@@ -226,6 +226,12 @@ class Ads {
     while (_placements[adPlace] != AdState.Closed) await Future.delayed(d);
   }
 
+  static void pausedApp() {
+    _placements.forEach((key, value) {
+      if (key != AdPlace.Banner &&
+          (value == AdState.Show || value == AdState.RewardReceived))
+        _updateState(key, AdState.Clicked);
+    });
   }
 }
 
@@ -285,7 +291,7 @@ extension AdPlaceExt on AdPlace {
 
   int get threshold {
     if (this == AdPlace.Interstitial) return 7;
-    // if (this == AdPlace.Banner) return 10;
+    if (this == AdPlace.Banner) return 10;
     return 0;
   }
 }
