@@ -119,7 +119,13 @@ class Cell extends PositionComponent {
             fontSize:
                 radius * scales[getScore(value).toString().length.clamp(0, 5)],
             fontFamily: 'quicksand',
-            color: hiddenMode > 1 ? colors[value].color : Colors.white));
+            color: hiddenMode > 1 ? colors[value].color : Colors.white,
+            shadows: [
+          BoxShadow(
+              color: Colors.black.withAlpha(150),
+              blurRadius: 3,
+              offset: Offset(0, radius * 0.05))
+        ]));
 
     if (hiddenMode > 0)
       _hiddenPaint = Paint()
