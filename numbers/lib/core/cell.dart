@@ -114,18 +114,21 @@ class Cell extends PositionComponent {
 
     _sidePaint = colors[value].withAlpha(180).paint();
     _overPaint = colors[value].paint();
+
+    var shadows = <Shadow>[];
+    if (hiddenMode == 0) {
+      shadows.add(BoxShadow(
+          color: Colors.black.withAlpha(150),
+          blurRadius: 3,
+          offset: Offset(0, radius * 0.05)));
+    }
     _textPaint = TextPaint(
         style: TextStyle(
             fontSize:
                 radius * scales[getScore(value).toString().length.clamp(0, 5)],
             fontFamily: 'quicksand',
             color: hiddenMode > 1 ? colors[value].color : Colors.white,
-            shadows: [
-          BoxShadow(
-              color: Colors.black.withAlpha(150),
-              blurRadius: 3,
-              offset: Offset(0, radius * 0.05))
-        ]));
+            shadows: shadows));
 
     if (hiddenMode > 0)
       _hiddenPaint = Paint()
