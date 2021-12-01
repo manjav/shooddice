@@ -59,7 +59,7 @@ class _StartDialogState extends AbstractDialogState<StartDialog> {
               cornerRadius: 16.d,
               content:
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                SVG.icon("4", theme),
+                SVG.icon("E", theme),
                 SizedBox(width: 12.d),
                 Text(_startButtonLabel,
                     style: theme.textTheme.headline5,

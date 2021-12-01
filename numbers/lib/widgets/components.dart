@@ -119,7 +119,7 @@ class Components {
                       isEnable: !_has(boost) && Ads.isReady(),
                       colors: TColors.orange.value,
                       content: Row(children: [
-                        SVG.icon("0", theme, scale: 0.7),
+                        SVG.icon("A", theme, scale: 0.7),
                         Expanded(
                             child: Text("free_l".l(),
                                 textAlign: TextAlign.center,

@@ -49,7 +49,7 @@ class _ConfirmDialogState extends AbstractDialogState<ConfirmDialog> {
               content: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    SVG.icon("5", theme),
+                    SVG.icon("F", theme),
                     Text("Replay", style: theme.textTheme.headline5)
                   ]))),
       Positioned(
@@ -64,7 +64,7 @@ class _ConfirmDialogState extends AbstractDialogState<ConfirmDialog> {
               content: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    SVG.icon("4", theme),
+                    SVG.icon("E", theme),
                     Text("ok_l".l(), style: theme.textTheme.headline5)
                   ]))),
       Center(child: Components.confetty(widget.confettiController))

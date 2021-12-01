@@ -82,7 +82,7 @@ class _BigBlockDialogState extends AbstractDialogState<BigBlockDialog> {
           errorMessage: Toast("ads_unavailable".l(), monoIcon: "0"),
           onTap: () => buttonsClick(context, "big", reward * rewardCoef, true),
           content: Stack(alignment: Alignment.centerLeft, children: [
-            SVG.icon("0", theme),
+            SVG.icon("A", theme),
             Positioned(
                 top: 5.d,
                 left: 44.d,

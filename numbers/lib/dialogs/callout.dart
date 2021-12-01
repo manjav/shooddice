@@ -92,7 +92,7 @@ class _CalloutState extends AbstractDialogState<Callout> {
                                   errorMessage: Toast("ads_unavailable".l(),
                                       monoIcon: "0"),
                                   content: Row(children: [
-                                    SVG.icon("0", theme, scale: 0.7),
+                                    SVG.icon("A", theme, scale: 0.7),
                                     Expanded(
                                         child: Text("free_l".l(),
                                             textAlign: TextAlign.center,

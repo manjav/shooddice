@@ -78,7 +78,7 @@ class _ReviveDialogState extends AbstractDialogState<ReviveDialog> {
             onTap: () => buttonsClick(context, "revive", 0, true),
             colors: TColors.orange.value,
             content: Stack(alignment: Alignment.centerLeft, children: [
-              SVG.icon("0", theme),
+              SVG.icon("A", theme),
               Positioned(
                   top: 5.d,
                   left: 40.d,

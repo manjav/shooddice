@@ -74,7 +74,7 @@ class _StatsDialogState extends AbstractDialogState<StatsDialog> {
                   content: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        SVG.icon("8", theme),
+                        SVG.icon("I", theme),
                         Text("share_l".l(), style: theme.textTheme.headline5)
                       ]))
         ]));

@@ -164,7 +164,7 @@ class _ShopDialogState extends AbstractDialogState<ShopDialog> {
                               Toast("ads_unavailable".l(), monoIcon: "0"),
                           onTap: _freeCoin,
                           content: Row(children: [
-                            SVG.icon("0", theme),
+                            SVG.icon("A", theme),
                             SizedBox(width: 8.d),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -189,7 +189,7 @@ class _ShopDialogState extends AbstractDialogState<ShopDialog> {
                           colors: TColors.green.value,
                           cornerRadius: 16.d,
                           content: Row(children: [
-                            SVG.icon("5", theme),
+                            SVG.icon("F", theme),
                             SizedBox(width: 12.d),
                             Text("shop_restore".l(),
                                 overflow: TextOverflow.ellipsis,

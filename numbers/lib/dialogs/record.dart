@@ -80,7 +80,7 @@ class _RecordDialogState extends AbstractDialogState<RecordDialog> {
           onTap: () =>
               buttonsClick(context, "record", rewardCoef * reward, true),
           content: Stack(alignment: Alignment.centerLeft, children: [
-            SVG.icon("0", theme),
+            SVG.icon("A", theme),
             Positioned(
                 top: 5.d,
                 left: 44.d,

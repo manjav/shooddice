@@ -67,7 +67,7 @@ class _FreeCoinsDialogState extends AbstractDialogState<FreeCoinsDialog> {
           },
           content:
               Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-            SVG.icon("0", theme),
+            SVG.icon("A", theme),
             Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
