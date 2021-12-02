@@ -39,8 +39,8 @@ class MyGame extends FlameGame with TapDetector {
   static int boostNextMode = 0;
   static bool boostBig = false;
   static bool isPlaying = false;
+  static Rect bounds = Rect.fromLTRB(0, 0, 0, 0);
 
-  Rect bounds = Rect.fromLTRB(0, 0, 0, 0);
   Function(GameEvent, int)? onGameEvent;
   int numRevives = 0;
   String? removingMode;
@@ -66,9 +66,8 @@ class MyGame extends FlameGame with TapDetector {
   FallingEffect? _fallingEffect;
   ColumnHint? _columnHint;
 
-  MyGame({bounds, onGameEvent}) : super() {
+  MyGame({onGameEvent}) : super() {
     Prefs.score = 0;
-    this.bounds = bounds;
     this.onGameEvent = onGameEvent;
   }
 
@@ -123,7 +122,7 @@ class MyGame extends FlameGame with TapDetector {
     _nextCell.init(Cell.getNextColumn(_fallingsCount), 0,
         Cell.getNextValue(_fallingsCount),
         hiddenMode: boostNextMode + 1);
-    _nextCell.x = _nextCell.column * Cell.diameter + Cell.radius + bounds.left;
+    _nextCell.x = Cell.getX(_nextCell.column);
     _nextCell.y = bounds.top + Cell.radius;
     add(_nextCell);
 
@@ -156,8 +155,8 @@ class MyGame extends FlameGame with TapDetector {
     while (_cells.getMatchs(column, row, value).length > 0)
       value = Cell.getNextValue(0);
     var cell = Cell(column, row, value);
-    cell.x = bounds.left + column * Cell.diameter + Cell.radius;
-    cell.y = bounds.top + Cell.diameter * (Cells.height - row) + Cell.radius;
+    cell.x = Cell.getX(column);
+    cell.y = Cell.getY(row);
     cell.state = CellState.Fixed;
     _cells.map[column][row] = cell;
     add(cell);
@@ -197,7 +196,7 @@ class MyGame extends FlameGame with TapDetector {
     if (_reward > 0) _numRewardCells++;
     var cell = Cell(_nextCell.column, row, _nextCell.value, reward: _reward);
     _reward = 0;
-    cell.x = bounds.left + cell.column * Cell.diameter + Cell.radius;
+    cell.x = Cell.getX(cell.column);
     cell.y = _nextCell.y + Cell.diameter - 20;
     _cells.map[cell.column][row] = _cells.last = cell;
     _cells.target =
@@ -220,8 +219,7 @@ class MyGame extends FlameGame with TapDetector {
     if (_tutorMode && _cells.last!.y > bounds.top + Cell.diameter * 1.54) {
       isPlaying = false;
       var c = Cell.getNextColumn(_fallingsCount);
-      _columnHint!.show(
-          bounds.left + c * Cell.diameter + Cell.radius, c - _nextCell.column);
+      _columnHint!.show(Cell.getX(c), c - _nextCell.column);
     }
 
     // Check reach to target
@@ -277,12 +275,12 @@ class MyGame extends FlameGame with TapDetector {
       }
       var row = _cells.length(col);
       if (_cells.last! == _cells.get(col, row - 1)) --row;
-      var _y = bounds.top + Cell.diameter * (Cells.height - row) + Cell.radius;
+      var _y = Cell.getY(row);
       if (_cells.last!.y > _y) {
         debugPrint("col:$col  ${_cells.last!.y}  >>> $_y");
         return;
       }
-      var _x = bounds.left + col * Cell.diameter + Cell.radius;
+      var _x = Cell.getX(col);
       // Change column
       if (_nextCell.column != col) {
         _nextCell.column = col;
@@ -315,8 +313,7 @@ class MyGame extends FlameGame with TapDetector {
     var time = 0.1;
     _cells.loop((i, j, c) {
       c.state = CellState.Falling;
-      var dy =
-          bounds.top + Cell.diameter * (Cells.height - c.row) + Cell.radius;
+      var dy = Cell.getY(c.row);
       var coef = ((dy - c.y) / (Cell.diameter * Cells.height)) * 0.2;
       var hasDistance = dy - c.y > 0;
       var s1 = CombinedEffect(effects: [

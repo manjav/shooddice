@@ -72,14 +72,14 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             body: Stack(alignment: Alignment.bottomCenter, children: [
           _game == null ? SizedBox() : _gameWidget!,
           Positioned(
-              top: _game!.bounds.top - 69.d,
-              left: _game!.bounds.left,
-              right: _game!.bounds.left,
+              top: MyGame.bounds.top - 69.d,
+              left: MyGame.bounds.left,
+              right: MyGame.bounds.left,
               child: _getHeader(theme)),
           Positioned(
-              top: _game!.bounds.bottom + 10.d,
-              left: _game!.bounds.left - 22.d,
-              right: _game!.bounds.left,
+              top: MyGame.bounds.bottom + 10.d,
+              left: MyGame.bounds.left - 22.d,
+              right: MyGame.bounds.left,
               child: _getFooter(theme)),
           _underFooter(),
           Center(child: Components.confetty(_confettiController!))
@@ -344,7 +344,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       case GameEvent.reward:
         _game!.showReward(
             value,
-            Vector2(_game!.bounds.center.dx, _game!.bounds.bottom + 8.d),
+            Vector2(MyGame.bounds.center.dx, MyGame.bounds.bottom + 8.d),
             GameEvent.rewarded);
         return;
       case GameEvent.rewarded:
@@ -425,7 +425,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         MyGame.isPlaying = true;
         _game!.showReward(
             PiggyDialog.capacity,
-            Vector2(_game!.bounds.top, Device.size.width * 0.5),
+            Vector2(MyGame.bounds.top, Device.size.width * 0.5),
             GameEvent.openPiggy);
       }
       MyGame.isPlaying = true;
@@ -438,11 +438,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       return;
     }
     EdgeInsets padding = EdgeInsets.only(
-        right: _game!.bounds.left, top: _game!.bounds.bottom - 78.d);
+        right: MyGame.bounds.left, top: MyGame.bounds.bottom - 78.d);
     if (type == "next")
       padding = EdgeInsets.only(
           left: (Device.size.width - Callout.chromeWidth) * 0.5,
-          top: _game!.bounds.top + 68.d);
+          top: MyGame.bounds.top + 68.d);
     var result = await Rout.push(
         context, Callout("clt_${type}_text".l(), type, padding: padding),
         barrierColor: Colors.transparent, barrierDismissible: true);
@@ -465,9 +465,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     var bottom = 180.d;
     Cell.updateSizes((Device.size.height - top - bottom) / (Cells.height + 1));
     var padding = (Device.size.width - (Cells.width * Cell.diameter)) * 0.5;
-    var bounds = Rect.fromLTRB(
+    MyGame.bounds = Rect.fromLTRB(
         padding, top, Device.size.width - padding, Device.size.height - bottom);
-    _game = MyGame(bounds: bounds, onGameEvent: _onGameEventHandler);
+    _game = MyGame(onGameEvent: _onGameEventHandler);
     _gameWidget = GameWidget(game: _game!);
   }
 
@@ -478,7 +478,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       MyGame.isPlaying = true;
       _game!.showReward(
           FreeCoinsDialog.reward,
-          Vector2(_game!.bounds.top, Device.size.width * 0.5),
+          Vector2(MyGame.bounds.top, Device.size.width * 0.5),
           GameEvent.freeCoins);
     }
     MyGame.isPlaying = true;
