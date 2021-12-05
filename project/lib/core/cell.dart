@@ -16,8 +16,6 @@ enum CellState { init, float, falling, fell, fixed }
 class Cell extends PositionComponent {
   static double diameter = 64.0;
   static double padding = 1.8;
-  static double minSpeed = 0.01;
-  static double maxSpeed = 0.8;
   static double roundness = 7.0;
   static double thickness = 4.6;
   static int lastRandomValue = 9;
@@ -183,8 +181,6 @@ class Cell extends PositionComponent {
 
   static void updateSizes(double _diameter) {
     diameter = _diameter;
-    minSpeed = _diameter * 0.01;
-    maxSpeed = _diameter * 0.8;
     padding = _diameter * 0.04;
     roundness = _diameter * 0.15;
     thickness = _diameter * 0.1;
