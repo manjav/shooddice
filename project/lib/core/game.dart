@@ -105,9 +105,9 @@ class MyGame extends FlameGame with TapDetector {
         bounds.right + 4, bounds.bottom + 4, 16, 16);
     _lineRect = RRect.fromLTRBXY(
         bounds.left + 2,
-        bounds.top + Cell.diameter - 4,
+        bounds.bottom - Cell.diameter - 4,
         bounds.right - 2,
-        bounds.top + Cell.diameter,
+        bounds.bottom - Cell.diameter,
         4,
         4);
     _rects = List.generate(
@@ -125,7 +125,7 @@ class MyGame extends FlameGame with TapDetector {
         Cell.getNextValue(_fallingsCount),
         hiddenMode: boostNextMode + 1);
     _nextCell.x = Cell.getX(_nextCell.column);
-    _nextCell.y = bounds.top + Cell.radius;
+    _nextCell.y = bounds.bottom - Cell.radius;
     add(_nextCell);
 
     if (_tutorMode) {
@@ -217,7 +217,7 @@ class MyGame extends FlameGame with TapDetector {
     var cell = Cell(_nextCell.column, row, _nextCell.value, reward: _reward);
     _reward = 0;
     cell.x = Cell.getX(cell.column);
-    cell.y = _nextCell.y + Cell.diameter - 20;
+    cell.y = _nextCell.y;
     _cells.map[cell.column][row] = _cells.last = cell;
     _cells.target =
         bounds.top + Cell.diameter * (Cells.height - row) + Cell.radius;
@@ -288,7 +288,7 @@ class MyGame extends FlameGame with TapDetector {
       var row = _cells.length(col);
       if (_cells.last! == _cells.get(col, row - 1)) --row;
       var _y = Cell.getY(row);
-      if (_cells.last!.y > _y) {
+      if (_cells.last!.y < _y) {
         debugPrint("col:$col  ${_cells.last!.y}  >>> $_y");
         return;
       }
@@ -307,13 +307,8 @@ class MyGame extends FlameGame with TapDetector {
       Sound.play("fall");
       ++_fallingsCount;
       _fallingEffect!.tint(
-          RRect.fromLTRBXY(
-              _x - Cell.radius,
-              _cells.last!.y + Cell.diameter,
-              _x + Cell.radius,
-              bounds.bottom - row * Cell.diameter,
-              Cell.roundness,
-              Cell.roundness),
+          RRect.fromLTRBXY(_x - Cell.radius, _y - Cell.radius, _x + Cell.radius,
+              bounds.bottom, Cell.roundness, Cell.roundness),
           Cell.colors[_cells.last!.value].color);
     }
     _fallAll();
@@ -526,8 +521,8 @@ class FallingEffect extends PositionComponent {
     return Paint()
       ..shader =
           ui.Gradient.linear(Offset(0, _rect!.top), Offset(0, _rect!.bottom), [
-        _color!.withAlpha(0),
         _color!.withAlpha(_alpha),
+        _color!.withAlpha(0),
       ]);
   }
 }
