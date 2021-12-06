@@ -53,6 +53,7 @@ class MyGame extends FlameGame with TapDetector {
   int _valueRecord = 0;
   int _fallingsCount = 0;
   int _lastFallingColumn = 0;
+  double _speed = Cell.minSpeed;
   Cell _nextCell = Cell(0, 0, 0);
   Cells _cells = Cells();
 
@@ -206,6 +207,7 @@ class MyGame extends FlameGame with TapDetector {
       _nextCell.init(_nextCell.column, 0, Cell.getNextValue(seed),
           hiddenMode: boostNextMode + 1);
     }
+    _speed = Cell.minSpeed;
   }
 
   void update(double dt) {
@@ -219,6 +221,16 @@ class MyGame extends FlameGame with TapDetector {
       var c = Cell.getNextColumn(_fallingsCount);
       _columnHint!.show(Cell.getX(c), c - _nextCell.column);
     }
+
+    // Check reach to target
+    if (_cells.last!.y < _cells.target!) {
+      _speed = (_speed + 0.01).clamp(Cell.minSpeed, Cell.maxSpeed);
+      _cells.last!.y += _speed;
+      return;
+    }
+
+    // Change cell state
+    _fallAll();
   }
 
   void onTapDown(TapDownInfo info) {
