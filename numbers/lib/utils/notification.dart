@@ -37,12 +37,22 @@ class Notifier {
     for (var l in locations)
       if (l.currentTimeZone.offset == tzo) tz.setLocalLocation(l);
 
+    // Sleep message
+    var sleep = tz.TZDateTime.from(
+        DateTime(now.year, now.month, now.day, 23), tz.local);
+
+    // Weekend message
+    var date = DateTime(now.year, now.month, now.day, 10);
+    while (date.weekday != 6) date = date.add(Duration(days: 1));
+    var weekend = tz.TZDateTime.from(date, tz.local);
+
     // Message map
     var messages = {
       record ? "record" : "default1": _getTime(24 * 3600),
       "default2": _getTime(72 * 3600),
       "default3": _getTime(168 * 3600),
-    tz.setLocalLocation(tz.getLocation("Asia/Tehran"));
+      "sleep": sleep,
+      "weekend": weekend
     };
 
     // Schedule
