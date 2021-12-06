@@ -60,7 +60,7 @@ class _FreeCoinsDialogState extends AbstractDialogState<FreeCoinsDialog> {
           padding: EdgeInsets.fromLTRB(8.d, 0, 8.d, 8.d),
           isEnable: Ads.isReady(),
           colors: TColors.orange.value,
-          errorMessage: Toast("ads_unavailable".l(), monoIcon: "0"),
+          errorMessage: Toast("ads_unavailable".l(), monoIcon: "A"),
           onTap: () {
             FreeCoinsDialog.autoAppearance = 0;
             buttonsClick(context, "freecoins", 0, true);

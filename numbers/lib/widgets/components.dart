@@ -115,7 +115,7 @@ class Components {
                   height: 39.d,
                   child: BumpedButton(
                       cornerRadius: 8.d,
-                      errorMessage: Toast("ads_unavailable".l(), monoIcon: "0"),
+                      errorMessage: Toast("ads_unavailable".l(), monoIcon: "A"),
                       isEnable: !_has(boost) && Ads.isReady(),
                       colors: TColors.orange.value,
                       content: Row(children: [

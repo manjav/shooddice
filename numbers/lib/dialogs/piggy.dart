@@ -63,7 +63,7 @@ class _PiggyDialogState extends AbstractDialogState<PiggyDialog> {
           padding: EdgeInsets.fromLTRB(8.d, 0, 8.d, 8.d),
           isEnable: rewardAvailble && Ads.isReady(),
           colors: TColors.orange.value,
-          errorMessage: Toast("ads_unavailable".l(), monoIcon: "0"),
+          errorMessage: Toast("ads_unavailable".l(), monoIcon: "A"),
           onTap: () {
             PiggyDialog.autoAppearance = 0;
             buttonsClick(context, "piggy", 0, true);

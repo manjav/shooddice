@@ -161,7 +161,7 @@ class _ShopDialogState extends AbstractDialogState<ShopDialog> {
                           isEnable: Ads.isReady(),
                           colors: TColors.orange.value,
                           errorMessage:
-                              Toast("ads_unavailable".l(), monoIcon: "0"),
+                              Toast("ads_unavailable".l(), monoIcon: "A"),
                           onTap: _freeCoin,
                           content: Row(children: [
                             SVG.icon("A", theme),
