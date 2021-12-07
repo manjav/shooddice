@@ -13,7 +13,7 @@ class Prefs {
         Pref.coin.set(500, itemType: "game", itemId: "initial");
         Pref.removeOne.set(3);
         Pref.removeColor.set(3);
-        Pref.rateTarget.set(5);
+        Pref.rateTarget.set(2);
       }
       Pref.coinPiggy.set(0);
       Pref.visitCount.increase(1);

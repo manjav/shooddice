@@ -72,8 +72,7 @@ class _StartDialogState extends AbstractDialogState<StartDialog> {
   _onStart() async {
     _startButtonLabel = "wait_l".l();
     _onUpdate();
-    var shown = await RatingDialog.showRating(context);
-    if (!shown && Pref.playCount.value > AdPlace.Interstitial.threshold)
+    if (Pref.playCount.value > AdPlace.Interstitial.threshold)
       await Ads.showInterstitial(AdPlace.InterstitialVideo);
     await Rout.push(context, HomePage());
     Cell.maxRandomValue = 4;
@@ -81,6 +80,7 @@ class _StartDialogState extends AbstractDialogState<StartDialog> {
     MyGame.boostBig = false;
     _startButtonLabel = "start_l".l();
     _onUpdate();
+    await RatingDialog.showRating(context);
   }
 
   _onUpdate() => setState(() {});
