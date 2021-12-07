@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:confetti/confetti.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:numbers/core/game.dart';
 import 'package:numbers/dialogs/toast.dart';

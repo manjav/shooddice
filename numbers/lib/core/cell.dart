@@ -1,14 +1,10 @@
 import 'dart:math';
-import 'dart:ui';
 
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
-import 'package:flame/game.dart';
 import 'package:flame/palette.dart';
 import 'package:flame_svg/svg.dart';
-import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
 import 'package:numbers/core/cells.dart';
 import 'package:numbers/core/game.dart';
 import 'package:numbers/utils/prefs.dart';

@@ -4,7 +4,6 @@ import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:games_services/games_services.dart';
 import 'package:numbers/dialogs/quit.dart';
 import 'package:numbers/utils/ads.dart';

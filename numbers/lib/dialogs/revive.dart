@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:numbers/utils/ads.dart';
 import 'package:numbers/utils/localization.dart';
