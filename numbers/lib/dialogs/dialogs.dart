@@ -12,7 +12,6 @@ import 'package:numbers/widgets/components.dart';
 
 // ignore: must_be_immutable
 class AbstractDialog extends StatefulWidget {
-  static bool showSuicideInterstitial = false;
   DialogMode mode;
   String? sfx;
   String? title;
@@ -94,7 +93,7 @@ class AbstractDialogState<T extends AbstractDialog> extends State<T> {
     if (showAd) {
       var reward = await Ads.showRewarded();
       if (reward == null) return;
-    } else if (coin > 0 && AbstractDialog.showSuicideInterstitial) {
+    } else if (coin > 0 && Ads.showSuicideInterstitial) {
       await Ads.showInterstitial(AdPlace.Interstitial);
     }
     if (coin != 0) Pref.coin.increase(coin, itemType: "confirm", itemId: type);
