@@ -1,6 +1,5 @@
 import 'package:device_info/device_info.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -33,14 +32,16 @@ class MyApp extends StatefulWidget {
 }
 
 class AppState extends State<MyApp> {
+  static FirebaseAnalytics analytics = FirebaseAnalytics.instance;
+  static FirebaseAnalyticsObserver observer =
+      FirebaseAnalyticsObserver(analytics: analytics);
   ThemeData _themeData = Themes.darkData;
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations(
         [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
-    var analytics = FirebaseAnalytics();
     return MaterialApp(
-        navigatorObservers: [FirebaseAnalyticsObserver(analytics: analytics)],
+        navigatorObservers: <NavigatorObserver>[observer],
         theme: _themeData,
         builder: (BuildContext context, Widget? child) => MediaQuery(
             data: MediaQuery.of(context).copyWith(textScaleFactor: 1),
