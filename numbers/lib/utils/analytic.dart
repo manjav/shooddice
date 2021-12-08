@@ -134,8 +134,10 @@ class Analytics {
       {Map<String, dynamic>? parameters}) async {
     _firebaseAnalytics.logEvent(name: name, parameters: parameters);
 
-    var value = parameters == null ? "" : parameters.values.first;
-    GameAnalytics.addDesignEvent({"eventId": name, "value": value});
+    var data = parameters == null
+        ? {"eventId": name}
+        : {"eventId": name, "value": parameters.values.first};
+    GameAnalytics.addDesignEvent(data);
   }
 
   static Future<void> share(String contentType, String itemId) async {
