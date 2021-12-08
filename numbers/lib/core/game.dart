@@ -284,10 +284,8 @@ class MyGame extends FlameGame with TapDetector {
       // Change column
       if (_nextCell.column != col) {
         _nextCell.column = col;
-        _nextCell.add(MoveEffect(
-            duration: 0.3,
-            path: [Vector2(_x, _nextCell.y)],
-            curve: Curves.easeInOutQuad));
+        _nextCell.add(MoveEffect.to(Vector2(_x, _nextCell.y),
+            EffectController(duration: 0.3, curve: Curves.easeInOutQuad)));
 
         _cells.translate(_cells.last!, col, row);
         _cells.last!.x = _x;
@@ -314,19 +312,19 @@ class MyGame extends FlameGame with TapDetector {
     _cells.loop((i, j, c) {
       c.state = CellState.Falling;
       var dy = Cell.getY(c.row);
-      var coef = ((dy - c.y) / (Cell.diameter * Cells.height)) * 0.2;
+      var coef = ((dy - c.y) / (Cell.diameter * Cells.height)) * 0.4;
       var hasDistance = dy - c.y > 0;
-      var s1 = CombinedEffect(effects: [
-        MoveEffect(
-            path: [Vector2(c.x, dy + Cell.radius * coef)], duration: time),
-        SizeEffect(size: Vector2(1, 1 - coef), duration: time)
-      ]);
-      var s2 = CombinedEffect(effects: [
-        MoveEffect(path: [Vector2(c.x, dy)], duration: time),
-        SizeEffect(size: Vector2(1, 1), duration: time)
-      ]);
-      Animate(c, [s1, s2],
-          onComplete: () => fallingComplete(c, dy, hasDistance));
+
+      var c1 = EffectController(duration: time);
+      c.add(MoveEffect.to(Vector2(c.x, dy + Cell.radius * coef), c1));
+      c.add(SizeEffect.to(Vector2(1, 1 - coef), c1));
+
+      var c2 = DelayedEffectController(EffectController(duration: time * 2),
+          delay: time);
+      c.add(MoveEffect.to(Vector2(c.x, dy), c2));
+      c.add(SizeEffect.to(Vector2(1, 1), c2));
+
+      Animate.checkCompletion(c2, () => fallingComplete(c, dy, hasDistance));
     }, state: CellState.Float, startFrom: _lastFallingColumn);
   }
 
@@ -379,8 +377,9 @@ class MyGame extends FlameGame with TapDetector {
       for (var m in matchs) {
         _cells.accumulateColumn(m.column, m.row);
         _collectReward(m);
-        m.add(MoveEffect(
-            duration: 0.1, path: [c.position], onComplete: () => remove(m)));
+        var controller = EffectController(duration: 0.1);
+        m.add(MoveEffect.to(c.position, controller));
+        Animate.checkCompletion(controller, () => remove(m));
       }
 
       if (matchs.length > 0) {
@@ -459,14 +458,13 @@ class MyGame extends FlameGame with TapDetector {
   void showReward(int value, Vector2 destination, GameEvent event) {
     Sound.play("coin");
     var r = Reward(value, size.x * 0.5, size.y * 0.6);
-    var start = SizeEffect(
-        size: Vector2(1, 1), duration: 0.3, curve: Curves.easeOutBack);
-    var end = CombinedEffect(effects: [
-      MoveEffect(path: [destination], duration: 0.3),
-      SizeEffect(size: Vector2(0.3, 0.3), duration: 0.3)
-    ]);
-    Animate(r, [start, SizeEffect(size: Vector2(1, 1), duration: 0.3), end],
-        onComplete: () {
+    var start = EffectController(duration: 0.3, curve: Curves.easeOutBack);
+    r.add(SizeEffect.to(Vector2(1, 1), start));
+    var end = EffectController(duration: 0.3, curve: Curves.easeInExpo);
+    var delay = DelayedEffectController(end, delay: 1);
+    r.add(MoveEffect.to(destination, delay));
+    r.add(SizeEffect.to(Vector2(0.3, 0.3), delay));
+    Animate.checkCompletion(delay, () {
           remove(r);
           onGameEvent?.call(event, value);
     });
@@ -487,13 +485,13 @@ class MyGame extends FlameGame with TapDetector {
         sprite: sprite);
     celebration.anchor = Anchor.center;
     var _size = Vector2(bounds.width, bounds.width * 0.2);
-    var start =
-        SizeEffect(size: _size, duration: 0.3, curve: Curves.easeInExpo);
-    var idle1 = SizeEffect(
-        size: _size * 1.05, duration: 0.4, curve: Curves.easeOutExpo);
-    var idle2 = SizeEffect(size: _size * 1.0, duration: 0.6);
-    var end = SizeEffect(
-        size: Vector2(_size.x, 0), duration: 0.2, curve: Curves.easeInBack);
+    var start = SizeEffect.to(
+        _size, EffectController(duration: 0.3, curve: Curves.easeInExpo));
+    var idle1 = SizeEffect.to(_size * 1.05,
+        EffectController(duration: 0.4, curve: Curves.easeOutExpo));
+    var idle2 = SizeEffect.to(_size * 1.0, EffectController(duration: 0.6));
+    var end = SizeEffect.to(Vector2(_size.x, 0),
+        EffectController(duration: 0.2, curve: Curves.easeInBack));
     Animate(celebration, [start, idle1, idle2, end],
         onComplete: () => remove(celebration));
     add(celebration);

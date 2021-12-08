@@ -5,6 +5,7 @@ import 'package:flame/effects.dart';
 import 'package:flame/palette.dart';
 import 'package:flame_svg/svg.dart';
 import 'package:flutter/material.dart';
+import 'package:numbers/animations/animate.dart';
 import 'package:numbers/core/cells.dart';
 import 'package:numbers/core/game.dart';
 import 'package:numbers/utils/prefs.dart';
@@ -137,11 +138,10 @@ class Cell extends PositionComponent {
     if (reward > 0) _coin = await Svg.load('images/coin.svg');
 
     size = Vector2(1.3, 1.3);
-    add(SizeEffect(
-        size: Vector2(1, 1),
-        duration: matched ? 0.2 : 0.3,
-        curve: Curves.easeOutBack,
-        onComplete: _animationComplete));
+    var controller = EffectController(
+        duration: matched ? 0.2 : 0.3, curve: Curves.easeOutBack);
+    add(SizeEffect.to(Vector2(1, 1), controller));
+    Animate.checkCompletion(controller, _animationComplete);
     return this;
   }
 
@@ -153,11 +153,10 @@ class Cell extends PositionComponent {
   }
 
   void delete(Function(Cell)? onDelete) {
-    add(SizeEffect(
-        size: Vector2(0, 0),
-        duration: MyGame.random.nextDouble() * 0.8,
-        curve: Curves.easeInBack,
-        onComplete: () => onDelete?.call(this)));
+    var controller = EffectController(
+        duration: MyGame.random.nextDouble() * 0.8, curve: Curves.easeInBack);
+    add(SizeEffect.to(Vector2.zero(), controller));
+    Animate.checkCompletion(controller, () => onDelete?.call(this));
   }
 
   @override
