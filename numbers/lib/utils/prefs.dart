@@ -104,6 +104,7 @@ extension PrefExt on Pref {
 
   int increase(int value,
       {bool backup = true, String? itemType, String? itemId}) {
+    if (value == 0) return 0;
     return set(this.value + value,
         backup: backup, itemType: itemType, itemId: itemId);
   }
