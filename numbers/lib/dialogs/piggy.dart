@@ -14,7 +14,7 @@ import 'toast.dart';
 
 // ignore: must_be_immutable
 class PiggyDialog extends AbstractDialog {
-  static int capacity = 500;
+  static int capacity = 50;
   static int autoAppearance = -1;
   bool? playApplaud;
   PiggyDialog({this.playApplaud})
