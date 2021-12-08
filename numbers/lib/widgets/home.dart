@@ -386,7 +386,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         return;
       }
       if (event == GameEvent.completeTutorial) {
-        if (result == "tutorFinish") Pref.tutorMode.set(1);
+        if (result[0] == "tutorFinish") Pref.tutorMode.set(1);
         MyGame.boostNextMode = 1;
         _createGame();
       }
@@ -399,7 +399,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     Analytics.design('guiClick:pause:$source');
     if (!showMenu) return;
     var result = await Rout.push(context, PauseDialog());
-    _onPauseButtonsClick(result ?? "resume");
+    _onPauseButtonsClick(result == null ? "resume" : result[0]);
   }
 
   void _onPauseButtonsClick(String type) {
@@ -419,7 +419,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     if (type == "piggy") {
       var result =
           await Rout.push(context, PiggyDialog(playApplaud: playApplaud));
-      if (result != null && result != "") {
+      if (result != null) {
         PiggyDialog.autoAppearance = -1;
         MyGame.isPlaying = true;
         _game!.showReward(
@@ -473,7 +473,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   _showFreeCoinsDialog() async {
     MyGame.isPlaying = false;
     var result = await Rout.push(context, FreeCoinsDialog());
-    if (result != null && result != "") {
+    if (result != null) {
       MyGame.isPlaying = true;
       _game!.showReward(
           FreeCoinsDialog.reward,

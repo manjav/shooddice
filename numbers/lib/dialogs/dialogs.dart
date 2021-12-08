@@ -96,8 +96,7 @@ class AbstractDialogState<T extends AbstractDialog> extends State<T> {
     } else if (coin > 0 && Ads.showSuicideInterstitial) {
       await Ads.showInterstitial(AdPlace.Interstitial);
     }
-    if (coin != 0) Pref.coin.increase(coin, itemType: "confirm", itemId: type);
-    Navigator.of(context).pop(type);
+    Navigator.of(context).pop([type, coin]);
   }
 
   Widget bannerAdsFactory(String type) {

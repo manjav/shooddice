@@ -42,7 +42,7 @@ class _ConfirmDialogState extends AbstractDialogState<ConfirmDialog> {
           bottom: 0,
           left: 0,
           child: BumpedButton(
-              onTap: () => Navigator.of(context).pop("tutorReset"),
+              onTap: () => Navigator.of(context).pop(["tutorReset"]),
               colors: TColors.green.value,
               cornerRadius: 16.d,
               content: Row(
@@ -57,7 +57,7 @@ class _ConfirmDialogState extends AbstractDialogState<ConfirmDialog> {
           bottom: 0,
           right: 0,
           child: BumpedButton(
-              onTap: () => Navigator.of(context).pop("tutorFinish"),
+              onTap: () => Navigator.of(context).pop(["tutorFinish"]),
               colors: TColors.blue.value,
               cornerRadius: 16.d,
               content: Row(
