@@ -326,14 +326,20 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         await Future.delayed(Duration(seconds: 1));
         _widget = ReviveDialog(_game!.numRevives);
         break;
-      case GameEvent.openPiggy:
+      case GameEvent.bigReward:
+      case GameEvent.recordReward:
+      case GameEvent.piggyReward:
       case GameEvent.freeCoins:
-        if (event == GameEvent.openPiggy) {
+        if (event == GameEvent.piggyReward) {
           Pref.coinPiggy.set(0);
           _rewardLineAnimation!
               .animateTo(0, duration: const Duration(milliseconds: 400));
         }
-        Pref.coin.increase(value, itemType: "game", itemId: "random");
+        Pref.coin.increase(value, itemType: "game", itemId: event.name);
+        if (event == GameEvent.recordReward) {
+          _closeGame();
+          return;
+        }
         Sound.play("win");
         setState(() {});
         return;
@@ -370,14 +376,22 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         if (result == null) {
           if (value > 0) {
             var r =
-            await Rout.push(context, RecordDialog(_confettiController!));
+                await Rout.push(context, RecordDialog(_confettiController!));
             if (r != null) {
               _showReward(r[1], GameEvent.recordReward);
+            }
+            return;
           }
+          _closeGame();
           return;
         }
+        Pref.coin.increase(result[1], itemType: "game", itemId: "revive");
         _game!.revive();
         setState(() {});
+        return;
+      }
+      if (event == GameEvent.big) {
+        _showReward(result[1], GameEvent.bigReward);
         return;
       }
       if (event == GameEvent.completeTutorial) {
@@ -438,6 +452,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         context, Callout("clt_${type}_text".l(), type, padding: padding),
         barrierColor: Colors.transparent, barrierDismissible: true);
     if (result != null) {
+      Pref.coin.increase(result[1], itemType: "game", itemId: result[0]);
       if (type == "next") {
         _game!.boostNext();
         return;
@@ -496,5 +511,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     await Future.delayed(Duration(milliseconds: 200));
     _game!.showReward(value,
         target ?? Vector2(MyGame.bounds.top, Device.size.width * 0.5), event);
+  }
+
+  void _closeGame() {
+    Analytics.endProgress(
+        "main", Pref.playCount.value, Pref.record.value, _game!.numRevives);
+    Navigator.of(context).pop();
   }
 }

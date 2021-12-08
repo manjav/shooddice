@@ -22,15 +22,17 @@ import 'package:numbers/utils/utils.dart';
 
 enum GameEvent {
   big,
+  bigReward,
   boost,
   celebrate,
   completeTutorial,
   freeCoins,
   lose,
+  recordReward,
   remove,
   reward,
   rewarded,
-  openPiggy,
+  piggyReward,
   score
 }
 
@@ -465,8 +467,8 @@ class MyGame extends FlameGame with TapDetector {
     r.add(MoveEffect.to(destination, delay));
     r.add(SizeEffect.to(Vector2(0.3, 0.3), delay));
     Animate.checkCompletion(delay, () {
-          remove(r);
-          onGameEvent?.call(event, value);
+      remove(r);
+      onGameEvent?.call(event, value);
     });
     add(r);
   }

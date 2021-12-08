@@ -58,8 +58,7 @@ class _ReviveDialogState extends AbstractDialogState<ReviveDialog> {
                   Positioned(
                       top: 5.d,
                       left: 40.d,
-                      child: Text("${cost.format()}",
-                          style: theme.textTheme.button)),
+                      child: Text("$cost", style: theme.textTheme.button)),
                   Positioned(
                       bottom: 7.d,
                       left: 40.d,
