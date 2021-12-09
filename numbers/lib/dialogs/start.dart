@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:numbers/core/cell.dart';
 import 'package:numbers/core/game.dart';
@@ -30,8 +32,9 @@ class _StartDialogState extends AbstractDialogState<StartDialog> {
 
   @override
   void initState() {
-    if (Pref.tutorMode.value == 0) _onStart();
     super.initState();
+    if (Pref.tutorMode.value == 0)
+      Timer(const Duration(milliseconds: 100), _onStart);
   }
 
   @override
