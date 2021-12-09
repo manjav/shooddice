@@ -295,7 +295,6 @@ extension AdPlaceExt on AdPlace {
   }
 
   int get threshold {
-    if (this == AdPlace.Interstitial) return 3;
     if (this == AdPlace.InterstitialVideo) return 7;
     if (this == AdPlace.Banner) return 10;
     return 0;
