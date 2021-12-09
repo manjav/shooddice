@@ -428,10 +428,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     if (type == "piggy") {
       var result =
           await Rout.push(context, PiggyDialog(playApplaud: playApplaud));
-      if (result != null) {
-        MyGame.isPlaying = true;
-        _showReward(result[1], GameEvent.piggyReward);
-      }
+      if (result != null) _showReward(result[1], GameEvent.piggyReward);
       MyGame.isPlaying = true;
       return;
     }
@@ -479,10 +476,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   _showFreeCoinsDialog() async {
     MyGame.isPlaying = false;
     var result = await Rout.push(context, FreeCoinsDialog());
-    if (result != null) {
-      MyGame.isPlaying = true;
-      _showReward(result[1], GameEvent.freeCoins);
-    }
+    if (result != null) _showReward(result[1], GameEvent.freeCoins);
     MyGame.isPlaying = true;
   }
 
@@ -508,6 +502,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   _showReward(int value, GameEvent event, [Vector2? target]) async {
     await Future.delayed(Duration(milliseconds: 200));
+    MyGame.isPlaying = true;
     _game!.showReward(value,
         target ?? Vector2(MyGame.bounds.top, Device.size.width * 0.5), event);
   }
