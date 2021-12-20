@@ -14,7 +14,7 @@ class Analytics {
     "isDebug": false
   });
 
-  static init(FirebaseAnalytics analytics) async {
+  static init(FirebaseAnalytics analytics) {
     _firebaseAnalytics = analytics;
 
     GameAnalytics.setEnabledInfoLog(false);
@@ -41,6 +41,10 @@ class Analytics {
         registerOnAppOpenAttributionCallback: true,
         registerOnDeepLinkingCallback: true);
 
+    updateVariantIDs();
+  }
+
+  static void updateVariantIDs() async {
     var testVariantId = await GameAnalytics.getRemoteConfigsValueAsString(
         "TheSuicideAd", "1"); //{"TheSuicideAd": "2"}
     Ads.showSuicideInterstitial = testVariantId == "2";
