@@ -31,6 +31,7 @@ class Analytics {
     var type = "installed";
     GameAnalytics.setCustomDimension01(type);
     appsflyerSdk.logEvent("type_$type", {});
+    _firebaseAnalytics.setUserProperty(name: "buildType", value: type);
 
     GameAnalytics.configureAutoDetectAppVersion(true);
     GameAnalytics.initialize("2c9380c96ef57f01f353906b341a21cc",
