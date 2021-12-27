@@ -49,7 +49,7 @@ class Analytics {
     var testVariantId =
         await GameAnalytics.getRemoteConfigsValueAsString("MoreRewards", "1");
     print("testVariantId ==> $testVariantId");
-    PiggyDialog.capacity = testVariantId == "2" ? 30 : 60;
+    PiggyDialog.capacity = testVariantId == "2" ? 60 : 30;
   }
 
   static Future<void> purchase(String currency, double amount, String itemId,
