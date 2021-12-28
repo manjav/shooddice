@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:numbers/core/cell.dart';
 import 'package:numbers/core/game.dart';
 import 'package:numbers/dialogs/rating.dart';
+import 'package:numbers/dialogs/toast.dart';
 import 'package:numbers/utils/ads.dart';
 import 'package:numbers/utils/analytic.dart';
 import 'package:numbers/utils/localization.dart';
@@ -11,7 +12,6 @@ import 'package:numbers/utils/prefs.dart';
 import 'package:numbers/utils/themes.dart';
 import 'package:numbers/utils/utils.dart';
 import 'package:numbers/widgets/buttons.dart';
-import 'package:numbers/widgets/components.dart';
 import 'package:numbers/widgets/home.dart';
 
 import 'dialogs.dart';
@@ -48,9 +48,9 @@ class _StartDialogState extends AbstractDialogState<StartDialog> {
         Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
       Expanded(
           child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-        Components.startButton(context, "start_big".l(), "512", _onUpdate),
+        _boostButton("start_big".l(), "512"),
         SizedBox(width: 2.d),
-        Components.startButton(context, "start_next".l(), "next", _onUpdate)
+        _boostButton("start_next".l(), "next")
       ])),
       SizedBox(height: 10.d),
       Container(
@@ -70,6 +70,80 @@ class _StartDialogState extends AbstractDialogState<StartDialog> {
               ])))
     ]);
     return super.build(context);
+  }
+
+  Widget _boostButton(String title, String boost) {
+    var theme = Theme.of(context);
+    return Expanded(
+        child: Container(
+            padding: EdgeInsets.all(8.d),
+            decoration: ButtonDecor(TColors.whiteFlat.value, 12.d, true, false),
+            child:
+                Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                SVG.show(boost, 58.d),
+                _has(boost) ? SVG.show("accept", 22.d) : SizedBox()
+              ]),
+              SizedBox(height: 6.d),
+              Expanded(
+                  child: Text(title,
+                  style: theme.textTheme.subtitle2,
+                  textAlign: TextAlign.center)),
+              SizedBox(height: 6.d),
+              SizedBox(
+                  width: 92.d,
+                  height: 40.d,
+                  child: BumpedButton(
+                      cornerRadius: 8.d,
+                      isEnable: !_has(boost),
+                      content: Row(children: [
+                        SVG.show("coin", 24.d),
+                        Expanded(
+                            child: Text("100",
+                                textAlign: TextAlign.center,
+                                style: theme.textTheme.bodyText2))
+                      ]),
+                      onTap: () => _onBoostTap(boost, 100))),
+              SizedBox(height: 4.d),
+              SizedBox(
+                  width: 92.d,
+                  height: 42.d,
+                  child: BumpedButton(
+                      cornerRadius: 8.d,
+                      errorMessage: Toast("ads_unavailable".l(), monoIcon: "A"),
+                      isEnable: !_has(boost) && Ads.isReady(),
+                      colors: TColors.orange.value,
+                      content: Row(children: [
+                        SVG.icon("A", theme, scale: 0.7),
+                        Expanded(
+                            child: Text("free_l".l(),
+                                textAlign: TextAlign.center,
+                                style: theme.textTheme.headline5))
+                      ]),
+                      onTap: () => _onBoostTap(boost, 0))),
+              SizedBox(height: 6.d)
+            ])));
+  }
+
+  void _onBoostTap(String boost, int cost) async {
+    if (cost > 0) {
+      if (Pref.coin.value < cost) {
+        Rout.push(context, Toast("coin_notenough".l(), icon: "coin"));
+        return;
+      }
+    } else {
+      var reward = await Ads.showRewarded();
+      if (reward == null) return;
+    }
+    Pref.coin.increase(-cost, itemType: "start", itemId: boost);
+
+    if (boost == "next") MyGame.boostNextMode = 1;
+    if (boost == "512") MyGame.boostBig = true;
+    _onUpdate();
+  }
+
+  bool _has(String boost) {
+    return (boost == "next") ? MyGame.boostNextMode > 0 : MyGame.boostBig;
   }
 
   _onStart() async {
