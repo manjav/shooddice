@@ -201,6 +201,7 @@ enum DialogMode {
   confirmDialog,
   pause,
   piggy,
+  quests,
   quit,
   rating,
   record,
@@ -227,6 +228,8 @@ extension DialogName on DialogMode {
         return "pause";
       case DialogMode.piggy:
         return "piggy";
+      case DialogMode.quests:
+        return "quests";
       case DialogMode.quit:
         return "quit";
       case DialogMode.rating:

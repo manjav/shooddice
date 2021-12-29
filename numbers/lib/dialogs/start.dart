@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:numbers/core/cell.dart';
 import 'package:numbers/core/game.dart';
+import 'package:numbers/dialogs/quests.dart';
 import 'package:numbers/dialogs/rating.dart';
 import 'package:numbers/dialogs/toast.dart';
 import 'package:numbers/utils/ads.dart';
@@ -43,6 +44,7 @@ class _StartDialogState extends AbstractDialogState<StartDialog> {
     if (Pref.tutorMode.value == 0) return SizedBox();
     var theme = Theme.of(context);
     stepChildren.clear();
+    stepChildren.add(_questButton(theme));
     stepChildren.add(bannerAdsFactory("start"));
     widget.child =
         Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
@@ -87,8 +89,8 @@ class _StartDialogState extends AbstractDialogState<StartDialog> {
               SizedBox(height: 6.d),
               Expanded(
                   child: Text(title,
-                  style: theme.textTheme.subtitle2,
-                  textAlign: TextAlign.center)),
+                      style: theme.textTheme.subtitle2,
+                      textAlign: TextAlign.center)),
               SizedBox(height: 6.d),
               SizedBox(
                   width: 92.d,
@@ -162,4 +164,18 @@ class _StartDialogState extends AbstractDialogState<StartDialog> {
   }
 
   _onUpdate() => setState(() {});
+
+  Widget _questButton(ThemeData theme) {
+    return Positioned(
+        top: 100.d,
+        left: 32.d,
+        width: 120.d,
+        child: BumpedButton(
+            content: Row(children: [
+              SVG.show("accept", 28.d),
+              SizedBox(width: 2.d),
+              Text("quests_l".l())
+            ]),
+            onTap: () => Rout.push(context, QuestsDialog())));
+  }
 }
