@@ -14,6 +14,7 @@ import 'package:numbers/utils/themes.dart';
 import 'package:numbers/utils/utils.dart';
 import 'package:numbers/widgets/buttons.dart';
 import 'package:numbers/widgets/home.dart';
+import 'package:numbers/widgets/punchbutton.dart';
 
 import 'dialogs.dart';
 
@@ -166,16 +167,24 @@ class _StartDialogState extends AbstractDialogState<StartDialog> {
   _onUpdate() => setState(() {});
 
   Widget _questButton(ThemeData theme) {
-    return Positioned(
+    var completed = Quests.hasCompleted;
+    var button = PunchButton(
         top: 100.d,
         left: 32.d,
         width: 120.d,
-        child: BumpedButton(
+        height: 60.d,
+        colors: (completed ? TColors.orange : TColors.whiteFlat).value,
             content: Row(children: [
               SVG.show("accept", 28.d),
               SizedBox(width: 2.d),
               Text("quests_l".l())
             ]),
-            onTap: () => Rout.push(context, QuestsDialog())));
+        onTap: () async {
+          await Rout.push(context, QuestsDialog());
+          _onUpdate();
+        });
+    button.isPlaying = completed;
+    return button;
+  }
   }
 }
