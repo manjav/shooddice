@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:numbers/core/cell.dart';
 import 'package:numbers/core/game.dart';
+import 'package:numbers/dialogs/notify.dart';
 import 'package:numbers/dialogs/quests.dart';
 import 'package:numbers/dialogs/rating.dart';
 import 'package:numbers/dialogs/toast.dart';
@@ -36,6 +37,7 @@ class _StartDialogState extends AbstractDialogState<StartDialog> {
   @override
   void initState() {
     super.initState();
+    Quests.onQuestComplete = _onQuestUpdate;
     if (Pref.tutorMode.value == 0)
       Timer(const Duration(milliseconds: 100), _onStart);
   }
@@ -186,5 +188,7 @@ class _StartDialogState extends AbstractDialogState<StartDialog> {
     button.isPlaying = completed;
     return button;
   }
+
+  void _onQuestUpdate(Quest quest) {
   }
 }
