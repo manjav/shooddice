@@ -21,7 +21,12 @@ class Prefs {
     });
   }
 
-  static void _set(String key, int value, bool backup) {
+  static int getInt(String key) {
+    return _instance!.getInt(key) ?? 0;
+    // if (backup) _backup();
+  }
+
+  static void setInt(String key, int value, bool backup) {
     _instance!.setInt(key, value);
     // if (backup) _backup();
   }
@@ -29,10 +34,7 @@ class Prefs {
   static int getBig(int value) => _instance!.getInt("big_$value") ?? 0;
   static void increaseBig(int value) {
     var key = "big_$value";
-    if (_instance!.containsKey(key))
-      _set(key, _instance!.getInt(key)! + 1, true);
-    else
-      _set(key, 1, true);
+    setInt(key, getInt(key) + 1, true);
   }
 }
 
@@ -88,7 +90,7 @@ extension PrefExt on Pref {
   }
 
   int get value {
-    return Prefs._instance!.getInt(name) ?? 0;
+    return Prefs.getInt(name);
   }
 
   int set(int value, {bool backup = true, String? itemType, String? itemId}) {
@@ -98,7 +100,7 @@ extension PrefExt on Pref {
           : GAResourceFlowType.Sink;
       Analytics.resource(type, name, value.abs(), itemType!, itemId!);
     }
-    Prefs._set(name, value, backup);
+    Prefs.setInt(name, value, backup);
     return value;
   }
 
