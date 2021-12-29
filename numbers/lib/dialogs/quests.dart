@@ -16,8 +16,6 @@ class QuestsDialog extends AbstractDialog {
   QuestsDialog()
       : super(
           DialogMode.quests,
-          width: 330.d,
-          height: 360.d,
           title: "quests_l".l(),
         );
   @override
@@ -26,46 +24,77 @@ class QuestsDialog extends AbstractDialog {
 
 class _QuestsDialogState extends AbstractDialogState<QuestsDialog> {
   @override
-  Widget build(BuildContext context) {
-    _updateQuests();
+  Widget chromeFactory(ThemeData theme, double width) {
     var theme = Theme.of(context);
-
-    widget.child = ListView.builder(
-        // padding: const EdgeInsets.all(8),
-        itemCount: _quests.length,
-        itemBuilder: _questItemBuilder);
-
-    return super.build(context);
+    var list = Quests.list.values.toList();
+    var hasChrome = widget.hasChrome ?? true;
+    return Container(
+        width: 340.d,
+        height: 384.d,
+        padding: widget.padding ?? EdgeInsets.all(8.d),
+        decoration: hasChrome
+            ? BoxDecoration(
+                shape: BoxShape.rectangle,
+                color: theme.dialogTheme.backgroundColor,
+                borderRadius: BorderRadius.all(Radius.circular(24.d)))
+            : null,
+        child: ListView.builder(
+            padding: EdgeInsets.zero,
+            // padding: const EdgeInsets.all(8),
+            itemCount: Quests.list.length,
+            itemBuilder: (c, i) => _questItemBuilder(theme, list[i])));
   }
 
-  Widget _questItemBuilder(BuildContext context, int index) {
-    var quest = _quests[index];
-    var theme = Theme.of(context);
+  Widget _questItemBuilder(ThemeData theme, Quest quest) {
     return Container(
-        height: 72.d,
+        height: 92.d,
         child: BumpedButton(
-            colors: TColors.whiteFlat.value,
-            onTap: () => _onquestItemTap(quest),
-            content:
-                Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
-              SVG.show("ice", 32.d),
-              Expanded(
-                  child: Column(children: [
-                Text(quest.type.l(["${quest.max}"]),
-                    style: theme.textTheme.subtitle1),
-                SizedBox(
-                    width: 132.d,
-                    height: 32.d,
-                    child: Components.slider(
-                        theme, quest.min, quest.value, quest.max))
-              ])),
-              Column(children: [
-                SVG.show("coin", 32.d),
-                Text("x${quest.reward}", style: theme.textTheme.subtitle2)
-              ])
+            colors:
+                quest.isDone ? TColors.orange.value : TColors.whiteFlat.value,
+            padding: EdgeInsets.fromLTRB(12.d, 4.d, 12.d, 4.d),
+            // onTap: () => _onquestItemTap(quest),
+            content: Stack(alignment: Alignment.center, children: [
+              Positioned(left: 0, child: SVG.show(quest.type.icon, 54.d)),
+              Positioned(
+                  top: quest.isDone ? 0 : 12.d,
+                  right: 44,
+                  left: 62,
+                  child: Text(quest.text, style: theme.textTheme.subtitle2)),
+              quest.isDone
+                  ? PunchButton(
+                      colors: TColors.green.value,
+                      content: Text(
+                        "collect_l".l(),
+                        style: theme.textTheme.headline5,
+                        textAlign: TextAlign.center,
+                      ),
+                      bottom: 12.d,
+                      width: 132.d,
+                      height: 44.d,
+                      onTap: () => _collect(quest))
+                  : Positioned(
+                      width: 132.d,
+                      height: 32.d,
+                      bottom: 12.d,
+                      child: Components.slider(
+                          theme, quest.min, quest.value, quest.max)),
+              Positioned(
+                  right: 0,
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SVG.show("coin", 32.d),
+                        Text("x${quest.reward}",
+                            style: theme.textTheme.subtitle2)
+                      ]))
             ])));
   }
 
+  void _collect(Quest quest) {
+    quest.levelUp();
+    setState(() {});
+  }
+}
 
 class Quests {
   static Function(Quest)? onQuestComplete;
@@ -82,7 +111,7 @@ class Quests {
     var quests = list.values;
     for (var quest in quests) if (quest.isDone) return true;
     return false;
-    }
+  }
 
   static void _addQuest(QuestType type) {
     list[type] = Quest(type, type.level, value: type.value);
