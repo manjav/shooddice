@@ -14,6 +14,7 @@ import 'package:numbers/animations/animate.dart';
 import 'package:numbers/core/achieves.dart';
 import 'package:numbers/core/cell.dart';
 import 'package:numbers/core/cells.dart';
+import 'package:numbers/dialogs/quests.dart';
 import 'package:numbers/utils/analytic.dart';
 import 'package:numbers/utils/prefs.dart';
 import 'package:numbers/utils/sounds.dart';
@@ -364,6 +365,7 @@ class MyGame extends FlameGame with TapDetector {
         cm--;
       }
     }
+    Quests.increase(QuestType.merges, numMerges);
     return numMerges > 0;
   }
 

@@ -1,9 +1,13 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:numbers/utils/localization.dart';
+import 'package:numbers/utils/prefs.dart';
 import 'package:numbers/utils/themes.dart';
 import 'package:numbers/utils/utils.dart';
 import 'package:numbers/widgets/buttons.dart';
 import 'package:numbers/widgets/components.dart';
+import 'package:numbers/widgets/punchbutton.dart';
 
 import 'dialogs.dart';
 
@@ -21,7 +25,6 @@ class QuestsDialog extends AbstractDialog {
 }
 
 class _QuestsDialogState extends AbstractDialogState<QuestsDialog> {
-  static List<Quest> _quests = <Quest>[];
   @override
   Widget build(BuildContext context) {
     _updateQuests();
@@ -63,16 +66,40 @@ class _QuestsDialogState extends AbstractDialogState<QuestsDialog> {
             ])));
   }
 
-  void _updateQuests() {
-    if (_quests.isEmpty) {
-      _quests.add(Quest("quest_merges", 0, 2, 10, 10));
-      _quests.add(Quest("quest_powerup", 0, 4, 12, 12));
-      _quests.add(Quest("quest_big", 0, 2, 6, 6));
-      _quests.add(Quest("quest_ads", 0, 72, 100, 100));
-    }
+
+class Quests {
+  static Function(Quest)? onQuestComplete;
+  static Map<QuestType, Quest> list = {};
+
+  static void init() {
+    _addQuest(QuestType.merges);
+    _addQuest(QuestType.removeone);
+    _addQuest(QuestType.video);
+    _addQuest(QuestType.b2048);
   }
 
-  _onquestItemTap(Quest quest) {}
+  static bool get hasCompleted {
+    var quests = list.values;
+    for (var quest in quests) if (quest.isDone) return true;
+    return false;
+    }
+
+  static void _addQuest(QuestType type) {
+    list[type] = Quest(type, type.level, value: type.value);
+  }
+
+  static void increase(QuestType type, int value) {
+    if (value == 0) return;
+    var quest = list[type];
+    var key = "q_${type.name}";
+    var res = Prefs.getInt(key) + value;
+    Prefs.setInt(key, res, true);
+    quest!.value = res;
+    if (!quest.notified && res >= quest.max) {
+      quest.notified = true;
+      onQuestComplete?.call(quest);
+    }
+  }
 }
 
 class Quest {
