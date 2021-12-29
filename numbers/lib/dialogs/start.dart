@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:numbers/core/cell.dart';
 import 'package:numbers/core/game.dart';
-import 'package:numbers/dialogs/notify.dart';
+import 'package:numbers/notifications/questnotify.dart';
 import 'package:numbers/dialogs/quests.dart';
 import 'package:numbers/dialogs/rating.dart';
 import 'package:numbers/dialogs/toast.dart';
@@ -48,6 +48,12 @@ class _StartDialogState extends AbstractDialogState<StartDialog> {
     var theme = Theme.of(context);
     stepChildren.clear();
     stepChildren.add(_questButton(theme));
+    stepChildren.add(Positioned(
+        top: 100.d,
+        right: 32.d,
+        width: 54.d,
+        child: BumpedButton(
+            onTap: () => _onQuestUpdate(Quests.list[QuestType.removeone]!))));
     stepChildren.add(bannerAdsFactory("start"));
     widget.child =
         Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
@@ -176,11 +182,11 @@ class _StartDialogState extends AbstractDialogState<StartDialog> {
         width: 120.d,
         height: 60.d,
         colors: (completed ? TColors.orange : TColors.whiteFlat).value,
-            content: Row(children: [
-              SVG.show("accept", 28.d),
-              SizedBox(width: 2.d),
-              Text("quests_l".l())
-            ]),
+        content: Row(children: [
+          SVG.show("accept", 28.d),
+          SizedBox(width: 2.d),
+          Text("quests_l".l())
+        ]),
         onTap: () async {
           await Rout.push(context, QuestsDialog());
           _onUpdate();
@@ -190,5 +196,20 @@ class _StartDialogState extends AbstractDialogState<StartDialog> {
   }
 
   void _onQuestUpdate(Quest quest) {
+    _onUpdate();
+    final theme = Theme.of(context);
+    final notification = QuestNotification(quest, 48.d);
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: notification,
+        backgroundColor: theme.cardColor,
+        duration: const Duration(milliseconds: 1400),
+        behavior: SnackBarBehavior.floating,
+        padding: EdgeInsets.symmetric(horizontal: 6.d, vertical: 14.d),
+        margin: EdgeInsets.only(
+            right: 12.d,
+            left: 12.d,
+            bottom: Device.size.height - 62 - notification.size),
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.d))));
   }
 }
