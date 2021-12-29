@@ -25,8 +25,10 @@ class _QuestNotificationyState extends State<QuestNotification>
         upperBound: 48.d,
         duration: const Duration(milliseconds: 400));
     _controller!.addListener(() => setState(() {}));
-    Future.delayed(_controller!.duration!,
-        () => _controller!.animateTo(36.d, curve: Curves.easeInOutBack));
+    Future.delayed(_controller!.duration!, () {
+      _controller!.animateTo(36.d, curve: Curves.easeInOutBack);
+      Sound.play("bell");
+    });
     super.initState();
   }
 
