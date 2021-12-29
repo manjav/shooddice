@@ -4,7 +4,9 @@ import 'package:intl/intl.dart';
 
 class Rout {
   static dynamic push(BuildContext context, Widget page,
-      {Color? barrierColor, bool barrierDismissible = false}) async {
+      {Color? barrierColor,
+      Tween<Offset>? tween,
+      bool barrierDismissible = false}) async {
     return await Navigator.of(context).push(PageRouteBuilder(
         opaque: false,
         reverseTransitionDuration: Duration(milliseconds: 200),
@@ -13,11 +15,11 @@ class Rout {
         barrierDismissible: barrierDismissible,
         transitionsBuilder: (context, animation, secondaryAnimation, child) =>
             SlideTransition(
-                position: animation.drive(
+                position: animation.drive(tween ??
                     Tween(begin: Offset(0.0, 0.08), end: Offset.zero)
                         .chain(CurveTween(curve: Curves.easeOutExpo))),
                 child: child),
-        pageBuilder: (BuildContext context, _, __) => page));
+        pageBuilder: (c, _, __) => page));
   }
 }
 
