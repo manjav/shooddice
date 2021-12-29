@@ -49,7 +49,7 @@ class Cell extends PositionComponent {
   static double getX(int col) => MyGame.bounds.left + col * diameter + radius;
   static double getY(int row) =>
       MyGame.bounds.top + (Cells.height - row) * diameter + radius;
-  static int getScore(int value) => pow(2, value) as int;
+  static int getScore(int value) => pow(2, value).toInt();
   // static int getNextValue(int step) => [1, 2, 3, 3, 2, 2, 1, 1][step];
   // static int getNextColumn(int step) => [0, 1, 1, 2, 4, 4, 4, 4][step];
   static int getNextValue(int seed) {
