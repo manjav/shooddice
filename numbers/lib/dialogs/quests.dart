@@ -165,7 +165,7 @@ class Quest {
   static int _getCheckpoint(QuestType type, int stage) {
     switch (type) {
       case QuestType.b2048:
-        return pow(2, stage + 1).toInt();
+        return pow(2, stage).toInt();
       case QuestType.merges:
         return pow(2, stage + 6).toInt();
       case QuestType.removeone:
@@ -178,13 +178,13 @@ class Quest {
   int get reward {
     switch (type) {
       case QuestType.b2048:
-        return (level + 1) * 1000;
+        return (level + 1) * 200;
       case QuestType.merges:
-        return (level + 1) * 500;
+        return (level + 1) * 200;
       case QuestType.removeone:
-        return pow(2, level).toInt() * 200;
+        return pow(2, level).toInt() * 100;
       case QuestType.video:
-        return (level + 1) * 300;
+        return (level + 1) * 100;
     }
   }
 }
