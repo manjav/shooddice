@@ -139,6 +139,7 @@ class Quest {
 
   Quest(this.type, this.level, {int value = 0}) {
     this.value = value;
+    notified = isDone;
   }
 
   bool get isDone => value >= max;
@@ -146,8 +147,9 @@ class Quest {
   String get text => ("quest_" + type.name).l([max.toString()]);
 
   void levelUp() {
-    Prefs.setInt("q_l_${type.name}", level + 1, true);
+    Pref.coin.increase(reward, itemType: "quest", itemId: type.name);
     level++;
+    Prefs.setInt("q_l_${type.name}", level, true);
     notified = false;
   }
 
