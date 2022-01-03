@@ -249,6 +249,7 @@ class MyGame extends FlameGame with TapDetector {
       if (cell == null || cell.state != CellState.Fixed) return;
       if (removingMode == "one") {
         Pref.removeOne.increase(-1);
+        Quests.increase(QuestType.removeone, 1);
         _removeCell(cell.column, cell.row, true);
       } else {
         Pref.removeColor.increase(-1);
@@ -415,6 +416,7 @@ class MyGame extends FlameGame with TapDetector {
     // Show big number popup
     if (cell.value > _valueRecord) {
       isPlaying = false;
+      if (cell.value == 10) Quests.increase(QuestType.b2048, 1);
       onGameEvent?.call(GameEvent.big, _valueRecord = cell.value);
     }
 
