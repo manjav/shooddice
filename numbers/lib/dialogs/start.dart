@@ -43,17 +43,23 @@ class _StartDialogState extends AbstractDialogState<StartDialog> {
   }
 
   @override
+  Widget headerFactory(ThemeData theme, double width) {
+    return Container(
+        width: width - 36.d,
+        height: 150.d,
+        padding: EdgeInsets.only(bottom: 12.d),
+        child: Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [Text(widget.title!, style: theme.textTheme.headline4)]));
+  }
+
+  @override
   Widget build(BuildContext context) {
     if (Pref.tutorMode.value == 0) return SizedBox();
     var theme = Theme.of(context);
     stepChildren.clear();
     stepChildren.add(_questButton(theme));
-    stepChildren.add(Positioned(
-        top: 100.d,
-        right: 32.d,
-        width: 54.d,
-        child: BumpedButton(
-            onTap: () => _onQuestUpdate(Quests.list[QuestType.removeone]!))));
+    stepChildren.add(_dailyButton(theme));
     stepChildren.add(bannerAdsFactory("start"));
     widget.child =
         Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
@@ -177,21 +183,42 @@ class _StartDialogState extends AbstractDialogState<StartDialog> {
   Widget _questButton(ThemeData theme) {
     var completed = Quests.hasCompleted;
     var button = PunchButton(
-        top: 100.d,
-        left: 32.d,
-        width: 120.d,
-        height: 60.d,
+        top: 110.d,
+        left: 24.d,
+        width: 110.d,
+        height: 110.d,
         colors: (completed ? TColors.orange : TColors.whiteFlat).value,
-        content: Row(children: [
-          SVG.show("accept", 28.d),
-          SizedBox(width: 2.d),
-          Text("quests_l".l())
+        content: Column(children: [
+          SVG.show("quests", 72.d),
+          Text("quests_l".l(), style: theme.textTheme.subtitle2)
         ]),
         onTap: () async {
           await Rout.push(context, QuestsDialog());
           _onUpdate();
         });
     button.isPlaying = completed;
+    return button;
+  }
+
+  Widget _dailyButton(ThemeData theme) {
+    var available = Quests.hasCompleted;
+    var button = PunchButton(
+        top: 110.d,
+        right: 24.d,
+        width: 110.d,
+        height: 110.d,
+        padding: EdgeInsets.fromLTRB(2.d, 6.d, 0.d, 12.d),
+        colors: (available ? TColors.orange : TColors.whiteFlat).value,
+        content: Column(children: [
+          SVG.show("calendar", 72.d),
+          Text("daily_l".l(), style: theme.textTheme.subtitle2)
+        ]),
+        onTap: () async {
+          await Rout.push(context, Toast("coming_soon".l(), icon: "calendar"),
+              barrierDismissible: true);
+          _onUpdate();
+        });
+    button.isPlaying = available;
     return button;
   }
 
