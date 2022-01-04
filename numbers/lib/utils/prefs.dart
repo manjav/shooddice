@@ -14,6 +14,7 @@ class Prefs {
         Pref.removeOne.set(3);
         Pref.removeColor.set(3);
         Pref.rateTarget.set(2);
+        Pref.maxRandom.set(4);
       }
       Pref.coinPiggy.set(0);
       Pref.visitCount.increase(1);
@@ -51,6 +52,8 @@ enum Pref {
   isMute,
   isVibrateOff,
   noAds,
+  maxRandom,
+  numRevives,
   playCount,
   rate,
   ratedBefore,
@@ -58,6 +61,7 @@ enum Pref {
   record,
   removeOne,
   removeColor,
+  score,
   tutorMode,
   visitCount
 }
@@ -73,6 +77,10 @@ extension PrefExt on Pref {
         return "isMute";
       case Pref.isVibrateOff:
         return "isVibrateOff";
+      case Pref.maxRandom:
+        return "maxRandom";
+      case Pref.numRevives:
+        return "numRevives";
       case Pref.noAds:
         return "noAds";
       case Pref.playCount:
@@ -89,6 +97,8 @@ extension PrefExt on Pref {
         return "removeOne";
       case Pref.removeColor:
         return "removeColor";
+      case Pref.score:
+        return "score";
       case Pref.tutorMode:
         return "tutorMode";
       case Pref.visitCount:

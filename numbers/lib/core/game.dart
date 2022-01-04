@@ -45,7 +45,6 @@ class MyGame extends FlameGame with TapDetector {
   static Rect bounds = Rect.fromLTRB(0, 0, 0, 0);
 
   Function(GameEvent, int)? onGameEvent;
-  int numRevives = 0;
   String? removingMode;
 
   bool _tutorMode = false;
@@ -70,8 +69,9 @@ class MyGame extends FlameGame with TapDetector {
   ColumnHint? _columnHint;
 
   MyGame({onGameEvent}) : super() {
-    Prefs.score = 0;
     this.onGameEvent = onGameEvent;
+    Prefs.score = Pref.score.value;
+    Cell.maxRandomValue = Pref.maxRandom.value;
   }
 
   @override
@@ -438,7 +438,7 @@ class MyGame extends FlameGame with TapDetector {
     // More chance for spawm new cells
     var index = cell.value - (Cell.maxRandomValue * 0.7).ceil();
     if (index > -1 && index < Cell.lastRandomValue) {
-      Cell.maxRandomValue = index.min(Cell.maxRandomValue);
+      Pref.maxRandom.set(Cell.maxRandomValue = index.min(Cell.maxRandomValue));
     }
 
     _fallAll();
@@ -465,7 +465,7 @@ class MyGame extends FlameGame with TapDetector {
 
   void revive() {
     _linePaint.color = TColors.black.value[0];
-    numRevives++;
+    Pref.numRevives.increase(1);
     for (var i = 0; i < Cells.width; i++)
       for (var j = Cells.height - 3; j < Cells.height; j++)
         _removeCell(i, j, false);

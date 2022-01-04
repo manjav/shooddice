@@ -295,7 +295,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         break;
       case GameEvent.lose:
         await Future.delayed(Duration(seconds: 1));
-        _widget = ReviveDialog(_game!.numRevives);
+        _widget = ReviveDialog(Pref.numRevives.value);
         break;
       case GameEvent.bigReward:
       case GameEvent.recordReward:
@@ -341,7 +341,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     if (_widget != null) {
       var result = await Rout.push(context, _widget);
       if (event == GameEvent.lose) {
-        Prefs.setString("cells", "");
         if (result == null) {
           if (value > 0) {
             var r =
@@ -383,6 +382,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   void _onPauseButtonsClick(String type) {
     switch (type) {
       case "home":
+        Pref.score.set(Prefs.score);
         Navigator.of(context).pop();
         break;
       case "resume":
@@ -482,7 +482,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   void _closeGame() {
     Analytics.endProgress(
-        "main", Pref.playCount.value, Pref.record.value, _game!.numRevives);
+        "main", Pref.playCount.value, Pref.record.value, Pref.numRevives.value);
+    Prefs.setString("cells", "");
+    Pref.maxRandom.set(4);
+    Pref.numRevives.set(0);
+    Pref.score.set(0);
     Navigator.of(context).pop();
   }
 }

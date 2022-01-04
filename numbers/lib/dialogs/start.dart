@@ -1,12 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:numbers/core/cell.dart';
 import 'package:numbers/core/game.dart';
-import 'package:numbers/notifications/questnotify.dart';
 import 'package:numbers/dialogs/quests.dart';
 import 'package:numbers/dialogs/rating.dart';
 import 'package:numbers/dialogs/toast.dart';
+import 'package:numbers/notifications/questnotify.dart';
 import 'package:numbers/utils/ads.dart';
 import 'package:numbers/utils/analytic.dart';
 import 'package:numbers/utils/localization.dart';
@@ -171,7 +170,6 @@ class _StartDialogState extends AbstractDialogState<StartDialog> {
     if (Pref.playCount.value > AdPlace.InterstitialVideo.threshold)
       await Ads.showInterstitial(AdPlace.InterstitialVideo);
     await Rout.push(context, HomePage());
-    Cell.maxRandomValue = 4;
     MyGame.boostNextMode = 0;
     MyGame.boostBig = false;
     _startButtonLabel = "start_l".l();
