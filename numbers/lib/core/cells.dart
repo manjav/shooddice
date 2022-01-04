@@ -1,4 +1,5 @@
 import 'package:numbers/core/cell.dart';
+import 'package:numbers/utils/prefs.dart';
 import 'package:numbers/utils/utils.dart';
 
 class Cells {
@@ -77,6 +78,7 @@ class Cells {
     c.column = column;
     c.row = row;
     map[column][row] = c;
+    _save();
   }
 
   List<Cell> getMatchs(int column, int row, int value) {
@@ -104,7 +106,19 @@ class Cells {
       c.state = CellState.Float;
       map[c.column][c.row] = c;
       found = true;
+      _save();
     }
     return found;
+  }
+
+  void _save() {
+    var data = "";
+    for (var i = 0; i < width; i++) {
+      for (var j = 0; j < height; j++)
+        data += (map[i][j] != null ? map[i][j]!.value.toString() : "") +
+            (j < height - 1 ? "," : "");
+      data += (i < width - 1 ? "|" : "");
+    }
+    Prefs.setString("cells", data);
   }
 }

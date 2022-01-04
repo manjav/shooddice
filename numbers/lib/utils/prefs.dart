@@ -21,9 +21,16 @@ class Prefs {
     });
   }
 
+  static void setString(String key, String value) {
+    _instance!.setString(key, value);
+  }
+
+  static String getString(String key) {
+    return _instance!.getString(key) ?? "";
+  }
+
   static int getInt(String key) {
     return _instance!.getInt(key) ?? 0;
-    // if (backup) _backup();
   }
 
   static void setInt(String key, int value, bool backup) {

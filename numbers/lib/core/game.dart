@@ -139,24 +139,39 @@ class MyGame extends FlameGame with TapDetector {
           8)));
     }
 
-    // Add initial cells
-    if (boostBig) _createCell(_nextCell.column, 9);
-    for (var i = 0; i < (_tutorMode ? 3 : 5); i++) {
-      _createCell(Cell.getNextColumn(_fallingsCount),
-          Cell.getNextValue(_fallingsCount));
-      ++_fallingsCount;
+    var data = Prefs.getString("cells");
+    if (data.isEmpty) {
+      // Add initial cells
+      if (boostBig) _defineCell(_nextCell.column, 9);
+      for (var i = 0; i < (_tutorMode ? 3 : 5); i++) {
+        _defineCell(Cell.getNextColumn(_fallingsCount),
+            Cell.getNextValue(_fallingsCount));
+        ++_fallingsCount;
+      }
+    } else {
+      var columns = data.split("|");
+      for (var i = 0; i < columns.length; i++) {
+        var cells = columns[i].split(",");
+        for (var j = 0; j < cells.length; j++) {
+          if (cells[j].isEmpty) continue;
+          _createCell(i, j, int.parse(cells[j]));
+        }
+      }
     }
-
     isPlaying = true;
     _spawn();
     await Future.delayed(Duration(milliseconds: 10));
     onGameEvent?.call(GameEvent.score, 0);
   }
 
-  void _createCell(int column, value) {
+  void _defineCell(int column, value) {
     var row = _cells.length(column);
     while (_cells.getMatchs(column, row, value).length > 0)
       value = Cell.getNextValue(0);
+    _createCell(column, row, value);
+  }
+
+  void _createCell(int column, int row, value) {
     var cell = Cell(column, row, value);
     cell.x = Cell.getX(column);
     cell.y = Cell.getY(row);
