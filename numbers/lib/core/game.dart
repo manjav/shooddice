@@ -161,7 +161,7 @@ class MyGame extends FlameGame with TapDetector {
     cell.x = Cell.getX(column);
     cell.y = Cell.getY(row);
     cell.state = CellState.Fixed;
-    _cells.map[column][row] = cell;
+    _cells.set(column, row, cell);
     add(cell);
   }
 
@@ -435,7 +435,7 @@ class MyGame extends FlameGame with TapDetector {
     if (accumulate)
       _cells.accumulateColumn(column, row);
     else
-      _cells.map[column][row] = null;
+      _cells.set(column, row, null);
   }
 
   void _removeCellsByValue(int value) {

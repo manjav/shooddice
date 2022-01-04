@@ -16,11 +16,16 @@ class Cells {
     return map[column][row];
   }
 
+  void set(int column, int row, Cell? cell) {
+    map[column][row] = cell;
+    _save();
+  }
+
   int getMinValue() {
     int value = 1000;
     for (var i = 0; i < width; i++)
       for (var j = 0; j < height; j++)
-        value = (map[i][j] == null ? 1000 : get(i,j)!.value).max(value);
+        value = (map[i][j] == null ? 1000 : get(i, j)!.value).max(value);
     return value;
   }
 
