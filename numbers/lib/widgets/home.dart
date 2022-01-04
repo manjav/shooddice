@@ -382,7 +382,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   void _onPauseButtonsClick(String type) {
     switch (type) {
-      case "reset":
+      case "home":
         Navigator.of(context).pop();
         break;
       case "resume":
