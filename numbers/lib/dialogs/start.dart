@@ -201,14 +201,15 @@ class _StartDialogState extends AbstractDialogState<StartDialog> {
   }
 
   Widget _dailyButton(ThemeData theme) {
-    var available = Quests.hasCompleted;
+    var available = false;
+    //Quests.hasCompleted;
     var button = PunchButton(
         top: 110.d,
         right: 24.d,
         width: 110.d,
         height: 110.d,
         padding: EdgeInsets.fromLTRB(2.d, 6.d, 0.d, 12.d),
-        colors: (available ? TColors.orange : TColors.whiteFlat).value,
+        // colors: (available ? TColors.orange : TColors.whiteFlat).value,
         content: Column(children: [
           SVG.show("calendar", 72.d),
           Text("daily_l".l(), style: theme.textTheme.subtitle2)
