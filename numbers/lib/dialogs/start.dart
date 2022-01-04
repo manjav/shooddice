@@ -65,7 +65,8 @@ class _StartDialogState extends AbstractDialogState<StartDialog> {
         Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
       Expanded(
           child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-        _boostButton("start_big".l(), "512"),
+        if (Prefs.getString("cells").isEmpty)
+          _boostButton("start_big".l(), "512"),
         SizedBox(width: 2.d),
         _boostButton("start_next".l(), "next")
       ])),
