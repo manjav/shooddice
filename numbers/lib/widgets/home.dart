@@ -341,6 +341,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     if (_widget != null) {
       var result = await Rout.push(context, _widget);
       if (event == GameEvent.lose) {
+        Prefs.setString("cells", "");
         if (result == null) {
           if (value > 0) {
             var r =
