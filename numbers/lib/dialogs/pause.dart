@@ -45,7 +45,7 @@ class _PauseDialogState extends AbstractDialogState<PauseDialog> {
                   content: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        SVG.icon("F", theme),
+                        SVG.icon("J", theme),
                         Text("home_l".l(), style: theme.textTheme.headline5)
                       ])),
               BumpedButton(
