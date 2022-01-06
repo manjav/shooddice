@@ -1,4 +1,5 @@
 import 'package:gameanalytics_sdk/gameanalytics.dart';
+import 'package:numbers/core/cell.dart';
 import 'package:numbers/utils/analytic.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -11,10 +12,11 @@ class Prefs {
       _instance = prefs;
       if (!prefs.containsKey("visitCount")) {
         Pref.coin.set(500, itemType: "game", itemId: "initial");
+        Pref.lastBig.set(Cell.firstBigRecord);
+        Pref.maxRandom.set(Cell.maxRandomValue);
+        Pref.rateTarget.set(2);
         Pref.removeOne.set(3);
         Pref.removeColor.set(3);
-        Pref.rateTarget.set(2);
-        Pref.maxRandom.set(4);
       }
       Pref.coinPiggy.set(0);
       Pref.visitCount.increase(1);
@@ -52,6 +54,7 @@ enum Pref {
   isMute,
   isVibrateOff,
   noAds,
+  lastBig,
   maxRandom,
   numRevives,
   playCount,
@@ -77,6 +80,8 @@ extension PrefExt on Pref {
         return "isMute";
       case Pref.isVibrateOff:
         return "isVibrateOff";
+      case Pref.lastBig:
+        return "lastBig";
       case Pref.maxRandom:
         return "maxRandom";
       case Pref.numRevives:

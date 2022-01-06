@@ -71,7 +71,7 @@ class MyGame extends FlameGame with TapDetector {
   MyGame({onGameEvent}) : super() {
     this.onGameEvent = onGameEvent;
     Prefs.score = Pref.score.value;
-    Cell.maxRandomValue = Pref.maxRandom.value;
+    Cell.maxRandom = Pref.maxRandom.value;
   }
 
   @override
@@ -121,7 +121,7 @@ class MyGame extends FlameGame with TapDetector {
 
     add(_fallingEffect = FallingEffect());
 
-    _valueRecord = Cell.firstBigRecord;
+    _valueRecord = Pref.lastBig.value;
     _nextCell.init(Cell.getNextColumn(_fallingsCount), 0,
         Cell.getNextValue(_fallingsCount),
         hiddenMode: boostNextMode + 1);
@@ -432,13 +432,14 @@ class MyGame extends FlameGame with TapDetector {
     if (cell.value > _valueRecord) {
       isPlaying = false;
       if (cell.value == 11) Quests.increase(QuestType.b2048, 1);
-      onGameEvent?.call(GameEvent.big, _valueRecord = cell.value);
+      Pref.lastBig.set(_valueRecord = cell.value);
+      onGameEvent?.call(GameEvent.big, _valueRecord);
     }
 
     // More chance for spawm new cells
-    var index = cell.value - (Cell.maxRandomValue * 0.7).ceil();
+    var index = cell.value - (Cell.maxRandom * 0.7).ceil();
     if (index > -1 && index < Cell.lastRandomValue) {
-      Pref.maxRandom.set(Cell.maxRandomValue = index.min(Cell.maxRandomValue));
+      Pref.maxRandom.set(Cell.maxRandom = index.min(Cell.maxRandom));
     }
 
     _fallAll();
