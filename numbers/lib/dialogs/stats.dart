@@ -7,7 +7,7 @@ import 'package:numbers/utils/prefs.dart';
 import 'package:numbers/utils/themes.dart';
 import 'package:numbers/utils/utils.dart';
 import 'package:numbers/widgets/buttons.dart';
-import 'package:numbers/widgets/components.dart';
+import 'package:numbers/widgets/coins.dart';
 import 'package:numbers/widgets/widgets.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:screenshot/screenshot.dart';
@@ -37,10 +37,7 @@ class _StatsDialogState extends AbstractDialogState<StatsDialog> {
 
   @override
   Widget coinsButtonFactory(ThemeData theme) {
-    return Positioned(
-        top: 32.d,
-        left: 12.d,
-        child: Components.coins(context, widget.mode.name));
+    return Positioned(top: 32.d, left: 12.d, child: Coins(widget.mode.name));
   }
 
   @override

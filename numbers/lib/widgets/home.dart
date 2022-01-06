@@ -27,6 +27,7 @@ import 'package:numbers/utils/sounds.dart';
 import 'package:numbers/utils/themes.dart';
 import 'package:numbers/utils/utils.dart';
 import 'package:numbers/widgets/buttons.dart';
+import 'package:numbers/widgets/coins.dart';
 import 'package:numbers/widgets/components.dart';
 import 'package:rive/rive.dart';
 
@@ -98,7 +99,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             Analytics.design('guiClick:stats:home');
             Rout.push(context, StatsDialog());
           }),
-          Components.coins(context, "home", onTap: () async {
+          Coins("home", onTap: () async {
             MyGame.isPlaying = false;
             await Rout.push(context, ShopDialog());
             MyGame.isPlaying = true;

@@ -8,6 +8,7 @@ import 'package:numbers/utils/analytic.dart';
 import 'package:numbers/utils/prefs.dart';
 import 'package:numbers/utils/sounds.dart';
 import 'package:numbers/utils/utils.dart';
+import 'package:numbers/widgets/coins.dart';
 import 'package:numbers/widgets/components.dart';
 
 class AbstractDialog extends StatefulWidget {
@@ -137,9 +138,7 @@ class AbstractDialogState<T extends AbstractDialog> extends State<T> {
 
   Widget coinsButtonFactory(ThemeData theme) {
     return Positioned(
-        top: 32.d,
-        left: 66.d,
-        child: Components.coins(context, widget.mode.name));
+        top: 32.d, left: 66.d, child: Coins(widget.mode.name));
   }
 
   Widget headerFactory(ThemeData theme, double width) {
