@@ -1,3 +1,14 @@
+import 'dart:async';
+
+import 'package:flutter/material.dart';
+import 'package:numbers/dialogs/dialogs.dart';
+import 'package:numbers/utils/localization.dart';
+import 'package:numbers/utils/prefs.dart';
+import 'package:numbers/utils/themes.dart';
+import 'package:numbers/utils/utils.dart';
+import 'package:numbers/widgets/buttons.dart';
+import 'package:numbers/widgets/punchbutton.dart';
+
 class DailyDialog extends AbstractDialog {
   DailyDialog()
       : super(
@@ -36,6 +47,7 @@ class _DailyDialogState extends AbstractDialogState<DailyDialog> {
       SizedBox(height: 12.d),
       Text("daily_d".l(),
           style: Themes.style(Colors.white, 14.d), textAlign: TextAlign.center),
+      TimeWidget("daily_t".l(), () => setState(() {}))
     ]);
   }
 
@@ -97,6 +109,57 @@ class _DailyDialogState extends AbstractDialogState<DailyDialog> {
     Pref.dayCount.set(day.index + 1);
     Pref.coin.increase(day.reward, itemType: "daily", itemId: "${day.index}");
     setState(() {});
+  }
+}
+
+class TimeWidget extends StatefulWidget {
+  final String label;
+  final Function callback;
+  TimeWidget(this.label, this.callback);
+  @override
+  _TimeWidgetState createState() => _TimeWidgetState();
+}
+
+class _TimeWidgetState extends State<TimeWidget> {
+  Timer? _timer;
+  int remaining = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    var theme = Theme.of(context);
+    remaining = Days.remaining;
+    if (remaining <= 0) {
+      _timer = null;
+      return SizedBox(height: 54.d);
+    }
+
+    if (_timer == null)
+      _timer = Timer.periodic(const Duration(milliseconds: 999), _onTimerTick);
+
+    return Column(children: [
+      SizedBox(height: 12.d),
+      Text(widget.label,
+          style: Themes.style(Colors.white, 14.d), textAlign: TextAlign.center),
+      Text(remaining.toTime(), style: theme.textTheme.headline5)
+    ]);
+  }
+
+  void _onTimerTick(Timer timer) {
+    print("remaining $remaining");
+    if (remaining < 2000) {
+      timer.cancel();
+      _timer = null;
+      widget.callback.call();
+    } else {
+      setState(() {});
+    }
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    _timer = null;
+    super.dispose();
   }
 }
 

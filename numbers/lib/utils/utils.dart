@@ -29,6 +29,19 @@ extension IntExt on int {
     return _formatter.format(this);
   }
 
+  String toTime() {
+    var t = (this / 1000).round();
+    var s = t % 60;
+    t -= s;
+    var m = ((t % 3600) / 60).round();
+    t -= m * 60;
+    var h = (t / 3600).floor();
+    var ss = s < 10 ? "0$s" : "$s";
+    var ms = m < 10 ? "0$m" : "$m";
+    var hs = h < 10 ? "0$h" : "$h";
+    return "$hs : $ms : $ss";
+  }
+
   int min(int min) => this < min ? min : this;
   int max(int max) => this > max ? max : this;
 }

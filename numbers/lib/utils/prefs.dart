@@ -1,5 +1,6 @@
 import 'package:gameanalytics_sdk/gameanalytics.dart';
 import 'package:numbers/core/cell.dart';
+import 'package:numbers/dialogs/daily.dart';
 import 'package:numbers/utils/analytic.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -12,12 +13,14 @@ class Prefs {
       _instance = prefs;
       if (!prefs.containsKey("visitCount")) {
         Pref.coin.set(500, itemType: "game", itemId: "initial");
+        Pref.dayFirst.set(DateTime.now().millisecondsSinceEpoch - Days.DAY_LEN);
         Pref.lastBig.set(Cell.firstBigRecord);
         Pref.maxRandom.set(Cell.maxRandomValue);
         Pref.rateTarget.set(2);
         Pref.removeOne.set(3);
         Pref.removeColor.set(3);
       }
+
       Pref.coinPiggy.set(0);
       Pref.visitCount.increase(1);
       onInit();
@@ -51,6 +54,8 @@ class Prefs {
 enum Pref {
   coin,
   coinPiggy,
+  dayCount,
+  dayFirst,
   isMute,
   isVibrateOff,
   noAds,
@@ -76,6 +81,10 @@ extension PrefExt on Pref {
         return "coin";
       case Pref.coinPiggy:
         return "coinPiggy";
+      case Pref.dayFirst:
+        return "dayFirst";
+      case Pref.dayCount:
+        return "dayCount";
       case Pref.isMute:
         return "isMute";
       case Pref.isVibrateOff:
