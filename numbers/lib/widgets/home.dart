@@ -295,7 +295,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         break;
       case GameEvent.lose:
         await Future.delayed(Duration(seconds: 1));
-        _widget = ReviveDialog(Pref.numRevives.value);
+        _widget = ReviveDialog();
         break;
       case GameEvent.bigReward:
       case GameEvent.recordReward:
@@ -482,11 +482,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   void _closeGame() {
     Analytics.endProgress(
-        "main", Pref.playCount.value, Pref.record.value, Pref.numRevives.value);
-    Prefs.setString("cells", "");
-    Pref.maxRandom.set(4);
-    Pref.numRevives.set(0);
-    Pref.score.set(0);
+        "main", Pref.playCount.value, Pref.record.value, Prefs.score);
     Navigator.of(context).pop();
   }
 }
