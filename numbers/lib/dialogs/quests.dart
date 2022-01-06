@@ -39,20 +39,20 @@ class _QuestsDialogState extends AbstractDialogState<QuestsDialog> {
             : null,
         child: ListView.builder(
             padding: EdgeInsets.zero,
-            // padding: const EdgeInsets.all(8),
             itemCount: Quests.list.length,
-            itemBuilder: (c, i) => _questItemBuilder(theme, list[i])));
+            itemBuilder: (c, i) => _itemBuilder(theme, list[i])));
   }
 
-  Widget _questItemBuilder(ThemeData theme, Quest quest) {
+  Widget _itemBuilder(ThemeData theme, Quest quest) {
     return Container(
         height: 92.d,
-        child: BumpedButton(
-            colors:
+        decoration: ButtonDecor(
                 quest.isDone ? TColors.orange.value : TColors.whiteFlat.value,
+            12.d,
+            true,
+            false),
             padding: EdgeInsets.fromLTRB(12.d, 4.d, 12.d, 4.d),
-            // onTap: () => _onquestItemTap(quest),
-            content: Stack(alignment: Alignment.center, children: [
+        child: Stack(alignment: Alignment.center, children: [
               Positioned(left: 0, child: SVG.show(quest.type.icon, 54.d)),
               Positioned(
                   top: quest.isDone ? 0 : 12.d,
