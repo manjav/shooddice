@@ -15,6 +15,7 @@ import 'package:numbers/utils/prefs.dart';
 import 'package:numbers/utils/themes.dart';
 import 'package:numbers/utils/utils.dart';
 import 'package:numbers/widgets/buttons.dart';
+import 'package:numbers/widgets/coineffect.dart';
 import 'package:numbers/widgets/home.dart';
 import 'package:numbers/widgets/punchbutton.dart';
 
@@ -57,6 +58,7 @@ class _StartDialogState extends AbstractDialogState<StartDialog> {
     stepChildren.clear();
     stepChildren.add(_questButton(theme));
     stepChildren.add(_dailyButton(theme));
+    stepChildren.add(aaaa(theme));
     stepChildren.add(bannerAdsFactory("start"));
     return super.build(context);
   }
@@ -238,5 +240,20 @@ class _StartDialogState extends AbstractDialogState<StartDialog> {
             bottom: Device.size.height - 62 - notification.size),
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.d))));
+  }
+
+  Widget aaaa(ThemeData theme) {
+    return PunchButton(
+        bottom: 12,
+        onTap: () {
+          showDialog(
+            barrierDismissible: false,
+            barrierColor: Colors.transparent,
+            context: context,
+            builder: (BuildContext context) {
+              return CoinEffect(320);
+            },
+          );
+        });
   }
 }
