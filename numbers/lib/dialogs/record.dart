@@ -15,7 +15,6 @@ import 'package:numbers/widgets/components.dart';
 import 'package:numbers/widgets/punchbutton.dart';
 import 'package:rive/rive.dart';
 
-// ignore: must_be_immutable
 class RecordDialog extends AbstractDialog {
   final ConfettiController confettiController;
   RecordDialog(this.confettiController)
@@ -40,7 +39,7 @@ class _RecordDialogState extends AbstractDialogState<RecordDialog> {
 
   @override
   Widget contentFactory(ThemeData theme) {
-    return  Stack(alignment: Alignment.topCenter, children: [
+    return Stack(alignment: Alignment.topCenter, children: [
       Positioned(
           top: 152.d,
           child: Text("record_l".l(), style: theme.textTheme.caption)),

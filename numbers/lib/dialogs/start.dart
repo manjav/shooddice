@@ -18,7 +18,6 @@ import 'package:numbers/widgets/buttons.dart';
 import 'package:numbers/widgets/home.dart';
 import 'package:numbers/widgets/punchbutton.dart';
 
-// ignore: must_be_immutable
 class StartDialog extends AbstractDialog {
   StartDialog()
       : super(DialogMode.start,

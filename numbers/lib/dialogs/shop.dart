@@ -13,7 +13,6 @@ import 'package:numbers/utils/utils.dart';
 import 'package:numbers/widgets/buttons.dart';
 import 'package:numbers/widgets/components.dart';
 
-// ignore: must_be_immutable
 class ShopDialog extends AbstractDialog {
   ShopDialog()
       : super(DialogMode.shop,
@@ -91,13 +90,17 @@ class _ShopDialogState extends AbstractDialogState<ShopDialog> {
   }
 
   @override
-  Widget contentFactory(ThemeData theme) {
-    var items = coins.values.toList();
-    widget.coinButton = Positioned(
+  Widget coinsButtonFactory(ThemeData theme) {
+    return Positioned(
         top: 32.d,
         left: 12.d,
-        child: Components.coins(context, "shop", clickable: false));
-    return  Stack(children: [
+        child: Components.coins(context, widget.mode.name, clickable: false));
+  }
+
+  @override
+  Widget contentFactory(ThemeData theme) {
+    var items = coins.values.toList();
+    return Stack(children: [
       Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
         SizedBox(
             height: 200.d,

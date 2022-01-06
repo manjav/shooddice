@@ -9,7 +9,6 @@ import 'package:numbers/utils/themes.dart';
 import 'package:numbers/utils/utils.dart';
 import 'package:numbers/widgets/buttons.dart';
 
-// ignore: must_be_immutable
 class Callout extends AbstractDialog {
   static double chromeWidth = 220.d;
   static double chromeHeight = 84.d;

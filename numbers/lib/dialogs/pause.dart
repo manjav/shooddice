@@ -6,7 +6,6 @@ import 'package:numbers/utils/themes.dart';
 import 'package:numbers/utils/utils.dart';
 import 'package:numbers/widgets/buttons.dart';
 
-// ignore: must_be_immutable
 class PauseDialog extends AbstractDialog {
   PauseDialog()
       : super(

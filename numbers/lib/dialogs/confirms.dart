@@ -9,7 +9,6 @@ import 'package:numbers/utils/utils.dart';
 import 'package:numbers/widgets/buttons.dart';
 import 'package:numbers/widgets/components.dart';
 
-// ignore: must_be_immutable
 class ConfirmDialog extends AbstractDialog {
   final ConfettiController confettiController;
   ConfirmDialog(this.confettiController)
@@ -18,7 +17,6 @@ class ConfirmDialog extends AbstractDialog {
             height: 200.d,
             width: 340.d,
             showCloseButton: false,
-            coinButton: SizedBox(),
             statsButton: SizedBox(),
             scoreButton: SizedBox(),
             padding: EdgeInsets.fromLTRB(12.d, 4.d, 12.d, 12.d));
@@ -27,6 +25,9 @@ class ConfirmDialog extends AbstractDialog {
 }
 
 class _ConfirmDialogState extends AbstractDialogState<ConfirmDialog> {
+  @override
+  Widget coinsButtonFactory(ThemeData theme) => SizedBox();
+
   @override
   void initState() {
     Timer(Duration(milliseconds: 10), () => widget.confettiController.play());

@@ -12,7 +12,6 @@ import 'package:numbers/widgets/buttons.dart';
 import 'package:numbers/widgets/punchbutton.dart';
 import 'package:rive/rive.dart';
 
-// ignore: must_be_immutable
 class FreeCoinsDialog extends AbstractDialog {
   static final waitingTime = 30000;
   static final showTime = 2500;

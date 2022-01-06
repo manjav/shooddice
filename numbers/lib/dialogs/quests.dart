@@ -10,7 +10,6 @@ import 'package:numbers/widgets/buttons.dart';
 import 'package:numbers/widgets/components.dart';
 import 'package:numbers/widgets/punchbutton.dart';
 
-// ignore: must_be_immutable
 class QuestsDialog extends AbstractDialog {
   QuestsDialog()
       : super(
@@ -47,44 +46,44 @@ class _QuestsDialogState extends AbstractDialogState<QuestsDialog> {
     return Container(
         height: 92.d,
         decoration: ButtonDecor(
-                quest.isDone ? TColors.orange.value : TColors.whiteFlat.value,
+            quest.isDone ? TColors.orange.value : TColors.whiteFlat.value,
             12.d,
             true,
             false),
-            padding: EdgeInsets.fromLTRB(12.d, 4.d, 12.d, 4.d),
+        padding: EdgeInsets.fromLTRB(12.d, 4.d, 12.d, 4.d),
         child: Stack(alignment: Alignment.center, children: [
-              Positioned(left: 0, child: SVG.show(quest.type.icon, 54.d)),
-              Positioned(
-                  top: quest.isDone ? 0 : 12.d,
-                  right: 44,
-                  left: 62,
-                  child: Text(quest.text, style: theme.textTheme.subtitle2)),
-              quest.isDone
-                  ? PunchButton(
-                      colors: TColors.green.value,
-                      content: Text(
-                        "collect_l".l(),
-                        style: theme.textTheme.headline5,
-                        textAlign: TextAlign.center,
-                      ),
-                      bottom: 12.d,
-                      width: 132.d,
-                      height: 44.d,
-                      onTap: () => _collect(quest))
-                  : Positioned(
-                      width: 132.d,
-                      height: 32.d,
-                      bottom: 12.d,
-                      child: Components.slider(
-                          theme, quest.min, quest.value, quest.max)),
-              Positioned(
-                  right: 0,
-                  child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SVG.show("coin", 32.d),
+          Positioned(left: 0, child: SVG.show(quest.type.icon, 54.d)),
+          Positioned(
+              top: quest.isDone ? 0 : 12.d,
+              right: 44,
+              left: 62,
+              child: Text(quest.text, style: theme.textTheme.subtitle2)),
+          quest.isDone
+              ? PunchButton(
+                  colors: TColors.green.value,
+                  content: Text(
+                    "collect_l".l(),
+                    style: theme.textTheme.headline5,
+                    textAlign: TextAlign.center,
+                  ),
+                  bottom: 12.d,
+                  width: 132.d,
+                  height: 44.d,
+                  onTap: () => _collect(quest))
+              : Positioned(
+                  width: 132.d,
+                  height: 32.d,
+                  bottom: 12.d,
+                  child: Components.slider(
+                      theme, quest.min, quest.value, quest.max)),
+          Positioned(
+              right: 0,
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SVG.show("coin", 32.d),
                     Text("x${quest.reward}", style: theme.textTheme.subtitle2)
-                      ]))
+                  ]))
         ]));
   }
 

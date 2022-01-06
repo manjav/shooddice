@@ -4,14 +4,12 @@ import 'package:numbers/utils/localization.dart';
 import 'package:numbers/utils/utils.dart';
 import 'package:rive/rive.dart';
 
-// ignore: must_be_immutable
 class QuitDialog extends AbstractDialog {
   final bool? showAvatar;
   QuitDialog({this.showAvatar})
       : super(DialogMode.quit,
             height: 54.d,
             title: "quit_l".l(),
-            coinButton: SizedBox(),
             statsButton: SizedBox(),
             scoreButton: SizedBox(),
             padding: EdgeInsets.fromLTRB(16.d, 4.d, 16.d, 8.d));
@@ -20,6 +18,9 @@ class QuitDialog extends AbstractDialog {
 }
 
 class _QuitDialogState extends AbstractDialogState<QuitDialog> {
+  @override
+  Widget coinsButtonFactory(ThemeData theme) => SizedBox();
+
   @override
   Widget contentFactory(ThemeData theme) {
     return GestureDetector(

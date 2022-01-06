@@ -1,5 +1,3 @@
-// ignore_for_file: must_be_immutable
-
 import 'package:flutter/material.dart';
 import 'package:games_services/games_services.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -19,7 +17,6 @@ class AbstractDialog extends StatefulWidget {
   final double? width;
   final double? height;
   final Widget? scoreButton;
-  Widget? coinButton;
   final Widget? closeButton;
   final Widget? statsButton;
   final Function? onWillPop;
@@ -35,7 +32,6 @@ class AbstractDialog extends StatefulWidget {
       this.width,
       this.height,
       this.scoreButton,
-      this.coinButton,
       this.closeButton,
       this.statsButton,
       this.onWillPop,
@@ -140,11 +136,10 @@ class AbstractDialogState<T extends AbstractDialog> extends State<T> {
   }
 
   Widget coinsButtonFactory(ThemeData theme) {
-    return widget.coinButton ??
-        Positioned(
-            top: 32.d,
-            left: 66.d,
-            child: Components.coins(context, widget.mode.name));
+    return Positioned(
+        top: 32.d,
+        left: 66.d,
+        child: Components.coins(context, widget.mode.name));
   }
 
   Widget headerFactory(ThemeData theme, double width) {

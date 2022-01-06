@@ -12,7 +12,6 @@ import 'package:numbers/widgets/buttons.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:http/http.dart' as http;
 
-// ignore: must_be_immutable
 class RatingDialog extends AbstractDialog {
   static Future<bool> showRating(BuildContext context) async {
     print(
@@ -139,7 +138,6 @@ class _RatingDialogState extends AbstractDialogState<RatingDialog> {
   }
 }
 
-// ignore: must_be_immutable
 class ReviewDialog extends AbstractDialog {
   ReviewDialog()
       : super(

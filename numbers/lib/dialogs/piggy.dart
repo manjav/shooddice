@@ -14,10 +14,9 @@ import 'package:numbers/widgets/buttons.dart';
 import 'package:numbers/widgets/components.dart';
 import 'package:numbers/widgets/punchbutton.dart';
 
-// ignore: must_be_immutable
 class PiggyDialog extends AbstractDialog {
   static int capacity = 30;
-  bool? playApplaud;
+  final bool? playApplaud;
   PiggyDialog({this.playApplaud})
       : super(DialogMode.piggy,
             showCloseButton: false,

@@ -16,7 +16,6 @@ import 'package:numbers/widgets/punchbutton.dart';
 import 'package:numbers/widgets/widgets.dart';
 import 'package:rive/rive.dart';
 
-// ignore: must_be_immutable
 class BigBlockDialog extends AbstractDialog {
   final ConfettiController confettiController;
 

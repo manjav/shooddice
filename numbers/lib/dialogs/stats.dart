@@ -13,7 +13,6 @@ import 'package:path_provider/path_provider.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:share/share.dart';
 
-// ignore: must_be_immutable
 class StatsDialog extends AbstractDialog {
   StatsDialog()
       : super(
@@ -33,9 +32,15 @@ class _StatsDialogState extends AbstractDialogState<StatsDialog> {
   Widget build(BuildContext context) {
     stepChildren.clear();
     stepChildren.add(bannerAdsFactory("stats"));
-    widget.coinButton = Positioned(
-        top: 32.d, left: 12.d, child: Components.coins(context, "stats"));
     return super.build(context);
+  }
+
+  @override
+  Widget coinsButtonFactory(ThemeData theme) {
+    return Positioned(
+        top: 32.d,
+        left: 12.d,
+        child: Components.coins(context, widget.mode.name));
   }
 
   @override

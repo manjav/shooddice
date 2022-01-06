@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:numbers/dialogs/dialogs.dart';
 import 'package:numbers/utils/utils.dart';
 
-// ignore: must_be_immutable
 class Toast extends AbstractDialog {
   final String text;
   final String? icon;
@@ -12,7 +11,6 @@ class Toast extends AbstractDialog {
             height: 54.d,
             sfx: "merge-9",
             showCloseButton: false,
-            coinButton: SizedBox(),
             statsButton: SizedBox(),
             scoreButton: SizedBox(),
             padding: EdgeInsets.fromLTRB(12.d, 4.d, 12.d, 8.d));
@@ -21,6 +19,9 @@ class Toast extends AbstractDialog {
 }
 
 class _ToastState extends AbstractDialogState<Toast> {
+  @override
+  Widget coinsButtonFactory(ThemeData theme) => SizedBox();
+
   @override
   Widget contentFactory(ThemeData theme) {
     var iconWidget = <Widget>[];

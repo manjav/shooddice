@@ -14,7 +14,6 @@ import 'package:numbers/widgets/buttons.dart';
 import 'package:numbers/widgets/punchbutton.dart';
 import 'package:rive/rive.dart';
 
-// ignore: must_be_immutable
 class ReviveDialog extends AbstractDialog {
   ReviveDialog()
       : super(DialogMode.revive,

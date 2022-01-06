@@ -6,13 +6,12 @@ import 'package:numbers/utils/localization.dart';
 import 'package:numbers/utils/sounds.dart';
 import 'package:numbers/utils/utils.dart';
 
-// ignore: must_be_immutable
 class QuestNotification extends StatefulWidget {
   final Quest quest;
   final double size;
+  QuestNotification(this.quest, this.size);
   @override
   _QuestNotificationyState createState() => _QuestNotificationyState();
-  QuestNotification(this.quest, this.size);
 }
 
 class _QuestNotificationyState extends State<QuestNotification>
