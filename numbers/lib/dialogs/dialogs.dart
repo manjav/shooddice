@@ -18,7 +18,6 @@ class AbstractDialog extends StatefulWidget {
   final String? title;
   final double? width;
   final double? height;
-  Widget? child;
   final Widget? scoreButton;
   Widget? coinButton;
   final Widget? closeButton;
@@ -35,7 +34,6 @@ class AbstractDialog extends StatefulWidget {
       this.title,
       this.width,
       this.height,
-      this.child,
       this.scoreButton,
       this.coinButton,
       this.closeButton,
@@ -186,8 +184,10 @@ class AbstractDialogState<T extends AbstractDialog> extends State<T> {
                 shape: BoxShape.rectangle,
                 borderRadius: BorderRadius.all(Radius.circular(24.d)))
             : null,
-        child: widget.child ?? SizedBox());
+        child: contentFactory(theme));
   }
+
+  Widget contentFactory(ThemeData theme) => SizedBox();
 
   _onAdsUpdate(AdPlace placement, AdState state) {
     if (placement == AdPlace.Rewarded && state != AdState.Closed)

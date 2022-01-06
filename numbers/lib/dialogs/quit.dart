@@ -21,9 +21,8 @@ class QuitDialog extends AbstractDialog {
 
 class _QuitDialogState extends AbstractDialogState<QuitDialog> {
   @override
-  Widget build(BuildContext context) {
-    var theme = Theme.of(context);
-    widget.child = GestureDetector(
+  Widget contentFactory(ThemeData theme) {
+    return GestureDetector(
         child:
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           Expanded(
@@ -32,7 +31,6 @@ class _QuitDialogState extends AbstractDialogState<QuitDialog> {
           SVG.show("accept", 28.d)
         ]),
         onTap: () => buttonsClick(context, "quit", 0, false));
-    return super.build(context);
   }
 
   @override

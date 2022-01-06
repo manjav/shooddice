@@ -31,12 +31,16 @@ class _StatsDialogState extends AbstractDialogState<StatsDialog> {
   var shareMode = false;
   @override
   Widget build(BuildContext context) {
-    var theme = Theme.of(context);
     stepChildren.clear();
     stepChildren.add(bannerAdsFactory("stats"));
     widget.coinButton = Positioned(
         top: 32.d, left: 12.d, child: Components.coins(context, "stats"));
-    widget.child = Screenshot(
+    return super.build(context);
+  }
+
+  @override
+  Widget contentFactory(ThemeData theme) {
+    return Screenshot(
         controller: _screenshotController,
         child:
             Column(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
@@ -76,7 +80,6 @@ class _StatsDialogState extends AbstractDialogState<StatsDialog> {
                         Text("share_l".l(), style: theme.textTheme.headline5)
                       ]))
         ]));
-    return super.build(context);
   }
 
   Widget _bigRecordItem(ThemeData theme, int i) {

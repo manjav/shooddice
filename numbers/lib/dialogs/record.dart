@@ -39,9 +39,8 @@ class _RecordDialogState extends AbstractDialogState<RecordDialog> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    var theme = Theme.of(context);
-    widget.child = Stack(alignment: Alignment.topCenter, children: [
+  Widget contentFactory(ThemeData theme) {
+    return  Stack(alignment: Alignment.topCenter, children: [
       Positioned(
           top: 152.d,
           child: Text("record_l".l(), style: theme.textTheme.caption)),
@@ -102,6 +101,5 @@ class _RecordDialogState extends AbstractDialogState<RecordDialog> {
           child: RiveAnimation.asset('anims/nums-record.riv',
               stateMachines: ["machine"])),
     ]);
-    return super.build(context);
   }
 }

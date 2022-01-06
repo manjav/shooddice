@@ -43,9 +43,8 @@ class _BigBlockDialogState extends AbstractDialogState<BigBlockDialog> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    var theme = Theme.of(context);
-    widget.child = Stack(alignment: Alignment.topCenter, children: [
+  Widget contentFactory(ThemeData theme) {
+    return Stack(alignment: Alignment.topCenter, children: [
       Positioned(
           top: 140.d,
           child: Text("big_message".l([Cell.getScore(widget.value).toString()]),
@@ -113,6 +112,5 @@ class _BigBlockDialogState extends AbstractDialogState<BigBlockDialog> {
               turns: AlwaysStoppedAnimation(-0.02),
               child: Widgets.cell(theme, widget.value)))
     ]);
-    return super.build(context);
   }
 }

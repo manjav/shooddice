@@ -28,10 +28,14 @@ class ConfirmDialog extends AbstractDialog {
 
 class _ConfirmDialogState extends AbstractDialogState<ConfirmDialog> {
   @override
-  Widget build(BuildContext context) {
-    var theme = Theme.of(context);
+  void initState() {
     Timer(Duration(milliseconds: 10), () => widget.confettiController.play());
-    widget.child = Stack(alignment: Alignment.topCenter, children: [
+    super.initState();
+  }
+
+  @override
+  Widget contentFactory(ThemeData theme) {
+    return Stack(alignment: Alignment.topCenter, children: [
       Positioned(
           top: 20.d,
           child: Text("tutor_message".l(), style: theme.textTheme.caption)),
@@ -67,6 +71,5 @@ class _ConfirmDialogState extends AbstractDialogState<ConfirmDialog> {
                   ]))),
       Center(child: Components.confetty(widget.confettiController))
     ]);
-    return super.build(context);
   }
 }

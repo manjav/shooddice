@@ -54,14 +54,18 @@ class _StartDialogState extends AbstractDialogState<StartDialog> {
 
   @override
   Widget build(BuildContext context) {
-    if (Pref.tutorMode.value == 0) return SizedBox();
     var theme = Theme.of(context);
     stepChildren.clear();
     stepChildren.add(_questButton(theme));
     stepChildren.add(_dailyButton(theme));
     stepChildren.add(bannerAdsFactory("start"));
-    widget.child =
-        Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+    return super.build(context);
+  }
+
+  @override
+  Widget contentFactory(ThemeData theme) {
+    if (Pref.tutorMode.value == 0) return SizedBox();
+    return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
       Expanded(
           child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
         if (Prefs.getString("cells").isEmpty)
@@ -86,7 +90,6 @@ class _StartDialogState extends AbstractDialogState<StartDialog> {
                     textAlign: TextAlign.center)
               ])))
     ]);
-    return super.build(context);
   }
 
   Widget _boostButton(String title, String boost) {

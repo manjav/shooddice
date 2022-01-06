@@ -36,14 +36,13 @@ class _FreeCoinsDialogState extends AbstractDialogState<FreeCoinsDialog> {
   void initState() {
     reward = FreeCoinsDialog.reward;
     Timer(Duration(milliseconds: 600), () => Sound.play("win"));
+    FreeCoinsDialog.earnedAt = DateTime.now().millisecondsSinceEpoch;
     super.initState();
   }
 
   @override
-  Widget build(BuildContext context) {
-    var theme = Theme.of(context);
-    FreeCoinsDialog.earnedAt = DateTime.now().millisecondsSinceEpoch;
-    widget.child = Stack(alignment: Alignment.topCenter, children: [
+  Widget contentFactory(ThemeData theme) {
+    return Stack(alignment: Alignment.topCenter, children: [
       SizedBox(
           width: 126.d,
           height: 126.d,
@@ -102,6 +101,5 @@ class _FreeCoinsDialogState extends AbstractDialogState<FreeCoinsDialog> {
                         Text("claim_l".l(), style: theme.textTheme.subtitle2)),
               ])))
     ]);
-    return super.build(context);
   }
 }

@@ -22,8 +22,7 @@ class Toast extends AbstractDialog {
 
 class _ToastState extends AbstractDialogState<Toast> {
   @override
-  Widget build(BuildContext context) {
-    var theme = Theme.of(context);
+  Widget contentFactory(ThemeData theme) {
     var iconWidget = <Widget>[];
     if (widget.monoIcon != null) {
       iconWidget.add(SVG.icon(widget.monoIcon!, theme));
@@ -35,7 +34,6 @@ class _ToastState extends AbstractDialogState<Toast> {
     }
     iconWidget
         .add(Text(widget.text, style: Theme.of(context).textTheme.headline5));
-    widget.child = Row(children: iconWidget);
-    return super.build(context);
+    return Row(children: iconWidget);
   }
 }

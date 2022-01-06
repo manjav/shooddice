@@ -13,6 +13,7 @@ import 'package:numbers/utils/utils.dart';
 import 'package:numbers/widgets/buttons.dart';
 import 'package:numbers/widgets/punchbutton.dart';
 import 'package:rive/rive.dart';
+
 // ignore: must_be_immutable
 class ReviveDialog extends AbstractDialog {
   ReviveDialog()
@@ -47,10 +48,9 @@ class _ReviveDialogState extends AbstractDialogState<ReviveDialog> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    var theme = Theme.of(context);
+  Widget contentFactory(ThemeData theme) {
     var cost = 200 * pow(2, _numRevives).round();
-    widget.child = Stack(
+    return Stack(
       alignment: Alignment.topCenter,
       children: [
         Positioned(
@@ -111,7 +111,6 @@ class _ReviveDialogState extends AbstractDialogState<ReviveDialog> {
             ]))
       ],
     );
-    return super.build(context);
   }
 
   @override

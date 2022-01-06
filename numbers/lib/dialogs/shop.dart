@@ -91,14 +91,13 @@ class _ShopDialogState extends AbstractDialogState<ShopDialog> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    var theme = Theme.of(context);
+  Widget contentFactory(ThemeData theme) {
     var items = coins.values.toList();
     widget.coinButton = Positioned(
         top: 32.d,
         left: 12.d,
         child: Components.coins(context, "shop", clickable: false));
-    widget.child = Stack(children: [
+    return  Stack(children: [
       Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
         SizedBox(
             height: 200.d,
@@ -198,8 +197,6 @@ class _ShopDialogState extends AbstractDialogState<ShopDialog> {
       ]),
       _overlay(theme)
     ]);
-
-    return super.build(context);
   }
 
   ProductDetails? _findProduct(String id) {

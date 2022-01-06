@@ -101,9 +101,8 @@ class RatingDialog extends AbstractDialog {
 class _RatingDialogState extends AbstractDialogState<RatingDialog> {
   int _response = 0;
   @override
-  Widget build(BuildContext context) {
-    var theme = Theme.of(context);
-    widget.child = WillPopScope(
+  Widget contentFactory(ThemeData theme) {
+    return WillPopScope(
         onWillPop: () async => false,
         child: Stack(alignment: Alignment.topRight, children: <Widget>[
           Text("rate_message".l(),
@@ -137,7 +136,6 @@ class _RatingDialogState extends AbstractDialogState<RatingDialog> {
                           Text("rate_l".l(), style: theme.textTheme.headline5)),
                   onTap: () => Navigator.pop(context, _response)))
         ]));
-    return super.build(context);
   }
 }
 
@@ -167,9 +165,8 @@ class _ReviewDialogState extends AbstractDialogState<ReviewDialog> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    var theme = Theme.of(context);
-    widget.child = Column(
+  Widget contentFactory(ThemeData theme) {
+    return Column(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -191,6 +188,10 @@ class _ReviewDialogState extends AbstractDialogState<ReviewDialog> {
                   child: Text("send_l".l(), style: theme.textTheme.headline5)),
               onTap: () => Navigator.pop(context, _commentController.text))
         ]);
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(body: Center(child: super.build(context)));
   }
 }

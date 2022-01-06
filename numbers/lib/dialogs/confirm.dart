@@ -24,9 +24,8 @@ class Toast extends AbstractDialog {
 
 class _ToastState extends AbstractDialogState<Toast> {
   @override
-  Widget build(BuildContext context) {
-    var theme = Theme.of(context);
-    widget.child = Column(children: [
+  Widget contentFactory(ThemeData theme) {
+    return Column(children: [
       SizedBox(
           width: 120.d,
           height: 120.d,
@@ -60,6 +59,5 @@ class _ToastState extends AbstractDialogState<Toast> {
                             style: theme.textTheme.headline5))))
       ])
     ]);
-    return super.build(context);
   }
 }

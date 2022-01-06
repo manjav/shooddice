@@ -41,9 +41,8 @@ class _PiggyDialogState extends AbstractDialogState<PiggyDialog> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    var theme = Theme.of(context);
-    widget.child = Stack(alignment: Alignment.topCenter, children: [
+  Widget contentFactory(ThemeData theme) {
+    return Stack(alignment: Alignment.topCenter, children: [
       SVG.show("piggy", 144.d),
       Positioned(
           top: 112.d,
@@ -56,7 +55,6 @@ class _PiggyDialogState extends AbstractDialogState<PiggyDialog> {
       _rightButton(theme, Pref.coinPiggy.value, PiggyDialog.capacity),
       _leftButton(theme, Pref.coinPiggy.value, PiggyDialog.capacity)
     ]);
-    return super.build(context);
   }
 
   _leftButton(ThemeData theme, int value, int maxValue) {
