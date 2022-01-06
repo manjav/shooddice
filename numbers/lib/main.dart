@@ -4,8 +4,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:games_services/games_services.dart';
+import 'package:numbers/dialogs/daily.dart';
 import 'package:numbers/dialogs/quests.dart';
 import 'package:numbers/dialogs/quit.dart';
+import 'package:numbers/dialogs/start.dart';
 import 'package:numbers/utils/ads.dart';
 import 'package:numbers/utils/analytic.dart';
 import 'package:numbers/utils/localization.dart';
@@ -15,8 +17,6 @@ import 'package:numbers/utils/sounds.dart';
 import 'package:numbers/utils/themes.dart';
 import 'package:numbers/utils/utils.dart';
 import 'package:smartlook/smartlook.dart';
-
-import 'dialogs/start.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -105,6 +105,7 @@ class _MainPageState extends State<MainPage> with WidgetsBindingObserver {
     Analytics.init(widget.analytics);
     Prefs.init(() async {
       await Localization.init();
+      Days.init();
       Quests.init();
       Notifier.init();
       _recordApp();
