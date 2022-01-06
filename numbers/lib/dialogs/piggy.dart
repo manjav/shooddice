@@ -31,27 +31,25 @@ class PiggyDialog extends AbstractDialog {
 class _PiggyDialogState extends AbstractDialogState<PiggyDialog> {
   @override
   void initState() {
-    super.initState();
+    reward =
+        Pref.coinPiggy.value >= PiggyDialog.capacity ? PiggyDialog.capacity : 0;
+
+    if (widget.playApplaud ?? false)
+      Timer(Duration(milliseconds: 600), () => Sound.play("win"));
     Analytics.updateVariantIDs();
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
-    var filled = Pref.coinPiggy.value >= PiggyDialog.capacity;
-
-    if (widget.playApplaud ?? false)
-      Timer(Duration(milliseconds: 600), () => Sound.play("win"));
-    widget.onWillPop = () => buttonsClick(
-        context, "piggy", filled ? PiggyDialog.capacity : 0, false);
-
     widget.child = Stack(alignment: Alignment.topCenter, children: [
       SVG.show("piggy", 144.d),
       Positioned(
           top: 112.d,
           width: 260.d,
           child: Text(
-              "piggy_${filled ? 'collect' : 'fill'}"
+              "piggy_${reward > 0 ? 'collect' : 'fill'}"
                   .l([(PiggyDialog.capacity * Ads.rewardCoef).toString()]),
               textAlign: TextAlign.center,
               style: theme.textTheme.caption)),

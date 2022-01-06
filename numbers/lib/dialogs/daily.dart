@@ -9,6 +9,7 @@ import 'package:numbers/utils/utils.dart';
 import 'package:numbers/widgets/buttons.dart';
 import 'package:numbers/widgets/punchbutton.dart';
 
+// ignore: must_be_immutable
 class DailyDialog extends AbstractDialog {
   DailyDialog()
       : super(

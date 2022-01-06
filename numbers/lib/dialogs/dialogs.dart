@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:games_services/games_services.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -10,24 +12,23 @@ import 'package:numbers/utils/sounds.dart';
 import 'package:numbers/utils/utils.dart';
 import 'package:numbers/widgets/components.dart';
 
-// ignore: must_be_immutable
 class AbstractDialog extends StatefulWidget {
-  DialogMode mode;
-  String? sfx;
-  String? title;
-  double? width;
-  double? height;
+  final DialogMode mode;
+  final String? sfx;
+  final String? title;
+  final double? width;
+  final double? height;
   Widget? child;
-  Widget? scoreButton;
+  final Widget? scoreButton;
   Widget? coinButton;
-  Widget? closeButton;
-  Widget? statsButton;
-  Function? onWillPop;
-  EdgeInsets? padding;
-  bool? hasChrome;
-  bool? showCloseButton;
-  bool? closeOnBack;
-  Map<String, dynamic>? args;
+  final Widget? closeButton;
+  final Widget? statsButton;
+  final Function? onWillPop;
+  final EdgeInsets? padding;
+  final bool? hasChrome;
+  final bool? showCloseButton;
+  final bool? closeOnBack;
+  final Map<String, dynamic>? args;
 
   AbstractDialog(this.mode,
       {this.sfx,
@@ -51,11 +52,17 @@ class AbstractDialog extends StatefulWidget {
 
 class AbstractDialogState<T extends AbstractDialog> extends State<T> {
   List<Widget> stepChildren = <Widget>[];
+  int reward = 0;
+  Function? onWillPop;
   @override
   void initState() {
     Ads.onUpdate = _onAdsUpdate;
     Sound.play(widget.sfx ?? "pop");
     Analytics.setScreen(widget.mode.name);
+    if (widget.onWillPop != null)
+      onWillPop = widget.onWillPop;
+    else if (reward > 0)
+      onWillPop = () => buttonsClick(context, widget.mode.name, reward, false);
     super.initState();
   }
 
@@ -79,7 +86,7 @@ class AbstractDialogState<T extends AbstractDialog> extends State<T> {
     return WillPopScope(
         key: Key(widget.mode.name),
         onWillPop: () async {
-          widget.onWillPop?.call();
+          onWillPop?.call();
           return widget.closeOnBack ?? true;
         },
         child: Stack(alignment: Alignment.center, children: children));
@@ -199,6 +206,8 @@ enum DialogMode {
   callout,
   confirm,
   confirmDialog,
+  daily,
+  freeCoins,
   pause,
   piggy,
   quests,
@@ -228,6 +237,8 @@ extension DialogName on DialogMode {
         return "daily";
       case DialogMode.pause:
         return "pause";
+      case DialogMode.freeCoins:
+        return "freeCoins";
       case DialogMode.piggy:
         return "piggy";
       case DialogMode.quests:

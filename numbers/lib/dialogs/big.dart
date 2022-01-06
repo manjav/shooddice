@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:numbers/core/cell.dart';
+import 'package:numbers/dialogs/dialogs.dart';
 import 'package:numbers/dialogs/toast.dart';
 import 'package:numbers/utils/ads.dart';
 import 'package:numbers/utils/localization.dart';
@@ -14,8 +15,6 @@ import 'package:numbers/widgets/components.dart';
 import 'package:numbers/widgets/punchbutton.dart';
 import 'package:numbers/widgets/widgets.dart';
 import 'package:rive/rive.dart';
-
-import 'dialogs.dart';
 
 // ignore: must_be_immutable
 class BigBlockDialog extends AbstractDialog {
@@ -34,16 +33,18 @@ class BigBlockDialog extends AbstractDialog {
 
 class _BigBlockDialogState extends AbstractDialogState<BigBlockDialog> {
   @override
-  Widget build(BuildContext context) {
-    var rewardCoef = 10;
-    var reward = (widget.value - 8) * 10;
-    var theme = Theme.of(context);
+  void initState() {
+    reward = (widget.value - 8) * 10;
     Timer(Duration(milliseconds: 500), () {
       widget.confettiController.play();
       Sound.play("win");
     });
-    widget.onWillPop = () => buttonsClick(context, "big", reward, false);
+    super.initState();
+  }
 
+  @override
+  Widget build(BuildContext context) {
+    var theme = Theme.of(context);
     widget.child = Stack(alignment: Alignment.topCenter, children: [
       Positioned(
           top: 140.d,
@@ -79,20 +80,21 @@ class _BigBlockDialogState extends AbstractDialogState<BigBlockDialog> {
           isEnable: Ads.isReady(),
           colors: TColors.orange.value,
           errorMessage: Toast("ads_unavailable".l(), monoIcon: "A"),
-          onTap: () => buttonsClick(context, "big", reward * rewardCoef, true),
+          onTap: () =>
+              buttonsClick(context, "big", reward * Ads.rewardCoef, true),
           content: Stack(alignment: Alignment.centerLeft, children: [
             SVG.icon("A", theme),
             Positioned(
                 top: 5.d,
                 left: 44.d,
-                child: Text((reward * rewardCoef).format(),
+                child: Text((reward * Ads.rewardCoef).format(),
                     style: theme.textTheme.headline4)),
             Positioned(
                 bottom: 4.d,
                 left: 44.d,
                 child: Row(children: [
                   SVG.show("coin", 22.d),
-                  Text("x$rewardCoef", style: theme.textTheme.headline6)
+                  Text("x${Ads.rewardCoef}", style: theme.textTheme.headline6)
                 ])),
           ])),
       Positioned(

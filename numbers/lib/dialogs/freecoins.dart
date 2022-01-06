@@ -19,11 +19,10 @@ class FreeCoinsDialog extends AbstractDialog {
   static final autoAppearance = 3;
   static final reward = 20;
 
-  bool? playApplaud;
   static int earnedAt = 0;
 
-  FreeCoinsDialog({this.playApplaud})
-      : super(DialogMode.piggy,
+  FreeCoinsDialog()
+      : super(DialogMode.freeCoins,
             height: 320.d,
             showCloseButton: false,
             title: "freecoins_l".l(),
@@ -34,13 +33,16 @@ class FreeCoinsDialog extends AbstractDialog {
 
 class _FreeCoinsDialogState extends AbstractDialogState<FreeCoinsDialog> {
   @override
+  void initState() {
+    reward = FreeCoinsDialog.reward;
+    Timer(Duration(milliseconds: 600), () => Sound.play("win"));
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
-    var reward = FreeCoinsDialog.reward;
     FreeCoinsDialog.earnedAt = DateTime.now().millisecondsSinceEpoch;
-    if (widget.playApplaud ?? false)
-      Timer(Duration(milliseconds: 600), () => Sound.play("win"));
-    widget.onWillPop = () => buttonsClick(context, "freecoins", reward, false);
     widget.child = Stack(alignment: Alignment.topCenter, children: [
       SizedBox(
           width: 126.d,

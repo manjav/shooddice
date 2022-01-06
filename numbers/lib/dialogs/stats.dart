@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:numbers/core/cell.dart';
+import 'package:numbers/dialogs/dialogs.dart';
 import 'package:numbers/utils/analytic.dart';
 import 'package:numbers/utils/localization.dart';
 import 'package:numbers/utils/prefs.dart';
@@ -11,8 +12,6 @@ import 'package:numbers/widgets/widgets.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:share/share.dart';
-
-import 'dialogs.dart';
 
 // ignore: must_be_immutable
 class StatsDialog extends AbstractDialog {

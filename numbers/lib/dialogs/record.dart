@@ -29,14 +29,18 @@ class RecordDialog extends AbstractDialog {
 
 class _RecordDialogState extends AbstractDialogState<RecordDialog> {
   @override
-  Widget build(BuildContext context) {
-    var reward = 10;
-    var theme = Theme.of(context);
+  void initState() {
+    reward = 10;
     Timer(Duration(milliseconds: 500), () {
       widget.confettiController.play();
       Sound.play("win");
     });
-    widget.onWillPop = () => buttonsClick(context, "record", reward, false);
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    var theme = Theme.of(context);
     widget.child = Stack(alignment: Alignment.topCenter, children: [
       Positioned(
           top: 152.d,

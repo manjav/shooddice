@@ -83,10 +83,9 @@ class _QuestsDialogState extends AbstractDialogState<QuestsDialog> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         SVG.show("coin", 32.d),
-                        Text("x${quest.reward}",
-                            style: theme.textTheme.subtitle2)
+                    Text("x${quest.reward}", style: theme.textTheme.subtitle2)
                       ]))
-            ])));
+        ]));
   }
 
   void _collect(Quest quest) {
