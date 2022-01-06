@@ -224,6 +224,8 @@ extension DialogName on DialogMode {
         return "confirmDialog";
       case DialogMode.confirm:
         return "confirm";
+      case DialogMode.daily:
+        return "daily";
       case DialogMode.pause:
         return "pause";
       case DialogMode.piggy:
