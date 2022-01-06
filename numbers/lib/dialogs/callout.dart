@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:numbers/dialogs/dialogs.dart';
 import 'package:numbers/dialogs/toast.dart';
 import 'package:numbers/utils/ads.dart';
 import 'package:numbers/utils/localization.dart';
@@ -7,8 +8,6 @@ import 'package:numbers/utils/sounds.dart';
 import 'package:numbers/utils/themes.dart';
 import 'package:numbers/utils/utils.dart';
 import 'package:numbers/widgets/buttons.dart';
-
-import 'dialogs.dart';
 
 // ignore: must_be_immutable
 class Callout extends AbstractDialog {

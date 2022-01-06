@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:numbers/dialogs/dialogs.dart';
+import 'package:numbers/dialogs/toast.dart';
 import 'package:numbers/utils/ads.dart';
 import 'package:numbers/utils/analytic.dart';
 import 'package:numbers/utils/localization.dart';
@@ -11,9 +13,6 @@ import 'package:numbers/utils/utils.dart';
 import 'package:numbers/widgets/buttons.dart';
 import 'package:numbers/widgets/components.dart';
 import 'package:numbers/widgets/punchbutton.dart';
-
-import 'dialogs.dart';
-import 'toast.dart';
 
 // ignore: must_be_immutable
 class PiggyDialog extends AbstractDialog {

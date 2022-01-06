@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:in_app_review/in_app_review.dart';
+import 'package:numbers/dialogs/dialogs.dart';
 import 'package:numbers/dialogs/toast.dart';
 import 'package:numbers/utils/analytic.dart';
 import 'package:numbers/utils/localization.dart';
@@ -10,8 +11,6 @@ import 'package:numbers/utils/utils.dart';
 import 'package:numbers/widgets/buttons.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:http/http.dart' as http;
-
-import 'dialogs.dart';
 
 // ignore: must_be_immutable
 class RatingDialog extends AbstractDialog {

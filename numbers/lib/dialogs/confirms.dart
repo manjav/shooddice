@@ -2,13 +2,12 @@ import 'dart:async';
 
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
+import 'package:numbers/dialogs/dialogs.dart';
 import 'package:numbers/utils/localization.dart';
 import 'package:numbers/utils/themes.dart';
 import 'package:numbers/utils/utils.dart';
 import 'package:numbers/widgets/buttons.dart';
 import 'package:numbers/widgets/components.dart';
-
-import 'dialogs.dart';
 
 // ignore: must_be_immutable
 class ConfirmDialog extends AbstractDialog {

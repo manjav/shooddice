@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:numbers/dialogs/dialogs.dart';
 import 'package:numbers/utils/localization.dart';
 import 'package:numbers/utils/prefs.dart';
 import 'package:numbers/utils/themes.dart';
 import 'package:numbers/utils/utils.dart';
 import 'package:numbers/widgets/buttons.dart';
-
-import 'dialogs.dart';
 
 // ignore: must_be_immutable
 class PauseDialog extends AbstractDialog {

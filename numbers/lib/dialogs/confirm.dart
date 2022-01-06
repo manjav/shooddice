@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:numbers/dialogs/dialogs.dart';
 import 'package:numbers/utils/themes.dart';
 import 'package:numbers/utils/utils.dart';
 import 'package:numbers/widgets/buttons.dart';
 import 'package:rive/rive.dart';
-
-import 'dialogs.dart';
 
 // ignore: must_be_immutable
 class Toast extends AbstractDialog {

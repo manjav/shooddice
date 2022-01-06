@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
+import 'package:numbers/dialogs/dialogs.dart';
+import 'package:numbers/dialogs/toast.dart';
 import 'package:numbers/utils/ads.dart';
 import 'package:numbers/utils/localization.dart';
 import 'package:numbers/utils/prefs.dart';
@@ -12,9 +14,6 @@ import 'package:numbers/widgets/buttons.dart';
 import 'package:numbers/widgets/components.dart';
 import 'package:numbers/widgets/punchbutton.dart';
 import 'package:rive/rive.dart';
-
-import 'dialogs.dart';
-import 'toast.dart';
 
 // ignore: must_be_immutable
 class RecordDialog extends AbstractDialog {
