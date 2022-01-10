@@ -155,7 +155,7 @@ class _StartDialogState extends AbstractDialogState<StartDialog> {
       var reward = await Ads.showRewarded();
       if (reward == null) return;
     }
-    Pref.coin.increase(-cost, itemType: "start", itemId: boost);
+    await Coins.change(-cost, "start", boost);
 
     if (boost == "next") MyGame.boostNextMode = 1;
     if (boost == "512") MyGame.boostBig = true;

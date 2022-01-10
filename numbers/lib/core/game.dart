@@ -22,18 +22,16 @@ import 'package:numbers/utils/themes.dart';
 import 'package:numbers/utils/utils.dart';
 
 enum GameEvent {
-  big,
-  bigReward,
   boost,
   celebrate,
   completeTutorial,
-  freeCoins,
   lose,
-  recordReward,
   remove,
   reward,
-  rewarded,
-  piggyReward,
+  freeCoins,
+  rewardBig,
+  rewardPiggy,
+  rewardRecord,
   score
 }
 
@@ -97,7 +95,10 @@ class MyGame extends FlameGame with TapDetector {
     await super.onLoad();
 
     _tutorMode = Pref.tutorMode.value == 0;
-    Pref.playCount.increase(1);
+    if (_tutorMode)
+      Prefs.setString("cells", "");
+    else
+      Pref.playCount.increase(1);
     Analytics.startProgress(
         "main", Pref.playCount.value, "big $boostBig next $boostNextMode");
 
@@ -430,10 +431,10 @@ class MyGame extends FlameGame with TapDetector {
 
     // Show big number popup
     if (cell.value > _valueRecord) {
-      isPlaying = false;
       if (cell.value == 11) Quests.increase(QuestType.b2048, 1);
       Pref.lastBig.set(_valueRecord = cell.value);
-      onGameEvent?.call(GameEvent.big, _valueRecord);
+      Prefs.increaseBig(_valueRecord);
+      onGameEvent?.call(GameEvent.rewardBig, _valueRecord);
     }
 
     // More chance for spawm new cells
