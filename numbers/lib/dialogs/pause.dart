@@ -11,6 +11,7 @@ class PauseDialog extends AbstractDialog {
       : super(
           DialogMode.pause,
           title: "pause_l".l(),
+          popDuration: 300,
           showCloseButton: false,
         );
   @override

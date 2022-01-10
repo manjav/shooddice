@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
+import 'package:numbers/dialogs/dialogs.dart';
 
 class Rout {
   static dynamic push(BuildContext context, Widget page,
       {Color? barrierColor,
       Tween<Offset>? tween,
       bool barrierDismissible = false}) async {
+    var popDuration = (page is AbstractDialog) ? (page.popDuration ?? 1) : 1;
     return await Navigator.of(context).push(PageRouteBuilder(
         opaque: false,
-        reverseTransitionDuration: Duration(milliseconds: 200),
+        reverseTransitionDuration: Duration(milliseconds: popDuration),
         barrierColor:
             barrierColor ?? Theme.of(context).backgroundColor.withAlpha(230),
         barrierDismissible: barrierDismissible,

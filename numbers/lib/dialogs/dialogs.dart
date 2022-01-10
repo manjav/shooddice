@@ -26,21 +26,25 @@ class AbstractDialog extends StatefulWidget {
   final bool? showCloseButton;
   final bool? closeOnBack;
   final Map<String, dynamic>? args;
+  final int? popDuration;
 
-  AbstractDialog(this.mode,
-      {this.sfx,
-      this.title,
-      this.width,
-      this.height,
-      this.scoreButton,
-      this.closeButton,
-      this.statsButton,
-      this.onWillPop,
-      this.padding,
-      this.hasChrome,
-      this.showCloseButton,
-      this.closeOnBack,
-      this.args});
+  AbstractDialog(
+    this.mode, {
+    this.sfx,
+    this.title,
+    this.width,
+    this.height,
+    this.scoreButton,
+    this.closeButton,
+    this.statsButton,
+    this.onWillPop,
+    this.padding,
+    this.hasChrome,
+    this.showCloseButton,
+    this.closeOnBack,
+    this.args,
+    this.popDuration,
+  });
   @override
   AbstractDialogState createState() => AbstractDialogState();
 }
