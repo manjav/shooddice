@@ -201,8 +201,8 @@ enum DialogMode {
   callout,
   confirm,
   confirmDialog,
+  cube,
   daily,
-  freeCoins,
   pause,
   piggy,
   quests,
@@ -228,12 +228,12 @@ extension DialogName on DialogMode {
         return "confirmDialog";
       case DialogMode.confirm:
         return "confirm";
+      case DialogMode.cube:
+        return "cube";
       case DialogMode.daily:
         return "daily";
       case DialogMode.pause:
         return "pause";
-      case DialogMode.freeCoins:
-        return "freeCoins";
       case DialogMode.piggy:
         return "piggy";
       case DialogMode.quests:

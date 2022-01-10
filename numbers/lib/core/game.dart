@@ -28,8 +28,8 @@ enum GameEvent {
   lose,
   remove,
   reward,
-  freeCoins,
   rewardBig,
+  rewardCube,
   rewardPiggy,
   rewardRecord,
   score

@@ -12,7 +12,7 @@ import 'package:numbers/core/game.dart';
 import 'package:numbers/dialogs/big.dart';
 import 'package:numbers/dialogs/callout.dart';
 import 'package:numbers/dialogs/confirms.dart';
-import 'package:numbers/dialogs/freecoins.dart';
+import 'package:numbers/dialogs/cube.dart';
 import 'package:numbers/dialogs/pause.dart';
 import 'package:numbers/dialogs/piggy.dart';
 import 'package:numbers/dialogs/record.dart';
@@ -196,9 +196,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     if (isAdsReady && _timer == null) {
       var duration = Duration(
           milliseconds: _animationTime
-              ? FreeCoinsDialog.showTime
-              : FreeCoinsDialog.waitingTime +
-                  Random().nextInt(FreeCoinsDialog.waitingTime));
+              ? CubeDialog.showTime
+              : CubeDialog.waitingTime +
+                  Random().nextInt(CubeDialog.waitingTime));
       _timer = Timer(duration, () {
         _animationTime = !_animationTime;
         _timer = null;
@@ -224,7 +224,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         bottom: 0.d,
         height: 120.d,
         child: GestureDetector(
-            onTap: _showFreeCoinsDialog,
+            onTap: _showCubeDialog,
             child:
                 Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
               SizedBox(
@@ -235,7 +235,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   height: 44.d,
                   alignment: Alignment.center,
                   padding: EdgeInsets.symmetric(horizontal: 12.d),
-                  child: Text("freecoins_catch".l()),
+                  child: Text("cube_catch".l()),
                   decoration: Components.badgeDecoration(color: Colors.white)),
             ])));
   }
@@ -311,8 +311,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         await Future.delayed(Duration(milliseconds: 250));
         _widget = BigBlockDialog(value, _confettiController!);
         break;
-      case GameEvent.freeCoins:
-        _widget = FreeCoinsDialog();
+      case GameEvent.rewardCube:
+        _widget = CubeDialog();
         break;
       case GameEvent.rewardPiggy:
         _widget = PiggyDialog(playApplaud: value > 0);
@@ -354,7 +354,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       }
       MyGame.isPlaying = true;
       if (event == GameEvent.rewardBig ||
-          event == GameEvent.freeCoins ||
+          event == GameEvent.rewardCube ||
           event == GameEvent.rewardPiggy) {
         await Future.delayed(Duration(milliseconds: 250));
         await Coins.change(result[1], "game", event.name);
@@ -437,11 +437,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     _gameWidget = GameWidget(game: _game!);
   }
 
-  _showFreeCoinsDialog() async {
+  _showCubeDialog() async {
     // Check fruad in frequently tap on cube man
-    if (DateTime.now().millisecondsSinceEpoch - FreeCoinsDialog.earnedAt >
-        FreeCoinsDialog.waitingTime)
-      _game!.onGameEvent?.call(GameEvent.freeCoins, 0);
+    if (DateTime.now().millisecondsSinceEpoch - CubeDialog.earnedAt >
+        CubeDialog.waitingTime)
+      _game!.onGameEvent?.call(GameEvent.rewardCube, 0);
   }
 
   void _onRemoveBlock() {
