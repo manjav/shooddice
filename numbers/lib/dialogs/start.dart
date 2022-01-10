@@ -54,6 +54,7 @@ class _StartDialogState extends AbstractDialogState<StartDialog> {
 
   @override
   Widget build(BuildContext context) {
+    if (Pref.tutorMode.value == 0) return SizedBox();
     var theme = Theme.of(context);
     stepChildren.clear();
     stepChildren.add(_questButton(theme));
@@ -64,7 +65,6 @@ class _StartDialogState extends AbstractDialogState<StartDialog> {
 
   @override
   Widget contentFactory(ThemeData theme) {
-    if (Pref.tutorMode.value == 0) return SizedBox();
     return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
       Expanded(
           child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [

@@ -10,7 +10,6 @@ class Prefs {
     SharedPreferences.getInstance().then((SharedPreferences prefs) async {
       _instance = prefs;
       if (!prefs.containsKey("visitCount")) {
-        Pref.coin.set(500, itemType: "game", itemId: "initial");
         Pref.dayFirst.set(DateTime.now().millisecondsSinceEpoch - Days.DAY_LEN);
         Pref.lastBig.set(Cell.firstBigRecord);
         Pref.maxRandom.set(Cell.maxRandomValue);
