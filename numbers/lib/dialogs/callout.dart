@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:numbers/dialogs/dialogs.dart';
+import 'package:numbers/dialogs/shop.dart';
 import 'package:numbers/dialogs/toast.dart';
 import 'package:numbers/utils/ads.dart';
 import 'package:numbers/utils/localization.dart';
@@ -31,10 +32,9 @@ class _CalloutState extends AbstractDialogState<Callout> {
   @override
   Widget build(BuildContext context) {
     var pd = widget.padding;
-    var cost = 200;
     var theme = Theme.of(context);
     var hasCoinButton = widget.hasCoinButton ?? true;
-    var hasCoin = Pref.coin.value > cost;
+    var hasCoin = Pref.coin.value > Price.boost;
     Callout.chromeWidth = hasCoin ? 132.d : 220.d;
     Callout.chromeHeight = hasCoin ? 100.d : 84.d;
     Sound.play("pop");
@@ -73,12 +73,12 @@ class _CalloutState extends AbstractDialogState<Callout> {
                                   content: Row(children: [
                                     SVG.show("coin", 24.d),
                                     Expanded(
-                                        child: Text("$cost",
+                                        child: Text("${Price.boost}",
                                             textAlign: TextAlign.center,
                                             style: theme.textTheme.bodyText2))
                                   ]),
-                                  onTap: () => buttonsClick(
-                                      context, widget.type, -cost, false))
+                                  onTap: () => buttonsClick(context,
+                                      widget.type, -Price.boost, false))
                               : SizedBox()),
                       SizedBox(width: hasCoin ? 0 : 8.d),
                       hasCoin

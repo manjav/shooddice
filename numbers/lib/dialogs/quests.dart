@@ -176,13 +176,13 @@ class Quest {
   int get reward {
     switch (type) {
       case QuestType.b2048:
-        return (level + 1) * 200;
+        return (level + 1) * 100;
       case QuestType.merges:
-        return (level + 1) * 200;
+        return (level + 1) * 100;
       case QuestType.removeone:
         return pow(2, level).toInt() * 100;
       case QuestType.video:
-        return (level + 1) * 100;
+        return (level + 1) * 50;
     }
   }
 }

@@ -4,6 +4,7 @@ import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:numbers/core/cell.dart';
 import 'package:numbers/dialogs/dialogs.dart';
+import 'package:numbers/dialogs/shop.dart';
 import 'package:numbers/dialogs/toast.dart';
 import 'package:numbers/utils/ads.dart';
 import 'package:numbers/utils/localization.dart';
@@ -33,7 +34,7 @@ class BigBlockDialog extends AbstractDialog {
 class _BigBlockDialogState extends AbstractDialogState<BigBlockDialog> {
   @override
   void initState() {
-    reward = (widget.value - 8) * 10;
+    reward = (widget.value - 8) * Price.big;
     Timer(Duration(milliseconds: 500), () {
       widget.confettiController.play();
       Sound.play("win");

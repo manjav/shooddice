@@ -13,6 +13,17 @@ import 'package:numbers/utils/utils.dart';
 import 'package:numbers/widgets/buttons.dart';
 import 'package:numbers/widgets/coins.dart';
 
+class Price {
+  static const ad = 50;
+  static const big = 10;
+  static const cube = 10;
+  static const piggy = 20;
+  static const record = 10;
+
+  static const boost = 300;
+  static const revive = 300;
+}
+
 class ShopDialog extends AbstractDialog {
   ShopDialog()
       : super(DialogMode.shop,
@@ -90,7 +101,8 @@ class _ShopDialogState extends AbstractDialogState<ShopDialog> {
   }
 
   @override
-  Widget coinsButtonFactory(ThemeData theme) => Coins(widget.mode.name, left: 12.d, clickable: false);
+  Widget coinsButtonFactory(ThemeData theme) =>
+      Coins(widget.mode.name, left: 12.d, clickable: false);
 
   @override
   Widget contentFactory(ThemeData theme) {
@@ -171,7 +183,7 @@ class _ShopDialogState extends AbstractDialogState<ShopDialog> {
                                 Row(
                                   children: [
                                     SVG.show("coin", 24.d),
-                                    Text("+100",
+                                    Text("+${Price.ad}",
                                         style: theme.textTheme.headline6)
                                   ],
                                 )
@@ -271,7 +283,7 @@ class _ShopDialogState extends AbstractDialogState<ShopDialog> {
   _freeCoin() async {
     var reward = await Ads.showRewarded();
     if (reward != null) {
-      Coins.change(100, "shop", "ad");
+      Coins.change(Price.ad, "shop", "ad");
     }
   }
 

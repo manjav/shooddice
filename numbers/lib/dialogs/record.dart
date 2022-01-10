@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:numbers/dialogs/dialogs.dart';
+import 'package:numbers/dialogs/shop.dart';
 import 'package:numbers/dialogs/toast.dart';
 import 'package:numbers/utils/ads.dart';
 import 'package:numbers/utils/localization.dart';
@@ -29,7 +30,7 @@ class RecordDialog extends AbstractDialog {
 class _RecordDialogState extends AbstractDialogState<RecordDialog> {
   @override
   void initState() {
-    reward = 10;
+    reward = Price.record;
     Timer(Duration(milliseconds: 500), () {
       widget.confettiController.play();
       Sound.play("win");

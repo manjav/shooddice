@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:numbers/dialogs/dialogs.dart';
+import 'package:numbers/dialogs/shop.dart';
 import 'package:numbers/dialogs/toast.dart';
 import 'package:numbers/utils/ads.dart';
 import 'package:numbers/utils/analytic.dart';
@@ -15,7 +16,6 @@ import 'package:numbers/widgets/components.dart';
 import 'package:numbers/widgets/punchbutton.dart';
 
 class PiggyDialog extends AbstractDialog {
-  static int capacity = 30;
   final bool? playApplaud;
   PiggyDialog({this.playApplaud})
       : super(DialogMode.piggy,
@@ -30,8 +30,7 @@ class PiggyDialog extends AbstractDialog {
 class _PiggyDialogState extends AbstractDialogState<PiggyDialog> {
   @override
   void initState() {
-    reward =
-        Pref.coinPiggy.value >= PiggyDialog.capacity ? PiggyDialog.capacity : 0;
+    reward = Pref.coinPiggy.value >= Price.piggy ? Price.piggy : 0;
 
     if (widget.playApplaud ?? false)
       Timer(Duration(milliseconds: 600), () => Sound.play("win"));
@@ -48,11 +47,11 @@ class _PiggyDialogState extends AbstractDialogState<PiggyDialog> {
           width: 260.d,
           child: Text(
               "piggy_${reward > 0 ? 'collect' : 'fill'}"
-                  .l([(PiggyDialog.capacity * Ads.rewardCoef).toString()]),
+                  .l([(Price.piggy * Ads.rewardCoef).toString()]),
               textAlign: TextAlign.center,
               style: theme.textTheme.caption)),
-      _rightButton(theme, Pref.coinPiggy.value, PiggyDialog.capacity),
-      _leftButton(theme, Pref.coinPiggy.value, PiggyDialog.capacity)
+      _rightButton(theme, Pref.coinPiggy.value, Price.piggy),
+      _leftButton(theme, Pref.coinPiggy.value, Price.piggy)
     ]);
   }
 

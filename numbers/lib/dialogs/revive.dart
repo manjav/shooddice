@@ -48,7 +48,7 @@ class _ReviveDialogState extends AbstractDialogState<ReviveDialog> {
 
   @override
   Widget contentFactory(ThemeData theme) {
-    var cost = 200 * pow(2, _numRevives).round();
+    var cost = Price.revive * pow(2, _numRevives).round();
     return Stack(
       alignment: Alignment.topCenter,
       children: [

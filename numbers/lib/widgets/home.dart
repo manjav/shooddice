@@ -52,7 +52,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     _createGame();
     _rewardLineAnimation = AnimationController(
         vsync: this,
-        upperBound: PiggyDialog.capacity * 1.0,
+        upperBound: Price.piggy * 1.0,
         value: Pref.coinPiggy.value * 1.0);
     _rewardLineAnimation!.addListener(() => setState(() {}));
     _confettiController =
@@ -175,9 +175,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                   theme,
                                   0,
                                   _rewardLineAnimation!.value.round(),
-                                  PiggyDialog.capacity,
+                                  Price.piggy,
                                   icon: SVG.show("coin", 32.d))),
-                          colors: Pref.coinPiggy.value >= PiggyDialog.capacity
+                          colors: Pref.coinPiggy.value >= Price.piggy
                               ? TColors.orange.value
                               : null))
                 ])),
@@ -299,12 +299,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             x: MyGame.bounds.center.dx,
             y: MyGame.bounds.bottom + 8.d,
             duraion: 1000);
-        var piggyCoins =
-            (Pref.coinPiggy.value + value).clamp(0, PiggyDialog.capacity);
+        var piggyCoins = (Pref.coinPiggy.value + value).clamp(0, Price.piggy);
         Pref.coinPiggy.set(piggyCoins);
         _rewardLineAnimation!.animateTo(piggyCoins * 1.0,
             duration: const Duration(seconds: 1), curve: Curves.easeInOutSine);
-        if (piggyCoins >= PiggyDialog.capacity) {
+        if (piggyCoins >= Price.piggy) {
           await Future.delayed(Duration(milliseconds: 500));
           _game!.onGameEvent?.call(GameEvent.rewardPiggy, 1);
         }
@@ -401,6 +400,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   }
 
   _boost(String type) async {
+    if (type == "piggy") {
+      Rout.push(context, PiggyDialog());
+      return;
+    }
     MyGame.isPlaying = false;
     if (type == "one" && Pref.removeOne.value > 0 ||
         type == "color" && Pref.removeColor.value > 0) {

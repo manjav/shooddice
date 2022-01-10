@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:numbers/dialogs/dialogs.dart';
+import 'package:numbers/dialogs/shop.dart';
 import 'package:numbers/dialogs/toast.dart';
 import 'package:numbers/utils/ads.dart';
 import 'package:numbers/utils/localization.dart';
@@ -16,7 +17,6 @@ class CubeDialog extends AbstractDialog {
   static final waitingTime = 30000;
   static final showTime = 2500;
   static final autoAppearance = 3;
-  static final reward = 20;
 
   static int earnedAt = 0;
 
@@ -33,7 +33,7 @@ class CubeDialog extends AbstractDialog {
 class _CubeDialogState extends AbstractDialogState<CubeDialog> {
   @override
   void initState() {
-    reward = CubeDialog.reward;
+    reward = Price.cube;
     Timer(Duration(milliseconds: 600), () => Sound.play("win"));
     CubeDialog.earnedAt = DateTime.now().millisecondsSinceEpoch;
     super.initState();

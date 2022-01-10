@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:appsflyer_sdk/appsflyer_sdk.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:gameanalytics_sdk/gameanalytics.dart';
-import 'package:numbers/dialogs/piggy.dart';
 
 class Analytics {
   static late FirebaseAnalytics _firebaseAnalytics;
@@ -49,7 +48,6 @@ class Analytics {
     var testVariantId =
         await GameAnalytics.getRemoteConfigsValueAsString("MoreRewards", "1");
     print("testVariantId ==> $testVariantId");
-    PiggyDialog.capacity = testVariantId == "2" ? 60 : 30;
   }
 
   static Future<void> purchase(String currency, double amount, String itemId,

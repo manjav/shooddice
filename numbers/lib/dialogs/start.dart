@@ -6,6 +6,7 @@ import 'package:numbers/dialogs/daily.dart';
 import 'package:numbers/dialogs/dialogs.dart';
 import 'package:numbers/dialogs/quests.dart';
 import 'package:numbers/dialogs/rating.dart';
+import 'package:numbers/dialogs/shop.dart';
 import 'package:numbers/dialogs/toast.dart';
 import 'package:numbers/notifications/questnotify.dart';
 import 'package:numbers/utils/ads.dart';
@@ -119,11 +120,11 @@ class _StartDialogState extends AbstractDialogState<StartDialog> {
                       content: Row(children: [
                         SVG.show("coin", 24.d),
                         Expanded(
-                            child: Text("100",
+                            child: Text("${Price.boost}",
                                 textAlign: TextAlign.center,
                                 style: theme.textTheme.bodyText2))
                       ]),
-                      onTap: () => _onBoostTap(boost, 100))),
+                      onTap: () => _onBoostTap(boost, Price.boost))),
               SizedBox(height: 4.d),
               SizedBox(
                   width: 92.d,
