@@ -15,6 +15,7 @@ class Sound {
     add("pop");
     add("win");
     add("coin");
+    add("coins");
     add("merge-end");
     add("button-down");
     add("button-up");

@@ -477,22 +477,6 @@ class MyGame extends FlameGame with TapDetector {
     });
   }
 
-  void showReward(int value, Vector2 destination, GameEvent event) {
-    Sound.play("coin");
-    var r = Reward(value, size.x * 0.5, size.y * 0.6);
-    var start = EffectController(duration: 0.3, curve: Curves.easeOutBack);
-    r.add(SizeEffect.to(Vector2(1, 1), start));
-    var end = EffectController(duration: 0.3, curve: Curves.easeInExpo);
-    var delay = DelayedEffectController(end, delay: 1);
-    r.add(MoveEffect.to(destination, delay));
-    r.add(SizeEffect.to(Vector2(0.3, 0.3), delay));
-    Animate.checkCompletion(delay, () {
-      remove(r);
-      onGameEvent?.call(event, value);
-    });
-    add(r);
-  }
-
   Future<void> _celebrate() async {
     var limit = 3;
     if (_mergesCount < limit) return;

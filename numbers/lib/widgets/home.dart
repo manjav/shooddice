@@ -471,14 +471,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     super.dispose();
   }
 
-  _showReward(int value, GameEvent event, [Vector2? target]) async {
-    MyGame.isPlaying = true;
-    if (value <= 0) return;
-    await Future.delayed(Duration(milliseconds: 200));
-    _game!.showReward(value,
-        target ?? Vector2(MyGame.bounds.top, Device.size.width * 0.5), event);
-  }
-
   void _closeGame() {
     Analytics.endProgress(
         "main", Pref.playCount.value, Pref.record.value, Prefs.score);

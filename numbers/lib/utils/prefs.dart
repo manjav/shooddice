@@ -1,7 +1,5 @@
-import 'package:gameanalytics_sdk/gameanalytics.dart';
 import 'package:numbers/core/cell.dart';
 import 'package:numbers/dialogs/daily.dart';
-import 'package:numbers/utils/analytic.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Prefs {
@@ -124,21 +122,13 @@ extension PrefExt on Pref {
     return Prefs.getInt(name);
   }
 
-  int set(int value, {bool backup = true, String? itemType, String? itemId}) {
-    if (this == Pref.coin) {
-      var type = value > this.value
-          ? GAResourceFlowType.Source
-          : GAResourceFlowType.Sink;
-      Analytics.resource(type, name, value.abs(), itemType!, itemId!);
-    }
+  int set(int value, {bool backup = true}) {
     Prefs.setInt(name, value, backup);
     return value;
   }
 
-  int increase(int value,
-      {bool backup = true, String? itemType, String? itemId}) {
+  int increase(int value, {bool backup = true}) {
     if (value == 0) return 0;
-    return set(this.value + value,
-        backup: backup, itemType: itemType, itemId: itemId);
+    return set(this.value + value, backup: backup);
   }
 }
