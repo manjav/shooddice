@@ -90,12 +90,7 @@ class _ShopDialogState extends AbstractDialogState<ShopDialog> {
   }
 
   @override
-  Widget coinsButtonFactory(ThemeData theme) {
-    return Positioned(
-        top: 32.d,
-        left: 12.d,
-        child: Coins(widget.mode.name, clickable: false));
-  }
+  Widget coinsButtonFactory(ThemeData theme) => Coins(widget.mode.name, left: 12.d, clickable: false);
 
   @override
   Widget contentFactory(ThemeData theme) {

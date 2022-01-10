@@ -69,7 +69,6 @@ class AbstractDialogState<T extends AbstractDialog> extends State<T> {
     var children = <Widget>[];
     children.add(rankButtonFactory(theme));
     children.add(statsButtonFactory(theme));
-    children.add(coinsButtonFactory(theme));
 
     var rows = <Widget>[];
     rows.add(headerFactory(theme, width));
@@ -77,6 +76,7 @@ class AbstractDialogState<T extends AbstractDialog> extends State<T> {
     children.add(
         Column(mainAxisAlignment: MainAxisAlignment.center, children: rows));
     children.addAll(stepChildren);
+    children.add(coinsButtonFactory(theme));
 
     return WillPopScope(
         key: Key(widget.mode.name),
@@ -136,10 +136,7 @@ class AbstractDialogState<T extends AbstractDialog> extends State<T> {
             }));
   }
 
-  Widget coinsButtonFactory(ThemeData theme) {
-    return Positioned(
-        top: 32.d, left: 66.d, child: Coins(widget.mode.name));
-  }
+  Widget coinsButtonFactory(ThemeData theme) => Coins(widget.mode.name);
 
   Widget headerFactory(ThemeData theme, double width) {
     var hasClose = widget.showCloseButton ?? true;

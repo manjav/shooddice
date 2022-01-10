@@ -36,9 +36,8 @@ class _StatsDialogState extends AbstractDialogState<StatsDialog> {
   }
 
   @override
-  Widget coinsButtonFactory(ThemeData theme) {
-    return Positioned(top: 32.d, left: 12.d, child: Coins(widget.mode.name));
-  }
+  Widget coinsButtonFactory(ThemeData theme) =>
+      Coins(widget.mode.name, left: 12.d);
 
   @override
   Widget contentFactory(ThemeData theme) {

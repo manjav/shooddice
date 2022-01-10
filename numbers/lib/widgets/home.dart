@@ -42,7 +42,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   GameWidget? _gameWidget;
   int loadingState = 0;
 
-  AnimationController? _rewardAnimation;
   AnimationController? _rewardLineAnimation;
   ConfettiController? _confettiController;
 
@@ -52,8 +51,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     _createGame();
-    _rewardAnimation = AnimationController(vsync: this);
-    _rewardAnimation!.addListener(() => setState(() {}));
     _rewardLineAnimation = AnimationController(
         vsync: this,
         upperBound: PiggyDialog.capacity * 1.0,
@@ -82,7 +79,16 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               right: MyGame.bounds.left,
               child: _getFooter(theme)),
           _underFooter(),
-          Center(child: Components.confetty(_confettiController!))
+          Center(child: Components.confetty(_confettiController!)),
+          Coins("home",
+              top: MyGame.bounds.top - 69.d,
+              left: MyGame.bounds.left + 52.d,
+              height: 56.d, onTap: () async {
+            MyGame.isPlaying = false;
+            await Rout.push(context, ShopDialog());
+            MyGame.isPlaying = true;
+            setState(() {});
+          })
         ])));
   }
 
@@ -98,12 +104,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             _pause("stats");
             Analytics.design('guiClick:stats:home');
             Rout.push(context, StatsDialog());
-          }),
-          Coins("home", onTap: () async {
-            MyGame.isPlaying = false;
-            await Rout.push(context, ShopDialog());
-            MyGame.isPlaying = true;
-            setState(() {});
           }),
           Expanded(
               child:
@@ -163,7 +163,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                  SizedBox(height: 5 * _rewardAnimation!.value),
                   Expanded(
                       child: _button(
                           theme, 20.d, "piggy", () => _boost("piggy"),
@@ -467,7 +466,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   @override
   void dispose() {
     _timer?.cancel();
-    _rewardAnimation?.dispose();
     _confettiController?.dispose();
     _rewardLineAnimation?.dispose();
     super.dispose();
