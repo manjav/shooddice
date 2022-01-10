@@ -24,14 +24,15 @@ class Coins extends StatefulWidget {
           itemType,
           itemId!);
     }
-    if (value > 0) {
+    if (value > 0)
       await effect(value, x: targetX, y: targetY);
-    }
+    else
+      Pref.coin.increase(value);
   }
 
   static effect(int value, {double? x, double? y, int? duraion}) async {
-    // await Future.delayed(Duration(milliseconds: Coins.duration));
     Coins._onStart.last.call(value, x, y, duraion);
+    await Future.delayed(Duration(milliseconds: Coins.duration));
   }
 
   static List<Function(int, double?, double?, int?)> _onStart = [];

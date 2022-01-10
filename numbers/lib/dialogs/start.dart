@@ -175,13 +175,13 @@ class _StartDialogState extends AbstractDialogState<StartDialog> {
     var result = await Rout.push(context, HomePage());
     MyGame.boostNextMode = 0;
     MyGame.boostBig = false;
+    _startButtonLabel = "start_l".l();
+    _onUpdate();
     if (result != null) {
       await Future.delayed(Duration(milliseconds: 100));
       await Coins.change(result[1], "game", result[0]);
+      await RatingDialog.showRating(context);
     }
-    _startButtonLabel = "start_l".l();
-    _onUpdate();
-    await RatingDialog.showRating(context);
   }
 
   _onUpdate() => setState(() {});
@@ -244,5 +244,4 @@ class _StartDialogState extends AbstractDialogState<StartDialog> {
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.d))));
   }
-
 }

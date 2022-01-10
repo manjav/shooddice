@@ -304,8 +304,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         Pref.coinPiggy.set(piggyCoins);
         _rewardLineAnimation!.animateTo(piggyCoins * 1.0,
             duration: const Duration(seconds: 1), curve: Curves.easeInOutSine);
-        if (piggyCoins >= PiggyDialog.capacity)
+        if (piggyCoins >= PiggyDialog.capacity) {
+          await Future.delayed(Duration(milliseconds: 500));
           _game!.onGameEvent?.call(GameEvent.rewardPiggy, 1);
+        }
         return;
       case GameEvent.rewardBig:
         await Future.delayed(Duration(milliseconds: 250));
@@ -362,13 +364,16 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       }
 
       if (event == GameEvent.completeTutorial) {
+        Prefs.setString("cells", "");
         if (result[0] == "tutorFinish") {
           Pref.tutorMode.set(1);
           MyGame.boostNextMode = 1;
+        }
+        setState(() => _createGame());
+        if (result[0] == "tutorFinish") {
+          await Future.delayed(Duration(microseconds: 200));
           await Coins.change(100, "game", event.name);
         }
-        Prefs.setString("cells", "");
-        _createGame();
       }
     }
     _onPauseButtonsClick("resume");
@@ -425,7 +430,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     MyGame.isPlaying = true;
   }
 
-  void _createGame() {
+  _createGame() {
     Analytics.setScreen("game");
     var top = 140.d;
     var bottom = 180.d;
