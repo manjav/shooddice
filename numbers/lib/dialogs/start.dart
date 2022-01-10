@@ -58,7 +58,6 @@ class _StartDialogState extends AbstractDialogState<StartDialog> {
     stepChildren.clear();
     stepChildren.add(_questButton(theme));
     stepChildren.add(_dailyButton(theme));
-    stepChildren.add(aaaa(theme));
     stepChildren.add(bannerAdsFactory("start"));
     return super.build(context);
   }
@@ -242,18 +241,4 @@ class _StartDialogState extends AbstractDialogState<StartDialog> {
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.d))));
   }
 
-  Widget aaaa(ThemeData theme) {
-    return PunchButton(
-        bottom: 12,
-        onTap: () {
-          showDialog(
-            barrierDismissible: false,
-            barrierColor: Colors.transparent,
-            context: context,
-            builder: (BuildContext context) {
-              return CoinEffect(320);
-            },
-          );
-        });
-  }
 }

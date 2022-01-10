@@ -271,8 +271,7 @@ class _ShopDialogState extends AbstractDialogState<ShopDialog> {
   _freeCoin() async {
     var reward = await Ads.showRewarded();
     if (reward != null) {
-      Pref.coin.increase(100, itemType: "shop", itemId: "ad");
-      setState(() {});
+      Coins.change(100, "shop", "ad");
     }
   }
 
@@ -283,8 +282,7 @@ class _ShopDialogState extends AbstractDialogState<ShopDialog> {
       Pref.noAds.set(1);
     } else {
       type = "coin";
-      Pref.coin.increase(p!.amount,
-          itemType: "shop", itemId: purchaseDetails.productID);
+      Coins.change(p!.amount, "shop", purchaseDetails.productID);
     }
 
     Analytics.purchase(p!.currencyCode, p.rawPrice, p.id, type,

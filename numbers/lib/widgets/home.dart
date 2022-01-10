@@ -318,19 +318,16 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         _onRemoveBlock();
         break;
       case GameEvent.reward:
-        _showReward(value, GameEvent.rewarded,
-            Vector2(MyGame.bounds.center.dx, MyGame.bounds.bottom + 8.d));
-        return;
-      case GameEvent.rewarded:
-        var dailyCoins = Pref.coinPiggy.value + value;
-        Pref.coinPiggy.set(dailyCoins.clamp(0, PiggyDialog.capacity));
-        _rewardAnimation!.value = 1;
-        _rewardAnimation!.animateTo(0,
-            duration: const Duration(milliseconds: 200),
-            curve: Curves.easeOutSine);
-        _rewardLineAnimation!.animateTo(Pref.coinPiggy.value * 1.0,
+        await Coins.effect(value,
+            x: MyGame.bounds.center.dx,
+            y: MyGame.bounds.bottom + 8.d,
+            duraion: 1000);
+        var piggyCoins =
+            (Pref.coinPiggy.value + value).clamp(0, PiggyDialog.capacity);
+        Pref.coinPiggy.set(piggyCoins);
+        _rewardLineAnimation!.animateTo(piggyCoins * 1.0,
             duration: const Duration(seconds: 1), curve: Curves.easeInOutSine);
-        if (dailyCoins >= PiggyDialog.capacity)
+        if (piggyCoins >= PiggyDialog.capacity)
           await _boost("piggy", playApplaud: true);
         return;
       case GameEvent.score:
@@ -417,7 +414,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         context, Callout("clt_${type}_text".l(), type, padding: padding),
         barrierColor: Colors.transparent, barrierDismissible: true);
     if (result != null) {
-      Pref.coin.increase(result[1], itemType: "game", itemId: result[0]);
+      await Coins.change(result[1], "game", result[0]);
       if (type == "next") {
         _game!.boostNext();
         return;
@@ -448,7 +445,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         FreeCoinsDialog.waitingTime) return;
     MyGame.isPlaying = false;
     var result = await Rout.push(context, FreeCoinsDialog());
-    if (result != null) _showReward(result[1], GameEvent.freeCoins);
+      _game!.onGameEvent?.call(GameEvent.freeCoins, 0);
     MyGame.isPlaying = true;
   }
 

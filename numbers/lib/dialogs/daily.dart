@@ -7,6 +7,7 @@ import 'package:numbers/utils/prefs.dart';
 import 'package:numbers/utils/themes.dart';
 import 'package:numbers/utils/utils.dart';
 import 'package:numbers/widgets/buttons.dart';
+import 'package:numbers/widgets/coins.dart';
 import 'package:numbers/widgets/punchbutton.dart';
 
 class DailyDialog extends AbstractDialog {
@@ -107,7 +108,7 @@ class _DailyDialogState extends AbstractDialogState<DailyDialog> {
   _collect(Day day) {
     day.state = DayState.collected;
     Pref.dayCount.set(day.index + 1);
-    Pref.coin.increase(day.reward, itemType: "daily", itemId: "${day.index}");
+    Coins.change(day.reward, "daily", "${day.index}");
     setState(() {});
   }
 }
@@ -145,7 +146,6 @@ class _TimeWidgetState extends State<TimeWidget> {
   }
 
   void _onTimerTick(Timer timer) {
-    print("remaining $remaining");
     if (remaining < 2000) {
       timer.cancel();
       _timer = null;
@@ -164,7 +164,7 @@ class _TimeWidgetState extends State<TimeWidget> {
 }
 
 class Days {
-  static const DAY_LEN = 3600000; //86400000;
+  static const DAY_LEN = 86400000;
   static List<Day> list = [];
 
   static bool collectable = false;

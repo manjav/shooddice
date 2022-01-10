@@ -7,6 +7,7 @@ import 'package:numbers/utils/prefs.dart';
 import 'package:numbers/utils/themes.dart';
 import 'package:numbers/utils/utils.dart';
 import 'package:numbers/widgets/buttons.dart';
+import 'package:numbers/widgets/coins.dart';
 import 'package:numbers/widgets/components.dart';
 import 'package:numbers/widgets/punchbutton.dart';
 
@@ -144,7 +145,7 @@ class Quest {
   String get text => ("quest_" + type.name).l([max.toString()]);
 
   void levelUp() {
-    Pref.coin.increase(reward, itemType: "quest", itemId: type.name);
+    Coins.change(reward, "quest", type.name);
     level++;
     Prefs.setInt("q_l_${type.name}", level, true);
     notified = false;
