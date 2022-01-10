@@ -330,12 +330,16 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       var result = await Rout.push(context, _widget);
       if (event == GameEvent.lose) {
         if (result == null) {
-          if (value > 0) {
-            var r =
-                await Rout.push(context, RecordDialog(_confettiController!));
-            if (r != null) {
-              _showReward(r[1], GameEvent.recordReward);
+          if (value > 0)
+            _game!.onGameEvent?.call(GameEvent.rewardRecord, 0);
+          else
+            _closeGame(result);
+          return;
         }
+        await Coins.change(result[1], "game", "revive");
+        _game!.revive();
+        MyGame.isPlaying = true;
+        setState(() {});
         return;
       }
 
@@ -344,9 +348,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         _rewardLineAnimation!
             .animateTo(0, duration: const Duration(milliseconds: 400));
       }
-        Pref.coin.increase(result[1], itemType: "game", itemId: "revive");
-        _game!.revive();
-        setState(() {});
+      if (event == GameEvent.rewardRecord) {
+        _closeGame(result);
         return;
       }
       MyGame.isPlaying = true;
@@ -455,14 +458,15 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   @override
   void dispose() {
     _timer?.cancel();
+    _confettiController?.stop();
     _confettiController?.dispose();
     _rewardLineAnimation?.dispose();
     super.dispose();
   }
 
-  void _closeGame() {
+  void _closeGame(result) {
     Analytics.endProgress(
         "main", Pref.playCount.value, Pref.record.value, Prefs.score);
-    Navigator.of(context).pop();
+    Navigator.of(context).pop(result);
   }
 }

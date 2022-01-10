@@ -15,7 +15,7 @@ import 'package:numbers/utils/prefs.dart';
 import 'package:numbers/utils/themes.dart';
 import 'package:numbers/utils/utils.dart';
 import 'package:numbers/widgets/buttons.dart';
-import 'package:numbers/widgets/coineffect.dart';
+import 'package:numbers/widgets/coins.dart';
 import 'package:numbers/widgets/home.dart';
 import 'package:numbers/widgets/punchbutton.dart';
 
@@ -172,9 +172,13 @@ class _StartDialogState extends AbstractDialogState<StartDialog> {
     await Analytics.updateVariantIDs();
     if (Pref.playCount.value > AdPlace.InterstitialVideo.threshold)
       await Ads.showInterstitial(AdPlace.InterstitialVideo);
-    await Rout.push(context, HomePage());
+    var result = await Rout.push(context, HomePage());
     MyGame.boostNextMode = 0;
     MyGame.boostBig = false;
+    if (result != null) {
+      await Future.delayed(Duration(milliseconds: 100));
+      await Coins.change(result[1], "game", result[0]);
+    }
     _startButtonLabel = "start_l".l();
     _onUpdate();
     await RatingDialog.showRating(context);

@@ -101,4 +101,10 @@ class _RecordDialogState extends AbstractDialogState<RecordDialog> {
               stateMachines: ["machine"])),
     ]);
   }
+
+  @override
+  void dispose() {
+    super.dispose();
+    widget.confettiController.stop();
+  }
 }
