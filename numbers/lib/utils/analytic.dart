@@ -3,8 +3,12 @@ import 'dart:async';
 import 'package:appsflyer_sdk/appsflyer_sdk.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:gameanalytics_sdk/gameanalytics.dart';
+import 'package:numbers/dialogs/shop.dart';
+import 'package:numbers/utils/prefs.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 class Analytics {
+  static late int variant = 1;
   static late FirebaseAnalytics _firebaseAnalytics;
 
   static AppsflyerSdk appsflyerSdk = AppsflyerSdk({
@@ -45,6 +49,12 @@ class Analytics {
   }
 
   static Future<void> updateVariantIDs() async {
+    var packageInfo = await PackageInfo.fromPlatform();
+    var testVersion = Prefs.getString("testVersion");
+    if (testVersion.isNotEmpty && testVersion != packageInfo.buildNumber)
+      return;
+    if (testVersion.isEmpty)
+      Prefs.setString("testVersion", packageInfo.buildNumber);
     var testVariantId =
         await GameAnalytics.getRemoteConfigsValueAsString("MoreRewards", "1");
     print("testVariantId ==> $testVariantId");
