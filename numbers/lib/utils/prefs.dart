@@ -24,18 +24,12 @@ class Prefs {
     });
   }
 
+  static String getString(String key) => _instance!.getString(key) ?? "";
   static void setString(String key, String value) {
     _instance!.setString(key, value);
   }
 
-  static String getString(String key) {
-    return _instance!.getString(key) ?? "";
-  }
-
-  static int getInt(String key) {
-    return _instance!.getInt(key) ?? 0;
-  }
-
+  static int getInt(String key) => _instance!.getInt(key) ?? 0;
   static void setInt(String key, int value, bool backup) {
     _instance!.setInt(key, value);
     // if (backup) _backup();
