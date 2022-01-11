@@ -298,7 +298,7 @@ class _ShopDialogState extends AbstractDialogState<ShopDialog> {
       Coins.change(p!.amount, "shop", purchaseDetails.productID);
     }
 
-    Analytics.purchase(p!.currencyCode, p.rawPrice, p.id, type,
+    Analytics.purchase(p!.currencyCode, (p.rawPrice * 100).round(), p.id, type,
         purchaseDetails.purchaseID!, purchaseDetails.verificationData.source);
   }
 }

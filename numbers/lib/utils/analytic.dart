@@ -55,8 +55,8 @@ class Analytics {
       return;
     if (testVersion.isEmpty)
       Prefs.setString("testVersion", packageInfo.buildNumber);
-    var testVariantId = await GameAnalytics.getRemoteConfigsValueAsString(
-        "res-dayquest", "1");
+    var testVariantId =
+        await GameAnalytics.getRemoteConfigsValueAsString("res-dayquest", "1");
     variant = int.parse(testVariantId ?? "1");
     print("testVariantId ==> $variant");
     Price.ad = variant == 2 ? 50 : 100;
@@ -67,7 +67,7 @@ class Analytics {
     Price.revive = variant == 2 ? 300 : 100;
   }
 
-  static Future<void> purchase(String currency, double amount, String itemId,
+  static Future<void> purchase(String currency, int amount, String itemId,
       String itemType, String receipt, String signature) async {
     // if (iOS) {
     //   await _firebaseAnalytics.logEcommercePurchase(
@@ -77,16 +77,17 @@ class Analytics {
     //       origin: itemId,
     //       coupon: receipt);
     // }
-
-    GameAnalytics.addBusinessEvent({
+    var data = {
       "currency": currency,
+      "cartType": "shop",
       "amount": (amount * 100),
       "itemType": itemType,
       "itemId": itemId,
-      "cartType": "end_of_level",
       "receipt": receipt,
       "signature": signature,
-    });
+    };
+    print(data);
+    GameAnalytics.addBusinessEvent(data);
   }
 
   static Future<void> ad(
