@@ -58,8 +58,10 @@ class _StartDialogState extends AbstractDialogState<StartDialog> {
     if (Pref.tutorMode.value == 0) return SizedBox();
     var theme = Theme.of(context);
     stepChildren.clear();
-    stepChildren.add(_questButton(theme));
-    stepChildren.add(_dailyButton(theme));
+    if (Analytics.variant == 3) {
+      stepChildren.add(_questButton(theme));
+      stepChildren.add(_dailyButton(theme));
+    }
     stepChildren.add(bannerAdsFactory("start"));
     return super.build(context);
   }

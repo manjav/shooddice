@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:numbers/dialogs/dialogs.dart';
+import 'package:numbers/utils/analytic.dart';
 import 'package:numbers/utils/localization.dart';
 import 'package:numbers/utils/prefs.dart';
 import 'package:numbers/utils/themes.dart';
@@ -116,7 +117,7 @@ class Quests {
   }
 
   static void increase(QuestType type, int value) {
-    if (value == 0) return;
+    if (value == 0 || Analytics.variant < 3) return;
     var quest = list[type];
     var key = "q_${type.name}";
     var res = Prefs.getInt(key) + value;

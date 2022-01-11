@@ -55,9 +55,16 @@ class Analytics {
       return;
     if (testVersion.isEmpty)
       Prefs.setString("testVersion", packageInfo.buildNumber);
-    var testVariantId =
-        await GameAnalytics.getRemoteConfigsValueAsString("MoreRewards", "1");
-    print("testVariantId ==> $testVariantId");
+    var testVariantId = await GameAnalytics.getRemoteConfigsValueAsString(
+        "res-dayquest", "1");
+    variant = int.parse(testVariantId ?? "1");
+    print("testVariantId ==> $variant");
+    Price.ad = variant == 2 ? 50 : 100;
+    Price.cube = variant == 2 ? 10 : 20;
+    Price.piggy = variant == 2 ? 20 : 30;
+    Price.tutorial = variant == 2 ? 100 : 500;
+    Price.boost = variant == 2 ? 300 : 100;
+    Price.revive = variant == 2 ? 300 : 100;
   }
 
   static Future<void> purchase(String currency, double amount, String itemId,

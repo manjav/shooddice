@@ -371,7 +371,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         setState(() => _createGame());
         if (result[0] == "tutorFinish") {
           await Future.delayed(Duration(microseconds: 200));
-          await Coins.change(100, "game", event.name);
+          await Coins.change(Price.tutorial, "game", event.name);
         }
       }
     }
