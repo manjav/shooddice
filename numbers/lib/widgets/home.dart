@@ -11,7 +11,7 @@ import 'package:numbers/core/cells.dart';
 import 'package:numbers/core/game.dart';
 import 'package:numbers/dialogs/big.dart';
 import 'package:numbers/dialogs/callout.dart';
-import 'package:numbers/dialogs/confirms.dart';
+import 'package:numbers/dialogs/tutorial.dart';
 import 'package:numbers/dialogs/cube.dart';
 import 'package:numbers/dialogs/pause.dart';
 import 'package:numbers/dialogs/piggy.dart';
@@ -285,7 +285,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         _confettiController!.play();
         return;
       case GameEvent.completeTutorial:
-        _widget = ConfirmDialog(_confettiController!);
+        _widget = TutorialDialog(_confettiController!);
         break;
       case GameEvent.lose:
         await Future.delayed(Duration(seconds: 1));
