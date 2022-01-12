@@ -33,7 +33,7 @@ class StartDialog extends AbstractDialog {
 
 class _StartDialogState extends AbstractDialogState<StartDialog> {
   String _startButtonLabel = "start_l".l();
-
+  
   @override
   void initState() {
     super.initState();
@@ -69,6 +69,7 @@ class _StartDialogState extends AbstractDialogState<StartDialog> {
   @override
   Widget contentFactory(ThemeData theme) {
     var startMode = Prefs.getString("cells").isEmpty;
+    if (!startMode) _startButtonLabel = "continue_l".l();
     return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
       Expanded(
           child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
@@ -81,7 +82,7 @@ class _StartDialogState extends AbstractDialogState<StartDialog> {
           height: 80.d,
           child: BumpedButton(
               colors: TColors.blue.value,
-              isEnable: _startButtonLabel == (startMode ? "start_l" : "continue_l").l(),
+              isEnable: _startButtonLabel != "wait_l".l(),
               onTap: _onStart,
               cornerRadius: 16.d,
               content:
