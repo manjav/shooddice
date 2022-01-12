@@ -9,21 +9,22 @@ class Prefs {
   static void init(Function onInit) {
     SharedPreferences.getInstance().then((SharedPreferences prefs) async {
       _instance = prefs;
-      if (!prefs.containsKey("visitCount")) {
-        Pref.dayFirst.set(DateTime.now().millisecondsSinceEpoch - Days.DAY_LEN);
-        Pref.lastBig.set(Cell.firstBigRecord);
-        Pref.maxRandom.set(Cell.maxRandomValue);
+      var now = DateTime.now().millisecondsSinceEpoch;
+      if (!contains("visitCount")) {
         Pref.rateTarget.set(2);
         Pref.removeOne.set(3);
         Pref.removeColor.set(3);
       }
-
+      Pref.dayFirst.setIfEmpty(now - Days.DAY_LEN);
+      Pref.lastBig.setIfEmpty(Cell.firstBigRecord);
+      Pref.maxRandom.setIfEmpty(Cell.maxRandomValue);
       Pref.coinPiggy.set(0);
       Pref.visitCount.increase(1);
       onInit();
     });
   }
 
+  static bool contains(String key) => _instance!.containsKey(key);
   static String getString(String key) => _instance!.getString(key) ?? "";
   static void setString(String key, String value) {
     _instance!.setString(key, value);
@@ -113,6 +114,10 @@ extension PrefExt on Pref {
 
   int get value {
     return Prefs.getInt(name);
+  }
+
+  void setIfEmpty(int value) {
+    if (!Prefs.contains(name)) set(value);
   }
 
   int set(int value, {bool backup = true}) {
