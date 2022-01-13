@@ -103,8 +103,8 @@ class _MainPageState extends State<MainPage> with WidgetsBindingObserver {
     Sound.init();
     GamesServices.signIn();
     Prefs.init(() async {
-      Analytics.init(widget.analytics);
       await Localization.init();
+      Analytics.init(widget.analytics);
       Days.init();
       Quests.init();
       Notifier.init();
@@ -120,9 +120,7 @@ class _MainPageState extends State<MainPage> with WidgetsBindingObserver {
     DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
     AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
     if (androidInfo.version.sdkInt < 30) return;
-    Smartlook.setupAndStartRecording(
-        SetupOptionsBuilder('0c098e523024224cb6c534619b7d46df3d9b04b1')
-            .build());
+    Smartlook.setupAndStartRecording(SetupOptionsBuilder("sl_key".l()).build());
   }
 
   @override
