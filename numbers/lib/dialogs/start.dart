@@ -33,11 +33,13 @@ class StartDialog extends AbstractDialog {
 
 class _StartDialogState extends AbstractDialogState<StartDialog> {
   String _startButtonLabel = "start_l".l();
-  
+
   @override
   void initState() {
     super.initState();
     Quests.onQuestComplete = _onQuestUpdate;
+    if (!Prefs.getString("cells").isNotEmpty)
+      _startButtonLabel = "continue_l".l();
     if (Pref.tutorMode.value == 0)
       Timer(const Duration(milliseconds: 100), _onStart);
   }
@@ -69,7 +71,6 @@ class _StartDialogState extends AbstractDialogState<StartDialog> {
   @override
   Widget contentFactory(ThemeData theme) {
     var startMode = Prefs.getString("cells").isEmpty;
-    if (!startMode) _startButtonLabel = "continue_l".l();
     return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
       Expanded(
           child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
