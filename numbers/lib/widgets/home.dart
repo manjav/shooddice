@@ -316,7 +316,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         _widget = CubeDialog();
         break;
       case GameEvent.rewardPiggy:
-        _widget = PiggyDialog(playApplaud: value > 0);
+        _widget = PiggyDialog(value > 0);
         break;
       case GameEvent.rewardRecord:
         _widget = RecordDialog(_confettiController!);
@@ -401,7 +401,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   _boost(String type) async {
     if (type == "piggy") {
-      Rout.push(context, PiggyDialog());
+      _game!.onGameEvent?.call(GameEvent.rewardPiggy, 0);
       return;
     }
     MyGame.isPlaying = false;
