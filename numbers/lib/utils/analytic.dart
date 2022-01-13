@@ -15,8 +15,13 @@ class Analytics {
 
   static init(FirebaseAnalytics analytics) {
     _firebaseAnalytics = analytics;
+
     _appsflyerSdk = AppsflyerSdk(
         {"afDevKey": "af_key".l(), "afAppId": "app_id".l(), "isDebug": false});
+    _appsflyerSdk.initSdk(
+        registerConversionDataCallback: true,
+        registerOnAppOpenAttributionCallback: true,
+        registerOnDeepLinkingCallback: true);
 
     GameAnalytics.setEnabledInfoLog(false);
     GameAnalytics.setEnabledVerboseLog(false);
@@ -34,11 +39,6 @@ class Analytics {
 
     GameAnalytics.configureAutoDetectAppVersion(true);
     GameAnalytics.initialize("ga_key".l(), "ga_secret".l());
-
-    _appsflyerSdk.initSdk(
-        registerConversionDataCallback: true,
-        registerOnAppOpenAttributionCallback: true,
-        registerOnDeepLinkingCallback: true);
 
     updateVariantIDs();
   }
