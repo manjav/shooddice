@@ -68,12 +68,12 @@ class _StartDialogState extends AbstractDialogState<StartDialog> {
 
   @override
   Widget contentFactory(ThemeData theme) {
+    var startMode = Prefs.getString("cells").isEmpty;
     return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
       Expanded(
           child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-        if (Prefs.getString("cells").isEmpty)
-          _boostButton("start_big".l(), "512"),
-        SizedBox(width: 2.d),
+        if (startMode) _boostButton("start_big".l(), "512"),
+        if (startMode) SizedBox(width: 2.d),
         _boostButton("start_next".l(), "next")
       ])),
       SizedBox(height: 10.d),
@@ -81,7 +81,7 @@ class _StartDialogState extends AbstractDialogState<StartDialog> {
           height: 80.d,
           child: BumpedButton(
               colors: TColors.blue.value,
-              isEnable: _startButtonLabel == "start_l".l(),
+              isEnable: _startButtonLabel == (startMode ? "start_l" : "continue_l").l(),
               onTap: _onStart,
               cornerRadius: 16.d,
               content:
