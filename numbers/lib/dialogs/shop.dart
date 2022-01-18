@@ -88,8 +88,8 @@ class _ShopDialogState extends AbstractDialogState<ShopDialog> {
     setState(() => _message = "");
   }
 
-  void _listenToPurchaseUpdated(List<PurchaseDetails> purchaseDetailsList) {
-    purchaseDetailsList.forEach((PurchaseDetails purchaseDetails) async {
+  _listenToPurchaseUpdated(List<PurchaseDetails> purchaseDetailsList) async {
+    for (var purchaseDetails in purchaseDetailsList) {
       if (purchaseDetails.status == PurchaseStatus.pending) {
       } else {
         if (purchaseDetails.status == PurchaseStatus.error) {
@@ -104,7 +104,7 @@ class _ShopDialogState extends AbstractDialogState<ShopDialog> {
           await InAppPurchase.instance.completePurchase(purchaseDetails);
         }
       }
-    });
+    }
   }
 
   @override

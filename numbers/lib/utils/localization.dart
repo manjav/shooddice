@@ -30,9 +30,9 @@ extension Localization on String {
     var result = _sentences![key];
     if (result == null) return key;
     if (args != null) {
-      args.forEach((arg) {
+      for (var arg in args) {
         result = result!.replaceFirst(RegExp(r'%s'), arg.toString());
-      });
+      }
     }
     return result;
   }
