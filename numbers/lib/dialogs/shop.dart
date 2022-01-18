@@ -60,7 +60,7 @@ class _ShopDialogState extends AbstractDialogState<ShopDialog> {
       setState(() => _message = "shop_unavailable");
       return;
     }
-    if (coins.length > 0) {
+    if (coins.isNotEmpty) {
       setState(() => _message = "");
       return;
     }
@@ -146,7 +146,7 @@ class _ShopDialogState extends AbstractDialogState<ShopDialog> {
                     colors: TColors.green.value,
                     content: Center(
                         child: Text(
-                            "${others.length > 0 ? others["no_ads"]!.price : 0}",
+                            "${others.isNotEmpty ? others["no_ads"]!.price : 0}",
                             style: theme.textTheme.headline5)),
                     onTap: () => _onShopItemTap(others["no_ads"]!),
                   )),
