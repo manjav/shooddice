@@ -25,9 +25,9 @@ class StartDialog extends AbstractDialog {
       : super(
           DialogMode.start,
           key: key,
-            height: 330.d,
-            showCloseButton: false,
-            title: "start_title".l(),
+          height: 330.d,
+          showCloseButton: false,
+          title: "start_title".l(),
           padding: EdgeInsets.fromLTRB(12.d, 12.d, 12.d, 14.d),
         );
   @override
@@ -84,7 +84,7 @@ class _StartDialogState extends AbstractDialogState<StartDialog> {
         _boostButton("start_next".l(), "next")
       ])),
       SizedBox(height: 10.d),
-      Container(
+      SizedBox(
           height: 80.d,
           child: BumpedButton(
               colors: TColors.blue.value,

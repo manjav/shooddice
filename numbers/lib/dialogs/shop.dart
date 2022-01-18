@@ -246,7 +246,7 @@ class _ShopDialogState extends AbstractDialogState<ShopDialog> {
   }
 
   Widget _itemBuilder(ThemeData theme, ProductDetails product) {
-    return Container(
+    return SizedBox(
         height: 110.d,
         child: BumpedButton(
           colors: TColors.whiteFlat.value,
