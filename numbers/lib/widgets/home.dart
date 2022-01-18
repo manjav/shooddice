@@ -331,10 +331,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       var result = await Rout.push(context, _widget);
       if (event == GameEvent.lose) {
         if (result == null) {
-          if (value > 0)
+          if (value > 0) {
             _game!.onGameEvent?.call(GameEvent.rewardRecord, 0);
-          else
+          } else {
             _closeGame(result);
+          }
           return;
         }
         await Coins.change(result[1], "game", "revive");
@@ -412,10 +413,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     }
     EdgeInsets padding = EdgeInsets.only(
         right: MyGame.bounds.left, top: MyGame.bounds.bottom - 78.d);
-    if (type == "next")
+    if (type == "next") {
       padding = EdgeInsets.only(
           left: (Device.size.width - Callout.chromeWidth) * 0.5,
           top: MyGame.bounds.top + 68.d);
+    }
     var result = await Rout.push(
         context, Callout("clt_${type}_text".l(), type, padding: padding),
         barrierColor: Colors.transparent, barrierDismissible: true);
@@ -448,8 +450,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   _showCubeDialog() async {
     // Check fruad in frequently tap on cube man
     if (DateTime.now().millisecondsSinceEpoch - CubeDialog.earnedAt >
-        CubeDialog.waitingTime)
+        CubeDialog.waitingTime) {
       _game!.onGameEvent?.call(GameEvent.rewardCube, 0);
+    }
   }
 
   void _onRemoveBlock() {

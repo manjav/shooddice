@@ -70,15 +70,18 @@ class _ShopDialogState extends AbstractDialogState<ShopDialog> {
     }, onDone: () => _subscription.cancel(), onError: (error) => print(error));
 
     Set<String> skus = {"no_ads"};
-    for (var i = 0; i < 6; i++) skus.add("coin_$i");
+    for (var i = 0; i < 6; i++) {
+      skus.add("coin_$i");
+    }
     var response = await InAppPurchase.instance.queryProductDetails(skus);
-    coins = Map<String, ProductDetails>();
-    others = Map<String, ProductDetails>();
+    coins = <String, ProductDetails>{};
+    others = <String, ProductDetails>{};
     for (var product in response.productDetails) {
-      if (product.isConsumable)
+      if (product.isConsumable) {
         coins[product.id] = product;
-      else
+      } else {
         others[product.id] = product;
+      }
     }
     setState(() => _message = "");
   }
@@ -230,10 +233,11 @@ class _ShopDialogState extends AbstractDialogState<ShopDialog> {
               ? const CircularProgressIndicator()
               : TextButton(
                   onPressed: () {
-                    if (_message == "shop_unavailable".l())
+                    if (_message == "shop_unavailable".l()) {
                       Navigator.of(context).pop();
-                    else
+                    } else {
                       setState(() => _message = "");
+                    }
                   },
                   child: const Text("OK"))
         ]));

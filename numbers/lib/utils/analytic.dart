@@ -46,10 +46,12 @@ class Analytics {
   static Future<void> updateVariantIDs() async {
     var packageInfo = await PackageInfo.fromPlatform();
     var testVersion = Prefs.getString("testVersion");
-    if (testVersion.isNotEmpty && testVersion != packageInfo.buildNumber)
+    if (testVersion.isNotEmpty && testVersion != packageInfo.buildNumber) {
       return;
-    if (testVersion.isEmpty)
+    }
+    if (testVersion.isEmpty) {
       Prefs.setString("testVersion", packageInfo.buildNumber);
+    }
     var testVariantId =
         await GameAnalytics.getRemoteConfigsValueAsString("res-dayquest", "1");
     variant = int.parse(testVariantId ?? "1");

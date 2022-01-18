@@ -17,8 +17,10 @@ class RatingDialog extends AbstractDialog {
     print(
         "Rate:${Pref.rate.value}, plays:${Pref.playCount.value}, target:${Pref.rateTarget.value}");
     // Repeat rating request
-    if (Pref.rate.value >= 5 || Pref.playCount.value < Pref.rateTarget.value)
-      return false; // Already 5 rating or pending to reach target play count
+    // Already 5 rating or pending to reach target play count
+    if (Pref.rate.value >= 5 || Pref.playCount.value < Pref.rateTarget.value) {
+      return false;
+    }
     int rating = 0;
     try {
       rating = await Rout.push(context, RatingDialog());

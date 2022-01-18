@@ -95,10 +95,11 @@ class MyGame extends FlameGame with TapDetector {
     await super.onLoad();
 
     _tutorMode = Pref.tutorMode.value == 0;
-    if (_tutorMode)
+    if (_tutorMode) {
       Prefs.setString("cells", "");
-    else
+    } else {
       Pref.playCount.increase(1);
+    }
     Analytics.startProgress(
         "main", Pref.playCount.value, "big $boostBig next $boostNextMode");
 
@@ -167,8 +168,9 @@ class MyGame extends FlameGame with TapDetector {
 
   void _defineCell(int column, value) {
     var row = _cells.length(column);
-    while (_cells.getMatchs(column, row, value).length > 0)
+    while (_cells.getMatchs(column, row, value).isNotEmpty) {
       value = Cell.getNextValue(0);
+    }
     _createCell(column, row, value);
   }
 
@@ -208,9 +210,10 @@ class MyGame extends FlameGame with TapDetector {
       onGameEvent?.call(GameEvent.lose, _newRecord);
       return;
     }
-    if (_tutorMode)
+    if (_tutorMode) {
       _nextCell.init(_nextCell.column, 0, Cell.getNextValue(_fallingsCount),
           hiddenMode: boostNextMode + 1);
+    }
 
     if (_reward > 0) _numRewardCells++;
     var cell = Cell(_nextCell.column, row, _nextCell.value, reward: _reward);
@@ -449,10 +452,11 @@ class MyGame extends FlameGame with TapDetector {
   void _removeCell(int column, int row, bool accumulate) {
     if (_cells.map[column][row] == null) return;
     _cells.map[column][row].delete((c) => remove(c));
-    if (accumulate)
+    if (accumulate) {
       _cells.accumulateColumn(column, row);
-    else
+    } else {
       _cells.set(column, row, null);
+  }
   }
 
   void _removeCellsByValue(int value) {
@@ -468,9 +472,11 @@ class MyGame extends FlameGame with TapDetector {
   void revive() {
     _linePaint.color = TColors.black.value[0];
     Pref.numRevives.increase(1);
-    for (var i = 0; i < Cells.width; i++)
-      for (var j = Cells.height - 3; j < Cells.height; j++)
+    for (var i = 0; i < Cells.width; i++) {
+      for (var j = Cells.height - 3; j < Cells.height; j++) {
         _removeCell(i, j, false);
+      }
+    }
 
     Future.delayed(const Duration(seconds: 1), null).then((value) {
       isPlaying = true;
@@ -564,13 +570,17 @@ class ColumnHint extends PositionComponent {
     if (alpha <= 0) return;
     super.render(canvas);
     canvas.drawRRect(rect, alphaPaint(alpha));
-    if (appearanceState == 0)
+    if (appearanceState == 0) {
       alpha -= 15;
-    else if (appearanceState == 2) alpha += 15;
+    } else if (appearanceState == 2) {
+      alpha += 15;
+    }
 
-    if (_handSize.x < 88.d)
+    if (_handSize.x < 88.d) {
       _scale = 1.003;
-    else if (_handSize.x > 96.d) _scale = 0.992;
+    } else if (_handSize.x > 96.d) {
+      _scale = 0.992;
+    }
     _handSize.scale(_scale);
     if (alpha >= 1000) _hand?.renderPosition(canvas, _handPos, _handSize);
     _arrow?.renderPosition(canvas, _arrowPos, _arrowSize);

@@ -108,7 +108,9 @@ class Quests {
 
   static bool get hasCompleted {
     var quests = list.values;
-    for (var quest in quests) if (quest.isDone) return true;
+    for (var quest in quests) {
+      if (quest.isDone) return true;
+    }
     return false;
   }
 

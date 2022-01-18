@@ -24,10 +24,11 @@ class Coins extends StatefulWidget {
           itemType,
           itemId!);
     }
-    if (value > 0)
+    if (value > 0) {
       await effect(value, x: targetX, y: targetY);
-    else
+    } else {
       Pref.coin.increase(value);
+  }
   }
 
   static effect(int value, {double? x, double? y, int? duraion}) async {
@@ -146,10 +147,11 @@ class _CoinsState extends State<Coins> with TickerProviderStateMixin {
                   onTap: () {
                     if (widget.clickable) {
                       Analytics.design('guiClick:shop:${widget.source}');
-                      if (widget.onTap != null)
+                      if (widget.onTap != null) {
                         widget.onTap?.call();
-                      else
+                      } else {
                         Rout.push(context, ShopDialog());
+                      }
                     }
                   }))),
       Positioned(

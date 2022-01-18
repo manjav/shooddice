@@ -84,8 +84,9 @@ class _DailyDialogState extends AbstractDialogState<DailyDialog> {
   }
 
   _lineItem(ThemeData theme, Day day) {
-    if (day.state == DayState.collected)
+    if (day.state == DayState.collected) {
       return Positioned(bottom: 20.d, child: SVG.show("accept", 40.d));
+    }
     var waiting = day.state == DayState.waiting;
     var content = Row(mainAxisAlignment: MainAxisAlignment.center, children: [
       Text("${day.reward}",
@@ -134,8 +135,7 @@ class _TimeWidgetState extends State<TimeWidget> {
       return SizedBox(height: 54.d);
     }
 
-    if (_timer == null)
-      _timer = Timer.periodic(const Duration(milliseconds: 999), _onTimerTick);
+    _timer ??= Timer.periodic(const Duration(milliseconds: 999), _onTimerTick);
 
     return Column(children: [
       SizedBox(height: 12.d),

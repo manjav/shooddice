@@ -98,8 +98,9 @@ class Ads {
           _updateState(place, AdState.failedLoad, null, error);
           _attempts[place] = _attempts[place]! + 1;
           _ads.remove(place.name);
-          if (_attempts[place]! <= maxFailedLoadAttempts)
+          if (_attempts[place]! <= maxFailedLoadAttempts) {
             _getInterstitial(place);
+          }
         }));
   }
 
@@ -217,21 +218,25 @@ class Ads {
       [Ad? ad, AdError? error]) {
     _placements[place] = state;
     onUpdate?.call(place, state);
-    if (state.order > 0)
+    if (state.order > 0) {
       Analytics.ad(state.order, place.type, place.name, "admob");
+    }
     debugPrint("Ads ==> $place ${state.toString()} ${error ?? ''}");
   }
 
   static _waitForClose(AdPlace adPlace) async {
     const d = Duration(milliseconds: 300);
-    while (_placements[adPlace] != AdState.closed) await Future.delayed(d);
+    while (_placements[adPlace] != AdState.closed) {
+      await Future.delayed(d);
+    }
   }
 
   static void pausedApp() {
     _placements.forEach((key, value) {
       if (key != AdPlace.banner &&
-          (value == AdState.show || value == AdState.rewardReceived))
+          (value == AdState.show || value == AdState.rewardReceived)) {
         _updateState(key, AdState.clicked);
+      }
     });
   }
 }

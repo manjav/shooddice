@@ -185,8 +185,9 @@ class AbstractDialogState<T extends AbstractDialog> extends State<T> {
   Widget contentFactory(ThemeData theme) => const SizedBox();
 
   _onAdsUpdate(AdPlace placement, AdState state) {
-    if (placement == AdPlace.rewarded && state != AdState.closed)
+    if (placement == AdPlace.rewarded && state != AdState.closed) {
       setState(() {});
+    }
   }
 
   @override

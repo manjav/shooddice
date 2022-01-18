@@ -54,10 +54,11 @@ class SVG {
   }
 
   static Text icon(String name, ThemeData theme, {double? scale}) {
-    if (scale != null)
+    if (scale != null) {
       return Text(name,
           style: theme.textTheme.overline!
               .copyWith(fontSize: theme.textTheme.overline!.fontSize! * scale));
+    }
     return Text(name, style: theme.textTheme.overline);
   }
 }

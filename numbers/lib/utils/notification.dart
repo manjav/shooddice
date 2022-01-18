@@ -34,8 +34,9 @@ class Notifier {
     var now = DateTime.now();
     var locations = tz.timeZoneDatabase.locations.values;
     var tzo = now.timeZoneOffset.inMilliseconds;
-    for (var l in locations)
+    for (var l in locations) {
       if (l.currentTimeZone.offset == tzo) tz.setLocalLocation(l);
+    }
 
     // Sleep message
     var sleep = tz.TZDateTime.from(
@@ -43,8 +44,9 @@ class Notifier {
 
     // Weekend message
     var date = DateTime(now.year, now.month, now.day, 10);
-    while (date.weekday != 6) date = date.add(const Duration(days: 1));
-
+    while (date.weekday != 6) {
+      date = date.add(const Duration(days: 1));
+    }
     var weekend = tz.TZDateTime.from(date, tz.local);
 
     // Message map

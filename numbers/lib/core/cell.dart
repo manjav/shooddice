@@ -131,11 +131,12 @@ class Cell extends PositionComponent {
             color: hiddenMode > 1 ? colors[value].color : Colors.white,
             shadows: shadows));
 
-    if (hiddenMode > 0)
+    if (hiddenMode > 0) {
       _hiddenPaint = Paint()
         ..strokeWidth = 2
         ..style = PaintingStyle.stroke
         ..color = hiddenMode > 1 ? colors[value].color : Colors.white;
+    }
     if (reward > 0) _coin = await Svg.load('images/coin.svg');
 
     size = Vector2(1.3, 1.3);

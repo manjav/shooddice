@@ -104,9 +104,10 @@ class _StatsDialogState extends AbstractDialogState<StatsDialog> {
     setState(() {});
     final directory = await getApplicationDocumentsDirectory();
     var imagePath = await _screenshotController.captureAndSave(directory.path);
-    if (imagePath != null)
+    if (imagePath != null) {
       await Share.shareFiles([imagePath],
           text: "app_url".l(), subject: "app_title".l());
+    }
     shareMode = false;
     Analytics.share("image", "stats");
     setState(() {});

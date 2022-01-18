@@ -175,8 +175,9 @@ class _StartDialogState extends AbstractDialogState<StartDialog> {
     _startButtonLabel = "wait_l".l();
     _onUpdate();
     await Analytics.updateVariantIDs();
-    if (Pref.playCount.value > AdPlace.interstitialVideo.threshold)
+    if (Pref.playCount.value > AdPlace.interstitialVideo.threshold) {
       await Ads.showInterstitial(AdPlace.interstitialVideo);
+    }
     var result = await Rout.push(context, const HomePage());
     MyGame.boostNextMode = 0;
     MyGame.boostBig = false;

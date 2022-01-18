@@ -29,8 +29,9 @@ class _PiggyDialogState extends AbstractDialogState<PiggyDialog> {
   void initState() {
     reward = Pref.coinPiggy.value >= Price.piggy ? Price.piggy : 0;
 
-    if (widget.playApplaud)
+    if (widget.playApplaud) {
       Timer(const Duration(milliseconds: 600), () => Sound.play("win"));
+    }
     Analytics.updateVariantIDs();
     super.initState();
   }

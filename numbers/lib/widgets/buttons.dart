@@ -35,9 +35,10 @@ class _BumpedButtonState extends State<BumpedButton> {
   Widget build(BuildContext context) {
     var enable = widget.isEnable ?? true;
     var padding = widget.padding ?? EdgeInsets.fromLTRB(10.d, 6.d, 10.d, 12.d);
-    if (_isPressed && enable)
+    if (_isPressed && enable) {
       padding = padding.copyWith(
           top: padding.top + 2.d, bottom: padding.bottom - 2.d);
+    }
     return GestureDetector(
         onTap: () {
           if (enable) {
@@ -61,7 +62,7 @@ class _BumpedButtonState extends State<BumpedButton> {
         },
         child: Container(
             padding: padding,
-            child: widget.content ?? SizedBox(),
+            child: widget.content ?? const SizedBox(),
             decoration: ButtonDecor(widget.colors ?? TColors.white.value,
                 widget.cornerRadius ?? 10.d, enable, _isPressed),
             width: 144.d,
@@ -75,7 +76,7 @@ class ButtonDecor extends Decoration {
   final List<Color> colors;
   final double cornerRadius;
 
-  ButtonDecor(this.colors, this.cornerRadius, this.isEnable, this.isPressed);
+  const ButtonDecor(this.colors, this.cornerRadius, this.isEnable, this.isPressed);
 
   @override
   BoxPainter createBoxPainter([VoidCallback? onChanged]) {
