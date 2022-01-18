@@ -47,6 +47,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   bool _animationTime = false;
   Timer? _timer;
 
+  @override
   void initState() {
     super.initState();
     _createGame();

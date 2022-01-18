@@ -183,6 +183,7 @@ class MyGame extends FlameGame with TapDetector {
     add(cell);
   }
 
+  @override
   void render(Canvas canvas) {
     canvas.drawRRect(_bgRect!, _mainPaint);
     canvas.drawRect(_rects![0], _zebraPaint);
@@ -232,6 +233,7 @@ class MyGame extends FlameGame with TapDetector {
     _speed = Cell.minSpeed;
   }
 
+  @override
   void update(double dt) {
     super.update(dt);
 
@@ -255,6 +257,7 @@ class MyGame extends FlameGame with TapDetector {
     _fallAll();
   }
 
+  @override
   void onTapDown(TapDownInfo info) {
     if (info.eventPosition.global.y > bounds.bottom) return;
     if (removingMode != null) {
@@ -525,6 +528,7 @@ class FallingEffect extends PositionComponent {
     _alpha = 255;
   }
 
+  @override
   void render(Canvas canvas) {
     if (_alpha <= 0) return;
     canvas.drawRRect(_rect!, alphaPaint(_alpha));
@@ -566,6 +570,7 @@ class ColumnHint extends PositionComponent {
     _hand = await Svg.load('images/hand.svg');
   }
 
+  @override
   void render(Canvas canvas) {
     if (alpha <= 0) return;
     super.render(canvas);
