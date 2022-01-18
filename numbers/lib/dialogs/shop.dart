@@ -264,7 +264,7 @@ class _ShopDialogState extends AbstractDialogState<ShopDialog> {
               decoration: ButtonDecor(TColors.green.value, 8.d, true, false),
               child: Padding(
                   padding: EdgeInsets.fromLTRB(6.d, 6.d, 6.d, 7.d),
-                  child: Text("${product.price}",
+                  child: Text(product.price,
                       style: theme.textTheme.headline6,
                       textAlign: TextAlign.center)),
             ),

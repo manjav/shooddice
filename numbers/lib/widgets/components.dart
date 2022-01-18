@@ -16,7 +16,7 @@ class Components {
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
               Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-                Text("${Pref.record.value.format()}",
+                Text(Pref.record.value.format(),
                     style:
                         theme.textTheme.headline5!.copyWith(letterSpacing: -1)),
                 SizedBox(width: 3.d),

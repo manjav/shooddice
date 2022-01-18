@@ -121,7 +121,7 @@ class _CoinsState extends State<Coins> with TickerProviderStateMixin {
   // updated to reflect the controller's current value.
   Widget _buildAnimation(BuildContext context, Widget? child) {
     var theme = Theme.of(context);
-    var text = "${Pref.coin.value.format()}";
+    var text = Pref.coin.value.format();
 
     return Stack(alignment: Alignment.center, children: [
       Positioned(
