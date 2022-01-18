@@ -26,8 +26,10 @@ class Price {
 }
 
 class ShopDialog extends AbstractDialog {
-  ShopDialog()
-      : super(DialogMode.shop,
+  ShopDialog({Key? key})
+      : super(
+          DialogMode.shop,
+          key: key,
             title: "shop_l".l(),
             padding: EdgeInsets.all(8.d),
             width: 310.d,

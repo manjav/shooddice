@@ -20,8 +20,9 @@ class CubeDialog extends AbstractDialog {
 
   static int earnedAt = 0;
 
-  CubeDialog()
+  CubeDialog({Key? key})
       : super(DialogMode.cube,
+            key: key,
             height: 320.d,
             showCloseButton: false,
             title: "cube_l".l(),

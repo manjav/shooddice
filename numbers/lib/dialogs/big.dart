@@ -21,12 +21,15 @@ class BigBlockDialog extends AbstractDialog {
   final ConfettiController confettiController;
 
   final int value;
-  BigBlockDialog(this.value, this.confettiController)
-      : super(DialogMode.big,
-            height: 330.d,
-            showCloseButton: false,
-            padding: EdgeInsets.fromLTRB(18.d, 0.d, 18.d, 18.d),
-            title: Device.aspectRatio < 0.7 ? "big_l".l() : null);
+  BigBlockDialog(this.value, this.confettiController, {Key? key})
+      : super(
+          DialogMode.big,
+          key: key,
+          height: 330.d,
+          showCloseButton: false,
+          padding: EdgeInsets.fromLTRB(18.d, 0.d, 18.d, 18.d),
+          title: Device.aspectRatio < 0.7 ? "big_l".l() : null,
+        );
   @override
   _BigBlockDialogState createState() => _BigBlockDialogState();
 }

@@ -9,13 +9,16 @@ class Confirm extends AbstractDialog {
   final String text;
   final String? acceptText;
   final String? declineText;
-  Confirm(this.text, {this.acceptText, this.declineText})
-      : super(DialogMode.confirm,
-            showCloseButton: false,
+  Confirm(this.text, {Key? key, this.acceptText, this.declineText,})
+      : super(
+          DialogMode.confirm,
+          key: key,
+          showCloseButton: false,
           statsButton: const SizedBox(),
           scoreButton: const SizedBox(),
-            padding: EdgeInsets.fromLTRB(16.d, 0, 16.d, 16.d),
-            height: 0);
+          padding: EdgeInsets.fromLTRB(16.d, 0, 16.d, 16.d),
+          height: 0,
+        );
   @override
   _ConfirmState createState() => _ConfirmState();
 }

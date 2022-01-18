@@ -15,14 +15,19 @@ class Callout extends AbstractDialog {
   static double chromeHeight = 84.d;
   final String text;
   final String type;
-  final EdgeInsets? padding;
   final bool? hasCoinButton;
-  final double? width;
-  final double? height;
-  Callout(this.text, this.type,
-      {this.padding, this.width, this.height, this.hasCoinButton})
+  const Callout(this.text, this.type,
+      {Key? key,
+      EdgeInsets? padding,
+      double? width,
+      double? height,
+      this.hasCoinButton})
       : super(
           DialogMode.callout,
+          key: key,
+          padding: padding,
+          width: width,
+          height: height,
         );
   @override
   _CalloutState createState() => _CalloutState();

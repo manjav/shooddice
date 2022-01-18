@@ -86,10 +86,11 @@ class RatingDialog extends AbstractDialog {
     return true;
   }
 
-  final initialRating;
-  RatingDialog({this.initialRating = 1})
+  final int initialRating;
+  RatingDialog({Key? key, this.initialRating = 1})
       : super(
           DialogMode.rating,
+          key: key,
           height: 280.d,
           showCloseButton: false,
           title: "rate_title".l(),
@@ -141,9 +142,10 @@ class _RatingDialogState extends AbstractDialogState<RatingDialog> {
 }
 
 class ReviewDialog extends AbstractDialog {
-  ReviewDialog()
+  ReviewDialog({Key? key})
       : super(
           DialogMode.review,
+          key: key,
           height: 0,
           width: 320.d,
           title: "review_l".l(),

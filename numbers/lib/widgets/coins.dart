@@ -101,7 +101,7 @@ class _CoinsState extends State<Coins> with TickerProviderStateMixin {
     _x = _getAnimation(w * 0.38, x ?? l, 0.5, 0.8, Curves.easeInSine);
     _y = _getAnimation(h * 0.5, y ?? t, 0.5, 0.8, Curves.easeInExpo);
     Coins.duration = (d * 0.8).round();
-    this._value = value;
+    _value = value;
     _controller.reset();
     _controller.animateTo(1, duration: Duration(milliseconds: d));
     Sound.play("coin");

@@ -66,8 +66,7 @@ class MyGame extends FlameGame with TapDetector {
   FallingEffect? _fallingEffect;
   ColumnHint? _columnHint;
 
-  MyGame({onGameEvent}) : super() {
-    this.onGameEvent = onGameEvent;
+  MyGame({this.onGameEvent}) : super() {
     Prefs.score = Pref.score.value;
     Cell.maxRandom = Pref.maxRandom.value;
   }
@@ -409,7 +408,7 @@ class MyGame extends FlameGame with TapDetector {
         Animate.checkCompletion(controller, () => remove(m));
       }
 
-      if (matchs.length > 0) {
+      if (matchs.isNotEmpty) {
         _collectReward(c);
         c.matched = true;
         c.init(c.column, c.row, c.value + matchs.length, onInit: _onCellsInit);
@@ -459,7 +458,7 @@ class MyGame extends FlameGame with TapDetector {
       _cells.accumulateColumn(column, row);
     } else {
       _cells.set(column, row, null);
-  }
+    }
   }
 
   void _removeCellsByValue(int value) {

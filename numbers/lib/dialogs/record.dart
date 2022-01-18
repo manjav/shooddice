@@ -18,11 +18,14 @@ import 'package:rive/rive.dart';
 
 class RecordDialog extends AbstractDialog {
   final ConfettiController confettiController;
-  RecordDialog(this.confettiController)
-      : super(DialogMode.record,
-            showCloseButton: false,
-            height: 310.d,
-            padding: EdgeInsets.fromLTRB(18.d, 0.d, 18.d, 18.d));
+  RecordDialog(this.confettiController, {Key? key})
+      : super(
+          DialogMode.record,
+          key: key,
+          showCloseButton: false,
+          height: 310.d,
+          padding: EdgeInsets.fromLTRB(18.d, 0.d, 18.d, 18.d),
+        );
   @override
   _RecordDialogState createState() => _RecordDialogState();
 }

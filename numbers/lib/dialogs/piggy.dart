@@ -17,9 +17,12 @@ import 'package:numbers/widgets/punchbutton.dart';
 
 class PiggyDialog extends AbstractDialog {
   final bool playApplaud;
-  PiggyDialog(this.playApplaud)
+  PiggyDialog(this.playApplaud, {Key? key})
       : super(DialogMode.piggy,
-            height: 300.d, title: "piggy_l".l(), padding: EdgeInsets.all(18.d));
+            key: key,
+            height: 300.d,
+            title: "piggy_l".l(),
+            padding: EdgeInsets.all(18.d));
   @override
   _PiggyDialogState createState() => _PiggyDialogState();
 }

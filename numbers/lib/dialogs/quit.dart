@@ -6,13 +6,16 @@ import 'package:rive/rive.dart';
 
 class QuitDialog extends AbstractDialog {
   final bool? showAvatar;
-  QuitDialog({this.showAvatar})
-      : super(DialogMode.quit,
-            height: 54.d,
-            title: "quit_l".l(),
-            statsButton: const SizedBox(),
-            scoreButton: const SizedBox(),
-            padding: EdgeInsets.fromLTRB(16.d, 4.d, 16.d, 8.d));
+  QuitDialog({Key? key, this.showAvatar})
+      : super(
+          DialogMode.quit,
+          key: key,
+          height: 54.d,
+          title: "quit_l".l(),
+          statsButton: const SizedBox(),
+          scoreButton: const SizedBox(),
+          padding: EdgeInsets.fromLTRB(16.d, 4.d, 16.d, 8.d),
+        );
   @override
   _QuitDialogState createState() => _QuitDialogState();
 }

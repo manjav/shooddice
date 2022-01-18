@@ -109,7 +109,7 @@ class Cell extends PositionComponent {
     this.row = row;
     this.value = value;
     this.reward = reward;
-    this.onInit = onInit ?? null;
+    this.onInit = onInit;
     this.hiddenMode = hiddenMode;
     state = CellState.init;
 

@@ -99,10 +99,8 @@ class _ButtonDecorationPainter extends BoxPainter {
   bool isEnable = true;
 
   _ButtonDecorationPainter(
-      this.colors, this.cornerRadius, bool isEnable, bool isPressed)
+      this.colors, this.cornerRadius, this.isEnable, this.isPressed)
       : super() {
-    this.isEnable = isEnable;
-    this.isPressed = isPressed;
     _mainPaint.color =
         isEnable ? colors[2] : Color.lerp(colors[2], const Color(0xFF8a8a8a), 0.80)!;
     _backPaint.color = isEnable ? const Color(0xFF212527) : Colors.grey[600]!;

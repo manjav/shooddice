@@ -21,12 +21,15 @@ import 'package:numbers/widgets/home.dart';
 import 'package:numbers/widgets/punchbutton.dart';
 
 class StartDialog extends AbstractDialog {
-  StartDialog()
-      : super(DialogMode.start,
+  StartDialog({Key? key})
+      : super(
+          DialogMode.start,
+          key: key,
             height: 330.d,
             showCloseButton: false,
             title: "start_title".l(),
-            padding: EdgeInsets.fromLTRB(12.d, 12.d, 12.d, 14.d));
+          padding: EdgeInsets.fromLTRB(12.d, 12.d, 12.d, 14.d),
+        );
   @override
   _StartDialogState createState() => _StartDialogState();
 }
@@ -38,10 +41,12 @@ class _StartDialogState extends AbstractDialogState<StartDialog> {
   void initState() {
     super.initState();
     Quests.onQuestComplete = _onQuestUpdate;
-    if (Prefs.getString("cells").isNotEmpty)
+    if (Prefs.getString("cells").isNotEmpty) {
       _startButtonLabel = "continue_l".l();
-    if (Pref.tutorMode.value == 0)
+    }
+    if (Pref.tutorMode.value == 0) {
       Timer(const Duration(milliseconds: 100), _onStart);
+    }
   }
 
   @override

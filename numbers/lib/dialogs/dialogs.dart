@@ -28,8 +28,9 @@ class AbstractDialog extends StatefulWidget {
   final Map<String, dynamic>? args;
   final int? popDuration;
 
-  AbstractDialog(
+  const AbstractDialog(
     this.mode, {
+    Key? key,
     this.sfx,
     this.title,
     this.width,
@@ -44,7 +45,7 @@ class AbstractDialog extends StatefulWidget {
     this.closeOnBack,
     this.args,
     this.popDuration,
-  });
+  }) : super(key: key);
   @override
   AbstractDialogState createState() => AbstractDialogState();
 }
@@ -58,10 +59,11 @@ class AbstractDialogState<T extends AbstractDialog> extends State<T> {
     Ads.onUpdate = _onAdsUpdate;
     Sound.play(widget.sfx ?? "pop");
     Analytics.setScreen(widget.mode.name);
-    if (widget.onWillPop != null)
+    if (widget.onWillPop != null) {
       onWillPop = widget.onWillPop;
-    else if (reward > 0)
+    } else if (reward > 0) {
       onWillPop = () => buttonsClick(context, widget.mode.name, reward, false);
+    }
     super.initState();
   }
 

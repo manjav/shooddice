@@ -25,7 +25,7 @@ Future<void> main() async {
 }
 
 class MyApp extends StatefulWidget {
-  const MyApp();
+  const MyApp({Key? key}) : super(key: key);
   @override
   AppState createState() => AppState();
   static AppState? of(BuildContext context) =>

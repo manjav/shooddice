@@ -14,9 +14,10 @@ import 'package:screenshot/screenshot.dart';
 import 'package:share/share.dart';
 
 class StatsDialog extends AbstractDialog {
-  StatsDialog()
+  StatsDialog({Key? key})
       : super(
           DialogMode.stats,
+          key: key,
           title: "stats_l".l(),
           statsButton: const SizedBox(),
           padding: EdgeInsets.all(12.d),

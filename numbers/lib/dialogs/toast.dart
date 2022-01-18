@@ -6,14 +6,17 @@ class Toast extends AbstractDialog {
   final String text;
   final String? icon;
   final String? monoIcon;
-  Toast(this.text, {this.icon, this.monoIcon})
-      : super(DialogMode.toast,
-            height: 54.d,
-            sfx: "merge-9",
-            showCloseButton: false,
-            statsButton: const SizedBox(),
-            scoreButton: const SizedBox(),
-            padding: EdgeInsets.fromLTRB(12.d, 4.d, 12.d, 8.d));
+  Toast(this.text, {Key? key, this.icon, this.monoIcon})
+      : super(
+          DialogMode.toast,
+          key: key,
+          height: 54.d,
+          sfx: "merge-9",
+          showCloseButton: false,
+          statsButton: const SizedBox(),
+          scoreButton: const SizedBox(),
+          padding: EdgeInsets.fromLTRB(12.d, 4.d, 12.d, 8.d),
+        );
   @override
   _ToastState createState() => _ToastState();
 }

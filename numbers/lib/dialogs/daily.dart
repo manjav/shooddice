@@ -11,9 +11,10 @@ import 'package:numbers/widgets/coins.dart';
 import 'package:numbers/widgets/punchbutton.dart';
 
 class DailyDialog extends AbstractDialog {
-  DailyDialog()
+  DailyDialog({Key? key})
       : super(
           DialogMode.daily,
+          key: key,
           title: "daily_l".l(),
         );
   @override
@@ -117,7 +118,7 @@ class _DailyDialogState extends AbstractDialogState<DailyDialog> {
 class TimeWidget extends StatefulWidget {
   final String label;
   final Function callback;
-  TimeWidget(this.label, this.callback);
+  const TimeWidget(this.label, this.callback, {Key? key}) : super(key: key);
   @override
   _TimeWidgetState createState() => _TimeWidgetState();
 }
