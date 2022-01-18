@@ -164,24 +164,24 @@ class _TimeWidgetState extends State<TimeWidget> {
 }
 
 class Days {
-  static const DAY_LEN = 86400000;
+  static const dayLen = 86400000;
   static List<Day> list = [];
 
   static bool collectable = false;
   static int get remaining =>
-      (Pref.dayFirst.value + (Pref.dayCount.value + 1) * DAY_LEN) -
+      (Pref.dayFirst.value + (Pref.dayCount.value + 1) * dayLen) -
       DateTime.now().millisecondsSinceEpoch;
 
   static init() {
     var dayFirst = Pref.dayFirst.value;
     var dayCount = Pref.dayCount.value;
     var millisecondsSinceEpoch = DateTime.now().millisecondsSinceEpoch;
-    var diff = millisecondsSinceEpoch - (dayFirst + dayCount * DAY_LEN);
-    if (diff > DAY_LEN * 2) {
-      Pref.dayFirst.set(millisecondsSinceEpoch - DAY_LEN);
+    var diff = millisecondsSinceEpoch - (dayFirst + dayCount * dayLen);
+    if (diff > dayLen * 2) {
+      Pref.dayFirst.set(millisecondsSinceEpoch - dayLen);
       Pref.dayCount.set(dayCount = 0);
     }
-    collectable = (diff < DAY_LEN * 2 && diff > DAY_LEN) || dayCount == 0;
+    collectable = (diff < dayLen * 2 && diff > dayLen) || dayCount == 0;
     list.clear();
     for (var i = 0; i < 90; i++) {
       list.add(Day(

@@ -22,27 +22,27 @@ class Cell extends PositionComponent {
   static double thickness = 4.6;
   static int lastRandomValue = 9;
   static int maxRandom = 0;
-  static final firstBigRecord = 8;
-  static final maxRandomValue = 4;
+  static const firstBigRecord = 8;
+  static const maxRandomValue = 4;
   static final colors = [
-    PaletteEntry(Color(0xFF191C1D)),
-    PaletteEntry(Color(0xFF9600FF)),
-    PaletteEntry(Color(0xFFF0145A)),
-    PaletteEntry(Color(0xFFFFBC15)),
-    PaletteEntry(Color(0xFF21C985)),
-    PaletteEntry(Color(0xFF00B0F0)),
-    PaletteEntry(Color(0xFFE007B4)),
-    PaletteEntry(Color(0xFF7EE024)),
-    PaletteEntry(Color(0xFFFF5B8E)),
-    PaletteEntry(Color(0xFFFF5518)),
-    PaletteEntry(Color(0xFFACC723)),
-    PaletteEntry(Color(0xFF6132D6)),
-    PaletteEntry(Color(0xFFAC3674)),
-    PaletteEntry(Color(0xFF8E7C58)),
-    PaletteEntry(Color(0xFFE2DB21)),
-    PaletteEntry(Color(0xFF0070C0)),
-    PaletteEntry(Color(0xFF00C0C0)),
-    PaletteEntry(Color(0xFF004940))
+    const PaletteEntry(Color(0xFF191C1D)),
+    const PaletteEntry(Color(0xFF9600FF)),
+    const PaletteEntry(Color(0xFFF0145A)),
+    const PaletteEntry(Color(0xFFFFBC15)),
+    const PaletteEntry(Color(0xFF21C985)),
+    const PaletteEntry(Color(0xFF00B0F0)),
+    const PaletteEntry(Color(0xFFE007B4)),
+    const PaletteEntry(Color(0xFF7EE024)),
+    const PaletteEntry(Color(0xFFFF5B8E)),
+    const PaletteEntry(Color(0xFFFF5518)),
+    const PaletteEntry(Color(0xFFACC723)),
+    const PaletteEntry(Color(0xFF6132D6)),
+    const PaletteEntry(Color(0xFFAC3674)),
+    const PaletteEntry(Color(0xFF8E7C58)),
+    const PaletteEntry(Color(0xFFE2DB21)),
+    const PaletteEntry(Color(0xFF0070C0)),
+    const PaletteEntry(Color(0xFF00C0C0)),
+    const PaletteEntry(Color(0xFF004940))
   ];
   static final scales = [0, 1, 0.9, 0.75, 0.65, 0.6, 0.55];
   static double get radius => diameter * 0.5;
@@ -94,8 +94,8 @@ class Cell extends PositionComponent {
   Paint? _overPaint;
   Paint? _hiddenPaint;
   Svg? _coin;
-  Vector2 _coinPos = Vector2.all(-radius * 0.86);
-  Vector2 _coinSize = Vector2.all(26);
+  final Vector2 _coinPos = Vector2.all(-radius * 0.86);
+  final Vector2 _coinSize = Vector2.all(26);
 
   Cell(int column, int row, int value, {int reward = 0, Function(Cell)? onInit})
       : super() {
