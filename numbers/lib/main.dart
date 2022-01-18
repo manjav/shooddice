@@ -72,7 +72,7 @@ class _MainPageState extends State<MainPage> with WidgetsBindingObserver {
       Device.size = MediaQuery.of(context).size;
       Device.ratio = Device.size.height / 764;
       Device.aspectRatio = Device.size.width / Device.size.height;
-      print("${Device.size} ${MediaQuery.of(context).devicePixelRatio}");
+      // print("${Device.size} ${MediaQuery.of(context).devicePixelRatio}");
       MyApp.of(context)!.updateTheme();
       return const SizedBox();
     }
