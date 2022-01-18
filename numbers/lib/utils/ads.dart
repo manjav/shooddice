@@ -10,7 +10,7 @@ import 'package:numbers/utils/analytic.dart';
 import 'package:numbers/utils/prefs.dart';
 
 class Ads {
-  static Map<AdPlace, AdState> _placements = Map();
+  static final Map<AdPlace, AdState> _placements = {};
 
   static Function(AdPlace, AdState)? onUpdate;
   static String platform = Platform.isAndroid ? "Android" : "iOS";
@@ -20,7 +20,7 @@ class Ads {
   static const prefix = "ca-app-pub-5018637481206902/";
   static const maxFailedLoadAttempts = 3;
   static const AdRequest _request = AdRequest(nonPersonalizedAds: false);
-  static final Map<String, Ad> _ads = Map();
+  static final Map<String, Ad> _ads = {};
   static final Map<AdPlace, int> _attempts = {
     AdPlace.interstitial: 0,
     AdPlace.interstitialVideo: 0,

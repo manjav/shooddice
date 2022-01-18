@@ -43,8 +43,8 @@ class ShopDialog extends AbstractDialog {
 
 class _ShopDialogState extends AbstractDialogState<ShopDialog> {
   String _message = "wait_l".l();
-  var coins = Map<String, ProductDetails>();
-  var others = Map<String, ProductDetails>();
+  var coins = <String, ProductDetails>{};
+  var others = <String, ProductDetails>{};
   final InAppPurchase _inAppPurchase = InAppPurchase.instance;
   late StreamSubscription<List<PurchaseDetails>> _subscription;
 
