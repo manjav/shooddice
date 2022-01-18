@@ -82,7 +82,7 @@ class _CoinsState extends State<Coins> with TickerProviderStateMixin {
   @override
   void initState() {
     Coins._onStart.add(_onCoinStart);
-    print("initState ==> ${Coins._onStart.length}");
+    debugPrint("Coins initState ==> ${Coins._onStart.length}");
     super.initState();
   }
 
@@ -182,7 +182,7 @@ class _CoinsState extends State<Coins> with TickerProviderStateMixin {
   @override
   void dispose() {
     Coins._onStart.remove(_onCoinStart);
-    print("dispose ==> ${Coins._onStart.length}");
+    debugPrint("Coins dispose ==> ${Coins._onStart.length}");
     _punchController.dispose();
     _controller.dispose();
     super.dispose();

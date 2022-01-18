@@ -14,7 +14,7 @@ import 'package:http/http.dart' as http;
 
 class RatingDialog extends AbstractDialog {
   static Future<bool> showRating(BuildContext context) async {
-    print(
+    debugPrint(
         "Rate:${Pref.rate.value}, plays:${Pref.playCount.value}, target:${Pref.rateTarget.value}");
     // Repeat rating request
     // Already 5 rating or pending to reach target play count

@@ -30,10 +30,10 @@ class ShopDialog extends AbstractDialog {
       : super(
           DialogMode.shop,
           key: key,
-            title: "shop_l".l(),
-            padding: EdgeInsets.all(8.d),
-            width: 310.d,
-            height: 410.d,
+          title: "shop_l".l(),
+          padding: EdgeInsets.all(8.d),
+          width: 310.d,
+          height: 410.d,
           statsButton: const SizedBox(),
           scoreButton: const SizedBox(),
         );
@@ -69,7 +69,7 @@ class _ShopDialogState extends AbstractDialogState<ShopDialog> {
         _inAppPurchase.purchaseStream;
     _subscription = purchaseUpdated.listen((purchaseDetailsList) {
       _listenToPurchaseUpdated(purchaseDetailsList);
-    }, onDone: () => _subscription.cancel(), onError: (error) => print(error));
+    }, onDone: () => _subscription.cancel());
 
     Set<String> skus = {"no_ads"};
     for (var i = 0; i < 6; i++) {

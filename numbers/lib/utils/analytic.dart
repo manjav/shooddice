@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:appsflyer_sdk/appsflyer_sdk.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:flutter/material.dart';
 import 'package:gameanalytics_sdk/gameanalytics.dart';
 import 'package:numbers/dialogs/shop.dart';
 import 'package:numbers/utils/localization.dart';
@@ -55,7 +56,7 @@ class Analytics {
     var testVariantId =
         await GameAnalytics.getRemoteConfigsValueAsString("res-dayquest", "1");
     variant = int.parse(testVariantId ?? "1");
-    print("testVariantId ==> $variant");
+    debugPrint("testVariantId ==> $variant");
     Price.ad = variant == 2 ? 50 : 100;
     Price.cube = variant == 2 ? 10 : 20;
     Price.piggy = variant == 2 ? 20 : 30;
@@ -83,7 +84,6 @@ class Analytics {
       "receipt": receipt,
       "signature": signature,
     };
-    print(data);
     GameAnalytics.addBusinessEvent(data);
   }
 
