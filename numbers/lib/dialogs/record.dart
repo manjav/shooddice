@@ -31,7 +31,7 @@ class _RecordDialogState extends AbstractDialogState<RecordDialog> {
   @override
   void initState() {
     reward = Price.record;
-    Timer(Duration(milliseconds: 500), () {
+    Timer(const Duration(milliseconds: 500), () {
       widget.confettiController.play();
       Sound.play("win");
     });
@@ -96,7 +96,7 @@ class _RecordDialogState extends AbstractDialogState<RecordDialog> {
           ])),
       Positioned(
           top: 60, child: Components.confetty(widget.confettiController)),
-      Center(
+      const Center(
           heightFactor: 0.52,
           child: RiveAnimation.asset('anims/nums-record.riv',
               stateMachines: ["machine"])),

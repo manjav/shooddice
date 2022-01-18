@@ -8,7 +8,7 @@ import 'package:numbers/widgets/buttons.dart';
 
 class Components {
   static Widget scores(ThemeData theme, {Function()? onTap}) {
-    if (Pref.tutorMode.value == 0) return SizedBox();
+    if (Pref.tutorMode.value == 0) return const SizedBox();
     return Hero(
         tag: "score",
         child: GestureDetector(
@@ -27,13 +27,13 @@ class Components {
   }
 
   static Widget stats(ThemeData theme, {Function()? onTap}) {
-    if (Pref.tutorMode.value == 0) return SizedBox();
+    if (Pref.tutorMode.value == 0) return const SizedBox();
     return Hero(
         tag: "stats",
         child: SizedBox(
             width: 50.d,
             child: BumpedButton(
-                padding: EdgeInsets.fromLTRB(8, 4, 8, 10),
+                padding: const EdgeInsets.fromLTRB(8, 4, 8, 10),
                 content: GestureDetector(
                     onTap: onTap, child: SVG.show("profile", 48.d)))));
   }
@@ -99,7 +99,7 @@ class Components {
                       topLeft: hasIcon ? Radius.zero : round),
                   child: LinearProgressIndicator(value: value / max)),
               decoration: badgeDecoration())),
-      icon ?? SizedBox(),
+      icon ?? const SizedBox(),
       Positioned(
           left: hasIcon ? 32.d : 4.d,
           right: 4.d,

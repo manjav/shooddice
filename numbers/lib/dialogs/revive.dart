@@ -62,7 +62,7 @@ class _ReviveDialogState extends AbstractDialogState<ReviveDialog> {
             top: 24.d,
             child:
                 Text(Prefs.score.format(), style: theme.textTheme.headline3)),
-        Center(
+        const Center(
             heightFactor: 0.85,
             child: RiveAnimation.asset('anims/nums-revive.riv',
                 stateMachines: ["machine"])),

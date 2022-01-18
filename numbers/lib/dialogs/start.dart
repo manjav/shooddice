@@ -57,7 +57,7 @@ class _StartDialogState extends AbstractDialogState<StartDialog> {
 
   @override
   Widget build(BuildContext context) {
-    if (Pref.tutorMode.value == 0) return SizedBox();
+    if (Pref.tutorMode.value == 0) return const SizedBox();
     var theme = Theme.of(context);
     stepChildren.clear();
     if (Analytics.variant == 3) {
@@ -107,7 +107,7 @@ class _StartDialogState extends AbstractDialogState<StartDialog> {
                 Column(mainAxisAlignment: MainAxisAlignment.start, children: [
               Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                 SVG.show(boost, 58.d),
-                _has(boost) ? SVG.show("accept", 22.d) : SizedBox()
+                _has(boost) ? SVG.show("accept", 22.d) : const SizedBox()
               ]),
               SizedBox(height: 6.d),
               Expanded(
@@ -175,16 +175,16 @@ class _StartDialogState extends AbstractDialogState<StartDialog> {
     _startButtonLabel = "wait_l".l();
     _onUpdate();
     await Analytics.updateVariantIDs();
-    if (Pref.playCount.value > AdPlace.InterstitialVideo.threshold)
-      await Ads.showInterstitial(AdPlace.InterstitialVideo);
-    var result = await Rout.push(context, HomePage());
+    if (Pref.playCount.value > AdPlace.interstitialVideo.threshold)
+      await Ads.showInterstitial(AdPlace.interstitialVideo);
+    var result = await Rout.push(context, const HomePage());
     MyGame.boostNextMode = 0;
     MyGame.boostBig = false;
     _startButtonLabel =
         (Prefs.getString("cells").isEmpty ? "start_l" : "continue_l").l();
     _onUpdate();
     if (result != null) {
-      await Future.delayed(Duration(milliseconds: 100));
+      await Future.delayed(const Duration(milliseconds: 100));
       await Coins.change(result[1], "game", result[0]);
       await RatingDialog.showRating(context);
     }

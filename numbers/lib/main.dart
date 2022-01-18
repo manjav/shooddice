@@ -21,11 +21,11 @@ import 'package:smartlook/smartlook.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {
-  MyApp();
+  const MyApp();
   @override
   AppState createState() => AppState();
   static AppState? of(BuildContext context) =>
@@ -59,7 +59,7 @@ class AppState extends State<MyApp> {
 
 class MainPage extends StatefulWidget {
   final FirebaseAnalytics analytics;
-  MainPage({Key? key, required this.analytics}) : super(key: key);
+  const MainPage({Key? key, required this.analytics}) : super(key: key);
   @override
   _MainPageState createState() => _MainPageState();
 }
@@ -74,7 +74,7 @@ class _MainPageState extends State<MainPage> with WidgetsBindingObserver {
       Device.aspectRatio = Device.size.width / Device.size.height;
       print("${Device.size} ${MediaQuery.of(context).devicePixelRatio}");
       MyApp.of(context)!.updateTheme();
-      return SizedBox();
+      return const SizedBox();
     }
 
     _initServices();
@@ -82,7 +82,7 @@ class _MainPageState extends State<MainPage> with WidgetsBindingObserver {
         onWillPop: _onWillPop,
         child: Scaffold(
             body: _loadingState < 2
-                ? SizedBox()
+                ? const SizedBox()
                 : SizedBox(
                     width: Device.size.width,
                     height: Device.size.height,

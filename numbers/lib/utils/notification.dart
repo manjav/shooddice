@@ -11,12 +11,12 @@ class Notifier {
   static void init() async {
     const AndroidInitializationSettings initializationSettingsAndroid =
         AndroidInitializationSettings('app_icon');
-    final IOSInitializationSettings initializationSettingsIOS =
+    const IOSInitializationSettings initializationSettingsIOS =
         IOSInitializationSettings(
             onDidReceiveLocalNotification: onDidReceiveLocalNotification);
-    final MacOSInitializationSettings initializationSettingsMacOS =
+    const MacOSInitializationSettings initializationSettingsMacOS =
         MacOSInitializationSettings();
-    final InitializationSettings initializationSettings =
+    const InitializationSettings initializationSettings =
         InitializationSettings(
             android: initializationSettingsAndroid,
             iOS: initializationSettingsIOS,
@@ -43,7 +43,8 @@ class Notifier {
 
     // Weekend message
     var date = DateTime(now.year, now.month, now.day, 10);
-    while (date.weekday != 6) date = date.add(Duration(days: 1));
+    while (date.weekday != 6) date = date.add(const Duration(days: 1));
+
     var weekend = tz.TZDateTime.from(date, tz.local);
 
     // Message map

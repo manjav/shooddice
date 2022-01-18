@@ -35,7 +35,7 @@ class _BigBlockDialogState extends AbstractDialogState<BigBlockDialog> {
   @override
   void initState() {
     reward = (widget.value - 8) * Price.big;
-    Timer(Duration(milliseconds: 500), () {
+    Timer(const Duration(milliseconds: 500), () {
       widget.confettiController.play();
       Sound.play("win");
     });
@@ -102,14 +102,14 @@ class _BigBlockDialogState extends AbstractDialogState<BigBlockDialog> {
           top: 0,
           width: 180.d,
           height: 180.d,
-          child: RiveAnimation.asset('anims/nums-shine.riv',
+          child: const RiveAnimation.asset('anims/nums-shine.riv',
               stateMachines: ["machine"])),
       Positioned(
           top: 48.d,
           width: 80.d,
           height: 80.d,
           child: RotationTransition(
-              turns: AlwaysStoppedAnimation(-0.02),
+              turns: const AlwaysStoppedAnimation(-0.02),
               child: Widgets.cell(theme, widget.value)))
     ]);
   }

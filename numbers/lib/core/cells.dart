@@ -103,7 +103,7 @@ class Cells {
       if (c == null) continue;
       map[c.column][c.row] = null;
       --c.row;
-      c.state = CellState.Float;
+      c.state = CellState.float;
       map[c.column][c.row] = c;
       found = true;
       _save();

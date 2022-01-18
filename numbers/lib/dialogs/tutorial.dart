@@ -17,8 +17,8 @@ class TutorialDialog extends AbstractDialog {
             height: 200.d,
             width: 340.d,
             showCloseButton: false,
-            statsButton: SizedBox(),
-            scoreButton: SizedBox(),
+            statsButton: const SizedBox(),
+            scoreButton: const SizedBox(),
             padding: EdgeInsets.fromLTRB(12.d, 4.d, 12.d, 12.d));
   @override
   _TutorialDialogState createState() => _TutorialDialogState();
@@ -26,11 +26,11 @@ class TutorialDialog extends AbstractDialog {
 
 class _TutorialDialogState extends AbstractDialogState<TutorialDialog> {
   @override
-  Widget coinsButtonFactory(ThemeData theme) => SizedBox();
+  Widget coinsButtonFactory(ThemeData theme) => const SizedBox();
 
   @override
   void initState() {
-    Timer(Duration(milliseconds: 10), () => widget.confettiController.play());
+    Timer(const Duration(milliseconds: 10), () => widget.confettiController.play());
     super.initState();
   }
 

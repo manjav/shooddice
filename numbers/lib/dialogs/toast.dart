@@ -11,8 +11,8 @@ class Toast extends AbstractDialog {
             height: 54.d,
             sfx: "merge-9",
             showCloseButton: false,
-            statsButton: SizedBox(),
-            scoreButton: SizedBox(),
+            statsButton: const SizedBox(),
+            scoreButton: const SizedBox(),
             padding: EdgeInsets.fromLTRB(12.d, 4.d, 12.d, 8.d));
   @override
   _ToastState createState() => _ToastState();
@@ -20,7 +20,7 @@ class Toast extends AbstractDialog {
 
 class _ToastState extends AbstractDialogState<Toast> {
   @override
-  Widget coinsButtonFactory(ThemeData theme) => SizedBox();
+  Widget coinsButtonFactory(ThemeData theme) => const SizedBox();
 
   @override
   Widget contentFactory(ThemeData theme) {

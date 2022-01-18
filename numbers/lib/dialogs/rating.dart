@@ -115,7 +115,7 @@ class _RatingDialogState extends AbstractDialogState<RatingDialog> {
                   glowColor: Colors.amber,
                   direction: Axis.horizontal,
                   itemCount: 5,
-                  itemPadding: EdgeInsets.symmetric(horizontal: 3.0),
+                  itemPadding: const EdgeInsets.symmetric(horizontal: 3.0),
                   onRatingUpdate: (rating) {
                     _response = rating.toInt();
                     setState(() {});

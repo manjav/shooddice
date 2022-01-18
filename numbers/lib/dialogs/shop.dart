@@ -32,8 +32,9 @@ class ShopDialog extends AbstractDialog {
             padding: EdgeInsets.all(8.d),
             width: 310.d,
             height: 410.d,
-            statsButton: SizedBox(),
-            scoreButton: SizedBox());
+          statsButton: const SizedBox(),
+          scoreButton: const SizedBox(),
+        );
   @override
   _ShopDialogState createState() => _ShopDialogState();
 }
@@ -217,7 +218,7 @@ class _ShopDialogState extends AbstractDialogState<ShopDialog> {
   }
 
   _overlay(ThemeData theme) {
-    if (_message == "") return SizedBox();
+    if (_message.isEmpty) return const SizedBox();
     return Container(
         color: TColors.black.value[0].withAlpha(230),
         alignment: Alignment.center,
@@ -226,7 +227,7 @@ class _ShopDialogState extends AbstractDialogState<ShopDialog> {
           Text(_message, style: theme.textTheme.headline4),
           SizedBox(height: 32.d),
           _message == "wait_l".l()
-              ? CircularProgressIndicator()
+              ? const CircularProgressIndicator()
               : TextButton(
                   onPressed: () {
                     if (_message == "shop_unavailable".l())
@@ -234,7 +235,7 @@ class _ShopDialogState extends AbstractDialogState<ShopDialog> {
                     else
                       setState(() => _message = "");
                   },
-                  child: Text("OK"))
+                  child: const Text("OK"))
         ]));
   }
 

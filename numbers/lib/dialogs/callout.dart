@@ -49,7 +49,7 @@ class _CalloutState extends AbstractDialogState<Callout> {
               height: widget.height ?? Callout.chromeHeight,
               padding: EdgeInsets.all(8.d),
               decoration: BoxDecoration(
-                  boxShadow: [
+                  boxShadow: const [
                     BoxShadow(
                         blurRadius: 3,
                         color: Colors.black,
@@ -57,7 +57,7 @@ class _CalloutState extends AbstractDialogState<Callout> {
                   ],
                   color: theme.cardColor,
                   shape: BoxShape.rectangle,
-                  borderRadius: BorderRadius.all(Radius.circular(16))),
+                  borderRadius: const BorderRadius.all(Radius.circular(16))),
               child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -79,10 +79,10 @@ class _CalloutState extends AbstractDialogState<Callout> {
                                   ]),
                                   onTap: () => buttonsClick(context,
                                       widget.type, -Price.boost, false))
-                              : SizedBox()),
+                              : const SizedBox()),
                       SizedBox(width: hasCoin ? 0 : 8.d),
                       hasCoin
-                          ? SizedBox()
+                          ? const SizedBox()
                           : SizedBox(
                               width: 98.d,
                               height: 40.d,

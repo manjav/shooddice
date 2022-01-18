@@ -14,14 +14,14 @@ class Ads {
 
   static Function(AdPlace, AdState)? onUpdate;
   static String platform = Platform.isAndroid ? "Android" : "iOS";
-  static final rewardCoef = 10;
-  static final isSupportAdMob = true;
-  static final isSupportUnity = false;
-  static final prefix = "ca-app-pub-5018637481206902/";
-  static final maxFailedLoadAttempts = 3;
-  static final AdRequest _request = AdRequest(nonPersonalizedAds: false);
-  static Map<String, Ad> _ads = Map();
-  static Map<AdPlace, int> _attempts = {
+  static const rewardCoef = 10;
+  static const isSupportAdMob = true;
+  static const isSupportUnity = false;
+  static const prefix = "ca-app-pub-5018637481206902/";
+  static const maxFailedLoadAttempts = 3;
+  static const AdRequest _request = AdRequest(nonPersonalizedAds: false);
+  static final Map<String, Ad> _ads = Map();
+  static final Map<AdPlace, int> _attempts = {
     AdPlace.interstitial: 0,
     AdPlace.interstitialVideo: 0,
     AdPlace.rewarded: 0

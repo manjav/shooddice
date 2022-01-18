@@ -30,7 +30,7 @@ class _PiggyDialogState extends AbstractDialogState<PiggyDialog> {
     reward = Pref.coinPiggy.value >= Price.piggy ? Price.piggy : 0;
 
     if (widget.playApplaud)
-      Timer(Duration(milliseconds: 600), () => Sound.play("win"));
+      Timer(const Duration(milliseconds: 600), () => Sound.play("win"));
     Analytics.updateVariantIDs();
     super.initState();
   }
@@ -46,7 +46,7 @@ class _PiggyDialogState extends AbstractDialogState<PiggyDialog> {
             children: [
               Text(widget.title!, style: theme.textTheme.headline4),
               widget.playApplaud
-                  ? SizedBox()
+                  ? const SizedBox()
                   : GestureDetector(
                       child: SVG.show("close", 28.d),
                       onTap: () {
@@ -74,7 +74,7 @@ class _PiggyDialogState extends AbstractDialogState<PiggyDialog> {
   }
 
   _leftButton(ThemeData theme, int value, int maxValue) {
-    if (value < maxValue) return SizedBox();
+    if (value < maxValue) return const SizedBox();
     return Positioned(
         height: 76.d,
         width: 110.d,

@@ -31,7 +31,7 @@ import 'package:numbers/widgets/components.dart';
 import 'package:rive/rive.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({Key? key}) : super(key: key);
+  const HomePage({Key? key}) : super(key: key);
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -66,7 +66,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         onWillPop: _onWillPop,
         child: Scaffold(
             body: Stack(alignment: Alignment.bottomCenter, children: [
-          _game == null ? SizedBox() : _gameWidget!,
+          _game == null ? const SizedBox() : _gameWidget!,
           Positioned(
               top: MyGame.bounds.top - 69.d,
               left: MyGame.bounds.left,
@@ -125,7 +125,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   }
 
   Widget _getFooter(ThemeData theme) {
-    if (Pref.tutorMode.value == 0) return SizedBox();
+    if (Pref.tutorMode.value == 0) return const SizedBox();
     if (_game!.removingMode != null) {
       return Padding(
           padding: EdgeInsets.only(left: 22.d),
@@ -140,7 +140,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   ],
                   color: theme.cardColor,
                   shape: BoxShape.rectangle,
-                  borderRadius: BorderRadius.all(Radius.circular(16))),
+                  borderRadius: const BorderRadius.all(Radius.circular(16))),
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -209,7 +209,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     if (!_animationTime) {
       var isBannerAdReady = Ads.isReady(AdPlace.banner);
       var ad = Ads.getBanner("game", size: AdSize.banner);
-      if (!isBannerAdReady) return SizedBox();
+      if (!isBannerAdReady) return const SizedBox();
       return Positioned(
           bottom: 2.d,
           child: ClipRRect(
@@ -229,7 +229,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
               SizedBox(
                   width: 80.d,
-                  child: RiveAnimation.asset('anims/nums-character.riv',
+                  child: const RiveAnimation.asset('anims/nums-character.riv',
                       stateMachines: ["runState"])),
               Container(
                   height: 44.d,
@@ -243,7 +243,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   Widget _button(
       ThemeData theme, double right, String icon, Function() onPressed,
       {double? width, Widget? badge, List<Color>? colors}) {
-    if (Pref.tutorMode.value == 0) return SizedBox();
+    if (Pref.tutorMode.value == 0) return const SizedBox();
     return SizedBox(
         width: width ?? 64.d,
         child: BumpedButton(
@@ -255,7 +255,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   top: 4.d,
                   right: 2.d,
                   child: SVG.show(icon, 48.d)),
-              badge ?? SizedBox()
+              badge ?? const SizedBox()
             ]),
             onTap: () {
               Analytics.design('guiClick:$icon:game');
@@ -288,7 +288,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         _widget = TutorialDialog(_confettiController!);
         break;
       case GameEvent.lose:
-        await Future.delayed(Duration(seconds: 1));
+        await Future.delayed(const Duration(seconds: 1));
         _widget = ReviveDialog();
         break;
       case GameEvent.remove:
@@ -304,12 +304,12 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         _rewardLineAnimation!.animateTo(piggyCoins * 1.0,
             duration: const Duration(seconds: 1), curve: Curves.easeInOutSine);
         if (piggyCoins >= Price.piggy) {
-          await Future.delayed(Duration(milliseconds: 500));
+          await Future.delayed(const Duration(milliseconds: 500));
           _game!.onGameEvent?.call(GameEvent.rewardPiggy, 1);
         }
         return;
       case GameEvent.rewardBig:
-        await Future.delayed(Duration(milliseconds: 250));
+        await Future.delayed(const Duration(milliseconds: 250));
         _widget = BigBlockDialog(value, _confettiController!);
         break;
       case GameEvent.rewardCube:
@@ -357,7 +357,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       if (event == GameEvent.rewardBig ||
           event == GameEvent.rewardCube ||
           event == GameEvent.rewardPiggy) {
-        await Future.delayed(Duration(milliseconds: 250));
+        await Future.delayed(const Duration(milliseconds: 250));
         await Coins.change(result[1], "game", event.name);
         return;
       }
@@ -370,7 +370,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         }
         setState(() => _createGame());
         if (result[0] == "tutorFinish") {
-          await Future.delayed(Duration(microseconds: 200));
+          await Future.delayed(const Duration(microseconds: 200));
           await Coins.change(Price.tutorial, "game", event.name);
         }
       }

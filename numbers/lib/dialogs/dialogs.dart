@@ -100,13 +100,13 @@ class AbstractDialogState<T extends AbstractDialog> extends State<T> {
       var reward = await Ads.showRewarded();
       if (reward == null) return;
     } else if (coin > 0 && Ads.showSuicideInterstitial) {
-      await Ads.showInterstitial(AdPlace.Interstitial);
+      await Ads.showInterstitial(AdPlace.interstitial);
     }
     Navigator.of(context).pop([type, coin]);
   }
 
   Widget bannerAdsFactory(String type) {
-    if (!Ads.isReady(AdPlace.Banner)) return SizedBox();
+    if (!Ads.isReady(AdPlace.banner)) return const SizedBox();
     var ad = Ads.getBanner(type);
     return Positioned(
         bottom: 8.d,
@@ -153,7 +153,7 @@ class AbstractDialogState<T extends AbstractDialog> extends State<T> {
             children: [
               widget.title != null
                   ? Text(widget.title!, style: theme.textTheme.headline4)
-                  : SizedBox(),
+                  : const SizedBox(),
               if (hasClose)
                 widget.closeButton ??
                     GestureDetector(
@@ -182,10 +182,10 @@ class AbstractDialogState<T extends AbstractDialog> extends State<T> {
         child: contentFactory(theme));
   }
 
-  Widget contentFactory(ThemeData theme) => SizedBox();
+  Widget contentFactory(ThemeData theme) => const SizedBox();
 
   _onAdsUpdate(AdPlace placement, AdState state) {
-    if (placement == AdPlace.Rewarded && state != AdState.Closed)
+    if (placement == AdPlace.rewarded && state != AdState.closed)
       setState(() {});
   }
 

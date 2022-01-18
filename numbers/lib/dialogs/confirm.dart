@@ -12,8 +12,8 @@ class Confirm extends AbstractDialog {
   Confirm(this.text, {this.acceptText, this.declineText})
       : super(DialogMode.confirm,
             showCloseButton: false,
-            statsButton: SizedBox(),
-            scoreButton: SizedBox(),
+          statsButton: const SizedBox(),
+          scoreButton: const SizedBox(),
             padding: EdgeInsets.fromLTRB(16.d, 0, 16.d, 16.d),
             height: 0);
   @override
@@ -37,7 +37,7 @@ class _ConfirmState extends AbstractDialogState<Confirm> {
       SizedBox(height: 16.d),
       Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
         widget.declineText == null
-            ? SizedBox()
+            ? const SizedBox()
             : SizedBox(
                 width: 100.d,
                 child: BumpedButton(
@@ -48,7 +48,7 @@ class _ConfirmState extends AbstractDialogState<Confirm> {
                         child: Text(widget.declineText!,
                             style: theme.textTheme.headline5)))),
         widget.acceptText == null
-            ? SizedBox()
+            ? const SizedBox()
             : SizedBox(
                 width: 158.d,
                 child: BumpedButton(

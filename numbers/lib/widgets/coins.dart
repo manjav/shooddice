@@ -35,7 +35,7 @@ class Coins extends StatefulWidget {
     await Future.delayed(Duration(milliseconds: Coins.duration));
   }
 
-  static List<Function(int, double?, double?, int?)> _onStart = [];
+  static final List<Function(int, double?, double?, int?)> _onStart = [];
   static int duration = 0;
   final String source;
   final Function? onTap;
@@ -44,32 +44,32 @@ class Coins extends StatefulWidget {
   final double? top;
   final double? height;
 
-  Coins(this.source,
-      {this.onTap, this.clickable = true, this.left, this.top, this.height});
+  const Coins(this.source,
+      {Key? key, this.onTap, this.clickable = true, this.left, this.top, this.height}) : super(key: key);
   @override
   _CoinsState createState() => _CoinsState();
 }
 
 class _CoinsState extends State<Coins> with TickerProviderStateMixin {
   int _value = 0;
-  late var _controller = AnimationController(vsync: this);
-  late var _punchController = AnimationController(vsync: this);
+  late final _controller = AnimationController(vsync: this);
+  late final _punchController = AnimationController(vsync: this);
   late var _x = _getAnimation(0, 0, 0.5, 0.8, Curves.easeInSine);
   late var _y = _getAnimation(0, 0, 0.5, 0.8, Curves.easeInExpo);
-  late var _alpha = _getAnimation(0.0, 1.0, 0.05, 0.2, Curves.ease);
-  late var _sizeIn = _getAnimation(0.0, 64.d, 0, 0.2, Curves.easeOutBack);
-  late var _sizeOut = _getAnimation(74.d, 30.d, 0.6, 0.9, Curves.easeInSine);
-  late var _opacity = _getAnimation(1, 0, 0.9, 1.0, Curves.ease);
-  late var _padding = EdgeInsetsTween(
-    begin: EdgeInsets.only(left: 0),
+  late final _alpha = _getAnimation(0.0, 1.0, 0.05, 0.2, Curves.ease);
+  late final _sizeIn = _getAnimation(0.0, 64.d, 0, 0.2, Curves.easeOutBack);
+  late final _sizeOut = _getAnimation(74.d, 30.d, 0.6, 0.9, Curves.easeInSine);
+  late final _opacity = _getAnimation(1, 0, 0.9, 1.0, Curves.ease);
+  late final _padding = EdgeInsetsTween(
+    begin: const EdgeInsets.only(left: 0),
     end: EdgeInsets.only(left: 66.d),
   ).animate(CurvedAnimation(
       parent: _controller,
-      curve: Interval(0.1, 0.25, curve: Curves.easeOutBack)));
+      curve: const Interval(0.1, 0.25, curve: Curves.easeOutBack)));
 
   static final _defaultTop = 32.d;
   static final _defaultLeft = 66.d;
-  late double _height = widget.height ?? 52.d;
+  late final double _height = widget.height ?? 52.d;
 
   Animation<double> _getAnimation(double begin, double end,
       double intervalBegin, double intervalEnd, Curve curve) {
@@ -87,7 +87,7 @@ class _CoinsState extends State<Coins> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    if (Pref.tutorMode.value == 0) return SizedBox();
+    if (Pref.tutorMode.value == 0) return const SizedBox();
     return AnimatedBuilder(builder: _buildAnimation, animation: _controller);
   }
 
@@ -141,7 +141,7 @@ class _CoinsState extends State<Coins> with TickerProviderStateMixin {
                         ? Text("+  ",
                             textAlign: TextAlign.center,
                             style: theme.textTheme.button)
-                        : SizedBox()
+                        : const SizedBox()
                   ]),
                   onTap: () {
                     if (widget.clickable) {

@@ -18,7 +18,7 @@ class StatsDialog extends AbstractDialog {
       : super(
           DialogMode.stats,
           title: "stats_l".l(),
-          statsButton: SizedBox(),
+          statsButton: const SizedBox(),
           padding: EdgeInsets.all(12.d),
         );
   @override
@@ -26,7 +26,7 @@ class StatsDialog extends AbstractDialog {
 }
 
 class _StatsDialogState extends AbstractDialogState<StatsDialog> {
-  var _screenshotController = ScreenshotController();
+  final _screenshotController = ScreenshotController();
   var shareMode = false;
   @override
   Widget build(BuildContext context) {

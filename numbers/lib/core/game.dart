@@ -36,13 +36,13 @@ enum GameEvent {
 }
 
 class MyGame extends FlameGame with TapDetector {
-  static final Random random = new Random();
+  static final Random random = Random();
   static int boostNextMode = 0;
   static bool boostBig = false;
   static bool isPlaying = false;
-  static Rect bounds = Rect.fromLTRB(0, 0, 0, 0);
+  static Rect bounds = const Rect.fromLTRB(0, 0, 0, 0);
 
-  Function(GameEvent, int)? onGameEvent;
+  final Function(GameEvent, int)? onGameEvent;
   String? removingMode;
 
   bool _tutorMode = false;
@@ -54,15 +54,15 @@ class MyGame extends FlameGame with TapDetector {
   int _fallingsCount = 0;
   int _lastFallingColumn = 0;
   double _speed = Cell.minSpeed;
-  Cell _nextCell = Cell(0, 0, 0);
-  Cells _cells = Cells();
+  final Cell _nextCell = Cell(0, 0, 0);
+  final Cells _cells = Cells();
 
   RRect? _bgRect;
   RRect? _lineRect;
   List<Rect>? _rects;
-  Paint _linePaint = Paint();
-  Paint _mainPaint = Paint()..color = TColors.black.value[2];
-  Paint _zebraPaint = Paint()..color = TColors.black.value[3];
+  final Paint _linePaint = Paint();
+  final Paint _mainPaint = Paint()..color = TColors.black.value[2];
+  final Paint _zebraPaint = Paint()..color = TColors.black.value[3];
   FallingEffect? _fallingEffect;
   ColumnHint? _columnHint;
 
@@ -161,7 +161,7 @@ class MyGame extends FlameGame with TapDetector {
     }
     isPlaying = true;
     _spawn();
-    await Future.delayed(Duration(milliseconds: 10));
+    await Future.delayed(const Duration(milliseconds: 10));
     onGameEvent?.call(GameEvent.score, 0);
   }
 
@@ -176,7 +176,7 @@ class MyGame extends FlameGame with TapDetector {
     var cell = Cell(column, row, value);
     cell.x = Cell.getX(column);
     cell.y = Cell.getY(row);
-    cell.state = CellState.Fixed;
+    cell.state = CellState.fixed;
     _cells.set(column, row, cell);
     add(cell);
   }
@@ -191,7 +191,7 @@ class MyGame extends FlameGame with TapDetector {
 
   void _spawn() {
     // Check space is clean
-    if (_cells.existState(CellState.Float)) return;
+    if (_cells.existState(CellState.float)) return;
     // Check end of tutorial
     if (_tutorMode && _fallingsCount > 6) {
       onGameEvent?.call(GameEvent.completeTutorial, 0);
@@ -233,7 +233,7 @@ class MyGame extends FlameGame with TapDetector {
     super.update(dt);
 
     if (!isPlaying) return;
-    if (_cells.last == null || _cells.last!.state != CellState.Float) return;
+    if (_cells.last == null || _cells.last!.state != CellState.float) return;
 
     if (_tutorMode && _cells.last!.y > bounds.top + Cell.diameter * 1.54) {
       isPlaying = false;
@@ -262,7 +262,7 @@ class MyGame extends FlameGame with TapDetector {
           ((bounds.bottom - info.eventPosition.global.y) / Cell.diameter)
               .clamp(0, Cells.height - 1)
               .floor());
-      if (cell == null || cell.state != CellState.Fixed) return;
+      if (cell == null || cell.state != CellState.fixed) return;
       if (removingMode == "one") {
         Pref.removeOne.increase(-1);
         Quests.increase(QuestType.removeone, 1);
@@ -284,7 +284,7 @@ class MyGame extends FlameGame with TapDetector {
       onGameEvent?.call(GameEvent.boost, 0);
       return;
     }
-    if (_cells.last!.state == CellState.Float && !_cells.last!.matched) {
+    if (_cells.last!.state == CellState.float && !_cells.last!.matched) {
       var col = ((info.eventPosition.global.x - bounds.left) / Cell.diameter)
           .clamp(0, Cells.width - 1)
           .floor();
@@ -330,7 +330,7 @@ class MyGame extends FlameGame with TapDetector {
   void _fallAll() {
     var time = 0.1;
     _cells.loop((i, j, c) {
-      c.state = CellState.Falling;
+      c.state = CellState.falling;
       var dy = Cell.getY(c.row);
       var coef = ((dy - c.y) / (Cell.diameter * Cells.height)) * 0.4;
       var hasDistance = dy - c.y > 0;
@@ -345,19 +345,19 @@ class MyGame extends FlameGame with TapDetector {
       c.add(SizeEffect.to(Vector2(1, 1), c2));
 
       Animate.checkCompletion(c2, () => fallingComplete(c, dy, hasDistance));
-    }, state: CellState.Float, startFrom: _lastFallingColumn);
+    }, state: CellState.float, startFrom: _lastFallingColumn);
   }
 
   void fallingComplete(Cell cell, double dy, bool hasDistance) {
     if (hasDistance) _lastFallingColumn = cell.column;
     cell.size = Vector2(1, 1);
     cell.y = dy;
-    cell.state = CellState.Fell;
+    cell.state = CellState.fell;
 
     // All cells falling completed
     var hasFloat = false;
     _cells.loop((i, j, c) {
-      if (c.state.index < CellState.Fell.index) hasFloat = true;
+      if (c.state.index < CellState.fell.index) hasFloat = true;
     });
     if (hasFloat) return;
     // Check all matchs after falling animation
@@ -390,8 +390,8 @@ class MyGame extends FlameGame with TapDetector {
     var merges = 0;
     for (var j = 0; j < Cells.height; j++) {
       var c = _cells.map[i][j];
-      if (c == null || c.state != CellState.Fell) continue;
-      c.state = CellState.Fixed;
+      if (c == null || c.state != CellState.fell) continue;
+      c.state = CellState.fixed;
 
       var matchs = _cells.getMatchs(c.column, c.row, c.value);
       // Relaese all cells over matchs
@@ -472,7 +472,7 @@ class MyGame extends FlameGame with TapDetector {
       for (var j = Cells.height - 3; j < Cells.height; j++)
         _removeCell(i, j, false);
 
-    Future.delayed(Duration(seconds: 1), null).then((value) {
+    Future.delayed(const Duration(seconds: 1), null).then((value) {
       isPlaying = true;
       _spawn();
     });
@@ -502,7 +502,7 @@ class MyGame extends FlameGame with TapDetector {
     Animate(celebration, [start, idle1, idle2, end],
         onComplete: () => remove(celebration));
     add(celebration);
-    await Future.delayed(Duration(milliseconds: 200));
+    await Future.delayed(const Duration(milliseconds: 200));
     Sound.play("merge-end");
     onGameEvent?.call(GameEvent.celebrate, 0);
   }
@@ -539,7 +539,7 @@ class FallingEffect extends PositionComponent {
 class ColumnHint extends PositionComponent {
   int appearanceState = 0;
   RRect rect;
-  static final Paint _paint = PaletteEntry(Color(0xAAAADDFF)).paint()
+  static final Paint _paint = const PaletteEntry(Color(0xAAAADDFF)).paint()
     ..strokeWidth = 2
     ..style = PaintingStyle.stroke;
   int alpha = 0;
@@ -547,10 +547,10 @@ class ColumnHint extends PositionComponent {
 
   Svg? _hand;
   Svg? _arrow;
-  Vector2 _arrowPos = Vector2.all(0);
-  Vector2 _arrowSize = Vector2.all(32.d);
-  Vector2 _handPos = Vector2.all(0);
-  Vector2 _handSize = Vector2.all(96.d);
+  final Vector2 _arrowPos = Vector2.all(0);
+  final Vector2 _arrowSize = Vector2.all(32.d);
+  final Vector2 _handPos = Vector2.all(0);
+  final Vector2 _handSize = Vector2.all(96.d);
 
   ColumnHint(this.rect) : super() {
     _create();
