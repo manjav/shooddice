@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
@@ -29,12 +30,14 @@ class Ads {
   static bool showSuicideInterstitial = true;
   static RewardItem? reward;
 
-  static init() async {
+  static init() {
     if (isSupportAdMob) {
       MobileAds.instance.initialize();
-      _getInterstitial(AdPlace.interstitial);
-      _getInterstitial(AdPlace.interstitialVideo);
-      _getRewarded();
+      Timer(const Duration(seconds: 3), () {
+        _getInterstitial(AdPlace.interstitialVideo);
+        _getInterstitial(AdPlace.interstitial);
+        _getRewarded();
+      });
     }
 
     /* if (isSupportUnity) {

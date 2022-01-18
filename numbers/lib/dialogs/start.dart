@@ -102,6 +102,12 @@ class _StartDialogState extends AbstractDialogState<StartDialog> {
     ]);
   }
 
+  @override
+  Widget bannerAdsFactory(String type) {
+    if (!Ads.isReady(AdPlace.rewarded)) return const SizedBox();
+    return super.bannerAdsFactory(type);
+  }
+
   Widget _boostButton(String title, String boost) {
     var theme = Theme.of(context);
     return Expanded(

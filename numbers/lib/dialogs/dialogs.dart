@@ -108,7 +108,6 @@ class AbstractDialogState<T extends AbstractDialog> extends State<T> {
   }
 
   Widget bannerAdsFactory(String type) {
-    if (!Ads.isReady(AdPlace.banner)) return const SizedBox();
     var ad = Ads.getBanner(type);
     return Positioned(
         bottom: 8.d,
