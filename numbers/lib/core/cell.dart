@@ -11,7 +11,7 @@ import 'package:numbers/core/game.dart';
 import 'package:numbers/utils/prefs.dart';
 import 'package:numbers/utils/utils.dart';
 
-enum CellState { Init, Float, Falling, Fell, Fixed }
+enum CellState { init, float, falling, fell, fixed }
 
 class Cell extends PositionComponent {
   static double diameter = 64.0;
@@ -69,7 +69,7 @@ class Cell extends PositionComponent {
   int hiddenMode = 0;
   int column = 0, row = 0, reward = 0, value = 0;
   Function(Cell)? onInit;
-  CellState state = CellState.Init;
+  CellState state = CellState.init;
   static final RRect _backRect = RRect.fromLTRBXY(
       padding - radius,
       padding - radius,
@@ -111,7 +111,7 @@ class Cell extends PositionComponent {
     this.reward = reward;
     this.onInit = onInit ?? null;
     this.hiddenMode = hiddenMode;
-    state = CellState.Init;
+    state = CellState.init;
 
     _sidePaint = colors[value].withAlpha(180).paint();
     _overPaint = colors[value].paint();
@@ -148,7 +148,7 @@ class Cell extends PositionComponent {
 
   void _animationComplete() {
     size = Vector2(1, 1);
-    if (state == CellState.Init) state = CellState.Float;
+    if (state == CellState.init) state = CellState.float;
     onInit?.call(this);
     onInit = null;
   }
@@ -161,19 +161,19 @@ class Cell extends PositionComponent {
   }
 
   @override
-  void render(Canvas c) {
-    super.render(c);
+  void render(Canvas canvas) {
+    super.render(canvas);
     if (hiddenMode > 0) {
-      c.drawRRect(_overRect.s(size), _hiddenPaint!);
+      canvas.drawRRect(_overRect.s(size), _hiddenPaint!);
     } else {
-      c.drawRRect(_backRect.s(size), _backPaint);
-      c.drawRRect(_sideRect.s(size), _sidePaint!);
-      c.drawRRect(_overRect.s(size), _overPaint!);
+      canvas.drawRRect(_backRect.s(size), _backPaint);
+      canvas.drawRRect(_sideRect.s(size), _sidePaint!);
+      canvas.drawRRect(_overRect.s(size), _overPaint!);
     }
 
-    _textPaint!.render(c, "${hiddenMode == 1 ? "?" : getScore(value)}", _center,
+    _textPaint!.render(canvas, "${hiddenMode == 1 ? "?" : getScore(value)}", _center,
         anchor: Anchor.center);
-    if (reward > 0) _coin!.renderPosition(c, _coinPos, _coinSize);
+    if (reward > 0) _coin!.renderPosition(canvas, _coinPos, _coinSize);
   }
 
   @override
