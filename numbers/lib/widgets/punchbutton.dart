@@ -92,6 +92,7 @@ class _PunchButtonState extends State<PunchButton>
 
   @override
   void dispose() {
+    animation!.stop();
     animation!.dispose();
     super.dispose();
   }
