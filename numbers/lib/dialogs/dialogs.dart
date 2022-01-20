@@ -205,6 +205,7 @@ enum DialogMode {
   confirm,
   cube,
   daily,
+  home,
   pause,
   piggy,
   quests,
@@ -214,7 +215,6 @@ enum DialogMode {
   review,
   revive,
   shop,
-  start,
   stats,
   toast,
   tutorial,
@@ -233,6 +233,8 @@ extension DialogName on DialogMode {
         return "cube";
       case DialogMode.daily:
         return "daily";
+      case DialogMode.home:
+        return "home";
       case DialogMode.pause:
         return "pause";
       case DialogMode.piggy:
@@ -251,8 +253,6 @@ extension DialogName on DialogMode {
         return "revive";
       case DialogMode.shop:
         return "shop";
-      case DialogMode.start:
-        return "start";
       case DialogMode.stats:
         return "stats";
       case DialogMode.toast:
