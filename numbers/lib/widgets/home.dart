@@ -193,7 +193,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   }
 
   _underFooter() {
-    var isAdsReady = Ads.isReady();
+    var isAdsReady = Ads.isReady(AdPlace.interstitial);
     if (isAdsReady && _timer == null) {
       var duration = Duration(
           milliseconds: _animationTime
@@ -208,9 +208,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     }
 
     if (!_animationTime) {
-      var isBannerAdReady = Ads.isReady(AdPlace.banner);
       var ad = Ads.getBanner("game", size: AdSize.banner);
-      if (!isBannerAdReady) return const SizedBox();
       return Positioned(
           bottom: 2.d,
           child: ClipRRect(
@@ -222,7 +220,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     }
     return Positioned(
         left: 0,
-        bottom: 0.d,
+        bottom: 0,
         height: 120.d,
         child: GestureDetector(
             onTap: _showCubeDialog,
