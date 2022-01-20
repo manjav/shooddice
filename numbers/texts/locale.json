@@ -5,7 +5,7 @@
     "start_next": "Preview the next upcoming block!",
     "game_tutor": "How to play?",
     "clt_one_tip": "Select one to remove!",
-    "clt_next_tip": "Select color to remove!",
+    "clt_color_tip": "Select color to remove!",
     "clt_one_text": "Remove one block!",
     "clt_next_text": "Show next upcoming block!",
     "clt_color_text": "Select color for remove!",
