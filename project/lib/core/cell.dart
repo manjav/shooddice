@@ -65,7 +65,8 @@ class Cell extends PositionComponent {
   static double strock = 3.0;
   static double get radius => diameter * 0.5;
   static double getX(int col) => MyGame.bounds.left + col * diameter + radius;
-  static double getY(int row) => MyGame.bounds.top + row * diameter + radius;
+  static double getY(int row) =>
+      MyGame.bounds.top + row * diameter + radius - padding;
   static int getScore(int value) => value;
   // static int getNextValue(int step) => [1, 2, 3, 3, 2, 2, 1, 1][step];
   // static int getNextColumn(int step) => [0, 1, 1, 2, 4, 4, 4, 4][step];
@@ -84,16 +85,11 @@ class Cell extends PositionComponent {
   int column = 0, row = 0, reward = 0, value = 0;
   Function(Cell)? onInit;
   CellState state = CellState.init;
-  // static RRect _backRect = RRect.fromLTRBXY(
-  //     padding - radius,
-  //     padding - radius,
-  //     radius - padding,
-  //     radius - padding,
-  //     roundness * 1.3,
-  //     roundness * 1.3);
+  static RRect _shadowRect = RRect.zero;
   static RRect _sideRect = RRect.zero;
   static RRect _overRect = RRect.zero;
 
+  Paint? _shadowPaint;
   Paint? _sidePaint;
   Paint? _overPaint;
   Paint? _hiddenPaint;
@@ -119,6 +115,7 @@ class Cell extends PositionComponent {
     this.onInit = onInit;
     this.hiddenMode = hiddenMode;
     state = CellState.init;
+    _shadowPaint = Paint()..color = sideColors[0].withAlpha(100);
     _sidePaint = Paint()..color = sideColors[value];
     _overPaint = Paint()
       ..shader = ui.Gradient.radial(
@@ -171,7 +168,7 @@ class Cell extends PositionComponent {
     if (hiddenMode > 0) {
       canvas.drawRRect(_overRect.s(size), _hiddenPaint!);
     } else {
-      // canvas.drawRRect(_backRect.s(size), _backPaint);
+      canvas.drawRRect(_shadowRect.s(size), _shadowPaint!);
       canvas.drawRRect(_sideRect.s(size), _sidePaint!);
       canvas.drawRRect(_overRect.s(size), _overPaint!);
     }
@@ -191,6 +188,8 @@ class Cell extends PositionComponent {
     strock = _diameter * 0.065;
     roundness = _diameter * 0.25;
     thickness = _diameter * 0.025;
+    _shadowRect = RRect.fromLTRBXY(padding - radius, padding - radius,
+        radius - padding, radius + thickness, roundness, roundness);
     _sideRect = RRect.fromLTRBXY(padding - radius, padding - radius,
         radius - padding, radius - padding + thickness, roundness, roundness);
     _overRect = RRect.fromLTRBXY(
