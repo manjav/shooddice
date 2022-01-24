@@ -27,6 +27,7 @@ import 'package:project/utils/utils.dart';
 import 'package:project/widgets/buttons.dart';
 import 'package:project/widgets/coins.dart';
 import 'package:project/widgets/components.dart';
+import 'package:project/widgets/widgets.dart';
 import 'package:rive/rive.dart';
 
 class GamePage extends StatefulWidget {
@@ -45,6 +46,7 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
 
   bool _animationTime = false;
   Timer? _timer;
+  int _nextCell = 0;
 
   @override
   void initState() {
@@ -72,6 +74,12 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
               left: MyGame.bounds.left,
               right: MyGame.bounds.left,
               child: _getHeader(theme)),
+          Positioned(
+              top: MyGame.bounds.bottom + 4.d,
+              right: MyGame.bounds.left + 52.d,
+              height: 36.d,
+              width: 82.d,
+              child: _getNext(theme)),
           Positioned(
               top: MyGame.bounds.bottom + 10.d,
               left: MyGame.bounds.left - 22.d,
@@ -122,6 +130,30 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
             })
           ]))
         ]));
+  }
+
+  Widget _getNext(ThemeData theme) {
+    var r = Radius.circular(12.d);
+    return GestureDetector(
+        child: Container(
+            decoration: BoxDecoration(
+                color: TColors.white.value[3].withAlpha(20),
+                shape: BoxShape.rectangle,
+                borderRadius: BorderRadius.only(bottomLeft: r, bottomRight: r)),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                SkinnedText("next", style: theme.textTheme.headline6),
+                SizedBox.square(
+                    dimension: 28.d,
+                    child: _nextCell == 0
+                        ? Center(
+                            child: SkinnedText("?",
+                                style: theme.textTheme.headline6))
+                        : Widgets.cell(theme, _nextCell, size: 9.d))
+              ],
+            )),
+        onTap: () => _boost("next"));
   }
 
   Widget _getFooter(ThemeData theme) {
@@ -254,9 +286,6 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
   void _onGameEventHandler(GameEvent event, int value) async {
     Widget? _widget;
     switch (event) {
-      case GameEvent.boost:
-        await _boost("next");
-        break;
       case GameEvent.celebrate:
         _confettiController!.play();
         return;
@@ -267,6 +296,12 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
         await Future.delayed(const Duration(seconds: 1));
         _widget = ReviveDialog();
         break;
+      case GameEvent.next:
+        if (MyGame.boostNextMode > 0) {
+          _nextCell = value;
+          setState(() {});
+        }
+        return;
       case GameEvent.remove:
         _onRemoveBlock();
         break;
@@ -390,9 +425,10 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
     var padding = EdgeInsets.only(
         right: MyGame.bounds.left, top: MyGame.bounds.bottom - 78.d);
     if (type == "next") {
+      if (MyGame.boostNextMode > 0) return;
       padding = EdgeInsets.only(
           left: (Device.size.width - Callout.chromeWidth) * 0.5,
-          top: MyGame.bounds.top + 68.d);
+          top: MyGame.bounds.bottom - 88.d);
     }
     var result = await Rout.push(
         context, Callout("clt_${type}_text".l(), type, padding: padding),

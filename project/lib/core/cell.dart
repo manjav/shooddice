@@ -92,7 +92,6 @@ class Cell extends PositionComponent {
   Paint? _shadowPaint;
   Paint? _sidePaint;
   Paint? _overPaint;
-  Paint? _hiddenPaint;
   Svg? _valuePaint;
   Svg? _rewardPaint;
   final Vector2 _valuePos = Vector2(-16, -18);
@@ -120,23 +119,8 @@ class Cell extends PositionComponent {
     _overPaint = Paint()
       ..shader = ui.Gradient.radial(
           Offset(-radius * 0.15, -radius * 0.4), radius, colors[value]);
-
-    var shadows = <Shadow>[];
-    if (hiddenMode == 0) {
-      shadows.add(BoxShadow(
-          color: Colors.black.withAlpha(150),
-          blurRadius: 3,
-          offset: Offset(0, radius * 0.05)));
-    }
-
     _valuePaint = await Svg.load('images/n$value.svg');
 
-    if (hiddenMode > 0) {
-      _hiddenPaint = Paint()
-        ..strokeWidth = 2
-        ..style = PaintingStyle.stroke
-        ..color = hiddenMode > 1 ? colors[value][1] : Colors.white;
-    }
     if (reward > 0) _rewardPaint = await Svg.load('images/coin.svg');
 
     size = Vector2(1.3, 1.3);
@@ -165,13 +149,9 @@ class Cell extends PositionComponent {
   void render(Canvas canvas) {
     super.render(canvas);
     if (_sidePaint == null) return;
-    if (hiddenMode > 0) {
-      canvas.drawRRect(_overRect.s(size), _hiddenPaint!);
-    } else {
-      canvas.drawRRect(_shadowRect.s(size), _shadowPaint!);
-      canvas.drawRRect(_sideRect.s(size), _sidePaint!);
-      canvas.drawRRect(_overRect.s(size), _overPaint!);
-    }
+    canvas.drawRRect(_shadowRect.s(size), _shadowPaint!);
+    canvas.drawRRect(_sideRect.s(size), _sidePaint!);
+    canvas.drawRRect(_overRect.s(size), _overPaint!);
 
     _valuePaint!.renderPosition(canvas, _valuePos, _valueSize);
     if (reward > 0) {

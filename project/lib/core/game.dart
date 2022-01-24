@@ -21,9 +21,9 @@ import 'package:project/utils/themes.dart';
 import 'package:project/utils/utils.dart';
 
 enum GameEvent {
-  boost,
   celebrate,
   completeTutorial,
+  next,
   lose,
   remove,
   reward,
@@ -31,7 +31,7 @@ enum GameEvent {
   rewardCube,
   rewardPiggy,
   rewardRecord,
-  score
+  score,
 }
 
 class MyGame extends FlameGame with TapDetector {
@@ -133,7 +133,6 @@ class MyGame extends FlameGame with TapDetector {
         hiddenMode: boostNextMode + 1);
     _nextCell.x = Cell.getX(_nextCell.column);
     _nextCell.y = bounds.bottom - Cell.radius;
-    add(_nextCell);
 
     if (_tutorMode) {
       add(_columnHint = ColumnHint(RRect.fromLTRBXY(
@@ -234,6 +233,7 @@ class MyGame extends FlameGame with TapDetector {
       var seed = _tutorMode ? _fallingsCount : _cells.getMinValue();
       _nextCell.init(_nextCell.column, 0, Cell.getNextValue(seed),
           hiddenMode: boostNextMode + 1);
+      onGameEvent?.call(GameEvent.next, _nextCell.value);
     }
   }
 
@@ -276,14 +276,6 @@ class MyGame extends FlameGame with TapDetector {
       onGameEvent?.call(GameEvent.remove, 0);
       return;
     }
-    if (_tutorMode == isPlaying) return;
-    if (!_tutorMode &&
-        boostNextMode == 0 &&
-        info.eventPosition.global.y < bounds.top + Cell.diameter) {
-      isPlaying = false;
-      onGameEvent?.call(GameEvent.boost, 0);
-      return;
-    }
     if (_cells.last!.state == CellState.float && !_cells.last!.matched) {
       var col = ((info.eventPosition.global.x - bounds.left) / Cell.diameter)
           .clamp(0, Cells.width - 1)
@@ -304,8 +296,6 @@ class MyGame extends FlameGame with TapDetector {
       // Change column
       if (_nextCell.column != col) {
         _nextCell.column = col;
-        _nextCell.add(MoveEffect.to(Vector2(_x, _nextCell.y),
-            EffectController(duration: 0.3, curve: Curves.easeInOutQuad)));
 
         _cells.translate(_cells.last!, col, row);
         _cells.last!.x = _x;
@@ -457,8 +447,8 @@ class MyGame extends FlameGame with TapDetector {
 
   void boostNext() {
     boostNextMode = 1;
-    _nextCell.init(_nextCell.column, 0, _nextCell.value,
-        hiddenMode: boostNextMode + 1);
+    Sound.play("merge-6");
+    onGameEvent?.call(GameEvent.next, _nextCell.value);
   }
 
   void revive() {
