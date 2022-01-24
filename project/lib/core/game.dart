@@ -59,8 +59,10 @@ class MyGame extends FlameGame with TapDetector {
   RRect? _lineRect;
   List<Rect>? _rects;
   final Paint _linePaint = Paint();
-  final Paint _mainPaint = Paint()..color = TColors.black.value[2];
-  final Paint _zebraPaint = Paint()..color = TColors.black.value[3];
+  final Paint _mainPaint = Paint()
+    ..color = TColors.white.value[3].withAlpha(20);
+  final Paint _zebraPaint = Paint()
+    ..color = TColors.blue.value[0].withAlpha(10);
   FallingEffect? _fallingEffect;
   ColumnHint? _columnHint;
 
@@ -70,7 +72,7 @@ class MyGame extends FlameGame with TapDetector {
   }
 
   @override
-  Color backgroundColor() => TColors.black.value[0];
+  Color backgroundColor() => TColors.dark.value[1];
 
   void _addScore(int value) {
     if (_tutorMode) return;
@@ -100,7 +102,7 @@ class MyGame extends FlameGame with TapDetector {
     Analytics.startProgress(
         "main", Pref.playCount.value, "big $boostBig next $boostNextMode");
 
-    _linePaint.color = TColors.black.value[0];
+    _linePaint.color = TColors.white.value[1];
     _bgRect = RRect.fromLTRBXY(bounds.left - 4, bounds.top - 4,
         bounds.right + 4, bounds.bottom + 4, 16, 16);
     _lineRect = RRect.fromLTRBXY(
@@ -131,9 +133,9 @@ class MyGame extends FlameGame with TapDetector {
     if (_tutorMode) {
       add(_columnHint = ColumnHint(RRect.fromLTRBXY(
           0,
-          _bgRect!.top + Cell.diameter + Cell.padding * 3,
+          _bgRect!.top + Cell.padding,
           0,
-          _bgRect!.bottom - Cell.padding * 2,
+          _bgRect!.bottom - Cell.padding * 4 - Cell.diameter,
           8,
           8)));
     }
@@ -454,7 +456,7 @@ class MyGame extends FlameGame with TapDetector {
   }
 
   void revive() {
-    _linePaint.color = TColors.black.value[0];
+    _linePaint.color = TColors.white.value[1];
     Pref.numRevives.increase(1);
     for (var i = 0; i < Cells.width; i++) {
       for (var j = Cells.height - 3; j < Cells.height; j++) {
@@ -573,15 +575,15 @@ class ColumnHint extends PositionComponent {
   }
 
   show(double x, int direction) async {
-    var side = direction == 0 ? "down" : (direction > 0 ? "right" : "left");
+    var side = direction == 0 ? "vertical" : (direction > 0 ? "right" : "left");
     _arrow = await Svg.load('images/arrow-$side.svg');
     alpha = 1;
     rect = RRect.fromLTRBXY(
         x - Cell.radius, rect.top, x + Cell.radius, rect.bottom, 8.d, 8.d);
     _handPos.x = rect.center.dx - 2.d;
-    _handPos.y = rect.center.dy + 4.d;
+    _handPos.y = rect.bottom - Cell.diameter * (direction == 0 ? 1.5 : 1.3);
     _arrowPos.x = rect.center.dx - _arrowSize.x * 0.5;
-    _arrowPos.y = rect.top + Cell.radius * (direction == 0 ? 2.1 : 0.9);
+    _arrowPos.y = rect.bottom - Cell.radius * (direction == 0 ? 1.4 : -0.5);
     appearanceState = 2;
   }
 
