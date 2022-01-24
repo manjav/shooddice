@@ -9,6 +9,8 @@ import 'package:project/dialogs/rating.dart';
 import 'package:project/dialogs/shop.dart';
 import 'package:project/dialogs/toast.dart';
 import 'package:project/notifications/questnotify.dart';
+import 'package:project/theme/chrome.dart';
+import 'package:project/theme/skinnedtext.dart';
 import 'package:project/utils/ads.dart';
 import 'package:project/utils/analytic.dart';
 import 'package:project/utils/localization.dart';
@@ -26,6 +28,7 @@ class HomeDialog extends AbstractDialog {
           DialogMode.home,
           key: key,
           height: 330.d,
+          hasChrome: false,
           showCloseButton: false,
           title: "home_title".l(),
           padding: EdgeInsets.fromLTRB(12.d, 12.d, 12.d, 14.d),
@@ -54,10 +57,13 @@ class _HomeDialogState extends AbstractDialogState<HomeDialog> {
     return Container(
         width: width - 36.d,
         height: 150.d,
-        padding: EdgeInsets.only(bottom: 12.d),
+        padding: EdgeInsets.only(bottom: 4.d),
         child: Row(
             crossAxisAlignment: CrossAxisAlignment.end,
-            children: [Text(widget.title!, style: theme.textTheme.headline4)]));
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SkinnedText(widget.title!, style: theme.textTheme.headline4)
+            ]));
   }
 
   @override
@@ -76,7 +82,7 @@ class _HomeDialogState extends AbstractDialogState<HomeDialog> {
   @override
   Widget contentFactory(ThemeData theme) {
     var startMode = Prefs.getString("cells").isEmpty;
-    return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+    return Column(children: [
       Expanded(
           child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
         if (startMode) _boostButton("start_big".l(), "512"),
@@ -85,7 +91,8 @@ class _HomeDialogState extends AbstractDialogState<HomeDialog> {
       ])),
       SizedBox(height: 10.d),
       SizedBox(
-          height: 80.d,
+          width: 202.d,
+          height: 72.d,
           child: BumpedButton(
               colors: TColors.blue.value,
               isEnable: _startButtonLabel != "wait_l".l(),
@@ -95,7 +102,7 @@ class _HomeDialogState extends AbstractDialogState<HomeDialog> {
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                 SVG.icon("E", theme),
                 SizedBox(width: 12.d),
-                Text(_startButtonLabel,
+                SkinnedText(_startButtonLabel,
                     style: theme.textTheme.headline5,
                     textAlign: TextAlign.center)
               ])))
@@ -107,48 +114,51 @@ class _HomeDialogState extends AbstractDialogState<HomeDialog> {
     return Expanded(
         child: Container(
             padding: EdgeInsets.all(8.d),
-            decoration: ButtonDecor(TColors.whiteFlat.value, 12.d, true, false),
+            decoration: const ChromeDecoration(
+                color: Color(0xFF819391), showPins: false),
             child:
                 Column(mainAxisAlignment: MainAxisAlignment.start, children: [
               Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                SVG.show(boost, 58.d),
+                SVG.show(boost, 56.d),
                 _has(boost) ? SVG.show("accept", 22.d) : const SizedBox()
               ]),
-              SizedBox(height: 6.d),
+              // SizedBox(height: 6.d),
               Expanded(
                   child: Text(title,
                       style: theme.textTheme.subtitle2,
                       textAlign: TextAlign.center)),
               SizedBox(height: 6.d),
               SizedBox(
-                  width: 92.d,
-                  height: 40.d,
+                  width: 110.d,
+                  height: 46.d,
                   child: BumpedButton(
-                      cornerRadius: 8.d,
+                      cornerRadius: 12.d,
                       isEnable: !_has(boost),
-                      content: Row(children: [
+                      colors: TColors.yellow.value,
+                      content: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
                         SVG.show("coin", 24.d),
-                        Expanded(
-                            child: Text("${Price.boost}",
-                                textAlign: TextAlign.center,
-                                style: theme.textTheme.bodyText2))
+                            SkinnedText("${Price.boost}",
+                                style: theme.textTheme.headline5)
                       ]),
                       onTap: () => _onBoostTap(boost, Price.boost))),
-              SizedBox(height: 4.d),
+              SizedBox(height: 2.d),
               SizedBox(
-                  width: 92.d,
-                  height: 42.d,
+                  width: 110.d,
+                  height: 46.d,
                   child: BumpedButton(
-                      cornerRadius: 8.d,
+                      cornerRadius: 12.d,
                       errorMessage: Toast("ads_unavailable".l(), monoIcon: "A"),
                       isEnable: !_has(boost) && Ads.isReady(),
-                      colors: TColors.orange.value,
-                      content: Row(children: [
+                      colors: TColors.green.value,
+                      content: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
                         SVG.icon("A", theme, scale: 0.7),
-                        Expanded(
-                            child: Text("free_l".l(),
+                            SkinnedText("free_l".l(),
                                 textAlign: TextAlign.center,
-                                style: theme.textTheme.headline5))
+                                style: theme.textTheme.headline5)
                       ]),
                       onTap: () => _onBoostTap(boost, 0))),
               SizedBox(height: 6.d)
