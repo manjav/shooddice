@@ -4,7 +4,6 @@ import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:project/utils/prefs.dart';
 import 'package:project/utils/utils.dart';
-import 'package:project/widgets/buttons.dart';
 
 class Components {
   static Widget scores(ThemeData theme, {Function()? onTap}) {
@@ -30,12 +29,13 @@ class Components {
     if (Pref.tutorMode.value == 0) return const SizedBox();
     return Hero(
         tag: "stats",
-        child: SizedBox(
-            width: 50.d,
-            child: BumpedButton(
-                padding: const EdgeInsets.fromLTRB(8, 4, 8, 10),
-                content: GestureDetector(
-                    onTap: onTap, child: SVG.show("profile", 48.d)))));
+        child: GestureDetector(
+            onTap: onTap,
+            child: Container(
+                width: 44.d,
+                height: 50.d,
+                alignment: Alignment.center,
+                child: SVG.show("stats", 36.d))));
   }
 
   static Widget confetty(ConfettiController controller) {

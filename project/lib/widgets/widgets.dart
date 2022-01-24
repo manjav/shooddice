@@ -5,12 +5,11 @@ import 'package:project/core/cell.dart';
 import 'package:project/utils/utils.dart';
 
 class Widgets {
-  static Widget cell(ThemeData theme, int value,
-      {TextStyle? textStyle, double size = 12}) {
+  static Widget cell(ThemeData theme, int value, {double size = 12}) {
     return Container(
         padding: EdgeInsets.only(bottom: size * 0.4),
         alignment: Alignment.center,
-        child: SVG.show("n$value", size * 1.8),
+        child: SVG.show("n$value", size * 1.9),
         decoration: CellDecoration(value, size),
         width: 154.d,
         height: 52.d);
@@ -35,7 +34,7 @@ class _CellDecorationPainter extends BoxPainter {
   final int value;
   final double size;
   _CellDecorationPainter(this.value, this.size) : super() {
-    _shadowPaint.color = Cell.sideColors[0].withAlpha(144);
+    _shadowPaint.color = Cell.sideColors[0].withAlpha(100);
     _mainPaint.color = Cell.sideColors[value];
     _overPaint.shader = ui.Gradient.radial(
         Offset(size * 1.5, size * 1.3), size * 1.8, Cell.colors[value]);
@@ -43,21 +42,21 @@ class _CellDecorationPainter extends BoxPainter {
 
   @override
   void paint(Canvas canvas, Offset offset, ImageConfiguration configuration) {
-    var b = 2.0;
-    var _cr = size;
-    var r = RRect.fromLTRBXY(
+    var cr = size;
+    var b = size * 0.06;
+    var mr = RRect.fromLTRBXY(
         offset.dx,
         offset.dy,
         offset.dx + configuration.size!.width,
         offset.dy + configuration.size!.height,
-        _cr * 1.1,
-        _cr * 1.1);
-    var mr = RRect.fromLTRBXY(
-        r.left + b, r.top + b, r.right - b, r.bottom - b, _cr, _cr);
-    var or = RRect.fromLTRBXY(r.left + b * 2, r.top + b * 2, r.right - b * 2,
-        r.bottom - b * 2 - 5.d, _cr * 0.9, _cr * 0.9);
+        cr,
+        cr);
+    var sr =
+        RRect.fromLTRBXY(mr.left, mr.top, mr.right, mr.bottom + b * 3, cr, cr);
+    var or = RRect.fromLTRBXY(mr.left + b * 2, mr.top + b * 2, mr.right - b * 2,
+        mr.bottom - b * 2 - size * 0.3, cr * 0.9, cr * 0.9);
 
-    canvas.drawRRect(r, _shadowPaint);
+    canvas.drawRRect(sr, _shadowPaint);
     canvas.drawRRect(mr, _mainPaint);
     canvas.drawRRect(or, _overPaint);
   }

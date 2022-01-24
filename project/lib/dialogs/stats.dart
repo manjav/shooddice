@@ -87,11 +87,7 @@ class _StatsDialogState extends AbstractDialogState<StatsDialog> {
 
   Widget _bigRecordItem(ThemeData theme, int i) {
     return Row(children: [
-      SizedBox(
-          width: 44.d,
-          height: 44.d,
-          child: Widgets.cell(theme, i,
-              textStyle: Themes.style(TColors.white.value[3], 22.d))),
+      SizedBox(width: 44.d, height: 44.d, child: Widgets.cell(theme, i)),
       Text(" x ${Prefs.getBig(i)}", style: theme.textTheme.headline6)
     ]);
   }
