@@ -49,7 +49,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "game.block.puzzle.drop.the.number.merge"
+        applicationId "game.lulu.dice.merge.master.puzzle.instant.fun"
         minSdkVersion 19//flutter.minSdkVersion
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()

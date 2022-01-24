@@ -1,4 +1,4 @@
-package game.block.puzzle.drop.the.number.merge
+package game.lulu.dice.merge.master.puzzle.instant.fun
 
 import io.flutter.embedding.android.FlutterActivity
 
