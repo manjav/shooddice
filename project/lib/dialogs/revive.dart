@@ -4,14 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:project/core/cell.dart';
 import 'package:project/dialogs/dialogs.dart';
 import 'package:project/dialogs/shop.dart';
-import 'package:project/dialogs/toast.dart';
+import 'package:project/theme/skinnedtext.dart';
 import 'package:project/utils/ads.dart';
 import 'package:project/utils/localization.dart';
 import 'package:project/utils/prefs.dart';
-import 'package:project/utils/themes.dart';
 import 'package:project/utils/utils.dart';
-import 'package:project/widgets/buttons.dart';
-import 'package:project/widgets/punchbutton.dart';
 import 'package:rive/rive.dart';
 
 class ReviveDialog extends AbstractDialog {
@@ -57,12 +54,12 @@ class _ReviveDialogState extends AbstractDialogState<ReviveDialog> {
     return Stack(
       alignment: Alignment.topCenter,
       children: [
-        Positioned(
-            child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-          SVG.show("record", 16.d),
+        Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+          SVG.show("record", 20.d),
           Text(" ${Pref.record.value.format()}",
-              style: theme.textTheme.headline6)
-        ])),
+              style: theme.textTheme.headline6),
+          SizedBox(width: 4.d)
+        ]),
         Positioned(
             top: 24.d,
             child:
@@ -71,48 +68,24 @@ class _ReviveDialogState extends AbstractDialogState<ReviveDialog> {
             heightFactor: 0.85,
             child: RiveAnimation.asset('anims/nums-revive.riv',
                 stateMachines: ["machine"])),
-        Positioned(
-            height: 76.d,
-            width: 116.d,
-            bottom: 4.d,
-            left: 4.d,
-            child: BumpedButton(
-                onTap: () => buttonsClick(context, "revive", -cost, false),
-                cornerRadius: 16.d,
-                content: Stack(alignment: Alignment.centerLeft, children: [
-                  SVG.show("coin", 36.d),
-                  Positioned(
-                      top: 5.d,
-                      left: 40.d,
-                      child: Text("$cost", style: theme.textTheme.button)),
-                  Positioned(
-                      bottom: 7.d,
-                      left: 40.d,
-                      child: Text("revive_l".l(),
-                          style: theme.textTheme.subtitle1)),
-                ]))),
-        PunchButton(
-            height: 76.d,
-            width: 130.d,
-            bottom: 4.d,
-            right: 4.d,
-            cornerRadius: 16.d,
-            errorMessage: Toast("ads_unavailable".l(), monoIcon: "A"),
-            isEnable: _numRevives < 2 && Ads.isReady(),
-            onTap: () => buttonsClick(context, "revive", 0, true),
-            colors: TColors.orange.value,
-            content: Stack(alignment: Alignment.centerLeft, children: [
-              SVG.icon("A", theme),
-              Positioned(
-                  top: 5.d,
-                  left: 40.d,
-                  child: Text("free_l".l(), style: theme.textTheme.headline4)),
-              Positioned(
-                  bottom: 7.d,
-                  left: 40.d,
-                  child:
-                      Text("revive_l".l(), style: theme.textTheme.headline6)),
-            ]))
+        buttonFactory(
+            theme,
+            SVG.show("coin", 36.d),
+            [
+              SkinnedText("$cost", style: theme.textTheme.headline4),
+              SkinnedText("revive_l".l(), style: theme.textTheme.headline6)
+            ],
+            false,
+            () => buttonsClick(context, "revive", -cost, false)),
+        buttonFactory(
+            theme,
+            SVG.icon("A", theme),
+            [
+              SkinnedText("free_l".l(), style: theme.textTheme.headline4),
+              SkinnedText("revive_l".l(), style: theme.textTheme.headline6)
+            ],
+            true,
+            () => buttonsClick(context, "revive", 0, true))
       ],
     );
   }

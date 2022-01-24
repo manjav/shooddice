@@ -3,13 +3,19 @@ import 'package:games_services/games_services.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:project/dialogs/shop.dart';
 import 'package:project/dialogs/stats.dart';
+import 'package:project/dialogs/toast.dart';
+import 'package:project/theme/chrome.dart';
+import 'package:project/theme/skinnedtext.dart';
 import 'package:project/utils/ads.dart';
 import 'package:project/utils/analytic.dart';
+import 'package:project/utils/localization.dart';
 import 'package:project/utils/prefs.dart';
 import 'package:project/utils/sounds.dart';
+import 'package:project/utils/themes.dart';
 import 'package:project/utils/utils.dart';
 import 'package:project/widgets/coins.dart';
 import 'package:project/widgets/components.dart';
+import 'package:project/widgets/punchbutton.dart';
 
 class AbstractDialog extends StatefulWidget {
   final DialogMode mode;
@@ -154,7 +160,7 @@ class AbstractDialogState<T extends AbstractDialog> extends State<T> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               widget.title != null
-                  ? Text(widget.title!, style: theme.textTheme.headline4)
+                  ? SkinnedText(widget.title!, style: theme.textTheme.headline4)
                   : const SizedBox(),
               if (hasClose)
                 widget.closeButton ??
@@ -175,16 +181,66 @@ class AbstractDialogState<T extends AbstractDialog> extends State<T> {
             ? 340.d
             : (widget.height == 0 ? null : widget.height),
         padding: widget.padding ?? EdgeInsets.fromLTRB(18.d, 12.d, 18.d, 18.d),
-        decoration: hasChrome
-            ? BoxDecoration(
-                color: theme.dialogTheme.backgroundColor,
-                shape: BoxShape.rectangle,
-                borderRadius: BorderRadius.all(Radius.circular(24.d)))
-            : null,
+        decoration: hasChrome ? const ChromeDecoration() : null,
         child: contentFactory(theme));
   }
 
   Widget contentFactory(ThemeData theme) => const SizedBox();
+  Widget buttonFactory(
+      ThemeData theme, Widget icon, List<Widget> texts, bool isAds,
+      [Function()? onTap]) {
+    var coef = isAds ? Ads.rewardCoef : 1;
+    var button = PunchButton(
+        bottom: 4.d,
+        left: isAds ? null : 4.d,
+        right: isAds ? 4.d : null,
+        width: isAds ? 130.d : 112.d,
+        height: 76.d,
+        isEnable: !isAds || Ads.isReady(),
+        colors: isAds ? TColors.green.value : TColors.orange.value,
+        errorMessage:
+            isAds ? Toast("ads_unavailable".l(), monoIcon: "A") : null,
+        onTap: onTap ??
+            () => buttonsClick(context, widget.mode.name, reward * coef, isAds),
+        content: Row(children: [
+          icon,
+          Expanded(
+              child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: texts,
+          ))
+        ]));
+    button.isPlaying = isAds;
+    return button;
+  }
+
+  Widget buttonPayFactory(ThemeData theme) {
+    return buttonFactory(
+      theme,
+      SVG.show("coin", 36.d),
+      [
+        SkinnedText(reward.format(), style: theme.textTheme.headline4),
+        SkinnedText("claim_l".l(), style: theme.textTheme.headline6)
+      ],
+      false,
+    );
+  }
+
+  Widget buttonAdsFactory(ThemeData theme) {
+    return buttonFactory(
+        theme,
+        SVG.icon("B", theme),
+        [
+          SkinnedText((reward * Ads.rewardCoef).format(),
+              style: theme.textTheme.headline4),
+          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+            SVG.show("coin", 22.d),
+            SkinnedText("x${Ads.rewardCoef} ", style: theme.textTheme.headline6)
+          ])
+        ],
+        true);
+  }
 
   _onAdsUpdate(AdPlace placement, AdState state) {
     if (placement == AdPlace.rewarded && state != AdState.closed) {
