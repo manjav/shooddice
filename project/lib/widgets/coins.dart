@@ -3,9 +3,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:gameanalytics_sdk/gameanalytics.dart';
 import 'package:project/dialogs/shop.dart';
+import 'package:project/theme/skinnedtext.dart';
 import 'package:project/utils/analytic.dart';
 import 'package:project/utils/prefs.dart';
 import 'package:project/utils/sounds.dart';
+import 'package:project/utils/themes.dart';
 import 'package:project/utils/utils.dart';
 import 'package:project/widgets/buttons.dart';
 
@@ -137,17 +139,16 @@ class _CoinsState extends State<Coins> with TickerProviderStateMixin {
           child: Hero(
               tag: "coin",
               child: BumpedButton(
+                  colors: TColors.blue.value,
                   content: Row(children: [
                     SVG.show("coin", 32.d),
                     Expanded(
-                        child: Text(text,
+                        child: SkinnedText(text,
                             textAlign: TextAlign.center,
-                            style: theme.textTheme.bodyText2!.copyWith(
+                            style: theme.textTheme.headline4!.copyWith(
                                 fontSize: text.length > 5 ? 17.d : 22.d))),
                     widget.clickable
-                        ? Text("+  ",
-                            textAlign: TextAlign.center,
-                            style: theme.textTheme.button)
+                        ? SkinnedText("+ ", style: theme.textTheme.headline4)
                         : const SizedBox()
                   ]),
                   onTap: () {
@@ -162,14 +163,14 @@ class _CoinsState extends State<Coins> with TickerProviderStateMixin {
                   }))),
       Positioned(
           left: _x.value - 30.d,
-          top: _y.value + _sizeOut.value * 0.14,
+          top: _y.value + _sizeOut.value * 0.44,
           child: Opacity(
               opacity: _opacity.value,
               child: Padding(
                   padding: _padding.value,
                   child: Opacity(
                       opacity: _alpha.value,
-                      child: Text("+$_value",
+                      child: SkinnedText("+$_value",
                           style: theme.textTheme.headline2!
                               .copyWith(fontSize: _sizeOut.value * 0.5)))))),
       Positioned(

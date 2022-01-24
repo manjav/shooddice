@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project/dialogs/dialogs.dart';
+import 'package:project/theme/skinnedtext.dart';
 import 'package:project/utils/localization.dart';
 import 'package:project/utils/prefs.dart';
 import 'package:project/utils/themes.dart';
@@ -46,7 +47,8 @@ class _PauseDialogState extends AbstractDialogState<PauseDialog> {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         SVG.icon("J", theme),
-                        Text("home_l".l(), style: theme.textTheme.headline5)
+                        SkinnedText("home_l".l(),
+                            style: theme.textTheme.headline5)
                       ])),
               BumpedButton(
                   onTap: () => Navigator.of(context).pop(["resume"]),
@@ -56,7 +58,8 @@ class _PauseDialogState extends AbstractDialogState<PauseDialog> {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         SVG.icon("E", theme),
-                        Text("continue_l".l(), style: theme.textTheme.headline5)
+                        SkinnedText("continue_l".l(),
+                            style: theme.textTheme.headline5)
                       ]))
             ])));
     rows.add(SizedBox(height: 12.d));

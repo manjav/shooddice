@@ -34,7 +34,7 @@ class _BumpedButtonState extends State<BumpedButton> {
   @override
   Widget build(BuildContext context) {
     var enable = widget.isEnable ?? true;
-    var padding = widget.padding ?? EdgeInsets.fromLTRB(10.d, 6.d, 10.d, 12.d);
+    var padding = widget.padding ?? EdgeInsets.fromLTRB(10.d, 8.d, 10.d, 12.d);
     if (_isPressed && enable) {
       padding = padding.copyWith(
           top: padding.top + 2.d, bottom: padding.bottom - 2.d);
@@ -64,7 +64,7 @@ class _BumpedButtonState extends State<BumpedButton> {
             padding: padding,
             child: widget.content ?? const SizedBox(),
             decoration: ButtonDecor(widget.colors ?? TColors.white.value,
-                widget.cornerRadius ?? 10.d, enable, _isPressed),
+                widget.cornerRadius ?? 18.d, enable, _isPressed),
             width: 144.d,
             height: 52.d));
   }
@@ -86,13 +86,9 @@ class ButtonDecor extends Decoration {
 }
 
 class _ButtonDecorationPainter extends BoxPainter {
-  final _backPaint = Paint()..style = PaintingStyle.fill;
-  final _shadowPaint = Paint()
-    ..color = const Color(0x66000000)
-    ..style = PaintingStyle.fill
-    ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 1.5);
   final _mainPaint = Paint()..style = PaintingStyle.fill;
-  var _overPaint = Paint()..style = PaintingStyle.fill;
+  final _overPaint = Paint()..style = PaintingStyle.fill;
+  final _shadowPaint = Paint()..style = PaintingStyle.fill;
 
   final List<Color> colors;
   final double cornerRadius;
@@ -102,46 +98,48 @@ class _ButtonDecorationPainter extends BoxPainter {
   _ButtonDecorationPainter(
       this.colors, this.cornerRadius, this.isEnable, this.isPressed)
       : super() {
-    _mainPaint.color = isEnable
+    _overPaint.color = isEnable
         ? colors[2]
         : Color.lerp(colors[2], const Color(0xFF8a8a8a), 0.80)!;
-    _backPaint.color = isEnable ? const Color(0xFF212527) : Colors.grey[600]!;
+    _mainPaint.color = const Color(0xFF2A2141);
+    _shadowPaint.color = const Color(0x22000000);
   }
 
   @override
   void paint(Canvas canvas, Offset offset, ImageConfiguration configuration) {
-    var s = 0.8.d;
-    var b = isEnable ? 2.0.d : 0;
     var pressed = isPressed && isEnable;
-    var _cr = cornerRadius;
-    var r = RRect.fromLTRBXY(
+    var size = configuration.size ?? const Size(200, 200);
+    var radius = cornerRadius;
+    var padding = 3.d;
+    var thickness = 2.d;
+    var mainRect = RRect.fromLTRBXY(offset.dx, offset.dy,
+        offset.dx + size.width, offset.dy + size.height, radius, radius);
+    var overRect = RRect.fromLTRBXY(
+        offset.dx + padding,
+        offset.dy + padding - (pressed ? 0 : thickness * 0.6),
+        offset.dx + size.width - padding,
+        offset.dy + size.height - padding - (pressed ? 0 : thickness),
+        radius * 0.85,
+        radius * 0.85);
+    var shadowRect = RRect.fromLTRBXY(
         offset.dx,
         offset.dy,
-        offset.dx + configuration.size!.width,
-        offset.dy + configuration.size!.height,
-        _cr * 1.2,
-        _cr * 1.2);
-    var sr = RRect.fromLTRBXY(
-        r.left - s, r.top, r.right + s, r.bottom + s * 3, _cr * 1.2, _cr * 1.2);
-    var mr = RRect.fromLTRBXY(r.left + b, r.top + b + (isEnable ? 2.d : 0),
-        r.right - b, r.bottom - b, _cr, _cr);
-    var or = RRect.fromLTRBXY(
-        r.left + b, r.top + b, r.right - b, r.bottom - b - 5.d, _cr, _cr);
+        offset.dx + size.width,
+        offset.dy + size.height + thickness + padding,
+        radius * 1.1,
+        radius * 1.1);
 
-    _overPaint = Paint()
-      ..shader = ui.Gradient.linear(
-          Offset(or.left, or.top), Offset(or.left, or.bottom), [
-        isEnable
-            ? colors[0]
-            : Color.lerp(colors[0], const Color(0xFF8a8a8a), 0.70)!,
-        isEnable
-            ? colors[1]
-            : Color.lerp(colors[1], const Color(0xFF8a8a8a), 0.70)!
-      ]);
-
-    if (isEnable) canvas.drawRRect(sr, _shadowPaint);
-    if (isEnable) canvas.drawRRect(r, _backPaint);
-    if (!pressed) canvas.drawRRect(mr, _mainPaint);
-    canvas.drawRRect(pressed ? mr : or, _overPaint);
+    _overPaint.shader = ui.Gradient.linear(Offset(offset.dx, offset.dy),
+        Offset(offset.dx, offset.dy + size.height), [
+      isEnable
+          ? colors[0]
+          : Color.lerp(colors[0], const Color(0xFF8a8a8a), 0.70)!,
+      isEnable
+          ? colors[1]
+          : Color.lerp(colors[1], const Color(0xFF8a8a8a), 0.70)!
+    ]);
+    canvas.drawRRect(shadowRect, _shadowPaint);
+    canvas.drawRRect(mainRect, _mainPaint);
+    canvas.drawRRect(overRect, _overPaint);
   }
 }

@@ -225,7 +225,7 @@ class _ShopDialogState extends AbstractDialogState<ShopDialog> {
   _overlay(ThemeData theme) {
     if (_message.isEmpty) return const SizedBox();
     return Container(
-        color: TColors.black.value[0].withAlpha(230),
+        color: TColors.dark.value[1].withAlpha(230),
         alignment: Alignment.center,
         padding: EdgeInsets.all(16.d),
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [

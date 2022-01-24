@@ -58,27 +58,21 @@ class Themes {
   static style(Color color, double fontSize,
       {String? font, List<Shadow>? shadows}) {
     return TextStyle(
-        color: color,
-        fontSize: fontSize,
-        decoration: TextDecoration.none,
-        fontFamily: font ?? "quicksand",
-        shadows: shadows ??
-            [
-              BoxShadow(
-                  color: Colors.black.withAlpha(150),
-                  blurRadius: 3,
-                  offset: const Offset(0.5, 2))
-            ]);
+      foreground: Paint()..color = color,
+      fontSize: fontSize,
+      decoration: TextDecoration.none,
+      fontFamily: font ?? "quicksand",
+    );
   }
 
   static ThemeData get darkData {
     var textTheme = TextTheme(
         caption: TextStyle(color: TColors.white.value[2], fontSize: 16.d),
-        button: style(TColors.black.value[0], 24.d, shadows: []),
-        bodyText1: style(TColors.black.value[0], 22.d, shadows: []),
-        bodyText2: style(TColors.black.value[0], 20.d, shadows: []),
-        subtitle1: style(TColors.black.value[0], 16.d, shadows: []),
-        subtitle2: style(TColors.black.value[0], 14.d, shadows: []),
+        button: style(TColors.dark.value[0], 24.d, shadows: []),
+        bodyText1: style(TColors.dark.value[0], 22.d, shadows: []),
+        bodyText2: style(TColors.dark.value[0], 20.d, shadows: []),
+        subtitle1: style(TColors.dark.value[0], 16.d, shadows: []),
+        subtitle2: style(TColors.dark.value[0], 14.d, shadows: []),
         headline1: style(TColors.white.value[3], 56.d),
         headline2: style(TColors.white.value[3], 36.d),
         headline3: style(TColors.white.value[3], 30.d),
