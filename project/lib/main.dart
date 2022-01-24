@@ -81,6 +81,7 @@ class _MainPageState extends State<MainPage> with WidgetsBindingObserver {
     return WillPopScope(
         onWillPop: _onWillPop,
         child: Scaffold(
+            backgroundColor: Theme.of(context).backgroundColor,
             body: _loadingState < 2
                 ? const SizedBox()
                 : SizedBox(
