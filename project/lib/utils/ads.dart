@@ -6,9 +6,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:gameanalytics_sdk/gameanalytics.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:numbers/dialogs/quests.dart';
-import 'package:numbers/utils/analytic.dart';
-import 'package:numbers/utils/prefs.dart';
+import 'package:project/dialogs/quests.dart';
+import 'package:project/utils/analytic.dart';
+import 'package:project/utils/prefs.dart';
 
 class Ads {
   static final Map<AdPlace, AdState> _placements = {};

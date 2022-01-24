@@ -2,12 +2,12 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:gameanalytics_sdk/gameanalytics.dart';
-import 'package:numbers/dialogs/shop.dart';
-import 'package:numbers/utils/analytic.dart';
-import 'package:numbers/utils/prefs.dart';
-import 'package:numbers/utils/sounds.dart';
-import 'package:numbers/utils/utils.dart';
-import 'package:numbers/widgets/buttons.dart';
+import 'package:project/dialogs/shop.dart';
+import 'package:project/utils/analytic.dart';
+import 'package:project/utils/prefs.dart';
+import 'package:project/utils/sounds.dart';
+import 'package:project/utils/utils.dart';
+import 'package:project/widgets/buttons.dart';
 
 class Coins extends StatefulWidget {
   static change(int value,
@@ -28,7 +28,7 @@ class Coins extends StatefulWidget {
       await effect(value, x: targetX, y: targetY);
     } else {
       Pref.coin.increase(value);
-  }
+    }
   }
 
   static effect(int value, {double? x, double? y, int? duraion}) async {
@@ -46,7 +46,13 @@ class Coins extends StatefulWidget {
   final double? height;
 
   const Coins(this.source,
-      {Key? key, this.onTap, this.clickable = true, this.left, this.top, this.height}) : super(key: key);
+      {Key? key,
+      this.onTap,
+      this.clickable = true,
+      this.left,
+      this.top,
+      this.height})
+      : super(key: key);
   @override
   _CoinsState createState() => _CoinsState();
 }

@@ -1,9 +1,9 @@
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
-import 'package:numbers/utils/sounds.dart';
-import 'package:numbers/utils/themes.dart';
-import 'package:numbers/utils/utils.dart';
+import 'package:project/utils/sounds.dart';
+import 'package:project/utils/themes.dart';
+import 'package:project/utils/utils.dart';
 
 class BumpedButton extends StatefulWidget {
   final bool? isEnable;
@@ -76,7 +76,8 @@ class ButtonDecor extends Decoration {
   final List<Color> colors;
   final double cornerRadius;
 
-  const ButtonDecor(this.colors, this.cornerRadius, this.isEnable, this.isPressed);
+  const ButtonDecor(
+      this.colors, this.cornerRadius, this.isEnable, this.isPressed);
 
   @override
   BoxPainter createBoxPainter([VoidCallback? onChanged]) {
@@ -101,8 +102,9 @@ class _ButtonDecorationPainter extends BoxPainter {
   _ButtonDecorationPainter(
       this.colors, this.cornerRadius, this.isEnable, this.isPressed)
       : super() {
-    _mainPaint.color =
-        isEnable ? colors[2] : Color.lerp(colors[2], const Color(0xFF8a8a8a), 0.80)!;
+    _mainPaint.color = isEnable
+        ? colors[2]
+        : Color.lerp(colors[2], const Color(0xFF8a8a8a), 0.80)!;
     _backPaint.color = isEnable ? const Color(0xFF212527) : Colors.grey[600]!;
   }
 
@@ -129,8 +131,12 @@ class _ButtonDecorationPainter extends BoxPainter {
     _overPaint = Paint()
       ..shader = ui.Gradient.linear(
           Offset(or.left, or.top), Offset(or.left, or.bottom), [
-        isEnable ? colors[0] : Color.lerp(colors[0], const Color(0xFF8a8a8a), 0.70)!,
-        isEnable ? colors[1] : Color.lerp(colors[1], const Color(0xFF8a8a8a), 0.70)!
+        isEnable
+            ? colors[0]
+            : Color.lerp(colors[0], const Color(0xFF8a8a8a), 0.70)!,
+        isEnable
+            ? colors[1]
+            : Color.lerp(colors[1], const Color(0xFF8a8a8a), 0.70)!
       ]);
 
     if (isEnable) canvas.drawRRect(sr, _shadowPaint);

@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:games_services/games_services.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:numbers/dialogs/shop.dart';
-import 'package:numbers/dialogs/stats.dart';
-import 'package:numbers/utils/ads.dart';
-import 'package:numbers/utils/analytic.dart';
-import 'package:numbers/utils/prefs.dart';
-import 'package:numbers/utils/sounds.dart';
-import 'package:numbers/utils/utils.dart';
-import 'package:numbers/widgets/coins.dart';
-import 'package:numbers/widgets/components.dart';
+import 'package:project/dialogs/shop.dart';
+import 'package:project/dialogs/stats.dart';
+import 'package:project/utils/ads.dart';
+import 'package:project/utils/analytic.dart';
+import 'package:project/utils/prefs.dart';
+import 'package:project/utils/sounds.dart';
+import 'package:project/utils/utils.dart';
+import 'package:project/widgets/coins.dart';
+import 'package:project/widgets/components.dart';
 
 class AbstractDialog extends StatefulWidget {
   final DialogMode mode;

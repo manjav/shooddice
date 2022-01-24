@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:numbers/dialogs/dialogs.dart';
-import 'package:numbers/utils/localization.dart';
-import 'package:numbers/utils/prefs.dart';
-import 'package:numbers/utils/themes.dart';
-import 'package:numbers/utils/utils.dart';
-import 'package:numbers/widgets/buttons.dart';
+import 'package:project/dialogs/dialogs.dart';
+import 'package:project/utils/localization.dart';
+import 'package:project/utils/prefs.dart';
+import 'package:project/utils/themes.dart';
+import 'package:project/utils/utils.dart';
+import 'package:project/widgets/buttons.dart';
 
 class PauseDialog extends AbstractDialog {
   PauseDialog({Key? key})

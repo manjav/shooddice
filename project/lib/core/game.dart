@@ -10,16 +10,16 @@ import 'package:flame_svg/svg.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:games_services/games_services.dart';
-import 'package:numbers/animations/animate.dart';
-import 'package:numbers/core/achieves.dart';
-import 'package:numbers/core/cell.dart';
-import 'package:numbers/core/cells.dart';
-import 'package:numbers/dialogs/quests.dart';
-import 'package:numbers/utils/analytic.dart';
-import 'package:numbers/utils/prefs.dart';
-import 'package:numbers/utils/sounds.dart';
-import 'package:numbers/utils/themes.dart';
-import 'package:numbers/utils/utils.dart';
+import 'package:project/animations/animate.dart';
+import 'package:project/core/achieves.dart';
+import 'package:project/core/cell.dart';
+import 'package:project/core/cells.dart';
+import 'package:project/dialogs/quests.dart';
+import 'package:project/utils/analytic.dart';
+import 'package:project/utils/prefs.dart';
+import 'package:project/utils/sounds.dart';
+import 'package:project/utils/themes.dart';
+import 'package:project/utils/utils.dart';
 
 enum GameEvent {
   boost,

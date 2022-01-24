@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:numbers/dialogs/quests.dart';
-import 'package:numbers/utils/localization.dart';
-import 'package:numbers/utils/sounds.dart';
-import 'package:numbers/utils/utils.dart';
+import 'package:project/dialogs/quests.dart';
+import 'package:project/utils/localization.dart';
+import 'package:project/utils/sounds.dart';
+import 'package:project/utils/utils.dart';
 
 class QuestNotification extends StatefulWidget {
   final Quest quest;

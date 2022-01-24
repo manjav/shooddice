@@ -2,27 +2,25 @@ import 'dart:async';
 
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
-import 'package:numbers/dialogs/dialogs.dart';
-import 'package:numbers/utils/localization.dart';
-import 'package:numbers/utils/themes.dart';
-import 'package:numbers/utils/utils.dart';
-import 'package:numbers/widgets/buttons.dart';
-import 'package:numbers/widgets/components.dart';
+import 'package:project/dialogs/dialogs.dart';
+import 'package:project/utils/localization.dart';
+import 'package:project/utils/themes.dart';
+import 'package:project/utils/utils.dart';
+import 'package:project/widgets/buttons.dart';
+import 'package:project/widgets/components.dart';
 
 class TutorialDialog extends AbstractDialog {
   final ConfettiController confettiController;
   TutorialDialog(this.confettiController, {Key? key})
-      : super(
-          DialogMode.tutorial,
-          key: key,
-          sfx: "win",
-          height: 200.d,
-          width: 340.d,
-          showCloseButton: false,
-          statsButton: const SizedBox(),
-          scoreButton: const SizedBox(),
-          padding: EdgeInsets.fromLTRB(12.d, 4.d, 12.d, 12.d)
-        );
+      : super(DialogMode.tutorial,
+            key: key,
+            sfx: "win",
+            height: 200.d,
+            width: 340.d,
+            showCloseButton: false,
+            statsButton: const SizedBox(),
+            scoreButton: const SizedBox(),
+            padding: EdgeInsets.fromLTRB(12.d, 4.d, 12.d, 12.d));
   @override
   _TutorialDialogState createState() => _TutorialDialogState();
 }
@@ -33,7 +31,8 @@ class _TutorialDialogState extends AbstractDialogState<TutorialDialog> {
 
   @override
   void initState() {
-    Timer(const Duration(milliseconds: 10), () => widget.confettiController.play());
+    Timer(const Duration(milliseconds: 10),
+        () => widget.confettiController.play());
     super.initState();
   }
 

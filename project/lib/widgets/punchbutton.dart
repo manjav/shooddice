@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:numbers/utils/utils.dart';
+import 'package:project/utils/utils.dart';
 
 import 'buttons.dart';
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
-import 'package:numbers/dialogs/dialogs.dart';
+import 'package:project/dialogs/dialogs.dart';
 
 class Rout {
   static dynamic push(BuildContext context, Widget page,

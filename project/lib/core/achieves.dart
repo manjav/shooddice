@@ -1,6 +1,6 @@
 import 'package:flame/components.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:numbers/utils/utils.dart';
+import 'package:project/utils/utils.dart';
 
 class ScoreFX extends PositionComponent {
   static const _textColor = Color(0xFFFFFFFF);

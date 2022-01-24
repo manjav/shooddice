@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:numbers/dialogs/dialogs.dart';
-import 'package:numbers/utils/localization.dart';
-import 'package:numbers/utils/utils.dart';
+import 'package:project/dialogs/dialogs.dart';
+import 'package:project/utils/localization.dart';
+import 'package:project/utils/utils.dart';
 import 'package:rive/rive.dart';
 
 class QuitDialog extends AbstractDialog {
