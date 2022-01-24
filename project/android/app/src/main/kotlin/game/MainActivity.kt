@@ -1,4 +1,4 @@
-package game.lulu.dice.merge.master.puzzle.instant.fun
+package game
 
 import io.flutter.embedding.android.FlutterActivity
 
