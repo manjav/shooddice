@@ -112,13 +112,18 @@ class MyGame extends FlameGame with TapDetector {
         bounds.bottom - Cell.diameter,
         4,
         4);
+    // Zebra
     _rects = List.generate(
         2,
-        (i) => Rect.fromLTRB(
-            bounds.left + (i + 1) * Cell.diameter,
-            _bgRect!.top,
-            bounds.right - (i + 1) * Cell.diameter,
-            _bgRect!.bottom));
+        (i) => Rect.fromLTWH(bounds.left + (i * 2 + 1) * Cell.diameter,
+            _bgRect!.top, Cell.diameter, _bgRect!.height));
+    for (var i = 0; i < 3; i++) {
+      _rects!.add(Rect.fromLTWH(
+          bounds.left - 4,
+          bounds.top + (i * 2 + 1) * Cell.diameter,
+          _bgRect!.width,
+          Cell.diameter));
+    }
 
     add(_fallingEffect = FallingEffect());
 
@@ -185,8 +190,9 @@ class MyGame extends FlameGame with TapDetector {
   @override
   void render(Canvas canvas) {
     canvas.drawRRect(_bgRect!, _mainPaint);
-    canvas.drawRect(_rects![0], _zebraPaint);
-    canvas.drawRect(_rects![1], _mainPaint);
+    for (var r in _rects!) {
+      canvas.drawRect(r, _zebraPaint);
+    }
     canvas.drawRRect(_lineRect!, _linePaint);
     super.render(canvas);
   }
