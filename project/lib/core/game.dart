@@ -247,13 +247,13 @@ class MyGame extends FlameGame with TapDetector {
   void onTapDown(TapDownInfo info) {
     if (info.eventPosition.global.y > bounds.bottom) return;
     if (removingMode != null) {
-      var cell = _cells.get(
-          ((info.eventPosition.global.x - bounds.left) / Cell.diameter)
-              .clamp(0, Cells.width - 1)
-              .floor(),
-          ((bounds.bottom - info.eventPosition.global.y) / Cell.diameter)
-              .clamp(0, Cells.height - 1)
-              .floor());
+      var i = ((info.eventPosition.global.x - bounds.left) / Cell.diameter)
+          .clamp(0, Cells.width - 1)
+          .floor();
+      var j = ((info.eventPosition.global.y - bounds.top) / Cell.diameter)
+          .clamp(0, Cells.height - 1)
+          .floor();
+      var cell = _cells.get(i, j);
       if (cell == null || cell.state != CellState.fixed) return;
       if (removingMode == "one") {
         Pref.removeOne.increase(-1);
