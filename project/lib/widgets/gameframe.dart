@@ -5,13 +5,11 @@ import 'package:confetti/confetti.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:games_services/games_services.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:project/core/cell.dart';
 import 'package:project/core/cells.dart';
 import 'package:project/core/game.dart';
 import 'package:project/dialogs/big.dart';
 import 'package:project/dialogs/callout.dart';
-import 'package:project/dialogs/tutorial.dart';
 import 'package:project/dialogs/cube.dart';
 import 'package:project/dialogs/pause.dart';
 import 'package:project/dialogs/piggy.dart';
@@ -19,6 +17,7 @@ import 'package:project/dialogs/record.dart';
 import 'package:project/dialogs/revive.dart';
 import 'package:project/dialogs/shop.dart';
 import 'package:project/dialogs/stats.dart';
+import 'package:project/dialogs/tutorial.dart';
 import 'package:project/utils/ads.dart';
 import 'package:project/utils/analytic.dart';
 import 'package:project/utils/localization.dart';
@@ -160,28 +159,14 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
                 iconSize: 72.d,
                 onPressed: () => _pause("tap")),
             Expanded(
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                  Expanded(
-                      child: _button(
-                          theme, 20.d, "piggy", () => _boost("piggy"),
-                          // width: 96.d,
-                          badge: Positioned(
-                              height: 32.d,
-                              bottom: 0,
-                              left: 0,
-                              right: 6.d,
-                              child: Components.slider(
-                                  theme,
-                                  0,
-                                  _rewardLineAnimation!.value.round(),
-                                  Price.piggy,
-                                  icon: SVG.show("coin", 32.d))),
-                          colors: Pref.coinPiggy.value >= Price.piggy
-                              ? TColors.orange.value
-                              : null))
-                ])),
+                child: SizedBox(
+              height: 22.d,
+              child: GestureDetector(
+                  onTap: () => _boost("piggy"),
+                  child: Components.slider(theme, 0,
+                      _rewardLineAnimation!.value.round(), Price.piggy,
+                      icon: SVG.show("piggy", 44.d))),
+            )),
             SizedBox(width: 4.d),
             _button(theme, 96.d, "remove-color", () => _boost("color"),
                 badge: _badge(theme, Pref.removeColor.value)),
@@ -208,15 +193,7 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
     }
 
     if (!_animationTime) {
-      var ad = Ads.getBanner("game", size: AdSize.banner);
-      return Positioned(
-          bottom: 2.d,
-          child: ClipRRect(
-              borderRadius: BorderRadius.all(Radius.circular(8.d)),
-              child: SizedBox(
-                  width: ad.size.width.toDouble(),
-                  height: ad.size.height.toDouble(),
-                  child: AdWidget(ad: ad))));
+      return const SizedBox();
     }
     return Positioned(
         left: 0,
@@ -410,7 +387,7 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
       setState(() => _game!.removingMode = type);
       return;
     }
-    EdgeInsets padding = EdgeInsets.only(
+    var padding = EdgeInsets.only(
         right: MyGame.bounds.left, top: MyGame.bounds.bottom - 78.d);
     if (type == "next") {
       padding = EdgeInsets.only(

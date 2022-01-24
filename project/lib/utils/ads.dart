@@ -288,7 +288,7 @@ extension AdPlaceExt on AdPlace {
       case AdPlace.banner:
         return "${Ads.prefix}6405416271";
       case AdPlace.interstitial:
-        return "${Ads.prefix}6937186747";
+        return "${Ads.prefix}3526116819";
       case AdPlace.interstitialVideo:
         return "${Ads.prefix}1150371543";
       case AdPlace.rewarded:
