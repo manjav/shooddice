@@ -62,8 +62,8 @@ class Cell extends PositionComponent {
   static double padding = 1.8;
   static double roundness = 16.0;
   static double thickness = 2.0;
+  static double strock = 3.0;
   static double get radius => diameter * 0.5;
-  static double get strock => padding * 1.5;
   static double getX(int col) => MyGame.bounds.left + col * diameter + radius;
   static double getY(int row) => MyGame.bounds.top + row * diameter + radius;
   static int getScore(int value) => value;
@@ -91,20 +91,8 @@ class Cell extends PositionComponent {
   //     radius - padding,
   //     roundness * 1.3,
   //     roundness * 1.3);
-  static final RRect _sideRect = RRect.fromLTRBXY(
-      padding - radius,
-      padding - radius,
-      radius - padding,
-      radius - padding + thickness,
-      roundness,
-      roundness);
-  static final RRect _overRect = RRect.fromLTRBXY(
-      strock - radius,
-      strock - radius,
-      radius - strock,
-      radius - strock - thickness * 2,
-      roundness * 0.7,
-      roundness * 0.7);
+  static RRect _sideRect = RRect.zero;
+  static RRect _overRect = RRect.zero;
 
   Paint? _sidePaint;
   Paint? _overPaint;
@@ -189,8 +177,9 @@ class Cell extends PositionComponent {
     }
 
     _valuePaint!.renderPosition(canvas, _valuePos, _valueSize);
-    if (reward > 0)
+    if (reward > 0) {
       _rewardPaint!.renderPosition(canvas, _rewardPos, _rewardSize);
+    }
   }
 
   @override
@@ -199,8 +188,18 @@ class Cell extends PositionComponent {
   static void updateSizes(double _diameter) {
     diameter = _diameter;
     padding = _diameter * 0.04;
-    roundness = _diameter * 0.15;
-    thickness = _diameter * 0.02;
+    strock = _diameter * 0.065;
+    roundness = _diameter * 0.25;
+    thickness = _diameter * 0.025;
+    _sideRect = RRect.fromLTRBXY(padding - radius, padding - radius,
+        radius - padding, radius - padding + thickness, roundness, roundness);
+    _overRect = RRect.fromLTRBXY(
+        strock - radius,
+        strock - radius,
+        radius - strock,
+        radius - strock - thickness * 2,
+        roundness * 0.95,
+        roundness * 0.95);
   }
 }
 
