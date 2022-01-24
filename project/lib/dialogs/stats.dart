@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:project/core/cell.dart';
 import 'package:project/dialogs/dialogs.dart';
 import 'package:project/utils/analytic.dart';
 import 'package:project/utils/localization.dart';
@@ -85,17 +84,12 @@ class _StatsDialogState extends AbstractDialogState<StatsDialog> {
   }
 
   Widget _bigRecordItem(ThemeData theme, int i) {
-    var score = Cell.getScore(i).toString();
     return Row(children: [
       SizedBox(
           width: 44.d,
           height: 44.d,
           child: Widgets.cell(theme, i,
-              textStyle: Themes.style(
-                  TColors.white.value[3],
-                  22.d *
-                      Cell.scales[
-                          score.length.clamp(0, Cell.scales.length - 1)]))),
+              textStyle: Themes.style(TColors.white.value[3], 22.d))),
       Text(" x ${Prefs.getBig(i)}", style: theme.textTheme.headline6)
     ]);
   }

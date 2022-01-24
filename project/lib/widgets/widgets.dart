@@ -38,8 +38,8 @@ class _CellDecorationPainter extends BoxPainter {
 
   final int value;
   _CellDecorationPainter(this.value) : super() {
-    _mainPaint.color = Cell.colors[value].color.withAlpha(180);
-    _overPaint.color = Cell.colors[value].color;
+    _mainPaint.color = Cell.colors[value][1].withAlpha(180);
+    _overPaint.color = Cell.colors[value][1];
   }
 
   @override

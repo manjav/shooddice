@@ -22,25 +22,45 @@ class Cell extends PositionComponent {
   static int maxRandom = 0;
   static const firstBigRecord = 8;
   static const maxRandomValue = 4;
-  static final colors = [
-    const PaletteEntry(Color(0xFF191C1D)),
-    const PaletteEntry(Color(0xFF9600FF)),
-    const PaletteEntry(Color(0xFFF0145A)),
-    const PaletteEntry(Color(0xFFFFBC15)),
-    const PaletteEntry(Color(0xFF21C985)),
-    const PaletteEntry(Color(0xFF00B0F0)),
-    const PaletteEntry(Color(0xFFE007B4)),
-    const PaletteEntry(Color(0xFF7EE024)),
-    const PaletteEntry(Color(0xFFFF5B8E)),
-    const PaletteEntry(Color(0xFFFF5518)),
-    const PaletteEntry(Color(0xFFACC723)),
-    const PaletteEntry(Color(0xFF6132D6)),
-    const PaletteEntry(Color(0xFFAC3674)),
-    const PaletteEntry(Color(0xFF8E7C58)),
-    const PaletteEntry(Color(0xFFE2DB21)),
-    const PaletteEntry(Color(0xFF0070C0)),
-    const PaletteEntry(Color(0xFF00C0C0)),
-    const PaletteEntry(Color(0xFF004940))
+  static const sideColors = <Color>[
+    Color(0xFF191C1D),
+    Color(0xFF7E03CB),
+    Color(0xFFB8374B),
+    Color(0xFFE9682A),
+    Color(0xFF2CA7CA),
+    Color(0xFF4B84DA),
+    Color(0xFF8C1EB2),
+    Color(0xFF48BE2A),
+    Color(0xFFD44881),
+    Color(0xFFDF382D),
+    Color(0xFF99B42E),
+    Color(0xFF80514B),
+    Color(0xFF8F3C6E),
+    Color(0xFF8F7633),
+    Color(0xFFE29C5A),
+    Color(0xFF203793),
+    Color(0xFF326B7A),
+    Color(0xFF2D3B55)
+  ];
+  static const colors = [
+    <Color>[Color(0xFF191C1D), Color(0xFF191C1D)],
+    <Color>[Color(0xFFE85CFF), Color(0xFF9A00FE)],
+    <Color>[Color(0xFFFF7676), Color(0xFFE52956)],
+    <Color>[Color(0xFFFFEC42), Color(0xFFFF842B)],
+    <Color>[Color(0xFF3AFF95), Color(0xFF15D3D3)],
+    <Color>[Color(0xFF7BD7FF), Color(0xFF1DADFF)],
+    <Color>[Color(0xFFE167A2), Color(0xFFA520C6)],
+    <Color>[Color(0xFFECFF76), Color(0xFF29E55D)],
+    <Color>[Color(0xFFFF86A3), Color(0xFFFF2B91)],
+    <Color>[Color(0xFFFF9E58), Color(0xFFFF5631)],
+    <Color>[Color(0xFFFCFF6E), Color(0xFFB2D81C)],
+    <Color>[Color(0xFFE59494), Color(0xFF9F6159)],
+    <Color>[Color(0xFFE98AB7), Color(0xFFB04C8E)],
+    <Color>[Color(0xFFF2CE71), Color(0xFFA18B51)],
+    <Color>[Color(0xFFFFE7AA), Color(0xFFFFD231)],
+    <Color>[Color(0xFF3988FF), Color(0xFF1332CB)],
+    <Color>[Color(0xFF9CC9E2), Color(0xFF2D899D)],
+    <Color>[Color(0xFF7A95BD), Color(0xFF374C74)]
   ];
   static final scales = [0, 1, 0.9, 0.75, 0.65, 0.6, 0.55];
   static double get radius => diameter * 0.5;

@@ -309,7 +309,7 @@ class MyGame extends FlameGame with TapDetector {
       _fallingEffect!.tint(
           RRect.fromLTRBXY(_x - Cell.radius, _y - Cell.radius, _x + Cell.radius,
               bounds.bottom, Cell.roundness, Cell.roundness),
-          Cell.colors[_cells.last!.value].color);
+          Cell.colors[_cells.last!.value][0]);
     }
     _fallAll();
   }
