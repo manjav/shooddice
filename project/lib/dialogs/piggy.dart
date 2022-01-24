@@ -65,7 +65,7 @@ class _PiggyDialogState extends AbstractDialogState<PiggyDialog> {
     return Stack(alignment: Alignment.topCenter, children: [
       SVG.show("piggy", 144.d),
       Positioned(
-          top: 112.d,
+          top: 148.d,
           width: 260.d,
           child: Text(
               "piggy_${reward > 0 ? 'collect' : 'fill'}"
@@ -132,10 +132,14 @@ class _PiggyDialogState extends AbstractDialogState<PiggyDialog> {
           ]));
     }
     return Positioned(
-        height: 32.d,
+        height: 66.d,
         bottom: 12.d,
         width: 200.d,
-        child: Components.slider(theme, maxValue, value, maxValue,
-            icon: SVG.show("coin", 32.d)));
+        child: Components.slider(
+          theme,
+          maxValue,
+          value,
+          maxValue,
+        ));
   }
 }
