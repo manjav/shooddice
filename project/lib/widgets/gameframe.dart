@@ -18,6 +18,7 @@ import 'package:project/dialogs/revive.dart';
 import 'package:project/dialogs/shop.dart';
 import 'package:project/dialogs/stats.dart';
 import 'package:project/dialogs/tutorial.dart';
+import 'package:project/theme/skinnedtext.dart';
 import 'package:project/utils/ads.dart';
 import 'package:project/utils/analytic.dart';
 import 'package:project/utils/localization.dart';
@@ -81,8 +82,8 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
               width: 82.d,
               child: _getNext(theme)),
           Positioned(
-              top: MyGame.bounds.bottom + 10.d,
-              left: MyGame.bounds.left - 22.d,
+              top: MyGame.bounds.bottom + 16.d,
+              left: MyGame.bounds.left,
               right: MyGame.bounds.left,
               child: _getFooter(theme)),
           _underFooter(),
@@ -181,32 +182,26 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
                         child: SVG.show("close", 32.d), onTap: _onRemoveBlock)
                   ])));
     }
-    return SizedBox(
-        height: 68.d,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            IconButton(
-                icon: SVG.show("pause", 48.d),
-                iconSize: 72.d,
-                onPressed: () => _pause("tap")),
-            Expanded(
-                child: SizedBox(
-              height: 22.d,
-              child: GestureDetector(
-                  onTap: () => _boost("piggy"),
-                  child: Components.slider(theme, 0,
-                      _rewardLineAnimation!.value.round(), Price.piggy,
-                      icon: SVG.show("piggy", 44.d))),
-            )),
-            SizedBox(width: 4.d),
-            _button(theme, 96.d, "remove-color", () => _boost("color"),
-                badge: _badge(theme, Pref.removeColor.value)),
-            SizedBox(width: 4.d),
-            _button(theme, 20.d, "remove-one", () => _boost("one"),
-                badge: _badge(theme, Pref.removeOne.value)),
-          ],
-        ));
+    return Row(crossAxisAlignment: CrossAxisAlignment.end, children: [
+      _button(theme, "remove-color", () => _boost("color"),
+          badge: _badge(theme, Pref.removeColor.value)),
+      SizedBox(width: 2.d),
+      _button(theme, "remove-one", () => _boost("one"),
+          badge: _badge(theme, Pref.removeOne.value)),
+      SizedBox(width: 2.d),
+      Expanded(
+        child: GestureDetector(
+            onTap: () => _boost("piggy"),
+            child: Components.slider(
+                theme, 0, _rewardLineAnimation!.value.round(), Price.piggy,
+                icon: SVG.show("piggy", 40.d))),
+      ),
+      SizedBox(width: 12.d),
+      GestureDetector(
+          child: SizedBox(
+              width: 40.d, height: 64.d, child: SVG.show("pause", 40.d)),
+          onTap: () => _pause("tap")),
+    ]);
   }
 
   _underFooter() {
@@ -248,12 +243,12 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
             ])));
   }
 
-  Widget _button(
-      ThemeData theme, double right, String icon, Function() onPressed,
-      {double? width, Widget? badge, List<Color>? colors}) {
+  Widget _button(ThemeData theme, String icon, Function() onPressed,
+      {Widget? badge, List<Color>? colors}) {
     if (Pref.tutorMode.value == 0) return const SizedBox();
     return SizedBox(
-        width: width ?? 64.d,
+        width: 68.d,
+        height: 68.d,
         child: BumpedButton(
             colors: colors ?? TColors.whiteFlat.value,
             padding: EdgeInsets.fromLTRB(4.d, 0, 0, 4.d),
@@ -262,7 +257,7 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
                   height: 46.d,
                   top: 4.d,
                   right: 2.d,
-                  child: SVG.show(icon, 48.d)),
+                  child: SVG.show(icon, 40.d)),
               badge ?? const SizedBox()
             ]),
             onTap: () {
@@ -274,8 +269,8 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
   Widget _badge(ThemeData theme, int value) {
     return Positioned(
         height: 22.d,
-        bottom: 2.d,
-        left: 0,
+        bottom: 4.d,
+        left: 2.d,
         child: Container(
             padding: EdgeInsets.symmetric(horizontal: 8.d),
             child: Text(value == 0 ? "free_l".l() : "$value",
@@ -426,9 +421,7 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
         right: MyGame.bounds.left, top: MyGame.bounds.bottom - 78.d);
     if (type == "next") {
       if (MyGame.boostNextMode > 0) return;
-      padding = EdgeInsets.only(
-          left: (Device.size.width - Callout.chromeWidth) * 0.5,
-          top: MyGame.bounds.bottom - 88.d);
+      padding = EdgeInsets.only(right: 54.d, top: MyGame.bounds.bottom - 96.d);
     }
     var result = await Rout.push(
         context, Callout("clt_${type}_text".l(), type, padding: padding),
