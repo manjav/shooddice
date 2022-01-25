@@ -1,24 +1,24 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:numbers/core/game.dart';
-import 'package:numbers/dialogs/daily.dart';
-import 'package:numbers/dialogs/dialogs.dart';
-import 'package:numbers/dialogs/quests.dart';
-import 'package:numbers/dialogs/rating.dart';
-import 'package:numbers/dialogs/shop.dart';
-import 'package:numbers/dialogs/toast.dart';
-import 'package:numbers/notifications/questnotify.dart';
-import 'package:numbers/utils/ads.dart';
-import 'package:numbers/utils/analytic.dart';
-import 'package:numbers/utils/localization.dart';
-import 'package:numbers/utils/prefs.dart';
-import 'package:numbers/utils/themes.dart';
-import 'package:numbers/utils/utils.dart';
-import 'package:numbers/widgets/buttons.dart';
-import 'package:numbers/widgets/coins.dart';
-import 'package:numbers/widgets/gameframe.dart';
-import 'package:numbers/widgets/punchbutton.dart';
+import 'package:project/core/game.dart';
+import 'package:project/dialogs/daily.dart';
+import 'package:project/dialogs/dialogs.dart';
+import 'package:project/dialogs/quests.dart';
+import 'package:project/dialogs/rating.dart';
+import 'package:project/dialogs/shop.dart';
+import 'package:project/dialogs/toast.dart';
+import 'package:project/notifications/questnotify.dart';
+import 'package:project/utils/ads.dart';
+import 'package:project/utils/analytic.dart';
+import 'package:project/utils/localization.dart';
+import 'package:project/utils/prefs.dart';
+import 'package:project/theme/themes.dart';
+import 'package:project/utils/utils.dart';
+import 'package:project/widgets/buttons.dart';
+import 'package:project/widgets/coins.dart';
+import 'package:project/widgets/gameframe.dart';
+import 'package:project/widgets/punchbutton.dart';
 
 class HomeDialog extends AbstractDialog {
   HomeDialog({Key? key})

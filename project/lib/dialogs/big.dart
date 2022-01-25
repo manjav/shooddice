@@ -2,19 +2,19 @@ import 'dart:async';
 
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
-import 'package:numbers/core/cell.dart';
-import 'package:numbers/dialogs/dialogs.dart';
-import 'package:numbers/dialogs/shop.dart';
-import 'package:numbers/dialogs/toast.dart';
-import 'package:numbers/utils/ads.dart';
-import 'package:numbers/utils/localization.dart';
-import 'package:numbers/utils/sounds.dart';
-import 'package:numbers/utils/themes.dart';
-import 'package:numbers/utils/utils.dart';
-import 'package:numbers/widgets/buttons.dart';
-import 'package:numbers/widgets/components.dart';
-import 'package:numbers/widgets/punchbutton.dart';
-import 'package:numbers/widgets/widgets.dart';
+import 'package:project/core/cell.dart';
+import 'package:project/dialogs/dialogs.dart';
+import 'package:project/dialogs/shop.dart';
+import 'package:project/dialogs/toast.dart';
+import 'package:project/utils/ads.dart';
+import 'package:project/utils/localization.dart';
+import 'package:project/utils/sounds.dart';
+import 'package:project/theme/themes.dart';
+import 'package:project/utils/utils.dart';
+import 'package:project/widgets/buttons.dart';
+import 'package:project/widgets/components.dart';
+import 'package:project/widgets/punchbutton.dart';
+import 'package:project/widgets/widgets.dart';
 import 'package:rive/rive.dart';
 
 class BigBlockDialog extends AbstractDialog {

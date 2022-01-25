@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:numbers/dialogs/dialogs.dart';
-import 'package:numbers/utils/themes.dart';
-import 'package:numbers/utils/utils.dart';
-import 'package:numbers/widgets/buttons.dart';
+import 'package:project/dialogs/dialogs.dart';
+import 'package:project/theme/themes.dart';
+import 'package:project/utils/utils.dart';
+import 'package:project/widgets/buttons.dart';
 import 'package:rive/rive.dart';
 
 class Confirm extends AbstractDialog {
   final String text;
   final String? acceptText;
   final String? declineText;
-  Confirm(this.text, {Key? key, this.acceptText, this.declineText,})
-      : super(
+  Confirm(
+    this.text, {
+    Key? key,
+    this.acceptText,
+    this.declineText,
+  }) : super(
           DialogMode.confirm,
           key: key,
           showCloseButton: false,

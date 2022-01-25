@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:numbers/core/cell.dart';
-import 'package:numbers/utils/utils.dart';
+import 'package:project/core/cell.dart';
+import 'package:project/utils/utils.dart';
 
 class Widgets {
   static Widget cell(ThemeData theme, int value, {TextStyle? textStyle}) {

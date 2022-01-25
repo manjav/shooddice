@@ -1,5 +1,5 @@
-import 'package:numbers/core/cell.dart';
-import 'package:numbers/dialogs/daily.dart';
+import 'package:project/core/cell.dart';
+import 'package:project/dialogs/daily.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Prefs {

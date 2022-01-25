@@ -5,11 +5,11 @@ import 'package:flame/effects.dart';
 import 'package:flame/palette.dart';
 import 'package:flame_svg/svg.dart';
 import 'package:flutter/material.dart';
-import 'package:numbers/animations/animate.dart';
-import 'package:numbers/core/cells.dart';
-import 'package:numbers/core/game.dart';
-import 'package:numbers/utils/prefs.dart';
-import 'package:numbers/utils/utils.dart';
+import 'package:project/animations/animate.dart';
+import 'package:project/core/cells.dart';
+import 'package:project/core/game.dart';
+import 'package:project/utils/prefs.dart';
+import 'package:project/utils/utils.dart';
 
 enum CellState { init, float, falling, fell, fixed }
 
@@ -172,7 +172,8 @@ class Cell extends PositionComponent {
       canvas.drawRRect(_overRect.s(size), _overPaint!);
     }
 
-    _textPaint!.render(canvas, "${hiddenMode == 1 ? "?" : getScore(value)}", _center,
+    _textPaint!.render(
+        canvas, "${hiddenMode == 1 ? "?" : getScore(value)}", _center,
         anchor: Anchor.center);
     if (reward > 0) _coin!.renderPosition(canvas, _coinPos, _coinSize);
   }

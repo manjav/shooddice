@@ -1,6 +1,6 @@
-import 'package:numbers/core/cell.dart';
-import 'package:numbers/utils/prefs.dart';
-import 'package:numbers/utils/utils.dart';
+import 'package:project/core/cell.dart';
+import 'package:project/utils/prefs.dart';
+import 'package:project/utils/utils.dart';
 
 class Cells {
   static int width = 5;

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:numbers/utils/utils.dart';
+import 'package:project/utils/utils.dart';
 
 enum TColors { black, white, whiteFlat, yellow, blue, orange, green }
 
@@ -21,15 +21,35 @@ extension TColorsExt on TColors {
           const Color(0xFFFFFFFF)
         ];
       case TColors.whiteFlat:
-        return [const Color(0xFFFDFDFD), const Color(0xFFFDFDFD), const Color(0xFFCCCCCC)];
+        return [
+          const Color(0xFFFDFDFD),
+          const Color(0xFFFDFDFD),
+          const Color(0xFFCCCCCC)
+        ];
       case TColors.yellow:
-        return [const Color(0xFFFFC000), const Color(0xFFFE8C0F), const Color(0xFFEB6D0A)];
+        return [
+          const Color(0xFFFFC000),
+          const Color(0xFFFE8C0F),
+          const Color(0xFFEB6D0A)
+        ];
       case TColors.blue:
-        return [const Color(0xFF00B0F0), const Color(0xFF0070C0), const Color(0xFF00619F)];
+        return [
+          const Color(0xFF00B0F0),
+          const Color(0xFF0070C0),
+          const Color(0xFF00619F)
+        ];
       case TColors.orange:
-        return [const Color(0xFFEC8838), const Color(0xFFFA3838), const Color(0xFFD92A26)];
+        return [
+          const Color(0xFFEC8838),
+          const Color(0xFFFA3838),
+          const Color(0xFFD92A26)
+        ];
       case TColors.green:
-        return [const Color(0xFF81D33c), const Color(0xFF00A550), const Color(0xFF0A903D)];
+        return [
+          const Color(0xFF81D33c),
+          const Color(0xFF00A550),
+          const Color(0xFF0A903D)
+        ];
     }
   }
 }

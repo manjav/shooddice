@@ -1,5 +1,5 @@
 import 'package:flutter/services.dart';
-import 'package:numbers/utils/prefs.dart';
+import 'package:project/utils/prefs.dart';
 import 'package:soundpool/soundpool.dart';
 import 'package:vibration/vibration.dart';
 

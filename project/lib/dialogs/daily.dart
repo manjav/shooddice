@@ -1,14 +1,14 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:numbers/dialogs/dialogs.dart';
-import 'package:numbers/utils/localization.dart';
-import 'package:numbers/utils/prefs.dart';
-import 'package:numbers/utils/themes.dart';
-import 'package:numbers/utils/utils.dart';
-import 'package:numbers/widgets/buttons.dart';
-import 'package:numbers/widgets/coins.dart';
-import 'package:numbers/widgets/punchbutton.dart';
+import 'package:project/dialogs/dialogs.dart';
+import 'package:project/utils/localization.dart';
+import 'package:project/utils/prefs.dart';
+import 'package:project/theme/themes.dart';
+import 'package:project/utils/utils.dart';
+import 'package:project/widgets/buttons.dart';
+import 'package:project/widgets/coins.dart';
+import 'package:project/widgets/punchbutton.dart';
 
 class DailyDialog extends AbstractDialog {
   DailyDialog({Key? key})

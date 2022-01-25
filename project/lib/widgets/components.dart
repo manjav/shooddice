@@ -2,9 +2,9 @@ import 'dart:math';
 
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
-import 'package:numbers/utils/prefs.dart';
-import 'package:numbers/utils/utils.dart';
-import 'package:numbers/widgets/buttons.dart';
+import 'package:project/utils/prefs.dart';
+import 'package:project/utils/utils.dart';
+import 'package:project/widgets/buttons.dart';
 
 class Components {
   static Widget scores(ThemeData theme, {Function()? onTap}) {

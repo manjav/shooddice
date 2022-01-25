@@ -4,9 +4,9 @@ import 'package:appsflyer_sdk/appsflyer_sdk.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:gameanalytics_sdk/gameanalytics.dart';
-import 'package:numbers/dialogs/shop.dart';
-import 'package:numbers/utils/localization.dart';
-import 'package:numbers/utils/prefs.dart';
+import 'package:project/dialogs/shop.dart';
+import 'package:project/utils/localization.dart';
+import 'package:project/utils/prefs.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 class Analytics {
