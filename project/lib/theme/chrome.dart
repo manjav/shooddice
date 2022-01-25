@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:project/utils/utils.dart';
 
 class ChromeDecoration extends BoxDecoration {
-  final Color? color;
-  ChromeDecoration({this.color})
+  ChromeDecoration({Color? color})
       : super(
             color: color,
             shape: BoxShape.rectangle,
