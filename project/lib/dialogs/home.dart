@@ -9,6 +9,7 @@ import 'package:project/dialogs/rating.dart';
 import 'package:project/dialogs/shop.dart';
 import 'package:project/dialogs/toast.dart';
 import 'package:project/notifications/questnotify.dart';
+import 'package:project/theme/skinnedtext.dart';
 import 'package:project/theme/themes.dart';
 import 'package:project/utils/ads.dart';
 import 'package:project/utils/analytic.dart';
@@ -53,11 +54,13 @@ class _HomeDialogState extends AbstractDialogState<HomeDialog> {
   Widget headerFactory(ThemeData theme, double width) {
     return Container(
         width: width - 36.d,
-        height: 150.d,
-        padding: EdgeInsets.only(bottom: 12.d),
+        padding: EdgeInsets.only(bottom: 4.d),
         child: Row(
             crossAxisAlignment: CrossAxisAlignment.end,
-            children: [Text(widget.title!, style: theme.textTheme.headline4)]));
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SkinnedText(widget.title!, style: theme.textTheme.headline4)
+            ]));
   }
 
   @override
@@ -95,7 +98,7 @@ class _HomeDialogState extends AbstractDialogState<HomeDialog> {
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                 SVG.icon("E", theme),
                 SizedBox(width: 12.d),
-                Text(_startButtonLabel,
+                SkinnedText(_startButtonLabel,
                     style: theme.textTheme.headline5,
                     textAlign: TextAlign.center)
               ])))
@@ -114,7 +117,7 @@ class _HomeDialogState extends AbstractDialogState<HomeDialog> {
                 SVG.show(boost, 58.d),
                 _has(boost) ? SVG.show("accept", 22.d) : const SizedBox()
               ]),
-              SizedBox(height: 6.d),
+              // SizedBox(height: 6.d),
               Expanded(
                   child: Text(title,
                       style: theme.textTheme.subtitle2,
@@ -126,6 +129,7 @@ class _HomeDialogState extends AbstractDialogState<HomeDialog> {
                   child: BumpedButton(
                       cornerRadius: 8.d,
                       isEnable: !_has(boost),
+                      colors: TColors.orange.value,
                       content: Row(children: [
                         SVG.show("coin", 24.d),
                         Expanded(
@@ -142,7 +146,7 @@ class _HomeDialogState extends AbstractDialogState<HomeDialog> {
                       cornerRadius: 8.d,
                       errorMessage: Toast("ads_unavailable".l(), monoIcon: "A"),
                       isEnable: !_has(boost) && Ads.isReady(),
-                      colors: TColors.orange.value,
+                      colors: TColors.green.value,
                       content: Row(children: [
                         SVG.icon("A", theme, scale: 0.7),
                         Expanded(

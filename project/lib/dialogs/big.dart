@@ -5,15 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:project/core/cell.dart';
 import 'package:project/dialogs/dialogs.dart';
 import 'package:project/dialogs/shop.dart';
-import 'package:project/dialogs/toast.dart';
-import 'package:project/utils/ads.dart';
 import 'package:project/utils/localization.dart';
 import 'package:project/utils/sounds.dart';
-import 'package:project/theme/themes.dart';
 import 'package:project/utils/utils.dart';
-import 'package:project/widgets/buttons.dart';
 import 'package:project/widgets/components.dart';
-import 'package:project/widgets/punchbutton.dart';
 import 'package:project/widgets/widgets.dart';
 import 'package:rive/rive.dart';
 
@@ -52,53 +47,8 @@ class _BigBlockDialogState extends AbstractDialogState<BigBlockDialog> {
           top: 140.d,
           child: Text("big_message".l([Cell.getScore(widget.value).toString()]),
               style: theme.textTheme.caption, textAlign: TextAlign.center)),
-      Positioned(
-          height: 76.d,
-          width: 110.d,
-          bottom: 4.d,
-          left: 4.d,
-          child: BumpedButton(
-              onTap: () => buttonsClick(context, "big", reward, false),
-              cornerRadius: 16.d,
-              content: Stack(alignment: Alignment.centerLeft, children: [
-                SVG.show("coin", 36.d),
-                Positioned(
-                    top: 5.d,
-                    left: 36.d,
-                    child:
-                        Text(reward.format(), style: theme.textTheme.button)),
-                Positioned(
-                    bottom: 7.d,
-                    left: 36.d,
-                    child:
-                        Text("claim_l".l(), style: theme.textTheme.subtitle2)),
-              ]))),
-      PunchButton(
-          height: 76.d,
-          width: 130.d,
-          bottom: 4.d,
-          right: 4.d,
-          cornerRadius: 16.d,
-          isEnable: Ads.isReady(),
-          colors: TColors.orange.value,
-          errorMessage: Toast("ads_unavailable".l(), monoIcon: "A"),
-          onTap: () =>
-              buttonsClick(context, "big", reward * Ads.rewardCoef, true),
-          content: Stack(alignment: Alignment.centerLeft, children: [
-            SVG.icon("A", theme),
-            Positioned(
-                top: 5.d,
-                left: 44.d,
-                child: Text((reward * Ads.rewardCoef).format(),
-                    style: theme.textTheme.headline4)),
-            Positioned(
-                bottom: 4.d,
-                left: 44.d,
-                child: Row(children: [
-                  SVG.show("coin", 22.d),
-                  Text("x${Ads.rewardCoef}", style: theme.textTheme.headline6)
-                ])),
-          ])),
+      buttonPayFactory(theme),
+      buttonAdsFactory(theme),
       Positioned(
           top: 90, child: Components.confetty(widget.confettiController)),
       Positioned(

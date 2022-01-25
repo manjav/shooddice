@@ -3,24 +3,20 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:project/dialogs/dialogs.dart';
 import 'package:project/dialogs/shop.dart';
-import 'package:project/dialogs/toast.dart';
-import 'package:project/theme/themes.dart';
 import 'package:project/utils/ads.dart';
 import 'package:project/utils/analytic.dart';
 import 'package:project/utils/localization.dart';
 import 'package:project/utils/prefs.dart';
 import 'package:project/utils/sounds.dart';
 import 'package:project/utils/utils.dart';
-import 'package:project/widgets/buttons.dart';
 import 'package:project/widgets/components.dart';
-import 'package:project/widgets/punchbutton.dart';
 
 class PiggyDialog extends AbstractDialog {
   final bool playApplaud;
   PiggyDialog(this.playApplaud, {Key? key})
       : super(DialogMode.piggy,
             key: key,
-            height: 300.d,
+            height: Pref.coinPiggy.value >= Price.piggy ? 340.d : 280.d,
             title: "piggy_l".l(),
             padding: EdgeInsets.all(18.d));
   @override
@@ -79,63 +75,20 @@ class _PiggyDialogState extends AbstractDialogState<PiggyDialog> {
 
   _leftButton(ThemeData theme, int value, int maxValue) {
     if (value < maxValue) return const SizedBox();
-    return Positioned(
-        height: 76.d,
-        width: 110.d,
-        bottom: 4.d,
-        left: 4.d,
-        child: BumpedButton(
-            onTap: () => buttonsClick(context, "piggy", maxValue, false),
-            cornerRadius: 16.d,
-            content: Stack(alignment: Alignment.centerLeft, children: [
-              SVG.show("coin", 36.d),
-              Positioned(
-                  top: 5.d,
-                  left: 40.d,
-                  child:
-                      Text(maxValue.format(), style: theme.textTheme.button)),
-              Positioned(
-                  bottom: 7.d,
-                  left: 40.d,
-                  child: Text("claim_l".l(), style: theme.textTheme.subtitle2)),
-            ])));
+    return buttonPayFactory(theme);
   }
 
   Widget _rightButton(ThemeData theme, int value, int maxValue) {
-    var rewardAvailble = value >= maxValue;
-    if (rewardAvailble) {
-      return PunchButton(
-          height: 76.d,
-          width: 130.d,
-          bottom: 4.d,
-          right: 4.d,
-          cornerRadius: 16.d,
-          isEnable: Ads.isReady(),
-          colors: TColors.orange.value,
-          errorMessage: Toast("ads_unavailable".l(), monoIcon: "A"),
-          onTap: () =>
-              buttonsClick(context, "piggy", maxValue * Ads.rewardCoef, true),
-          content: Stack(alignment: Alignment.centerLeft, children: [
-            SVG.icon("A", theme),
-            Positioned(
-                top: 5.d,
-                left: 40.d,
-                child: Text((maxValue * Ads.rewardCoef).format(),
-                    style: theme.textTheme.headline4)),
-            Positioned(
-                bottom: 4.d,
-                left: 40.d,
-                child: Row(children: [
-                  SVG.show("coin", 22.d),
-                  Text("x${Ads.rewardCoef}", style: theme.textTheme.headline6)
-                ])),
-          ]));
-    }
+    if (value >= maxValue) return buttonAdsFactory(theme);
     return Positioned(
-        height: 32.d,
+        height: 66.d,
         bottom: 12.d,
         width: 200.d,
-        child: Components.slider(theme, maxValue, value, maxValue,
-            icon: SVG.show("coin", 32.d)));
+        child: Components.slider(
+          theme,
+          maxValue,
+          value,
+          maxValue,
+        ));
   }
 }

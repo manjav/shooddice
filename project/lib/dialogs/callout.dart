@@ -75,6 +75,7 @@ class _CalloutState extends AbstractDialogState<Callout> {
                           child: hasCoinButton
                               ? BumpedButton(
                                   cornerRadius: 8.d,
+                                  colors: TColors.orange.value,
                                   content: Row(children: [
                                     SVG.show("coin", 24.d),
                                     Expanded(
@@ -94,7 +95,7 @@ class _CalloutState extends AbstractDialogState<Callout> {
                               child: BumpedButton(
                                   cornerRadius: 8.d,
                                   isEnable: Ads.isReady(),
-                                  colors: TColors.orange.value,
+                                  colors: TColors.green.value,
                                   errorMessage: Toast("ads_unavailable".l(),
                                       monoIcon: "0"),
                                   content: Row(children: [

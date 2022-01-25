@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:project/dialogs/dialogs.dart';
+import 'package:project/theme/skinnedtext.dart';
 import 'package:project/theme/themes.dart';
 import 'package:project/utils/localization.dart';
 import 'package:project/utils/utils.dart';
@@ -51,13 +52,14 @@ class _TutorialDialogState extends AbstractDialogState<TutorialDialog> {
           left: 0,
           child: BumpedButton(
               onTap: () => Navigator.of(context).pop(["tutorReset"]),
-              colors: TColors.green.value,
+              colors: TColors.yellow.value,
               cornerRadius: 16.d,
               content: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     SVG.icon("F", theme),
-                    Text("replay_l".l(), style: theme.textTheme.headline5)
+                    SkinnedText("replay_l".l(),
+                        style: theme.textTheme.headline5)
                   ]))),
       Positioned(
           height: 76.d,
@@ -66,13 +68,13 @@ class _TutorialDialogState extends AbstractDialogState<TutorialDialog> {
           right: 0,
           child: BumpedButton(
               onTap: () => Navigator.of(context).pop(["tutorFinish"]),
-              colors: TColors.blue.value,
+              colors: TColors.green.value,
               cornerRadius: 16.d,
               content: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     SVG.icon("E", theme),
-                    Text("ok_l".l(), style: theme.textTheme.headline5)
+                    SkinnedText("ok_l".l(), style: theme.textTheme.headline5)
                   ]))),
       Center(child: Components.confetty(widget.confettiController))
     ]);
