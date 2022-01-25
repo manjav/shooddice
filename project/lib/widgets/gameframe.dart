@@ -134,6 +134,9 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
   }
 
   Widget _getNext(ThemeData theme) {
+    if (Pref.tutorMode.value == 0) {
+      return const SizedBox();
+    }
     var r = Radius.circular(12.d);
     return GestureDetector(
         child: Container(
