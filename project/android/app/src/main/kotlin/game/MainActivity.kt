@@ -1,4 +1,4 @@
-package game.block.puzzle.drop.the.number.merge
+package game
 
 import io.flutter.embedding.android.FlutterActivity
 
