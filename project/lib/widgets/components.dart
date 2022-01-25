@@ -88,8 +88,7 @@ class Components {
       Positioned(
           left: hasIcon ? 26.d : 0,
           right: 0,
-          bottom: 6.d,
-          top: 6.d,
+          height: 20.d,
           child: Container(
               child: ClipRRect(
                   borderRadius: BorderRadius.only(

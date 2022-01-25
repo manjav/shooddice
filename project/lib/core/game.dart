@@ -32,7 +32,7 @@ enum GameEvent {
   rewardCube,
   rewardPiggy,
   rewardRecord,
-  score
+  score,
 }
 
 class MyGame extends FlameGame with TapDetector {
@@ -62,7 +62,7 @@ class MyGame extends FlameGame with TapDetector {
   List<Rect>? _rects;
   final Paint _linePaint = Paint();
   final Paint _mainPaint = Paint()..color = TColors.dark.value[2];
-  final Paint _zebraPaint = Paint()..color = TColors.dark.value[3];
+  final Paint _zebraPaint = Paint()..color = TColors.dark.value[3].withAlpha(10);
   FallingEffect? _fallingEffect;
   ColumnHint? _columnHint;
 
@@ -114,11 +114,8 @@ class MyGame extends FlameGame with TapDetector {
         4);
     _rects = List.generate(
         2,
-        (i) => Rect.fromLTRB(
-            bounds.left + (i + 1) * Cell.diameter,
-            _bgRect!.top,
-            bounds.right - (i + 1) * Cell.diameter,
-            _bgRect!.bottom));
+        (i) => Rect.fromLTWH(bounds.left + (i * 2 + 1) * Cell.diameter,
+            _bgRect!.top, Cell.diameter, _bgRect!.height));
 
     add(_fallingEffect = FallingEffect());
 
@@ -185,8 +182,9 @@ class MyGame extends FlameGame with TapDetector {
   @override
   void render(Canvas canvas) {
     canvas.drawRRect(_bgRect!, _mainPaint);
-    canvas.drawRect(_rects![0], _zebraPaint);
-    canvas.drawRect(_rects![1], _mainPaint);
+    for (var r in _rects!) {
+      canvas.drawRect(r, _zebraPaint);
+    }
     canvas.drawRRect(_lineRect!, _linePaint);
     super.render(canvas);
   }

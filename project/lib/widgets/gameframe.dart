@@ -5,13 +5,11 @@ import 'package:confetti/confetti.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:games_services/games_services.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:project/core/cell.dart';
 import 'package:project/core/cells.dart';
 import 'package:project/core/game.dart';
 import 'package:project/dialogs/big.dart';
 import 'package:project/dialogs/callout.dart';
-import 'package:project/dialogs/tutorial.dart';
 import 'package:project/dialogs/cube.dart';
 import 'package:project/dialogs/pause.dart';
 import 'package:project/dialogs/piggy.dart';
@@ -19,11 +17,12 @@ import 'package:project/dialogs/record.dart';
 import 'package:project/dialogs/revive.dart';
 import 'package:project/dialogs/shop.dart';
 import 'package:project/dialogs/stats.dart';
+import 'package:project/dialogs/tutorial.dart';
+import 'package:project/theme/themes.dart';
 import 'package:project/utils/ads.dart';
 import 'package:project/utils/analytic.dart';
 import 'package:project/utils/localization.dart';
 import 'package:project/utils/prefs.dart';
-import 'package:project/theme/themes.dart';
 import 'package:project/utils/utils.dart';
 import 'package:project/widgets/buttons.dart';
 import 'package:project/widgets/coins.dart';
@@ -74,8 +73,8 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
               right: MyGame.bounds.left,
               child: _getHeader(theme)),
           Positioned(
-              top: MyGame.bounds.bottom + 10.d,
-              left: MyGame.bounds.left - 22.d,
+              top: MyGame.bounds.bottom + 16.d,
+              left: MyGame.bounds.left + 2.d,
               right: MyGame.bounds.left,
               child: _getFooter(theme)),
           _underFooter(),
@@ -150,46 +149,26 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
                         child: SVG.show("close", 32.d), onTap: _onRemoveBlock)
                   ])));
     }
-    return SizedBox(
-        height: 68.d,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            IconButton(
-                icon: SVG.show("pause", 48.d),
-                iconSize: 72.d,
-                onPressed: () => _pause("tap")),
-            Expanded(
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                  Expanded(
-                      child: _button(
-                          theme, 20.d, "piggy", () => _boost("piggy"),
-                          // width: 96.d,
-                          badge: Positioned(
-                              height: 32.d,
-                              bottom: 0,
-                              left: 0,
-                              right: 6.d,
-                              child: Components.slider(
-                                  theme,
-                                  0,
-                                  _rewardLineAnimation!.value.round(),
-                                  Price.piggy,
-                                  icon: SVG.show("coin", 32.d))),
-                          colors: Pref.coinPiggy.value >= Price.piggy
-                              ? TColors.orange.value
-                              : null))
-                ])),
-            SizedBox(width: 4.d),
-            _button(theme, 96.d, "remove-color", () => _boost("color"),
-                badge: _badge(theme, Pref.removeColor.value)),
-            SizedBox(width: 4.d),
-            _button(theme, 20.d, "remove-one", () => _boost("one"),
-                badge: _badge(theme, Pref.removeOne.value)),
-          ],
-        ));
+    return Row(crossAxisAlignment: CrossAxisAlignment.end, children: [
+      GestureDetector(
+          child: SizedBox(
+              width: 40.d, height: 64.d, child: SVG.show("pause", 40.d)),
+          onTap: () => _pause("tap")),
+      SizedBox(width: 6.d),
+      Expanded(
+        child: GestureDetector(
+            onTap: () => _boost("piggy"),
+            child: Components.slider(
+                theme, 0, _rewardLineAnimation!.value.round(), Price.piggy,
+                icon: SVG.show("piggy", 40.d))),
+      ),
+      SizedBox(width: 6.d),
+      _button(theme, "remove-color", () => _boost("color"),
+          badge: _badge(theme, Pref.removeColor.value)),
+      SizedBox(width: 2.d),
+      _button(theme, "remove-one", () => _boost("one"),
+          badge: _badge(theme, Pref.removeOne.value)),
+    ]);
   }
 
   _underFooter() {
@@ -208,15 +187,7 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
     }
 
     if (!_animationTime) {
-      var ad = Ads.getBanner("game", size: AdSize.banner);
-      return Positioned(
-          bottom: 2.d,
-          child: ClipRRect(
-              borderRadius: BorderRadius.all(Radius.circular(8.d)),
-              child: SizedBox(
-                  width: ad.size.width.toDouble(),
-                  height: ad.size.height.toDouble(),
-                  child: AdWidget(ad: ad))));
+      return const SizedBox();
     }
     return Positioned(
         left: 0,
@@ -239,12 +210,12 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
             ])));
   }
 
-  Widget _button(
-      ThemeData theme, double right, String icon, Function() onPressed,
-      {double? width, Widget? badge, List<Color>? colors}) {
+  Widget _button(ThemeData theme, String icon, Function() onPressed,
+      {Widget? badge, List<Color>? colors}) {
     if (Pref.tutorMode.value == 0) return const SizedBox();
     return SizedBox(
-        width: width ?? 64.d,
+        width: 68.d,
+        height: 68.d,
         child: BumpedButton(
             colors: colors ?? TColors.whiteFlat.value,
             padding: EdgeInsets.fromLTRB(4.d, 0, 0, 4.d),
@@ -253,7 +224,7 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
                   height: 46.d,
                   top: 4.d,
                   right: 2.d,
-                  child: SVG.show(icon, 48.d)),
+                  child: SVG.show(icon, 44.d)),
               badge ?? const SizedBox()
             ]),
             onTap: () {

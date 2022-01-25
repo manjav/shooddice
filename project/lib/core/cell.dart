@@ -14,12 +14,6 @@ import 'package:project/utils/utils.dart';
 enum CellState { init, float, falling, fell, fixed }
 
 class Cell extends PositionComponent {
-  static double diameter = 64.0;
-  static double padding = 1.8;
-  static double minSpeed = 0.01;
-  static double maxSpeed = 0.8;
-  static double roundness = 7.0;
-  static double thickness = 4.6;
   static int lastRandomValue = 9;
   static int maxRandom = 0;
   static const firstBigRecord = 8;
@@ -44,9 +38,23 @@ class Cell extends PositionComponent {
     const PaletteEntry(Color(0xFF00C0C0)),
     const PaletteEntry(Color(0xFF004940))
   ];
+
+  static double minSpeed = 0.01;
+  static double maxSpeed = 0.8;
+  static double diameter = 64.0;
+  static double padding = 1.8;
+  static double roundness = 16.0;
+  static double thickness = 2.0;
+  static double strock = 3.0;
+  static double radius = 32.0;
+  static RRect _backRect = RRect.zero;
+  static RRect _sideRect = RRect.zero;
+  static RRect _overRect = RRect.zero;
+  static Vector2 _valuePos = Vector2.zero();
+  static Vector2 _rewardPos = Vector2.zero();
+  static Vector2 _rewardSize = Vector2.zero();
+
   static final scales = [0, 1, 0.9, 0.75, 0.65, 0.6, 0.55];
-  static double get radius => diameter * 0.5;
-  static double get strock => padding * 1.1;
   static double getX(int col) => MyGame.bounds.left + col * diameter + radius;
   static double getY(int row) =>
       MyGame.bounds.top + (Cells.height - row) * diameter + radius;
@@ -59,43 +67,44 @@ class Cell extends PositionComponent {
     return min + MyGame.random.nextInt(maxRandom - min);
   }
 
+  static void updateSizes(double _diameter) {
+    minSpeed = _diameter * 0.01;
+    maxSpeed = _diameter * 0.8;
+    diameter = _diameter;
+    padding = _diameter * 0.04;
+    strock = _diameter * 0.045;
+    roundness = _diameter * 0.15;
+    thickness = _diameter * 0.1;
+    radius = _diameter * 0.5;
+
+    _valuePos = Vector2(0, _diameter * -0.05);
+    _rewardPos = Vector2.all(_diameter * -0.43);
+    _rewardSize = Vector2.all(_diameter * 0.4);
+
+    _backRect = RRect.fromLTRBXY(padding - radius, padding - radius,
+        radius - padding, radius - padding, roundness * 1.3, roundness * 1.3);
+    _sideRect = RRect.fromLTRBXY(strock - radius, strock - radius,
+        radius - strock, radius - strock, roundness, roundness);
+    _overRect = RRect.fromLTRBXY(strock - radius, strock - radius,
+        radius - strock, radius - strock - thickness, roundness, roundness);
+  }
+
   static int getNextColumn(int seed) => Pref.tutorMode.value == 0
       ? [2, 0, 3, 2, 1, 1, 2][seed]
       : MyGame.random.nextInt(Cells.width);
-
-  static final _center = Vector2(0, -3);
 
   bool matched = false;
   int hiddenMode = 0;
   int column = 0, row = 0, reward = 0, value = 0;
   Function(Cell)? onInit;
   CellState state = CellState.init;
-  static final RRect _backRect = RRect.fromLTRBXY(
-      padding - radius,
-      padding - radius,
-      radius - padding,
-      radius - padding,
-      roundness * 1.3,
-      roundness * 1.3);
-  static final RRect _sideRect = RRect.fromLTRBXY(strock - radius,
-      strock - radius, radius - strock, radius - strock, roundness, roundness);
-  static final RRect _overRect = RRect.fromLTRBXY(
-      strock - radius,
-      strock - radius,
-      radius - strock,
-      radius - strock - thickness,
-      roundness,
-      roundness);
 
   static final Paint _backPaint = colors[0].paint();
-
-  TextPaint? _textPaint;
+  Paint? _hiddenPaint;
   Paint? _sidePaint;
   Paint? _overPaint;
-  Paint? _hiddenPaint;
-  Svg? _coin;
-  final Vector2 _coinPos = Vector2.all(-radius * 0.86);
-  final Vector2 _coinSize = Vector2.all(26);
+  TextPaint? _valuePaint;
+  Svg? _rewardPaint;
 
   Cell(int column, int row, int value, {int reward = 0, Function(Cell)? onInit})
       : super() {
@@ -113,6 +122,7 @@ class Cell extends PositionComponent {
     this.hiddenMode = hiddenMode;
     state = CellState.init;
 
+    // Init paints
     _sidePaint = colors[value].withAlpha(180).paint();
     _overPaint = colors[value].paint();
 
@@ -123,7 +133,7 @@ class Cell extends PositionComponent {
           blurRadius: 3,
           offset: Offset(0, radius * 0.05)));
     }
-    _textPaint = TextPaint(
+    _valuePaint = TextPaint(
         style: TextStyle(
             fontSize:
                 radius * scales[getScore(value).toString().length.clamp(0, 5)],
@@ -137,7 +147,7 @@ class Cell extends PositionComponent {
         ..style = PaintingStyle.stroke
         ..color = hiddenMode > 1 ? colors[value].color : Colors.white;
     }
-    if (reward > 0) _coin = await Svg.load('images/coin.svg');
+    if (reward > 0) _rewardPaint = await Svg.load('images/coin.svg');
 
     size = Vector2(1.3, 1.3);
     var controller = EffectController(
@@ -172,29 +182,20 @@ class Cell extends PositionComponent {
       canvas.drawRRect(_overRect.s(size), _overPaint!);
     }
 
-    _textPaint!.render(
-        canvas, "${hiddenMode == 1 ? "?" : getScore(value)}", _center,
+    _valuePaint!.render(
+        canvas, "${hiddenMode == 1 ? "?" : getScore(value)}", _valuePos,
         anchor: Anchor.center);
-    if (reward > 0) _coin!.renderPosition(canvas, _coinPos, _coinSize);
+    if (reward > 0) _rewardPaint!.renderPosition(canvas, _rewardPos, _rewardSize);
   }
 
   @override
   String toString() => "Cell c:$column, r:$row, v:$value, s:$state}";
-
-  static void updateSizes(double _diameter) {
-    diameter = _diameter;
-    minSpeed = _diameter * 0.01;
-    maxSpeed = _diameter * 0.8;
-    padding = _diameter * 0.04;
-    roundness = _diameter * 0.15;
-    thickness = _diameter * 0.1;
-  }
 }
 
 extension RRectExt on RRect {
   RRect s(Vector2 size) {
     if (size.x == 1 && size.y == 1) return this;
     return RRect.fromLTRBXY(left * size.x, top * size.y, right * size.x,
-        bottom * size.y, blRadiusX, blRadiusY);
+        bottom * size.y, blRadiusX * size.x, blRadiusY * size.y);
   }
 }
