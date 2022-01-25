@@ -15,10 +15,10 @@ import 'package:project/core/achieves.dart';
 import 'package:project/core/cell.dart';
 import 'package:project/core/cells.dart';
 import 'package:project/dialogs/quests.dart';
+import 'package:project/theme/themes.dart';
 import 'package:project/utils/analytic.dart';
 import 'package:project/utils/prefs.dart';
 import 'package:project/utils/sounds.dart';
-import 'package:project/theme/themes.dart';
 import 'package:project/utils/utils.dart';
 
 enum GameEvent {
@@ -61,8 +61,8 @@ class MyGame extends FlameGame with TapDetector {
   RRect? _lineRect;
   List<Rect>? _rects;
   final Paint _linePaint = Paint();
-  final Paint _mainPaint = Paint()..color = TColors.black.value[2];
-  final Paint _zebraPaint = Paint()..color = TColors.black.value[3];
+  final Paint _mainPaint = Paint()..color = TColors.dark.value[2];
+  final Paint _zebraPaint = Paint()..color = TColors.dark.value[3];
   FallingEffect? _fallingEffect;
   ColumnHint? _columnHint;
 
@@ -72,7 +72,7 @@ class MyGame extends FlameGame with TapDetector {
   }
 
   @override
-  Color backgroundColor() => TColors.black.value[0];
+  Color backgroundColor() => TColors.dark.value[0];
 
   void _addScore(int value) {
     if (_tutorMode) return;
@@ -102,7 +102,7 @@ class MyGame extends FlameGame with TapDetector {
     Analytics.startProgress(
         "main", Pref.playCount.value, "big $boostBig next $boostNextMode");
 
-    _linePaint.color = TColors.black.value[0];
+    _linePaint.color = TColors.dark.value[0];
     _bgRect = RRect.fromLTRBXY(bounds.left - 4, bounds.top - 4,
         bounds.right + 4, bounds.bottom + 4, 16, 16);
     _lineRect = RRect.fromLTRBXY(
@@ -472,7 +472,7 @@ class MyGame extends FlameGame with TapDetector {
   }
 
   void revive() {
-    _linePaint.color = TColors.black.value[0];
+    _linePaint.color = TColors.dark.value[0];
     Pref.numRevives.increase(1);
     for (var i = 0; i < Cells.width; i++) {
       for (var j = Cells.height - 3; j < Cells.height; j++) {
@@ -591,7 +591,7 @@ class ColumnHint extends PositionComponent {
   }
 
   show(double x, int direction) async {
-    var side = direction == 0 ? "down" : (direction > 0 ? "right" : "left");
+    var side = direction == 0 ? "vertical" : (direction > 0 ? "right" : "left");
     _arrow = await Svg.load('images/arrow-$side.svg');
     alpha = 1;
     rect = RRect.fromLTRBXY(

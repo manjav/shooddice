@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:project/dialogs/dialogs.dart';
+import 'package:project/theme/themes.dart';
 import 'package:project/utils/localization.dart';
 import 'package:project/utils/prefs.dart';
-import 'package:project/theme/themes.dart';
 import 'package:project/utils/utils.dart';
 import 'package:project/widgets/buttons.dart';
 

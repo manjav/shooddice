@@ -35,7 +35,7 @@ class Components {
             child: BumpedButton(
                 padding: const EdgeInsets.fromLTRB(8, 4, 8, 10),
                 content: GestureDetector(
-                    onTap: onTap, child: SVG.show("profile", 48.d)))));
+                    onTap: onTap, child: SVG.show("stats", 48.d)))));
   }
 
   static Widget confetty(ConfettiController controller) {

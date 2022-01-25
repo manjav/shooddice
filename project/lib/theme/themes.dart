@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:project/utils/utils.dart';
 
-enum TColors { black, white, whiteFlat, yellow, blue, orange, green }
+enum TColors { dark, white, whiteFlat, yellow, blue, orange, green }
 
 extension TColorsExt on TColors {
   List<Color> get value {
     switch (this) {
-      case TColors.black:
+      case TColors.dark:
         return [
           const Color(0xFF2c3134),
           const Color(0xBB000000),
@@ -74,11 +74,11 @@ class Themes {
   static ThemeData get darkData {
     var textTheme = TextTheme(
         caption: TextStyle(color: TColors.white.value[2], fontSize: 16.d),
-        button: style(TColors.black.value[0], 24.d, shadows: []),
-        bodyText1: style(TColors.black.value[0], 22.d, shadows: []),
-        bodyText2: style(TColors.black.value[0], 20.d, shadows: []),
-        subtitle1: style(TColors.black.value[0], 16.d, shadows: []),
-        subtitle2: style(TColors.black.value[0], 14.d, shadows: []),
+        button: style(TColors.dark.value[0], 24.d, shadows: []),
+        bodyText1: style(TColors.dark.value[0], 22.d, shadows: []),
+        bodyText2: style(TColors.dark.value[0], 20.d, shadows: []),
+        subtitle1: style(TColors.dark.value[0], 16.d, shadows: []),
+        subtitle2: style(TColors.dark.value[0], 14.d, shadows: []),
         headline1: style(TColors.white.value[3], 56.d),
         headline2: style(TColors.white.value[3], 36.d),
         headline3: style(TColors.white.value[3], 30.d),
@@ -124,12 +124,12 @@ class Themes {
           backgroundColor: TColors.blue.value[2]),
       inputDecorationTheme: InputDecorationTheme(hintStyle: textTheme.caption),
       fontFamily: "quicksand",
-      dialogBackgroundColor: TColors.black.value[1],
+      dialogBackgroundColor: TColors.dark.value[1],
       // accentColor: primaries[0],
       // buttonColor: primaries[600],
       // scaffoldBackgroundColor: primaries[900],
-      backgroundColor: TColors.black.value[2],
-      dialogTheme: DialogTheme(backgroundColor: TColors.black.value[1]),
+      backgroundColor: TColors.dark.value[2],
+      dialogTheme: DialogTheme(backgroundColor: TColors.dark.value[1]),
       cardColor: TColors.white.value[0],
       // primaryColor: primaries[700],
       // focusColor: primaries[750],

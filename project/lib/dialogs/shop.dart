@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:project/dialogs/dialogs.dart';
 import 'package:project/dialogs/toast.dart';
+import 'package:project/theme/themes.dart';
 import 'package:project/utils/ads.dart';
 import 'package:project/utils/analytic.dart';
 import 'package:project/utils/localization.dart';
 import 'package:project/utils/prefs.dart';
-import 'package:project/theme/themes.dart';
 import 'package:project/utils/utils.dart';
 import 'package:project/widgets/buttons.dart';
 import 'package:project/widgets/coins.dart';
@@ -225,7 +225,7 @@ class _ShopDialogState extends AbstractDialogState<ShopDialog> {
   _overlay(ThemeData theme) {
     if (_message.isEmpty) return const SizedBox();
     return Container(
-        color: TColors.black.value[0].withAlpha(230),
+        color: TColors.dark.value[0].withAlpha(230),
         alignment: Alignment.center,
         padding: EdgeInsets.all(16.d),
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [

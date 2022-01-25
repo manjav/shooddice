@@ -3,6 +3,7 @@ import 'package:games_services/games_services.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:project/dialogs/shop.dart';
 import 'package:project/dialogs/stats.dart';
+import 'package:project/theme/chrome.dart';
 import 'package:project/utils/ads.dart';
 import 'package:project/utils/analytic.dart';
 import 'package:project/utils/prefs.dart';
@@ -176,10 +177,7 @@ class AbstractDialogState<T extends AbstractDialog> extends State<T> {
             : (widget.height == 0 ? null : widget.height),
         padding: widget.padding ?? EdgeInsets.fromLTRB(18.d, 12.d, 18.d, 18.d),
         decoration: hasChrome
-            ? BoxDecoration(
-                color: theme.dialogTheme.backgroundColor,
-                shape: BoxShape.rectangle,
-                borderRadius: BorderRadius.all(Radius.circular(24.d)))
+            ? ChromeDecoration(color: theme.dialogTheme.backgroundColor)
             : null,
         child: contentFactory(theme));
   }
