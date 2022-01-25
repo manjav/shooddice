@@ -63,7 +63,15 @@ class Cell extends PositionComponent {
   static double roundness = 16.0;
   static double thickness = 2.0;
   static double strock = 3.0;
-  static double get radius => diameter * 0.5;
+  static double radius = 32.0;
+  static RRect _shadowRect = RRect.zero;
+  static RRect _sideRect = RRect.zero;
+  static RRect _overRect = RRect.zero;
+  static Vector2 _valuePos = Vector2.zero();
+  static Vector2 _valueSize = Vector2.zero();
+  static Vector2 _rewardPos = Vector2.zero();
+  static Vector2 _rewardSize = Vector2.zero();
+
   static double getX(int col) => MyGame.bounds.left + col * diameter + radius;
   static double getY(int row) =>
       MyGame.bounds.top + row * diameter + radius - padding;
@@ -76,6 +84,32 @@ class Cell extends PositionComponent {
     return min + MyGame.random.nextInt(maxRandom - min);
   }
 
+  static void updateSizes(double _diameter) {
+    diameter = _diameter;
+    padding = _diameter * 0.04;
+    strock = _diameter * 0.065;
+    roundness = _diameter * 0.25;
+    thickness = _diameter * 0.025;
+    radius = _diameter * 0.5;
+
+    _valuePos = Vector2(_diameter * -0.25, _diameter * -0.28);
+    _valueSize = Vector2.all(_diameter * 0.5);
+    _rewardPos = Vector2.all(_diameter * -0.43);
+    _rewardSize = Vector2.all(_diameter * 0.4);
+
+    _shadowRect = RRect.fromLTRBXY(padding - radius, padding - radius,
+        radius - padding, radius + thickness, roundness, roundness);
+    _sideRect = RRect.fromLTRBXY(padding - radius, padding - radius,
+        radius - padding, radius - padding + thickness, roundness, roundness);
+    _overRect = RRect.fromLTRBXY(
+        strock - radius,
+        strock - radius,
+        radius - strock,
+        radius - strock - thickness * 2,
+        roundness * 0.95,
+        roundness * 0.95);
+  }
+
   static int getNextColumn(int seed) => Pref.tutorMode.value == 0
       ? [2, 0, 3, 2, 1, 1, 2][seed]
       : MyGame.random.nextInt(Cells.width);
@@ -85,19 +119,12 @@ class Cell extends PositionComponent {
   int column = 0, row = 0, reward = 0, value = 0;
   Function(Cell)? onInit;
   CellState state = CellState.init;
-  static RRect _shadowRect = RRect.zero;
-  static RRect _sideRect = RRect.zero;
-  static RRect _overRect = RRect.zero;
 
   Paint? _shadowPaint;
   Paint? _sidePaint;
   Paint? _overPaint;
   Svg? _valuePaint;
   Svg? _rewardPaint;
-  final Vector2 _valuePos = Vector2(-16, -18);
-  final Vector2 _valueSize = Vector2.all(32);
-  final Vector2 _rewardPos = Vector2.all(-radius * 0.86);
-  final Vector2 _rewardSize = Vector2.all(26);
 
   Cell(int column, int row, int value, {int reward = 0, Function(Cell)? onInit})
       : super() {
@@ -161,25 +188,6 @@ class Cell extends PositionComponent {
 
   @override
   String toString() => "Cell c:$column, r:$row, v:$value, s:$state}";
-
-  static void updateSizes(double _diameter) {
-    diameter = _diameter;
-    padding = _diameter * 0.04;
-    strock = _diameter * 0.065;
-    roundness = _diameter * 0.25;
-    thickness = _diameter * 0.025;
-    _shadowRect = RRect.fromLTRBXY(padding - radius, padding - radius,
-        radius - padding, radius + thickness, roundness, roundness);
-    _sideRect = RRect.fromLTRBXY(padding - radius, padding - radius,
-        radius - padding, radius - padding + thickness, roundness, roundness);
-    _overRect = RRect.fromLTRBXY(
-        strock - radius,
-        strock - radius,
-        radius - strock,
-        radius - strock - thickness * 2,
-        roundness * 0.95,
-        roundness * 0.95);
-  }
 }
 
 extension RRectExt on RRect {
