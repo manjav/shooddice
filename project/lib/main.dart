@@ -5,16 +5,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:games_services/games_services.dart';
 import 'package:project/dialogs/daily.dart';
+import 'package:project/dialogs/home.dart';
 import 'package:project/dialogs/quests.dart';
 import 'package:project/dialogs/quit.dart';
-import 'package:project/dialogs/home.dart';
+import 'package:project/theme/themes.dart';
 import 'package:project/utils/ads.dart';
 import 'package:project/utils/analytic.dart';
 import 'package:project/utils/localization.dart';
 import 'package:project/utils/notification.dart';
 import 'package:project/utils/prefs.dart';
 import 'package:project/utils/sounds.dart';
-import 'package:project/utils/themes.dart';
 import 'package:project/utils/utils.dart';
 import 'package:smartlook/smartlook.dart';
 

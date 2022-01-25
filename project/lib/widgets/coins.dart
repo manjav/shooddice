@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:gameanalytics_sdk/gameanalytics.dart';
 import 'package:project/dialogs/shop.dart';
 import 'package:project/theme/skinnedtext.dart';
+import 'package:project/theme/themes.dart';
 import 'package:project/utils/analytic.dart';
 import 'package:project/utils/prefs.dart';
 import 'package:project/utils/sounds.dart';
-import 'package:project/utils/themes.dart';
 import 'package:project/utils/utils.dart';
 import 'package:project/widgets/buttons.dart';
 

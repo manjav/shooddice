@@ -19,11 +19,11 @@ import 'package:project/dialogs/shop.dart';
 import 'package:project/dialogs/stats.dart';
 import 'package:project/dialogs/tutorial.dart';
 import 'package:project/theme/skinnedtext.dart';
+import 'package:project/theme/themes.dart';
 import 'package:project/utils/ads.dart';
 import 'package:project/utils/analytic.dart';
 import 'package:project/utils/localization.dart';
 import 'package:project/utils/prefs.dart';
-import 'package:project/utils/themes.dart';
 import 'package:project/utils/utils.dart';
 import 'package:project/widgets/buttons.dart';
 import 'package:project/widgets/coins.dart';
@@ -163,27 +163,24 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
   Widget _getFooter(ThemeData theme) {
     if (Pref.tutorMode.value == 0) return const SizedBox();
     if (_game!.removingMode != null) {
-      return Padding(
-          padding: EdgeInsets.only(left: 22.d),
-          child: Container(
-              padding: EdgeInsets.fromLTRB(24.d, 18.d, 24.d, 20.d),
-              decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                        blurRadius: 3.d,
-                        color: Colors.black,
-                        offset: Offset(0.5.d, 2.d))
-                  ],
-                  color: theme.cardColor,
-                  shape: BoxShape.rectangle,
-                  borderRadius: const BorderRadius.all(Radius.circular(16))),
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("clt_${_game!.removingMode!}_tip".l()),
-                    GestureDetector(
-                        child: SVG.show("close", 32.d), onTap: _onRemoveBlock)
-                  ])));
+      return Container(
+          padding: EdgeInsets.fromLTRB(24.d, 18.d, 24.d, 20.d),
+          decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                    blurRadius: 3.d,
+                    color: Colors.black,
+                    offset: Offset(0.5.d, 2.d))
+              ],
+              color: theme.cardColor,
+              shape: BoxShape.rectangle,
+              borderRadius: const BorderRadius.all(Radius.circular(16))),
+          child:
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            Text("clt_${_game!.removingMode!}_tip".l()),
+            GestureDetector(
+                child: SVG.show("close", 32.d), onTap: _onRemoveBlock)
+          ]));
     }
     return Row(crossAxisAlignment: CrossAxisAlignment.end, children: [
       _button(theme, "remove-color", () => _boost("color"),

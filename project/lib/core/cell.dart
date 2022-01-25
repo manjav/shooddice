@@ -141,13 +141,14 @@ class Cell extends PositionComponent {
     this.onInit = onInit;
     this.hiddenMode = hiddenMode;
     state = CellState.init;
+
+    // Init paints
     _shadowPaint = Paint()..color = sideColors[0].withAlpha(100);
     _sidePaint = Paint()..color = sideColors[value];
     _overPaint = Paint()
       ..shader = ui.Gradient.radial(
           Offset(-radius * 0.15, -radius * 0.4), radius, colors[value]);
     _valuePaint = await Svg.load('images/n$value.svg');
-
     if (reward > 0) _rewardPaint = await Svg.load('images/coin.svg');
 
     size = Vector2(1.3, 1.3);

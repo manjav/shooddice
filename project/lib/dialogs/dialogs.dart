@@ -6,12 +6,12 @@ import 'package:project/dialogs/stats.dart';
 import 'package:project/dialogs/toast.dart';
 import 'package:project/theme/chrome.dart';
 import 'package:project/theme/skinnedtext.dart';
+import 'package:project/theme/themes.dart';
 import 'package:project/utils/ads.dart';
 import 'package:project/utils/analytic.dart';
 import 'package:project/utils/localization.dart';
 import 'package:project/utils/prefs.dart';
 import 'package:project/utils/sounds.dart';
-import 'package:project/utils/themes.dart';
 import 'package:project/utils/utils.dart';
 import 'package:project/widgets/coins.dart';
 import 'package:project/widgets/components.dart';
@@ -186,6 +186,7 @@ class AbstractDialogState<T extends AbstractDialog> extends State<T> {
   }
 
   Widget contentFactory(ThemeData theme) => const SizedBox();
+  
   Widget buttonFactory(
       ThemeData theme, Widget icon, List<Widget> texts, bool isAds,
       [Function()? onTap]) {

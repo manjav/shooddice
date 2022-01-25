@@ -14,10 +14,10 @@ import 'package:project/core/achieves.dart';
 import 'package:project/core/cell.dart';
 import 'package:project/core/cells.dart';
 import 'package:project/dialogs/quests.dart';
+import 'package:project/theme/themes.dart';
 import 'package:project/utils/analytic.dart';
 import 'package:project/utils/prefs.dart';
 import 'package:project/utils/sounds.dart';
-import 'package:project/utils/themes.dart';
 import 'package:project/utils/utils.dart';
 
 enum GameEvent {
