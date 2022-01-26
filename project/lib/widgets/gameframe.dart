@@ -312,7 +312,7 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
         return;
       }
 
-      if (event == GameEvent.rewardPiggy) {
+      if (result != null && event == GameEvent.rewardPiggy) {
         Pref.coinPiggy.set(0);
         _rewardLineAnimation!
             .animateTo(0, duration: const Duration(milliseconds: 400));
