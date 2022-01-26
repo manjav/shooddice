@@ -51,6 +51,7 @@ class _ReviveDialogState extends AbstractDialogState<ReviveDialog> {
   @override
   Widget contentFactory(ThemeData theme) {
     var cost = Price.revive * pow(2, _numRevives).round();
+    var adyCost = cost ~/ Ads.costCoef;
     return Stack(
       alignment: Alignment.topCenter,
       children: [
@@ -81,11 +82,14 @@ class _ReviveDialogState extends AbstractDialogState<ReviveDialog> {
             theme,
             SVG.icon("A", theme),
             [
-              SkinnedText("free_l".l(), style: theme.textTheme.headline4),
+              Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+                SVG.show("coin", 24.d),
+                SkinnedText("$adyCost", style: theme.textTheme.headline4)
+              ]),
               SkinnedText("revive_l".l(), style: theme.textTheme.headline6)
             ],
             true,
-            () => buttonsClick(context, "revive", 0, true))
+            () => buttonsClick(context, "revive", -adyCost, true))
       ],
     );
   }
@@ -103,7 +107,7 @@ class _ReviveDialogState extends AbstractDialogState<ReviveDialog> {
       await Ads.showInterstitial(AdPlace.interstitial);
     }
 
-    // rterive game stats (Anti fraud)
+    // Reterive game stats (Anti fraud)
     Prefs.setString("cells", _cells);
     Pref.lastBig.set(_lastBig);
     Pref.maxRandom.set(_maxRandom);

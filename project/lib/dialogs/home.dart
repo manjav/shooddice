@@ -107,6 +107,7 @@ class _HomeDialogState extends AbstractDialogState<HomeDialog> {
 
   Widget _boostButton(String title, String boost) {
     var theme = Theme.of(context);
+    var adyCost = Price.boost ~/ Ads.costCoef;
     return Expanded(
         child: Container(
             padding: EdgeInsets.all(8.d),
@@ -125,19 +126,19 @@ class _HomeDialogState extends AbstractDialogState<HomeDialog> {
               SizedBox(height: 6.d),
               SizedBox(
                   width: 92.d,
-                  height: 40.d,
+                  height: 42.d,
                   child: BumpedButton(
                       cornerRadius: 8.d,
                       isEnable: !_has(boost),
                       colors: TColors.orange.value,
-                      content: Row(children: [
-                        SVG.show("coin", 24.d),
-                        Expanded(
-                            child: Text("${Price.boost}",
-                                textAlign: TextAlign.center,
-                                style: theme.textTheme.bodyText2))
-                      ]),
-                      onTap: () => _onBoostTap(boost, Price.boost))),
+                      content: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            SVG.show("coin", 24.d),
+                            Text("${Price.boost}",
+                                style: theme.textTheme.headline5)
+                          ]),
+                      onTap: () => _onBoostTap(boost, Price.boost, false))),
               SizedBox(height: 4.d),
               SizedBox(
                   width: 92.d,
@@ -147,20 +148,21 @@ class _HomeDialogState extends AbstractDialogState<HomeDialog> {
                       errorMessage: Toast("ads_unavailable".l(), monoIcon: "A"),
                       isEnable: !_has(boost) && Ads.isReady(),
                       colors: TColors.green.value,
-                      content: Row(children: [
-                        SVG.icon("A", theme, scale: 0.7),
-                        Expanded(
-                            child: Text("free_l".l(),
-                                textAlign: TextAlign.center,
-                                style: theme.textTheme.headline5))
-                      ]),
-                      onTap: () => _onBoostTap(boost, 0))),
+                      content: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            SVG.icon("A", theme, scale: 0.7),
+                            SizedBox(width: 2.d),
+                            SVG.show("coin", 18.d),
+                            Text("$adyCost", style: theme.textTheme.headline5)
+                          ]),
+                      onTap: () => _onBoostTap(boost, adyCost, true))),
               SizedBox(height: 6.d)
             ])));
   }
 
-  void _onBoostTap(String boost, int cost) async {
-    if (cost > 0) {
+  void _onBoostTap(String boost, int cost, bool showAds) async {
+    if (!showAds) {
       if (Pref.coin.value < cost) {
         Rout.push(context, Toast("coin_notenough".l(), icon: "coin"));
         return;
