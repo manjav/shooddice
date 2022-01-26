@@ -234,7 +234,7 @@ class AbstractDialogState<T extends AbstractDialog> extends State<T> {
   Widget buttonAdsFactory(ThemeData theme) {
     return buttonFactory(
         theme,
-        SVG.icon("B", theme),
+        SVG.icon("A", theme),
         [
           SkinnedText((reward * Ads.rewardCoef).format(),
               style: theme.textTheme.headline4),
