@@ -35,14 +35,15 @@ class _ReviveDialogState extends AbstractDialogState<ReviveDialog> {
   void initState() {
     // Immediate reset game stats (Anti fraud)
     _cells = Prefs.getString("cells");
-    _lastBig = Pref.lastBig.value;
+    _numRevives = Prefs.getCount(Pref.revive);
     _maxRandom = Pref.maxRandom.value;
-    _numRevives = Pref.numRevives.value;
+    _lastBig = Pref.lastBig.value;
     _score = Pref.score.value;
+
     Prefs.setString("cells", "");
-    Pref.lastBig.set(Cell.firstBigRecord);
+    Prefs.setCount(Pref.revive, 0);
     Pref.maxRandom.set(Cell.maxRandomValue);
-    Pref.numRevives.set(0);
+    Pref.lastBig.set(Cell.firstBigRecord);
     Pref.score.set(0);
 
     super.initState();
@@ -109,9 +110,9 @@ class _ReviveDialogState extends AbstractDialogState<ReviveDialog> {
 
     // Reterive game stats (Anti fraud)
     Prefs.setString("cells", _cells);
-    Pref.lastBig.set(_lastBig);
+    Prefs.setCount(Pref.revive, _numRevives);
     Pref.maxRandom.set(_maxRandom);
-    Pref.numRevives.set(_numRevives);
+    Pref.lastBig.set(_lastBig);
     Pref.score.set(_score);
     Navigator.of(context).pop([type, coin]);
   }

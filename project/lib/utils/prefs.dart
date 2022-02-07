@@ -39,7 +39,15 @@ class Prefs {
   static int getBig(int value) => _instance!.getInt("big_$value") ?? 0;
   static void increaseBig(int value) {
     var key = "big_$value";
-    setInt(key, getInt(key) + 1, true);
+    setInt(key, getInt(key) + 1, false);
+  }
+
+  static int getCount(Pref type) => getInt("${type.name}_count");
+  static void setCount(Pref type, int value) =>
+      setInt("${type.name}_count", value, false);
+  static void increaseCount(Pref type) {
+    var key = "${type.name}_count";
+    setInt(key, getInt(key) + 1, false);
   }
 }
 
@@ -53,7 +61,6 @@ enum Pref {
   noAds,
   lastBig,
   maxRandom,
-  numRevives,
   playCount,
   rate,
   ratedBefore,
@@ -61,6 +68,7 @@ enum Pref {
   record,
   removeOne,
   removeColor,
+  revive,
   score,
   tutorMode,
   visitCount
@@ -85,8 +93,6 @@ extension PrefExt on Pref {
         return "lastBig";
       case Pref.maxRandom:
         return "maxRandom";
-      case Pref.numRevives:
-        return "numRevives";
       case Pref.noAds:
         return "noAds";
       case Pref.playCount:
@@ -103,6 +109,8 @@ extension PrefExt on Pref {
         return "removeOne";
       case Pref.removeColor:
         return "removeColor";
+      case Pref.revive:
+        return "revive";
       case Pref.score:
         return "score";
       case Pref.tutorMode:

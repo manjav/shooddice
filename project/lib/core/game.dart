@@ -62,7 +62,8 @@ class MyGame extends FlameGame with TapDetector {
   List<Rect>? _rects;
   final Paint _linePaint = Paint();
   final Paint _mainPaint = Paint()..color = TColors.dark.value[2];
-  final Paint _zebraPaint = Paint()..color = TColors.dark.value[3].withAlpha(10);
+  final Paint _zebraPaint = Paint()
+    ..color = TColors.dark.value[3].withAlpha(10);
   FallingEffect? _fallingEffect;
   ColumnHint? _columnHint;
 
@@ -471,7 +472,7 @@ class MyGame extends FlameGame with TapDetector {
 
   void revive() {
     _linePaint.color = TColors.dark.value[0];
-    Pref.numRevives.increase(1);
+    Prefs.increaseCount(Pref.revive);
     for (var i = 0; i < Cells.width; i++) {
       for (var j = Cells.height - 3; j < Cells.height; j++) {
         _removeCell(i, j, false);
