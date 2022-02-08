@@ -82,9 +82,9 @@ class _HomeDialogState extends AbstractDialogState<HomeDialog> {
     return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
       Expanded(
           child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-        if (startMode) _boostButton("start_big".l(), "512"),
+        if (startMode) _boostButton(Pref.boostBig),
         if (startMode) SizedBox(width: 2.d),
-        _boostButton("start_next".l(), "next")
+        _boostButton(Pref.boostNext)
       ])),
       SizedBox(height: 10.d),
       SizedBox(
@@ -105,7 +105,7 @@ class _HomeDialogState extends AbstractDialogState<HomeDialog> {
     ]);
   }
 
-  Widget _boostButton(String title, String boost) {
+  Widget _boostButton(Pref boost) {
     var theme = Theme.of(context);
     var adyCost = Price.boost ~/ Ads.costCoef;
     return Expanded(
@@ -115,7 +115,7 @@ class _HomeDialogState extends AbstractDialogState<HomeDialog> {
             child:
                 Column(mainAxisAlignment: MainAxisAlignment.start, children: [
               Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                SVG.show(boost, 58.d),
+                SVG.show(boost.name, 58.d),
                 _has(boost) ? SVG.show("accept", 22.d) : const SizedBox()
               ]),
               // SizedBox(height: 6.d),
@@ -161,7 +161,7 @@ class _HomeDialogState extends AbstractDialogState<HomeDialog> {
             ])));
   }
 
-  void _onBoostTap(String boost, int cost, bool showAds) async {
+  void _onBoostTap(Pref boost, int cost, bool showAds) async {
     if (!showAds) {
       if (Pref.coin.value < cost) {
         Rout.push(context, Toast("coin_notenough".l(), icon: "coin"));
@@ -171,15 +171,17 @@ class _HomeDialogState extends AbstractDialogState<HomeDialog> {
       var reward = await Ads.showRewarded();
       if (reward == null) return;
     }
-    await Coins.change(-cost, "start", boost);
+    await Coins.change(-cost, "start", boost.name);
 
-    if (boost == "next") MyGame.boostNextMode = 1;
-    if (boost == "512") MyGame.boostBig = true;
+    if (boost == Pref.boostNext) MyGame.boostNextMode = 1;
+    if (boost == Pref.boostBig) MyGame.boostBig = true;
     _onUpdate();
   }
 
-  bool _has(String boost) {
-    return (boost == "next") ? MyGame.boostNextMode > 0 : MyGame.boostBig;
+  bool _has(Pref boost) {
+    return (boost == Pref.boostNext)
+        ? MyGame.boostNextMode > 0
+        : MyGame.boostBig;
   }
 
   _onStart() async {

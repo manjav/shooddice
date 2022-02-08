@@ -43,7 +43,7 @@ class MyGame extends FlameGame with TapDetector {
   static Rect bounds = const Rect.fromLTRB(0, 0, 0, 0);
 
   final Function(GameEvent, int)? onGameEvent;
-  String? removingMode;
+  Pref? removingMode;
 
   bool _tutorMode = false;
   int _reward = 0;
@@ -267,14 +267,13 @@ class MyGame extends FlameGame with TapDetector {
               .clamp(0, Cells.height - 1)
               .floor());
       if (cell == null || cell.state != CellState.fixed) return;
-      if (removingMode == "one") {
-        Pref.removeOne.increase(-1);
+      if (removingMode == Pref.boostRemoveOne) {
         Quests.increase(QuestType.removeone, 1);
         _removeCell(cell.column, cell.row, true);
       } else {
-        Pref.removeColor.increase(-1);
         _removeCellsByValue(cell.value);
       }
+      removingMode!.increase(-1);
       isPlaying = true;
       _fallAll();
       onGameEvent?.call(GameEvent.remove, 0);

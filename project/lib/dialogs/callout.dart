@@ -83,7 +83,7 @@ class _CalloutState extends AbstractDialogState<Callout> {
                                         style: theme.textTheme.headline5)
                                   ]),
                               onTap: () => buttonsClick(
-                                  context, widget.type, -Price.boost, false))),
+                                  context, widget.type.name, -Price.boost, false))),
                       SizedBox(width: 8.d),
                       SizedBox(
                           width: 98.d,
@@ -105,7 +105,7 @@ class _CalloutState extends AbstractDialogState<Callout> {
                                         style: theme.textTheme.headline5)
                                   ]),
                               onTap: () => buttonsClick(
-                                  context, widget.type, -adyCost, true)))
+                                  context, widget.type.name, -adyCost, true)))
                     ])
                   ])))
     ]);
