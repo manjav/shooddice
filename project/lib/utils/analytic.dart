@@ -63,7 +63,7 @@ class Analytics {
     Price.cube = variant == 2 ? 10 : 20;
     Price.piggy = variant == 2 ? 20 : 30;
     Price.tutorial = variant == 2 ? 200 : 500;
-    Price.boost = variant == 2 ? 300 : 100;
+    Price.boost = variant == 2 ? 200 : 100;
     Price.revive = variant == 2 ? 300 : 100;
 
     _firebaseAnalytics.setUserProperty(name: "test_name", value: testName);

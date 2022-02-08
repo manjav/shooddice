@@ -21,8 +21,8 @@ class Price {
   static int record = 10;
   static int tutorial = 100;
 
-  static int boost = 300;
-  static int revive = 300;
+  static int boost = 100;
+  static int revive = 200;
 }
 
 class ShopDialog extends AbstractDialog {
