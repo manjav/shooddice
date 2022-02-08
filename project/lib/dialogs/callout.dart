@@ -36,6 +36,7 @@ class _CalloutState extends AbstractDialogState<Callout> {
   @override
   Widget build(BuildContext context) {
     var pd = widget.padding;
+    var cost = Price.boost * (Prefs.getCount(widget.type) + 1);
     var adyCost = Price.boost ~/ Ads.costCoef;
     var theme = Theme.of(context);
     Callout.chromeWidth = 220.d;
@@ -79,11 +80,11 @@ class _CalloutState extends AbstractDialogState<Callout> {
                                       MainAxisAlignment.spaceAround,
                                   children: [
                                     SVG.show("coin", 24.d),
-                                    Text("${Price.boost}",
+                                    Text("$cost",
                                         style: theme.textTheme.headline5)
                                   ]),
                               onTap: () => buttonsClick(
-                                  context, widget.type.name, -Price.boost, false))),
+                                  context, widget.type.name, -cost, false))),
                       SizedBox(width: 8.d),
                       SizedBox(
                           width: 98.d,

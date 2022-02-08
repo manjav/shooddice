@@ -274,6 +274,7 @@ class MyGame extends FlameGame with TapDetector {
         _removeCellsByValue(cell.value);
       }
       removingMode!.increase(-1);
+      Prefs.increaseCount(removingMode!);
       isPlaying = true;
       _fallAll();
       onGameEvent?.call(GameEvent.remove, 0);
