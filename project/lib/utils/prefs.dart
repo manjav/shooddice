@@ -12,8 +12,8 @@ class Prefs {
       var now = DateTime.now().millisecondsSinceEpoch;
       if (!contains("visitCount")) {
         Pref.rateTarget.set(2);
-        Pref.removeOne.set(3);
-        Pref.removeColor.set(3);
+        Pref.boostRemoveOne.set(3);
+        Pref.boostRemoveColor.set(3);
       }
       Pref.dayFirst.setIfEmpty(now - Days.dayLen);
       Pref.lastBig.setIfEmpty(Cell.firstBigRecord);
@@ -52,6 +52,10 @@ class Prefs {
 }
 
 enum Pref {
+  boostBig,
+  boostNext,
+  boostRemoveColor,
+  boostRemoveOne,
   coin,
   coinPiggy,
   dayCount,
@@ -66,8 +70,6 @@ enum Pref {
   ratedBefore,
   rateTarget,
   record,
-  removeOne,
-  removeColor,
   revive,
   score,
   tutorMode,
@@ -77,6 +79,14 @@ enum Pref {
 extension PrefExt on Pref {
   String get name {
     switch (this) {
+      case Pref.boostBig:
+        return "boostBig";
+      case Pref.boostNext:
+        return "boostNext";
+      case Pref.boostRemoveColor:
+        return "boostRemoveColor";
+      case Pref.boostRemoveOne:
+        return "boostRemoveOne";
       case Pref.coin:
         return "coin";
       case Pref.coinPiggy:
@@ -105,10 +115,6 @@ extension PrefExt on Pref {
         return "ratedBefore";
       case Pref.record:
         return "record";
-      case Pref.removeOne:
-        return "removeOne";
-      case Pref.removeColor:
-        return "removeColor";
       case Pref.revive:
         return "revive";
       case Pref.score:
