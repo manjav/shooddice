@@ -56,7 +56,8 @@ class _TutorialDialogState extends AbstractDialogState<TutorialDialog> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     SVG.icon("F", theme),
-                    SkinnedText("replay_l".l(), style: theme.textTheme.headline5)
+                    SkinnedText("replay_l".l(),
+                        style: theme.textTheme.headline5)
                   ]))),
       Positioned(
           height: 76.d,

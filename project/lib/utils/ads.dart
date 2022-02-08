@@ -16,6 +16,7 @@ class Ads {
   static Function(AdPlace, AdState)? onUpdate;
   static String platform = Platform.isAndroid ? "Android" : "iOS";
   static const rewardCoef = 10;
+  static const costCoef = 5;
   static const isSupportAdMob = true;
   static const isSupportUnity = false;
   static const prefix = "ca-app-pub-5018637481206902/";

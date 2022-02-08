@@ -157,7 +157,7 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
                         : Widgets.cell(theme, _nextCell, size: 9.d))
               ],
             )),
-        onTap: () => _boost("next"));
+        onTap: () => _boost(Pref.boostNext));
   }
 
   Widget _getFooter(ThemeData theme) {
@@ -177,21 +177,23 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
               borderRadius: const BorderRadius.all(Radius.circular(16))),
           child:
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            Text("clt_${_game!.removingMode!}_tip".l()),
+            Text("clt_${_game!.removingMode!.name}_tip".l()),
             GestureDetector(
                 child: SVG.show("close", 32.d), onTap: _onRemoveBlock)
           ]));
     }
     return Row(crossAxisAlignment: CrossAxisAlignment.end, children: [
-      _button(theme, "remove-color", () => _boost("color"),
-          badge: _badge(theme, Pref.removeColor.value)),
+      _button(theme, Pref.boostRemoveColor.name,
+          () => _boost(Pref.boostRemoveColor),
+          badge: _badge(theme, Pref.boostRemoveColor.value)),
       SizedBox(width: 2.d),
-      _button(theme, "remove-one", () => _boost("one"),
-          badge: _badge(theme, Pref.removeOne.value)),
+      _button(
+          theme, Pref.boostRemoveOne.name, () => _boost(Pref.boostRemoveOne),
+          badge: _badge(theme, Pref.boostRemoveOne.value)),
       SizedBox(width: 2.d),
       Expanded(
         child: GestureDetector(
-            onTap: () => _boost("piggy"),
+            onTap: () => _boost(Pref.coinPiggy),
             child: Components.slider(
                 theme, 0, _rewardLineAnimation!.value.round(), Price.piggy,
                 icon: SVG.show("piggy", 40.d))),
@@ -351,7 +353,7 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
         return;
       }
 
-      if (event == GameEvent.rewardPiggy) {
+      if (result != null && event == GameEvent.rewardPiggy) {
         Pref.coinPiggy.set(0);
         _rewardLineAnimation!
             .animateTo(0, duration: const Duration(milliseconds: 400));
@@ -406,34 +408,31 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
     }
   }
 
-  _boost(String type) async {
-    if (type == "piggy") {
+  _boost(Pref type) async {
+    if (type == Pref.coinPiggy) {
       _game!.onGameEvent?.call(GameEvent.rewardPiggy, 0);
       return;
     }
     MyGame.isPlaying = false;
-    if (type == "one" && Pref.removeOne.value > 0 ||
-        type == "color" && Pref.removeColor.value > 0) {
+    if (type.value > 0) {
       setState(() => _game!.removingMode = type);
       return;
     }
     var padding = EdgeInsets.only(
         right: MyGame.bounds.left, top: MyGame.bounds.bottom - 78.d);
-    if (type == "next") {
+    if (type == Pref.boostNext) {
       if (MyGame.boostNextMode > 0) return;
       padding = EdgeInsets.only(right: 54.d, top: MyGame.bounds.bottom - 96.d);
     }
-    var result = await Rout.push(
-        context, Callout("clt_${type}_text".l(), type, padding: padding),
+    var result = await Rout.push(context, Callout(type, padding: padding),
         barrierColor: Colors.transparent, barrierDismissible: true);
     if (result != null) {
       await Coins.change(result[1], "game", result[0]);
-      if (type == "next") {
+      if (type == Pref.boostNext) {
         _game!.boostNext();
         return;
       }
-      if (type == "one") Pref.removeOne.set(1);
-      if (type == "color") Pref.removeColor.set(1);
+      type.set(1);
       setState(() => _game!.removingMode = type);
       return;
     }

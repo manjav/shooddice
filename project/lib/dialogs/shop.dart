@@ -21,8 +21,8 @@ class Price {
   static int record = 10;
   static int tutorial = 100;
 
-  static int boost = 300;
-  static int revive = 300;
+  static int boost = 100;
+  static int revive = 200;
 }
 
 class ShopDialog extends AbstractDialog {
@@ -257,7 +257,7 @@ class _ShopDialogState extends AbstractDialogState<ShopDialog> {
               SVG.show("coin", 20.d),
               Text(" ${product.name}", style: theme.textTheme.subtitle1)
             ]),
-            SizedBox(height: 7.d),
+            SizedBox(height: 5.d),
             Container(
               width: 92.d,
               height: 40.d,
