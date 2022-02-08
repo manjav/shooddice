@@ -385,8 +385,7 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
           left: (Device.size.width - Callout.chromeWidth) * 0.5,
           top: MyGame.bounds.top + 68.d);
     }
-    var result = await Rout.push(
-        context, Callout("clt_${type}_text".l(), type, padding: padding),
+    var result = await Rout.push(context, Callout(type, padding: padding),
         barrierColor: Colors.transparent, barrierDismissible: true);
     if (result != null) {
       await Coins.change(result[1], "game", result[0]);

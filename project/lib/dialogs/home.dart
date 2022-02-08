@@ -120,7 +120,7 @@ class _HomeDialogState extends AbstractDialogState<HomeDialog> {
               ]),
               // SizedBox(height: 6.d),
               Expanded(
-                  child: Text(title,
+                  child: Text("start_${boost.name}".l(),
                       style: theme.textTheme.subtitle2,
                       textAlign: TextAlign.center)),
               SizedBox(height: 6.d),
