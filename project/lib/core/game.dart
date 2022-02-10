@@ -473,7 +473,7 @@ class MyGame extends FlameGame with TapDetector {
         ? 0
         : random.nextInt(3) + _mergesCount * 2;
     var sprite = await Sprite.load(
-        'celebration-${(_mergesCount - limit).clamp(0, 3)}.png');
+        'dado-celebration-${(_mergesCount - limit).clamp(0, 3)}.png');
     var celebration = SpriteComponent(
         position: Vector2(_bgRect!.center.dx, _bgRect!.center.dy),
         size: Vector2.zero(),
