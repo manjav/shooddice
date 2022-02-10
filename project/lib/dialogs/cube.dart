@@ -44,7 +44,7 @@ class _CubeDialogState extends AbstractDialogState<CubeDialog> {
       SizedBox(
           width: 126.d,
           height: 126.d,
-          child: const RiveAnimation.asset('anims/nums-character.riv',
+          child: const RiveAnimation.asset('anims/dado-character.riv',
               stateMachines: ["happyState"])),
       Positioned(
           top: 126.d,
