@@ -51,7 +51,7 @@ extension IntExt on int {
 
 class SVG {
   static SvgPicture show(String name, double size) {
-    return SvgPicture.asset("assets/images/$name.svg", width: size);
+    return SvgPicture.asset("assets/images/dado-$name.svg", width: size);
   }
 
   static SkinnedText icon(String name, ThemeData theme, {double? scale}) {

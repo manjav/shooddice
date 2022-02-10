@@ -1,0 +1,12 @@
+<svg width="100" height="100" fill="none">
+    <circle r="14" transform="scale(-1 1)" cx="-73.5" cy="28" fill="#000" fill-opacity=".5" />
+    <circle r="13.5" transform="scale(-1 1)" cx="-73.5" cy="28" stroke="#000" stroke-opacity=".15" />
+    <path
+        d="M59.5 28c0 1.208.441 3.5.441 3.5S62.5 21 73.5 21s13.559 10.5 13.559 10.5.441-2.292.441-3.5c0-7.732-6.268-14-14-14s-14 6.268-14 14z"
+        fill="#000" fill-opacity=".2" />
+    <circle r="14" transform="scale(-1 1)" cx="-26.5" cy="72" fill="#000" fill-opacity=".5" />
+    <circle r="13.5" transform="scale(-1 1)" cx="-26.5" cy="72" stroke="#000" stroke-opacity=".15" />
+    <path
+        d="M12.5 72c0 1.208.441 3.5.441 3.5S15.5 65 26.5 65s13.559 10.5 13.559 10.5.441-2.292.441-3.5c0-7.732-6.268-14-14-14s-14 6.268-14 14z"
+        fill="#000" fill-opacity=".2" />
+</svg>

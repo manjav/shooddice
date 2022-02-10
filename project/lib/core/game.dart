@@ -546,7 +546,7 @@ class ColumnHint extends PositionComponent {
   }
 
   Future<void> _create() async {
-    _hand = await Svg.load('images/hand.svg');
+    _hand = await Svg.load('images/dado-hand.svg');
   }
 
   @override
@@ -572,7 +572,7 @@ class ColumnHint extends PositionComponent {
 
   show(double x, int direction) async {
     var side = direction == 0 ? "vertical" : (direction > 0 ? "right" : "left");
-    _arrow = await Svg.load('images/arrow-$side.svg');
+    _arrow = await Svg.load('images/dado-arrow-$side.svg');
     alpha = 1;
     rect = RRect.fromLTRBXY(
         x - Cell.radius, rect.top, x + Cell.radius, rect.bottom, 8.d, 8.d);
