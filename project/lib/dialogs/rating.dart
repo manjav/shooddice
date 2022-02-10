@@ -130,7 +130,7 @@ class _RatingDialogState extends AbstractDialogState<RatingDialog> {
               right: 48.d,
               left: 48.d,
               child: BumpedButton(
-                  errorMessage: Toast("rate_error".l(), icon: "ice"),
+                  errorMessage: Toast("rate_error".l()),
                   isEnable: _response > 0,
                   colors: TColors.blue.value,
                   content: Center(
@@ -183,7 +183,7 @@ class _ReviewDialogState extends AbstractDialogState<ReviewDialog> {
               decoration: InputDecoration(hintText: "review_hint".l())),
           const SizedBox(height: 15),
           BumpedButton(
-              errorMessage: Toast("review_error".l(), icon: "ice"),
+              errorMessage: Toast("review_error".l()),
               isEnable: _commentController.text != "",
               colors: TColors.green.value,
               content: Center(
