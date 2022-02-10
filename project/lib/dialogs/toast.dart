@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project/dialogs/dialogs.dart';
+import 'package:project/theme/chrome.dart';
 import 'package:project/utils/utils.dart';
 
 class Toast extends AbstractDialog {
@@ -24,6 +25,16 @@ class Toast extends AbstractDialog {
 class _ToastState extends AbstractDialogState<Toast> {
   @override
   Widget coinsButtonFactory(ThemeData theme) => const SizedBox();
+
+  @override
+  Widget chromeFactory(ThemeData theme, double width) {
+    return Container(
+        width: width,
+        height: widget.height,
+        padding: widget.padding,
+        decoration: const ChromeDecoration(showPins: false),
+        child: contentFactory(theme));
+  }
 
   @override
   Widget contentFactory(ThemeData theme) {
