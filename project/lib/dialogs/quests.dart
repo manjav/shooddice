@@ -120,7 +120,7 @@ class Quests {
   }
 
   static void increase(QuestType type, int value) {
-    if (value == 0 || Analytics.variant < 3) return;
+    if (value == 0) return;
     var quest = list[type];
     var key = "q_${type.name}";
     var res = Prefs.getInt(key) + value;
