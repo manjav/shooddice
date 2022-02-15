@@ -49,7 +49,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "game.lulu.dice.merge.master.puzzle.instant.fun"
+        applicationId "dice.dado.master.merge.puzzle.game.instant"
         minSdkVersion 19//flutter.minSdkVersion
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()

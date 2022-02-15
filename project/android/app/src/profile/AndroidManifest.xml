@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="game.lulu.dice.merge.master.puzzle.instant.fun">
+    package="dice.dado.master.merge.puzzle.game.instant">
     <!-- Flutter needs it to communicate with the running application
          to allow setting breakpoints, to provide hot reload, etc.
     -->
