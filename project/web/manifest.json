@@ -1,6 +1,6 @@
 {
-    "name": "numbers",
-    "short_name": "numbers",
+    "name": "dado",
+    "short_name": "dado",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
