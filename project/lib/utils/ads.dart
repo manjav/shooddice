@@ -287,13 +287,13 @@ extension AdPlaceExt on AdPlace {
   String get id {
     switch (this) {
       case AdPlace.banner:
-        return "${Ads.prefix}6405416271";
+        return "${Ads.prefix}5301735479";
       case AdPlace.interstitial:
-        return "${Ads.prefix}3526116819";
+        return "${Ads.prefix}3577590269";
       case AdPlace.interstitialVideo:
-        return "${Ads.prefix}1150371543";
+        return "${Ads.prefix}1142998614";
       case AdPlace.rewarded:
-        return "${Ads.prefix}8071003112";
+        return "${Ads.prefix}8727960691";
     }
   }
 
