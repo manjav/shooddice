@@ -1,51 +1,55 @@
-<svg width="100" height="100" viewBox="0 0 26.458 26.458">
+<svg width="100" height="100"
+    viewBox="0 0 26.458 26.458">
     <defs>
+        <linearGradient id="prefix__d">
+            <stop offset="0" stop-color="#fff" stop-opacity="0" />
+            <stop offset=".508" stop-color="#fff" stop-opacity=".871" />
+            <stop offset=".513" stop-color="#fff" stop-opacity=".871" />
+            <stop offset="1" stop-color="#fff" stop-opacity="0" />
+        </linearGradient>
         <linearGradient id="prefix__b">
+            <stop stop-opacity="0" stop-color="#fff" offset="0" />
+            <stop stop-color="#fff" offset=".508" />
+            <stop stop-color="#fff" offset=".513" />
+            <stop stop-opacity="0" stop-color="#fff" offset="1" />
+        </linearGradient>
+        <linearGradient id="prefix__a">
             <stop offset="0" stop-color="#fff" stop-opacity="0" />
             <stop offset=".399" stop-color="#fff" />
             <stop offset=".582" stop-color="#fff" />
             <stop offset="1" stop-color="#fff" stop-opacity="0" />
         </linearGradient>
-        <linearGradient id="prefix__a">
-            <stop offset="0" stop-color="#fff" stop-opacity="0" />
-            <stop offset=".399" stop-color="#fff" stop-opacity=".975" />
-            <stop offset=".582" stop-color="#fff" stop-opacity=".93" />
-            <stop offset="1" stop-color="#fff" stop-opacity="0" />
-        </linearGradient>
-        <linearGradient xlink:href="#prefix__b" id="prefix__d" gradientUnits="userSpaceOnUse"
-            gradientTransform="matrix(.65377 0 0 .27148 -55.2 467.63)" x1="95.612" y1="-676.297" x2="114.763"
+        <linearGradient xlink:href="#prefix__d" id="prefix__f" gradientUnits="userSpaceOnUse"
+            gradientTransform="matrix(.65377 0 0 .28934 -55.737 236.195)" x1="93.983" y1="-676.297" x2="117.078"
             y2="-676.297" />
-        <clipPath id="prefix__c">
-            <path d="M0 972h1087V0H0" clip-rule="evenodd" />
-        </clipPath>
+        <radialGradient gradientTransform="matrix(41.07836 116.95576 -124.54524 43.74401 69.439 45.045)"
+            gradientUnits="userSpaceOnUse" r="1" cy="0" cx="0" id="prefix__c">
+            <stop stop-color="#E85CFF" />
+            <stop stop-color="#9A00FE" offset="1" />
+        </radialGradient>
+        <radialGradient xlink:href="#prefix__c" id="prefix__e" gradientUnits="userSpaceOnUse"
+            gradientTransform="matrix(41.07836 116.95576 -124.54524 43.74401 69.439 45.045)" cx="0" cy="0" r="1" />
     </defs>
-    <g transform="matrix(.24153 .03621 .03621 -.24153 -58.808 158.441)" clip-path="url(#prefix__c)">
+    <g fill="none">
         <path
-            d="M151 651c-1.1 7.6 4.1 15 12 16l69.999 10.549c7.6 1.1 15-4.1 16-12l8.3-55c1.1-7.6-4.1-15-12-16L175.3 584c-7.6-1.1-15 4.1-16 12z"
-            fill="#9600ff" fill-rule="evenodd" />
+            d="M6.32 3.475l12.827-.631a6.022 6.022 0 016.324 5.73l.457 9.283c.164 3.34-2.397 6.572-5.731 6.324-4.236-.314-8.527.108-12.827.632-3.318.404-6.16-2.392-6.324-5.731L.59 9.8A6.022 6.022 0 016.32 3.475z"
+            fill="#000" fill-opacity=".15" />
+        <path
+            d="M6.26 2.27c4.333-.004 8.618-.11 12.715-.626 3.317-.419 6.16 2.391 6.324 5.73l.47 9.524c.164 3.34-2.394 6.518-5.731 6.324-3.795-.22-8.114.067-12.715.626-3.319.403-6.16-2.391-6.324-5.73l-.47-9.524C.367 5.254 2.918 2.273 6.262 2.27z"
+            fill="#7e03cb" />
+        <path
+            d="M50 4h105.473c25.484 0 46 20.516 46 46v66c0 25.484-20.516 46-46 46H50c-25.484 0-46-20.516-46-46V50C4 24.516 24.516 4 50 4z"
+            fill="url(#prefix__e)" transform="matrix(.12055 -.00593 .00593 .12055 .233 2.567)" />
     </g>
     <path
-        d="M25.295 18.203c0 1.852-1.524 3.373-3.391 3.402l-17.09.051c-1.851 0-3.374-1.514-3.4-3.391l-.01 1.645c0 1.852 1.544 3.421 3.401 3.391l17.089-.051c1.852 0 3.421-1.545 3.391-3.402z"
-        fill-opacity=".19" fill-rule="evenodd" />
+        d="M10.934 9.665a2.64 2.64 0 10.26 5.272c.89-.044 1.173-.558 2.04-.585.891-.028 1.27.404 2.188.377a2.64 2.64 0 10-.26-5.272c-.826.04-1.423.432-2.036.462-.628.03-1.274-.299-2.192-.254z"
+        fill-opacity=".5" />
     <path
-        style="font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-feature-settings:normal;text-indent:0;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000;text-transform:none;text-orientation:mixed;white-space:normal;shape-padding:0;isolation:auto;mix-blend-mode:normal"
-        d="M8.73 8.286A3.95 3.95 0 007.32 9.402c-.907 1.024.516 2.295 1.362 1.357 1.825-1.92 3.977-.167 2.423 1.637l-3.67 4.15c-.961.873-.269 1.696 1.007 1.9l4.26.038c1.164-.161 1.148-2.028-.174-1.767l-2.53.004L12.7 13.68c1.172-1.391 1.17-3.446-.074-4.752-1.14-1.068-2.798-1.271-3.848-.634z"
-        opacity=".62" />
+        d="M10.939 9.76a2.545 2.545 0 10.25 5.083c.905-.064 1.12-.553 2.057-.577.99-.025 1.215.397 2.171.369a2.545 2.545 0 10-.25-5.084c-.884.053-1.453.438-2.02.468-.606.033-1.211-.29-2.208-.26z"
+        fill="none" stroke="#000" stroke-width=".18838096" stroke-opacity=".15" />
     <path
-        style="font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-feature-settings:normal;text-indent:0;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000;text-transform:none;text-orientation:mixed;white-space:normal;shape-padding:0;isolation:auto;mix-blend-mode:normal"
-        d="M8.984 7.695A3.95 3.95 0 007.572 8.81c-.907 1.023.516 2.295 1.362 1.356 1.825-1.918 3.977-.166 2.423 1.638l-3.67 4.15c-.961.873-.269 1.695 1.007 1.9l4.26.037c1.164-.16 1.148-2.027-.174-1.766l-2.53.004 2.702-3.042c1.172-1.392 1.17-3.446-.074-4.752-1.14-1.068-2.797-1.271-3.848-.634z"
-        fill="#fff" />
-    <path
-        d="M14.211 8.191A3.95 3.95 0 0012.8 9.308c-.908 1.023.516 2.295 1.362 1.356 1.825-1.919 3.977-.166 2.423 1.638l-3.67 4.15c-.962.873-.269 1.695 1.006 1.9l4.26.037c1.164-.16 1.148-2.028-.174-1.766l-2.529.004 2.702-3.042c1.171-1.392 1.17-3.446-.074-4.752-1.14-1.068-2.798-1.272-3.848-.635z"
-        style="font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-feature-settings:normal;text-indent:0;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000;text-transform:none;text-orientation:mixed;white-space:normal;shape-padding:0;isolation:auto;mix-blend-mode:normal"
-        opacity=".62" />
-    <path
-        d="M14.465 7.6a3.95 3.95 0 00-1.412 1.116c-.908 1.024.516 2.295 1.362 1.357 1.825-1.919 3.977-.167 2.423 1.638l-3.67 4.15c-.962.872-.269 1.695 1.006 1.9l4.26.037c1.164-.16 1.148-2.028-.174-1.766l-2.528.004 2.7-3.042c1.172-1.392 1.17-3.447-.073-4.753-1.14-1.068-2.798-1.27-3.848-.634z"
-        style="font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-feature-settings:normal;text-indent:0;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000;text-transform:none;text-orientation:mixed;white-space:normal;shape-padding:0;isolation:auto;mix-blend-mode:normal"
-        fill="#fff" />
-    <path stroke-miterlimit="8"
-        d="M1.237 6.673c.01-1.876 1.534-3.475 3.478-3.43 6.478.553 11.167.502 17.289-.013 1.875.01 3.474 1.533 3.43 3.477l.013 13.585c-.01 1.876-1.534 3.475-3.478 3.43-6.593-.598-11.228-.454-17.289.013-1.875-.01-3.474-1.533-3.43-3.478z"
-        fill="none" stroke="#191c1d" stroke-width=".977" />
-    <path d="M7.31 273.484c3.79.242 7.884.259 12.52-.033v21.126c-4.193-.303-8.36-.206-12.52 0z" fill="url(#prefix__d)"
-        transform="translate(0 -270.542)" />
+        d="M10.934 9.665a2.64 2.64 0 00-2.506 2.766c.011.227.116.655.116.655s.384-2.001 2.455-2.103c1.24-.015 1.53.102 2.188.069.92-.047.974-.241 2.04-.277 2.073-.066 2.65 1.852 2.65 1.852s.062-.436.051-.664a2.64 2.64 0 00-2.765-2.506c-.87.043-1.422.429-2 .461-.621.036-1.268-.282-2.229-.253z"
+        fill-opacity=".2" />
+    <path d="M5.714 29.276c3.79.258 10.394.276 15.03-.035v22.516c-4.193-.323-10.87-.22-15.03 0z" fill="url(#prefix__f)"
+        transform="rotate(-2.818 -542.275 26.894)" />
 </svg>
