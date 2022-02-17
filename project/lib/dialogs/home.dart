@@ -71,10 +71,8 @@ class _HomeDialogState extends AbstractDialogState<HomeDialog> {
     if (Pref.tutorMode.value == 0) return const SizedBox();
     var theme = Theme.of(context);
     stepChildren.clear();
-    if (Analytics.variant == 3) {
-      stepChildren.add(_questButton(theme));
-      stepChildren.add(_dailyButton(theme));
-    }
+    stepChildren.add(_questButton(theme));
+    stepChildren.add(_dailyButton(theme));
     stepChildren.add(bannerAdsFactory("start"));
     return super.build(context);
   }
@@ -159,7 +157,8 @@ class _HomeDialogState extends AbstractDialogState<HomeDialog> {
                             SVG.icon("A", theme, scale: 0.7),
                             SizedBox(width: 2.d),
                             SVG.show("coin", 18.d),
-                            SkinnedText("$adyCost", style: theme.textTheme.headline5)
+                            SkinnedText("$adyCost",
+                                style: theme.textTheme.headline5)
                           ]),
                       onTap: () => _onBoostTap(boost, adyCost, true))),
               SizedBox(height: 6.d)

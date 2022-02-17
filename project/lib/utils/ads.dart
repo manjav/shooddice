@@ -182,7 +182,7 @@ class Ads {
         },
         onAdImpression: (ad) => _updateState(place, AdState.show, ad));
     _ad.setImmersiveMode(true);
-    _ad.show(onUserEarnedReward: (RewardedAd ad, RewardItem rewardItem) {
+    _ad.show(onUserEarnedReward: (AdWithoutView ad, RewardItem rewardItem) {
       reward = rewardItem;
       _updateState(place, AdState.rewardReceived, ad);
     });
