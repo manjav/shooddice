@@ -27,7 +27,7 @@ class HomeDialog extends AbstractDialog {
       : super(
           DialogMode.home,
           key: key,
-          height: 330.d,
+          height: 360.d,
           hasChrome: false,
           showCloseButton: false,
           title: "home_title".l(),
@@ -56,7 +56,6 @@ class _HomeDialogState extends AbstractDialogState<HomeDialog> {
   Widget headerFactory(ThemeData theme, double width) {
     return Container(
         width: width - 36.d,
-        height: 150.d,
         padding: EdgeInsets.only(bottom: 4.d),
         child: Row(
             crossAxisAlignment: CrossAxisAlignment.end,
@@ -87,10 +86,10 @@ class _HomeDialogState extends AbstractDialogState<HomeDialog> {
         if (startMode) SizedBox(width: 2.d),
         _boostButton(Pref.boostNext)
       ])),
-      SizedBox(height: 10.d),
+      SizedBox(height: 8.d),
       SizedBox(
           width: 202.d,
-          height: 72.d,
+          height: 70.d,
           child: BumpedButton(
               colors: TColors.blue.value,
               isEnable: _startButtonLabel != "wait_l".l(),
@@ -103,7 +102,8 @@ class _HomeDialogState extends AbstractDialogState<HomeDialog> {
                 SkinnedText(_startButtonLabel,
                     style: theme.textTheme.headline5,
                     textAlign: TextAlign.center)
-              ])))
+              ]))),
+      SizedBox(height: 40.d),
     ]);
   }
 
@@ -213,14 +213,16 @@ class _HomeDialogState extends AbstractDialogState<HomeDialog> {
   Widget _questButton(ThemeData theme) {
     var completed = Quests.hasCompleted;
     var button = PunchButton(
-        top: 110.d,
-        left: 24.d,
-        width: 110.d,
-        height: 110.d,
-        colors: (completed ? TColors.orange : TColors.whiteFlat).value,
+        bottom: 112.d,
+        right: -16.d,
+        width: 140.d,
+        height: 96.d,
+        padding: EdgeInsets.fromLTRB(2.d, 12.d, 14.d, 6.d),
+        colors: (completed ? TColors.green : TColors.purple).value,
         content: Column(children: [
-          SVG.show("quests", 72.d),
-          Text("quests_l".l(), style: theme.textTheme.subtitle2)
+          SVG.show("quests", 32.d),
+          SizedBox(height: 12.d),
+          SkinnedText("quests_l".l(), style: theme.textTheme.headline5)
         ]),
         onTap: () async {
           await Rout.push(context, QuestsDialog());
@@ -233,15 +235,20 @@ class _HomeDialogState extends AbstractDialogState<HomeDialog> {
   Widget _dailyButton(ThemeData theme) {
     var available = Days.collectable;
     var button = PunchButton(
-        top: 110.d,
-        right: 24.d,
-        width: 110.d,
-        height: 110.d,
-        padding: EdgeInsets.fromLTRB(2.d, 6.d, 0.d, 12.d),
-        colors: (available ? TColors.orange : TColors.whiteFlat).value,
+        bottom: 112.d,
+        left: -16.d,
+        width: 140.d,
+        height: 96.d,
+        padding: EdgeInsets.fromLTRB(14.d, 6.d, 2.d, 6.d),
+        colors: (available ? TColors.green : TColors.yellow).value,
         content: Column(children: [
-          SVG.show("calendar", 72.d),
-          Text("daily_l".l(), style: theme.textTheme.subtitle2)
+          SVG.show("daily", 32.d),
+          SizedBox(height: 12.d),
+          SkinnedText(
+            "daily_l".l(),
+            style: theme.textTheme.headline5,
+            textAlign: TextAlign.center,
+          )
         ]),
         onTap: () async {
           await Rout.push(context, DailyDialog());
