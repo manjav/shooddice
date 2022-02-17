@@ -39,7 +39,9 @@ class SkinnedText extends StatelessWidget {
                   ..style = PaintingStyle.stroke,
               ),
             )),
-        Center(heightFactor: 0.42, child: Text(text, style: style)),
+        Center(
+            heightFactor: 0.42,
+            child: Text(text, textAlign: textAlign, style: style)),
       ],
     );
   }
