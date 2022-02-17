@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project/utils/utils.dart';
 
-enum TColors { dark, white, whiteFlat, yellow, blue, orange, green }
+enum TColors { dark, white, whiteFlat, yellow, blue, orange, green, purple }
 
 extension TColorsExt on TColors {
   List<Color> get value {
@@ -35,7 +35,7 @@ extension TColorsExt on TColors {
       case TColors.blue:
         return [
           const Color(0xFF43C4FF),
-          const Color(0xFF00A0EA),
+          const Color(0xFF0090DA),
           const Color(0xFF00619F)
         ];
       case TColors.orange:
@@ -47,8 +47,14 @@ extension TColorsExt on TColors {
       case TColors.green:
         return [
           const Color(0xFFABFF4A),
-          const Color(0xFF00E25B),
+          const Color(0xFF00D24B),
           const Color(0xFF0A903D)
+        ];
+      case TColors.purple:
+        return [
+          const Color(0xFFC567FF),
+          const Color(0xFF8F00FF),
+          const Color(0xFF6E00EE),
         ];
     }
   }
