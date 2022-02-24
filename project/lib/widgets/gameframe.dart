@@ -360,9 +360,7 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
     switch (type) {
       case "home":
         Pref.score.set(Prefs.score);
-        Rout.pop(
-          context,
-        );
+        Rout.pop(context);
         break;
       case "resume":
         MyGame.isPlaying = true;
