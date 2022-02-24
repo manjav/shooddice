@@ -19,7 +19,7 @@ class Price {
   static int cube = 10;
   static int piggy = 20;
   static int record = 10;
-  static int tutorial = 100;
+  static int tutorial = 300;
 
   static int boost = 100;
   static int revive = 200;
