@@ -19,7 +19,7 @@ class Price {
   static int cube = 10;
   static int piggy = 20;
   static int record = 10;
-  static int tutorial = 100;
+  static int tutorial = 300;
 
   static int boost = 100;
   static int revive = 200;
@@ -45,6 +45,7 @@ class _ShopDialogState extends AbstractDialogState<ShopDialog> {
   String _message = "wait_l".l();
   var coins = <String, ProductDetails>{};
   var others = <String, ProductDetails>{};
+  static const String itemPrefix = "item_";
   final InAppPurchase _inAppPurchase = InAppPurchase.instance;
   late StreamSubscription<List<PurchaseDetails>> _subscription;
 
@@ -73,7 +74,7 @@ class _ShopDialogState extends AbstractDialogState<ShopDialog> {
 
     Set<String> skus = {"no_ads"};
     for (var i = 0; i < 6; i++) {
-      skus.add("coin_$i");
+      skus.add("$itemPrefix$i");
     }
     var response = await InAppPurchase.instance.queryProductDetails(skus);
     coins = <String, ProductDetails>{};
@@ -236,7 +237,7 @@ class _ShopDialogState extends AbstractDialogState<ShopDialog> {
               : TextButton(
                   onPressed: () {
                     if (_message == "shop_unavailable".l()) {
-                      Navigator.of(context).pop();
+                      Rout.pop(context);
                     } else {
                       setState(() => _message = "");
                     }
@@ -313,5 +314,5 @@ class _ShopDialogState extends AbstractDialogState<ShopDialog> {
 extension PExt on ProductDetails {
   String get name => title.split(' ')[0];
   int get amount => int.parse(name);
-  bool get isConsumable => id.substring(0, 5) == "coin_";
+  bool get isConsumable => id.substring(0, 5) == _ShopDialogState.itemPrefix;
 }

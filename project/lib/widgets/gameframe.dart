@@ -399,7 +399,7 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
     switch (type) {
       case "home":
         Pref.score.set(Prefs.score);
-        Navigator.of(context).pop();
+        Rout.pop(context);
         break;
       case "resume":
         MyGame.isPlaying = true;
@@ -482,6 +482,6 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
   void _closeGame(result) {
     Analytics.endProgress(
         "main", Pref.playCount.value, Pref.record.value, Prefs.score);
-    Navigator.of(context).pop(result);
+    Rout.pop(context, result);
   }
 }

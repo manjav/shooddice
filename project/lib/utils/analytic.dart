@@ -59,12 +59,14 @@ class Analytics {
         await GameAnalytics.getRemoteConfigsValueAsString(testName, "1");
     variant = int.parse(variantId ?? "1");
     debugPrint("testVariantId ==> $variant");
-    Price.ad = variant == 2 ? 50 : 100;
-    Price.cube = variant == 2 ? 10 : 20;
-    Price.piggy = variant == 2 ? 20 : 30;
-    Price.tutorial = variant == 2 ? 200 : 500;
-    Price.boost = variant == 2 ? 200 : 100;
-    Price.revive = variant == 2 ? 300 : 100;
+    if (variant == 2) {
+      Price.ad = 100;
+      Price.cube = 20;
+      Price.piggy = 30;
+      Price.record = 20;
+      Price.tutorial = 500;
+      Price.revive = 100;
+    }
 
     _firebaseAnalytics.setUserProperty(name: "test_name", value: testName);
     _firebaseAnalytics.setUserProperty(name: "test_variant", value: variantId);
