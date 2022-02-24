@@ -236,7 +236,7 @@ class _ShopDialogState extends AbstractDialogState<ShopDialog> {
               : TextButton(
                   onPressed: () {
                     if (_message == "shop_unavailable".l()) {
-                      Navigator.of(context).pop();
+                      Rout.pop(context);
                     } else {
                       setState(() => _message = "");
                     }
