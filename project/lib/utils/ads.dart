@@ -34,6 +34,9 @@ class Ads {
     if (isSupportAdMob) {
       MobileAds.instance.initialize();
       Timer(const Duration(seconds: 3), () {
+        for (var placement in _placements.values) {
+          placement.sdk = AdSDK.google;
+        }
         _getInterstitial(AdPlace.interstitialVideo);
         _getInterstitial(AdPlace.interstitial);
         _getRewarded();
@@ -199,10 +202,10 @@ class Ads {
     return reward;
   }
 
-  /* static Future<bool> _show([AdPlace? id]) async {
-    var placement = id ?? AdPlace.Rewarded;
+  /* static Future<RewardItem> _showUnityAd([AdPlace? id]) async {
+    var placement = id ?? AdPlace.rewarded;
     if (placement.type == GAAdType.Interstitial && Pref.noAds.value > 0)
-      return true; // No ads mode
+      return null; // No ads mode
     if (!isReady(placement)) {
       debugPrint("ads ${placement.name} is not ready.");
       Analytics.ad(GAAdAction.FailedShow, placement.type, placement.name);
@@ -219,11 +222,11 @@ class Ads {
   } 
 
   static AdPlace _getPlacement(String id) {
-    if (id.contains("Banner")) return AdPlace.Banner;
-    if (id.contains("Interstitial")) return AdPlace.Interstitial;
-    if (id.contains("InterstitialVideo")) return AdPlace.InterstitialVideo;
-    return AdPlace.Rewarded;
-  }*/
+    if (id.contains("Banner")) return AdPlace.banner;
+    if (id.contains("Interstitial")) return AdPlace.interstitial;
+    if (id.contains("InterstitialVideo")) return AdPlace.interstitialVideo;
+    return AdPlace.rewarded;
+  } */
 
   static void _updateState(AdPlace place, AdState state,
       [Ad? ad, AdError? error]) {
@@ -258,12 +261,13 @@ class MyAd {
   final Map<String, Ad> _ads = {};
 
   int attempts = 0;
+  AdSDK sdk = AdSDK.none;
   AdState state = AdState.closed;
 
   MyAd(this.type);
   Ad addAd(Ad ad, [String? type = ""]) {
     attempts = 0;
-    return _ads[type!] = ad;
+    return _ads["${sdk.name}_$type"] = ad;
   }
 
   void clearAd() {
@@ -271,14 +275,28 @@ class MyAd {
   }
 
   Ad getAd([String? type = ""]) {
-    return _ads[type]!;
+    return _ads["${sdk.name}_$type"]!;
   }
 
   bool containsAd([String? type = ""]) {
-    return _ads.containsKey(type);
+    return _ads.containsKey("${sdk.name}_$type");
   }
 }
 
+enum AdSDK { none, google, unity }
+
+extension AdSDKExt on AdSDK {
+  String get name {
+    switch (this) {
+      case AdSDK.none:
+        return "none";
+      case AdSDK.google:
+        return "google";
+      case AdSDK.unity:
+        return "unity";
+    }
+  }
+}
 
 enum AdState {
   closed,
