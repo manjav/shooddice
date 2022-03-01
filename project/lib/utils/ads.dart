@@ -11,7 +11,12 @@ import 'package:project/utils/analytic.dart';
 import 'package:project/utils/prefs.dart';
 
 class Ads {
-  static final Map<AdPlace, AdState> _placements = {};
+  static final Map<AdPlace, MyAd> _placements = {
+    AdPlace.banner: MyAd(AdPlace.banner),
+    AdPlace.interstitial: MyAd(AdPlace.interstitial),
+    AdPlace.interstitialVideo: MyAd(AdPlace.interstitialVideo),
+    AdPlace.rewarded: MyAd(AdPlace.rewarded)
+  };
 
   static Function(AdPlace, AdState)? onUpdate;
   static String platform = Platform.isAndroid ? "Android" : "iOS";
@@ -22,12 +27,6 @@ class Ads {
   static const prefix = "ca-app-pub-5018637481206902/";
   static const maxFailedLoadAttempts = 3;
   static const AdRequest _request = AdRequest(nonPersonalizedAds: false);
-  static final Map<String, Ad> _ads = {};
-  static final Map<AdPlace, int> _attempts = {
-    AdPlace.interstitial: 0,
-    AdPlace.interstitialVideo: 0,
-    AdPlace.rewarded: 0
-  };
   static bool showSuicideInterstitial = true;
   static RewardItem? reward;
 
@@ -49,12 +48,12 @@ class Ads {
             if (state == UnityAdState.ready) {
               Analytics.ad(
                   GAAdAction.Loaded, adPlace.type, adPlace.name, "unityads");
-              _updateState(adPlace, AdState.Loaded);
+              _updateState(adPlace, AdState.loaded);
             } else if (state == UnityAdState.complete ||
                 state == UnityAdState.skipped) {
               Analytics.ad(GAAdAction.RewardReceived, adPlace.type,
                   adPlace.name, "unityads");
-              _updateState(adPlace, AdState.Closed);
+              _updateState(adPlace, AdState.closed);
             }
             debugPrint("Ads ==> state: $state, $data");
           });
@@ -68,8 +67,11 @@ class Ads {
 
   static BannerAd getBanner(String type, {AdSize? size}) {
     var place = AdPlace.banner;
-    var name = place.name + "_" + type;
-    if (_ads.containsKey(name)) return _ads[name]! as BannerAd;
+
+    if (_placements[place]!.containsAd(type)) {
+      return _placements[place]!.getAd(type) as BannerAd;
+    }
+
     var _listener = BannerAdListener(
         onAdLoaded: (ad) => _updateState(place, AdState.loaded, ad),
         onAdFailedToLoad: (ad, error) {
@@ -80,29 +82,31 @@ class Ads {
         onAdClosed: (ad) => _updateState(place, AdState.closed, ad),
         onAdImpression: (ad) => _updateState(place, AdState.show, ad));
     _updateState(place, AdState.request);
-    return _ads[name] = BannerAd(
-        size: size ?? AdSize.largeBanner,
-        adUnitId: place.id,
-        listener: _listener,
-        request: _request)
-      ..load();
+    return _placements[place]!.addAd(
+        BannerAd(
+            size: size ?? AdSize.largeBanner,
+            adUnitId: place.id,
+            listener: _listener,
+            request: _request)
+          ..load(),
+        type) as BannerAd;
   }
 
   static void _getInterstitial(AdPlace place) {
+    var myAd = _placements[place]!;
     InterstitialAd.load(
         adUnitId: place.id,
         request: _request,
         adLoadCallback:
             InterstitialAdLoadCallback(onAdLoaded: (InterstitialAd ad) {
           _updateState(place, AdState.loaded, ad);
-          _ads[place.name] = ad;
-          _attempts[place] = 0;
+          myAd.addAd(ad);
           ad.setImmersiveMode(true);
         }, onAdFailedToLoad: (LoadAdError error) {
           _updateState(place, AdState.failedLoad, null, error);
-          _attempts[place] = _attempts[place]! + 1;
-          _ads.remove(place.name);
-          if (_attempts[place]! <= maxFailedLoadAttempts) {
+          myAd.clearAd();
+          myAd.attempts++;
+          if (myAd.attempts <= maxFailedLoadAttempts) {
             _getInterstitial(place);
           }
         }));
@@ -110,41 +114,44 @@ class Ads {
 
   static void _getRewarded() {
     var place = AdPlace.rewarded;
+    var myAd = _placements[place]!;
     RewardedAd.load(
         adUnitId: place.id,
         request: _request,
         rewardedAdLoadCallback:
             RewardedAdLoadCallback(onAdLoaded: (RewardedAd ad) {
-          _ads[place.name] = ad;
-          _attempts[place] = 0;
+          myAd.addAd(ad);
           _updateState(place, AdState.loaded, ad);
         }, onAdFailedToLoad: (LoadAdError error) {
           _updateState(place, AdState.failedLoad, null, error);
-          _ads.remove(place.name);
-          _attempts[place] = _attempts[place]! + 1;
-          if (_attempts[place]! <= maxFailedLoadAttempts) _getRewarded();
+          myAd.clearAd();
+          myAd.attempts++;
+          if (myAd.attempts <= maxFailedLoadAttempts) {
+            _getRewarded();
+          }
         }));
   }
 
   static bool isReady([AdPlace? place]) {
-    var _place = place ?? AdPlace.rewarded;
-    if (_place != AdPlace.rewarded) {
-      if (Pref.playCount.value < _place.threshold) return false;
+    var p = place ?? AdPlace.rewarded;
+    if (p != AdPlace.rewarded) {
+      if (Pref.playCount.value < p.threshold) return false;
       if (Pref.noAds.value > 0) return false;
     }
-    return _placements.containsKey(_place) &&
-        _placements[_place] == AdState.loaded;
+    return _placements[p]!.containsAd() &&
+        _placements[p]!.state == AdState.loaded;
   }
 
   static showInterstitial(AdPlace place) async {
     if (Pref.noAds.value > 0) return;
-    if (!_ads.containsKey(place.name)) {
+    var myAd = _placements[place]!;
+    if (!myAd.containsAd()) {
       debugPrint("Ads ==> attempt to show ${place.name} before loaded.");
       return;
     }
     if (!isReady(place)) return;
-    var _ad = _ads[place.name] as InterstitialAd;
-    _ad.fullScreenContentCallback = FullScreenContentCallback(
+    var iAd = myAd.getAd() as InterstitialAd;
+    iAd.fullScreenContentCallback = FullScreenContentCallback(
         onAdDismissedFullScreenContent: (InterstitialAd ad) {
           _updateState(place, AdState.closed, ad);
           ad.dispose();
@@ -156,38 +163,38 @@ class Ads {
           _getInterstitial(place);
         },
         onAdImpression: (ad) => _updateState(place, AdState.show, ad));
-    _ad.show();
-    _ads.remove(place.name);
+    iAd.show();
+    myAd.clearAd();
     await _waitForClose(place);
   }
 
   static Future<RewardItem?> showRewarded() async {
     reward = null;
-    var place = AdPlace.rewarded;
-    if (!_ads.containsKey(place.name)) {
-      debugPrint("Ads ==> attempt to show ${place.name} before loaded.");
+    var myAd = _placements[AdPlace.rewarded]!;
+    if (!myAd.containsAd()) {
+      debugPrint("Ads ==> attempt to show ${myAd.type.name} before loaded.");
       return null;
     }
-    var _ad = _ads[place.name] as RewardedAd;
-    _ad.fullScreenContentCallback = FullScreenContentCallback(
+    var rAd = myAd.getAd() as RewardedAd;
+    rAd.fullScreenContentCallback = FullScreenContentCallback(
         onAdDismissedFullScreenContent: (RewardedAd ad) {
-          _updateState(place, AdState.closed, ad);
+          _updateState(myAd.type, AdState.closed, ad);
           ad.dispose();
           _getRewarded();
         },
         onAdFailedToShowFullScreenContent: (RewardedAd ad, AdError error) {
-          _updateState(place, AdState.failedShow, ad, error);
+          _updateState(myAd.type, AdState.failedShow, ad, error);
           ad.dispose();
           _getRewarded();
         },
-        onAdImpression: (ad) => _updateState(place, AdState.show, ad));
-    _ad.setImmersiveMode(true);
-    _ad.show(onUserEarnedReward: (AdWithoutView ad, RewardItem rewardItem) {
+        onAdImpression: (ad) => _updateState(myAd.type, AdState.show, ad));
+    rAd.setImmersiveMode(true);
+    rAd.show(onUserEarnedReward: (AdWithoutView ad, RewardItem rewardItem) {
       reward = rewardItem;
-      _updateState(place, AdState.rewardReceived, ad);
+      _updateState(myAd.type, AdState.rewardReceived, ad);
     });
-    await _waitForClose(place);
-    _ads.remove(place.name);
+    await _waitForClose(myAd.type);
+    myAd.clearAd();
     if (reward != null) Quests.increase(QuestType.video, 1);
     return reward;
   }
@@ -220,7 +227,7 @@ class Ads {
 
   static void _updateState(AdPlace place, AdState state,
       [Ad? ad, AdError? error]) {
-    _placements[place] = state;
+    _placements[place]!.state = state;
     onUpdate?.call(place, state);
     if (state.order > 0) {
       Analytics.ad(state.order, place.type, place.name, "admob");
@@ -230,7 +237,7 @@ class Ads {
 
   static _waitForClose(AdPlace adPlace) async {
     const d = Duration(milliseconds: 300);
-    while (_placements[adPlace] != AdState.closed) {
+    while (_placements[adPlace]!.state != AdState.closed) {
       await Future.delayed(d);
     }
   }
@@ -238,12 +245,40 @@ class Ads {
   static void pausedApp() {
     _placements.forEach((key, value) {
       if (key != AdPlace.banner &&
-          (value == AdState.show || value == AdState.rewardReceived)) {
+          (value.state == AdState.show ||
+              value.state == AdState.rewardReceived)) {
         _updateState(key, AdState.clicked);
       }
     });
   }
 }
+
+class MyAd {
+  final AdPlace type;
+  final Map<String, Ad> _ads = {};
+
+  int attempts = 0;
+  AdState state = AdState.closed;
+
+  MyAd(this.type);
+  Ad addAd(Ad ad, [String? type = ""]) {
+    attempts = 0;
+    return _ads[type!] = ad;
+  }
+
+  void clearAd() {
+    _ads.clear();
+  }
+
+  Ad getAd([String? type = ""]) {
+    return _ads[type]!;
+  }
+
+  bool containsAd([String? type = ""]) {
+    return _ads.containsKey(type);
+  }
+}
+
 
 enum AdState {
   closed,
