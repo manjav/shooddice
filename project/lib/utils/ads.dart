@@ -18,7 +18,7 @@ class Ads {
     AdPlace.rewarded: MyAd(AdPlace.rewarded)
   };
 
-  static Function(AdPlace, AdState)? onUpdate;
+  static Function(MyAd)? onUpdate;
   static String platform = Platform.isAndroid ? "Android" : "iOS";
   static const rewardCoef = 10;
   static const costCoef = 5;
@@ -231,7 +231,7 @@ class Ads {
   static void _updateState(AdPlace place, AdState state,
       [Ad? ad, AdError? error]) {
     _placements[place]!.state = state;
-    onUpdate?.call(place, state);
+    onUpdate?.call(_placements[place]!);
     if (state.order > 0) {
       Analytics.ad(state.order, place.type, place.name, "admob");
     }
@@ -254,6 +254,8 @@ class Ads {
       }
     });
   }
+
+  static void _loadAlternatives() {}
 }
 
 class MyAd {

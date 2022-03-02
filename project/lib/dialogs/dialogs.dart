@@ -246,8 +246,8 @@ class AbstractDialogState<T extends AbstractDialog> extends State<T> {
         true);
   }
 
-  _onAdsUpdate(AdPlace placement, AdState state) {
-    if (placement == AdPlace.rewarded && state != AdState.closed) {
+  _onAdsUpdate(MyAd ad) {
+    if (ad.type == AdPlace.rewarded && ad.state != AdState.closed) {
       setState(() {});
     }
   }
