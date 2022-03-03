@@ -244,11 +244,13 @@ class _HomeDialogState extends AbstractDialogState<HomeDialog> {
         content: Column(children: [
           SVG.show("daily", 32.d),
           SizedBox(height: 12.d),
-          SkinnedText(
-            "daily_l".l(),
-            style: theme.textTheme.headline5,
-            textAlign: TextAlign.center,
-          )
+          SizedBox(
+              width: 100.d,
+              child: SkinnedText(
+                "daily_l".l(),
+                style: theme.textTheme.headline5,
+                textAlign: TextAlign.center,
+              ))
         ]),
         onTap: () async {
           await Rout.push(context, DailyDialog());
