@@ -68,7 +68,7 @@ class Ads {
     }*/
   }
 
-  static BannerAd getBanner(String type, {AdSize? size}) {
+  static BannerAd _getBanner(String type, {AdSize? size}) {
     var place = AdPlace.banner;
 
     if (_placements[place]!.containsAd(type)) {
@@ -93,6 +93,23 @@ class Ads {
             request: _request)
           ..load(),
         type) as BannerAd;
+  }
+
+  static Widget getBannerWidget(String type, {AdSize? size}) {
+    var width = 320.d;
+    var height = 50.d;
+    Widget? adWidget;
+    var banner = _getBanner(type, size: size);
+    width = banner.size.width.toDouble();
+    height = banner.size.height.toDouble();
+    adWidget = AdWidget(ad: banner);
+
+    return SizedBox(
+        width: width,
+        height: height,
+        child: ClipRRect(
+            borderRadius: BorderRadius.all(Radius.circular(16.d)),
+            child: adWidget));
   }
 
   static void _getInterstitial(AdPlace place) {
@@ -151,7 +168,8 @@ class Ads {
       debugPrint("Ads ==> ${place.name} is not ready.");
       return;
     }
-    if (!isReady(place)) return;
+    var myAd = _placements[place]!;
+
     var iAd = myAd.getAd() as InterstitialAd;
     iAd.fullScreenContentCallback = FullScreenContentCallback(
         onAdDismissedFullScreenContent: (InterstitialAd ad) {
