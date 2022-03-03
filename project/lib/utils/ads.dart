@@ -2,13 +2,14 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:gameanalytics_sdk/gameanalytics.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:project/dialogs/quests.dart';
 import 'package:project/utils/analytic.dart';
 import 'package:project/utils/prefs.dart';
+import 'package:project/utils/utils.dart';
+import 'package:unity_ads_plugin/unity_ads.dart';
 
 class Ads {
   static final Map<AdPlace, MyAd> _placements = {
@@ -26,6 +27,7 @@ class Ads {
   static const maxFailedLoadAttempts = 3;
   static const AdSDK _initialSDK = AdSDK.google;
   static const AdRequest _request = AdRequest(nonPersonalizedAds: false);
+  static AdSDK? selectedSDK;
   static bool showSuicideInterstitial = true;
   static RewardItem? reward;
 
@@ -36,28 +38,30 @@ class Ads {
     }
 
     if (selectedSDK == AdSDK.google) {
-        _getInterstitial(AdPlace.interstitialVideo);
-        _getInterstitial(AdPlace.interstitial);
-        _getRewarded();
-      });
-    }
-
-    /* if (isSupportUnity) {
+      MobileAds.instance.initialize();
+      _getInterstitial(AdPlace.interstitialVideo);
+      _getInterstitial(AdPlace.interstitial);
+      _getRewarded();
+    } else if (selectedSDK == AdSDK.unity) {
       UnityAds.init(
           gameId: "4230791",
           listener: (UnityAdState state, data) {
             AdPlace adPlace = _getPlacement(data['placementId']);
             if (state == UnityAdState.ready) {
-              Analytics.ad(
-                  GAAdAction.Loaded, adPlace.type, adPlace.name, "unityads");
               _updateState(adPlace, AdState.loaded);
-            } else if (state == UnityAdState.complete ||
-                state == UnityAdState.skipped) {
-              Analytics.ad(GAAdAction.RewardReceived, adPlace.type,
-                  adPlace.name, "unityads");
+            } else if (state == UnityAdState.started) {
+              _updateState(adPlace, AdState.show);
+            } else if (state == UnityAdState.complete) {
+              reward = RewardItem(1, AdState.rewardReceived.name);
+              _updateState(adPlace, AdState.rewardReceived);
               _updateState(adPlace, AdState.closed);
+            } else if (state == UnityAdState.skipped) {
+              reward = RewardItem(1, AdState.closed.name);
+              _updateState(adPlace, AdState.closed);
+            } else if (state == UnityAdState.error) {
+              _updateState(adPlace, AdState.failedLoad);
             }
-            debugPrint("Ads ==> state: $state, $data");
+            // debugPrint("UnityAds ==> state: $state, $data");
           });
     }
   }
@@ -264,8 +268,6 @@ class Ads {
       }
     });
   }
-
-  static void _loadAlternatives() {}
 }
 
 class MyAd {
@@ -291,6 +293,7 @@ class MyAd {
   }
 
   bool containsAd([String? type = ""]) {
+    if (sdk == AdSDK.unity) return true;
     return _ads.containsKey("${sdk.name}_$type");
   }
 }

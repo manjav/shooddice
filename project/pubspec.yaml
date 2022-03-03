@@ -38,6 +38,7 @@ dependencies:
   smartlook: ^2.0.1
   soundpool: ^2.1.0
   rive: ^0.8.1
+  unity_ads_plugin: ^0.2.2
   url_launcher: ^6.0.18
   vibration: ^1.7.4-nullsafety.0
 
