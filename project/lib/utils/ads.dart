@@ -2,13 +2,14 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:gameanalytics_sdk/gameanalytics.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:project/dialogs/quests.dart';
 import 'package:project/utils/analytic.dart';
 import 'package:project/utils/prefs.dart';
+import 'package:project/utils/utils.dart';
+import 'package:unity_ads_plugin/unity_ads.dart';
 
 class Ads {
   static final Map<AdPlace, MyAd> _placements = {
@@ -22,53 +23,50 @@ class Ads {
   static String platform = Platform.isAndroid ? "Android" : "iOS";
   static const rewardCoef = 10;
   static const costCoef = 5;
-  static const isSupportAdMob = true;
-  static const isSupportUnity = false;
   static const prefix = "ca-app-pub-5018637481206902/";
   static const maxFailedLoadAttempts = 3;
+  static const AdSDK _initialSDK = AdSDK.google;
   static const AdRequest _request = AdRequest(nonPersonalizedAds: false);
+  static AdSDK? selectedSDK;
   static bool showSuicideInterstitial = true;
   static RewardItem? reward;
 
-  static init() {
-    if (isSupportAdMob) {
-      MobileAds.instance.initialize();
-      Timer(const Duration(seconds: 3), () {
-        for (var placement in _placements.values) {
-          placement.sdk = AdSDK.google;
-        }
-        _getInterstitial(AdPlace.interstitialVideo);
-        _getInterstitial(AdPlace.interstitial);
-        _getRewarded();
-      });
+  static init([AdSDK? sdk]) {
+    selectedSDK = sdk ?? _initialSDK;
+    for (var placement in _placements.values) {
+      placement.sdk = selectedSDK!;
     }
 
-    /* if (isSupportUnity) {
+    if (selectedSDK == AdSDK.google) {
+      MobileAds.instance.initialize();
+      _getInterstitial(AdPlace.interstitialVideo);
+      _getInterstitial(AdPlace.interstitial);
+      _getRewarded();
+    } else if (selectedSDK == AdSDK.unity) {
       UnityAds.init(
           gameId: "4230791",
           listener: (UnityAdState state, data) {
             AdPlace adPlace = _getPlacement(data['placementId']);
             if (state == UnityAdState.ready) {
-              Analytics.ad(
-                  GAAdAction.Loaded, adPlace.type, adPlace.name, "unityads");
               _updateState(adPlace, AdState.loaded);
-            } else if (state == UnityAdState.complete ||
-                state == UnityAdState.skipped) {
-              Analytics.ad(GAAdAction.RewardReceived, adPlace.type,
-                  adPlace.name, "unityads");
+            } else if (state == UnityAdState.started) {
+              _updateState(adPlace, AdState.show);
+            } else if (state == UnityAdState.complete) {
+              reward = RewardItem(1, AdState.rewardReceived.name);
+              _updateState(adPlace, AdState.rewardReceived);
               _updateState(adPlace, AdState.closed);
+            } else if (state == UnityAdState.skipped) {
+              reward = RewardItem(1, AdState.closed.name);
+              _updateState(adPlace, AdState.closed);
+            } else if (state == UnityAdState.error) {
+              _updateState(adPlace, AdState.failedLoad);
             }
-            debugPrint("Ads ==> state: $state, $data");
+            // debugPrint("UnityAds ==> state: $state, $data");
           });
-    } 
-
-    for (var id in AdPlace.values) {
-      var ready = await UnityAds.isReady(placementId: id.name);
-      if (ready ?? false) _placements[id] = AdState.Loaded;
-    }*/
+    }
   }
 
-  static BannerAd getBanner(String type, {AdSize? size}) {
+  static BannerAd _getBanner(String type, {AdSize? size}) {
     var place = AdPlace.banner;
 
     if (_placements[place]!.containsAd(type)) {
@@ -93,6 +91,30 @@ class Ads {
             request: _request)
           ..load(),
         type) as BannerAd;
+  }
+
+  static Widget getBannerWidget(String type, {AdSize? size}) {
+    var width = 320.d;
+    var height = 50.d;
+    Widget? adWidget;
+    if (Ads.selectedSDK == AdSDK.unity) {
+      var unityBanner = UnityBannerAd(placementId: AdPlace.banner.name);
+      width = unityBanner.size.width.toDouble();
+      height = unityBanner.size.height.toDouble();
+      adWidget = unityBanner;
+    } else {
+      var banner = _getBanner(type, size: size);
+      width = banner.size.width.toDouble();
+      height = banner.size.height.toDouble();
+      adWidget = AdWidget(ad: banner);
+    }
+
+    return SizedBox(
+        width: width,
+        height: height,
+        child: ClipRRect(
+            borderRadius: BorderRadius.all(Radius.circular(16.d)),
+            child: adWidget));
   }
 
   static void _getInterstitial(AdPlace place) {
@@ -131,6 +153,8 @@ class Ads {
           myAd.attempts++;
           if (myAd.attempts <= maxFailedLoadAttempts) {
             _getRewarded();
+          } else if (_initialSDK == AdSDK.google) {
+            init(AdSDK.unity); // Alternative AD SDK
           }
         }));
   }
@@ -147,12 +171,16 @@ class Ads {
 
   static showInterstitial(AdPlace place) async {
     if (Pref.noAds.value > 0) return;
-    var myAd = _placements[place]!;
-    if (!myAd.containsAd()) {
-      debugPrint("Ads ==> attempt to show ${place.name} before loaded.");
+    if (!isReady(place)) {
+      debugPrint("Ads ==> ${place.name} is not ready.");
       return;
     }
-    if (!isReady(place)) return;
+    var myAd = _placements[place]!;
+
+    if (selectedSDK == AdSDK.unity) {
+      return await _showUnityAd(place);
+    }
+
     var iAd = myAd.getAd() as InterstitialAd;
     iAd.fullScreenContentCallback = FullScreenContentCallback(
         onAdDismissedFullScreenContent: (InterstitialAd ad) {
@@ -173,11 +201,16 @@ class Ads {
 
   static Future<RewardItem?> showRewarded() async {
     reward = null;
-    var myAd = _placements[AdPlace.rewarded]!;
-    if (!myAd.containsAd()) {
-      debugPrint("Ads ==> attempt to show ${myAd.type.name} before loaded.");
+    if (!isReady()) {
+      debugPrint("Ads ==> ${AdPlace.rewarded.name} is not ready.");
       return null;
     }
+
+    if (selectedSDK == AdSDK.unity) {
+      return await _showUnityAd(AdPlace.rewarded);
+    }
+
+    var myAd = _placements[AdPlace.rewarded]!;
     var rAd = myAd.getAd() as RewardedAd;
     rAd.fullScreenContentCallback = FullScreenContentCallback(
         onAdDismissedFullScreenContent: (RewardedAd ad) {
@@ -202,40 +235,38 @@ class Ads {
     return reward;
   }
 
-  /* static Future<RewardItem> _showUnityAd([AdPlace? id]) async {
+  static Future<RewardItem?> _showUnityAd([AdPlace? id]) async {
     var placement = id ?? AdPlace.rewarded;
-    if (placement.type == GAAdType.Interstitial && Pref.noAds.value > 0)
-      return null; // No ads mode
-    if (!isReady(placement)) {
-      debugPrint("ads ${placement.name} is not ready.");
-      Analytics.ad(GAAdAction.FailedShow, placement.type, placement.name);
-      return false;
-    }
-    Analytics.ad(GAAdAction.Show, placement.type,
-        placement.name); // where is this from?????
-    _lastAdState = UnityAdState.started;
-    _placementIds.remove(placement.name);
     UnityAds.showVideoAd(placementId: placement.name);
-    const d = Duration(milliseconds: 500);
-    while (_lastAdState == UnityAdState.started) await Future.delayed(d);
-    return _lastAdState == UnityAdState.complete;
-  } 
+    var p = _placements[placement]!;
+    p.state = AdState.show;
+    const d = Duration(milliseconds: 300);
+    while (p.state != AdState.closed && p.state != AdState.loaded) {
+      await Future.delayed(d);
+    }
+    return reward!.type == AdState.rewardReceived.name ? reward : null;
+  }
 
   static AdPlace _getPlacement(String id) {
     if (id.contains("Banner")) return AdPlace.banner;
     if (id.contains("Interstitial")) return AdPlace.interstitial;
     if (id.contains("InterstitialVideo")) return AdPlace.interstitialVideo;
     return AdPlace.rewarded;
-  } */
+  }
 
   static void _updateState(AdPlace place, AdState state,
       [Ad? ad, AdError? error]) {
-    _placements[place]!.state = state;
+    if (!(_placements[place]!.state == AdState.loaded &&
+        state != AdState.show)) {
+      _placements[place]!.state = state;
+    }
     onUpdate?.call(_placements[place]!);
     if (state.order > 0) {
-      Analytics.ad(state.order, place.type, place.name, "admob");
+      Analytics.ad(
+          state.order, place.type, place.name, _placements[place]!.sdk.name);
     }
-    debugPrint("Ads ==> $place ${state.toString()} ${error ?? ''}");
+    debugPrint(
+        "Ads ==> ${_placements[place]!.sdk} $place $state ${error ?? ''}");
   }
 
   static _waitForClose(AdPlace adPlace) async {
@@ -254,8 +285,6 @@ class Ads {
       }
     });
   }
-
-  static void _loadAlternatives() {}
 }
 
 class MyAd {
@@ -281,6 +310,7 @@ class MyAd {
   }
 
   bool containsAd([String? type = ""]) {
+    if (sdk == AdSDK.unity) return true;
     return _ads.containsKey("${sdk.name}_$type");
   }
 }
