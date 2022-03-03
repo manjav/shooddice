@@ -175,6 +175,10 @@ class Ads {
     }
     var myAd = _placements[place]!;
 
+    if (selectedSDK == AdSDK.unity) {
+      return await _showUnityAd(place);
+    }
+
     var iAd = myAd.getAd() as InterstitialAd;
     iAd.fullScreenContentCallback = FullScreenContentCallback(
         onAdDismissedFullScreenContent: (InterstitialAd ad) {
@@ -199,6 +203,12 @@ class Ads {
       debugPrint("Ads ==> ${AdPlace.rewarded.name} is not ready.");
       return null;
     }
+
+    if (selectedSDK == AdSDK.unity) {
+      return await _showUnityAd(AdPlace.rewarded);
+    }
+
+    var myAd = _placements[AdPlace.rewarded]!;
     var rAd = myAd.getAd() as RewardedAd;
     rAd.fullScreenContentCallback = FullScreenContentCallback(
         onAdDismissedFullScreenContent: (RewardedAd ad) {
@@ -223,40 +233,38 @@ class Ads {
     return reward;
   }
 
-  /* static Future<RewardItem> _showUnityAd([AdPlace? id]) async {
+  static Future<RewardItem?> _showUnityAd([AdPlace? id]) async {
     var placement = id ?? AdPlace.rewarded;
-    if (placement.type == GAAdType.Interstitial && Pref.noAds.value > 0)
-      return null; // No ads mode
-    if (!isReady(placement)) {
-      debugPrint("ads ${placement.name} is not ready.");
-      Analytics.ad(GAAdAction.FailedShow, placement.type, placement.name);
-      return false;
-    }
-    Analytics.ad(GAAdAction.Show, placement.type,
-        placement.name); // where is this from?????
-    _lastAdState = UnityAdState.started;
-    _placementIds.remove(placement.name);
     UnityAds.showVideoAd(placementId: placement.name);
-    const d = Duration(milliseconds: 500);
-    while (_lastAdState == UnityAdState.started) await Future.delayed(d);
-    return _lastAdState == UnityAdState.complete;
-  } 
+    var p = _placements[placement]!;
+    p.state = AdState.show;
+    const d = Duration(milliseconds: 300);
+    while (p.state != AdState.closed && p.state != AdState.loaded) {
+      await Future.delayed(d);
+    }
+    return reward!.type == AdState.rewardReceived.name ? reward : null;
+  }
 
   static AdPlace _getPlacement(String id) {
     if (id.contains("Banner")) return AdPlace.banner;
     if (id.contains("Interstitial")) return AdPlace.interstitial;
     if (id.contains("InterstitialVideo")) return AdPlace.interstitialVideo;
     return AdPlace.rewarded;
-  } */
+  }
 
   static void _updateState(AdPlace place, AdState state,
       [Ad? ad, AdError? error]) {
-    _placements[place]!.state = state;
+    if (!(_placements[place]!.state == AdState.loaded &&
+        state != AdState.show)) {
+      _placements[place]!.state = state;
+    }
     onUpdate?.call(_placements[place]!);
     if (state.order > 0) {
-      Analytics.ad(state.order, place.type, place.name, "admob");
+      Analytics.ad(
+          state.order, place.type, place.name, _placements[place]!.sdk.name);
     }
-    debugPrint("Ads ==> $place ${state.toString()} ${error ?? ''}");
+    debugPrint(
+        "Ads ==> ${_placements[place]!.sdk} $place $state ${error ?? ''}");
   }
 
   static _waitForClose(AdPlace adPlace) async {
