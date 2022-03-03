@@ -147,9 +147,8 @@ class Ads {
 
   static showInterstitial(AdPlace place) async {
     if (Pref.noAds.value > 0) return;
-    var myAd = _placements[place]!;
-    if (!myAd.containsAd()) {
-      debugPrint("Ads ==> attempt to show ${place.name} before loaded.");
+    if (!isReady(place)) {
+      debugPrint("Ads ==> ${place.name} is not ready.");
       return;
     }
     if (!isReady(place)) return;
@@ -173,9 +172,8 @@ class Ads {
 
   static Future<RewardItem?> showRewarded() async {
     reward = null;
-    var myAd = _placements[AdPlace.rewarded]!;
-    if (!myAd.containsAd()) {
-      debugPrint("Ads ==> attempt to show ${myAd.type.name} before loaded.");
+    if (!isReady()) {
+      debugPrint("Ads ==> ${AdPlace.rewarded.name} is not ready.");
       return null;
     }
     var rAd = myAd.getAd() as RewardedAd;
