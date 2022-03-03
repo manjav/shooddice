@@ -153,6 +153,8 @@ class Ads {
           myAd.attempts++;
           if (myAd.attempts <= maxFailedLoadAttempts) {
             _getRewarded();
+          } else if (_initialSDK == AdSDK.google) {
+            init(AdSDK.unity); // Alternative AD SDK
           }
         }));
   }
