@@ -22,21 +22,20 @@ class Ads {
   static String platform = Platform.isAndroid ? "Android" : "iOS";
   static const rewardCoef = 10;
   static const costCoef = 5;
-  static const isSupportAdMob = true;
-  static const isSupportUnity = false;
   static const prefix = "ca-app-pub-5018637481206902/";
   static const maxFailedLoadAttempts = 3;
+  static const AdSDK _initialSDK = AdSDK.google;
   static const AdRequest _request = AdRequest(nonPersonalizedAds: false);
   static bool showSuicideInterstitial = true;
   static RewardItem? reward;
 
-  static init() {
-    if (isSupportAdMob) {
-      MobileAds.instance.initialize();
-      Timer(const Duration(seconds: 3), () {
-        for (var placement in _placements.values) {
-          placement.sdk = AdSDK.google;
-        }
+  static init([AdSDK? sdk]) {
+    selectedSDK = sdk ?? _initialSDK;
+    for (var placement in _placements.values) {
+      placement.sdk = selectedSDK!;
+    }
+
+    if (selectedSDK == AdSDK.google) {
         _getInterstitial(AdPlace.interstitialVideo);
         _getInterstitial(AdPlace.interstitial);
         _getRewarded();
@@ -60,12 +59,7 @@ class Ads {
             }
             debugPrint("Ads ==> state: $state, $data");
           });
-    } 
-
-    for (var id in AdPlace.values) {
-      var ready = await UnityAds.isReady(placementId: id.name);
-      if (ready ?? false) _placements[id] = AdState.Loaded;
-    }*/
+    }
   }
 
   static BannerAd _getBanner(String type, {AdSize? size}) {
