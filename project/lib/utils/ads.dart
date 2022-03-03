@@ -97,10 +97,17 @@ class Ads {
     var width = 320.d;
     var height = 50.d;
     Widget? adWidget;
-    var banner = _getBanner(type, size: size);
-    width = banner.size.width.toDouble();
-    height = banner.size.height.toDouble();
-    adWidget = AdWidget(ad: banner);
+    if (Ads.selectedSDK == AdSDK.unity) {
+      var unityBanner = UnityBannerAd(placementId: AdPlace.banner.name);
+      width = unityBanner.size.width.toDouble();
+      height = unityBanner.size.height.toDouble();
+      adWidget = unityBanner;
+    } else {
+      var banner = _getBanner(type, size: size);
+      width = banner.size.width.toDouble();
+      height = banner.size.height.toDouble();
+      adWidget = AdWidget(ad: banner);
+    }
 
     return SizedBox(
         width: width,
