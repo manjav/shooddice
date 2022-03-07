@@ -37,7 +37,7 @@ class RatingDialog extends AbstractDialog {
         if (r != null) {
           comment = r;
           var url =
-              "https://shooddice.sarand.net/review/?rate=$rating&comment=$comment&visits=${Pref.visitCount.value}";
+              "https://dado.sarand.net/review/?rate=$rating&comment=$comment&visits=${Pref.visitCount.value}";
           var response = await http.get(Uri.parse(url));
           if (response.statusCode != 200) debugPrint('Failure status code 😱');
         }
