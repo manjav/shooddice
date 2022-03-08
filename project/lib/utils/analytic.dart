@@ -16,6 +16,10 @@ class Analytics {
 
   static final _funnelConfigs = {
     "purchase": [1],
+    "adinterstitial": [1],
+    "adrewardedad": [1, 10, 20, 30, 40, 50],
+    "adbannerclick": [1, 5, 10, 20],
+    "round_end": [5, 10, 20, 30, 50],
   };
 
   static init(FirebaseAnalytics analytics) {

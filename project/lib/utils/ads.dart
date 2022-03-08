@@ -79,7 +79,10 @@ class Ads {
           _updateState(place, AdState.failedLoad, ad, error);
           ad.dispose();
         },
-        onAdOpened: (ad) => _updateState(place, AdState.clicked, ad),
+        onAdOpened: (ad) {
+          Analytics.funnle("adbannerclick");
+          _updateState(place, AdState.clicked, ad);
+        },
         onAdClosed: (ad) => _updateState(place, AdState.closed, ad),
         onAdImpression: (ad) => _updateState(place, AdState.show, ad));
     _updateState(place, AdState.request);
@@ -197,6 +200,7 @@ class Ads {
     iAd.show();
     myAd.clearAd();
     await _waitForClose(place);
+    Analytics.funnle("adinterstitial");
   }
 
   static Future<RewardItem?> showRewarded() async {
@@ -231,7 +235,10 @@ class Ads {
     });
     await _waitForClose(myAd.type);
     myAd.clearAd();
-    if (reward != null) Quests.increase(QuestType.video, 1);
+    if (reward != null) {
+      Quests.increase(QuestType.video, 1);
+      Analytics.funnle("adrewarded");
+    }
     return reward;
   }
 
