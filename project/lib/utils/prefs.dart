@@ -1,5 +1,6 @@
 import 'package:project/core/cell.dart';
 import 'package:project/dialogs/daily.dart';
+import 'package:project/utils/analytic.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Prefs {
@@ -43,9 +44,11 @@ class Prefs {
   }
 
   static int getBig(int value) => _instance!.getInt("big_$value") ?? 0;
-  static void increaseBig(int value) {
+  static int increaseBig(int value) {
     var key = "big_$value";
-    setInt(key, getInt(key) + 1, false);
+    var newValue = increase(key, 1);
+    if (value == 6 || value == 7 || value == 10) Analytics.funnle(key);
+    return newValue;
   }
 
   static int getCount(Pref type) => getInt("${type.name}_count");

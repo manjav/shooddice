@@ -20,6 +20,9 @@ class Analytics {
     "adrewardedad": [1, 10, 20, 30, 40, 50],
     "adbannerclick": [1, 5, 10, 20],
     "round_end": [5, 10, 20, 30, 50],
+    "big6": [1],
+    "big7": [1],
+    "big10": [1],
     "boost_removeone": [1],
     "boost_removecolor": [1]
   };
