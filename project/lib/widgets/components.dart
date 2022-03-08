@@ -2,17 +2,22 @@ import 'dart:math';
 
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
+import 'package:project/utils/gamehub.dart';
 import 'package:project/utils/prefs.dart';
 import 'package:project/utils/utils.dart';
 import 'package:project/widgets/buttons.dart';
 
 class Components {
-  static Widget scores(ThemeData theme, {Function()? onTap}) {
+  static Widget scores(ThemeData theme, String source, {Function()? onTap}) {
     if (Pref.tutorMode.value == 0) return const SizedBox();
     return Hero(
         tag: "score",
         child: GestureDetector(
-            onTap: onTap,
+            onTap: () {
+              Analytics.design('guiClick:record:$source');
+              GamesServices.showLeaderboards();
+              onTap?.call();
+            },
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
               Row(mainAxisAlignment: MainAxisAlignment.end, children: [

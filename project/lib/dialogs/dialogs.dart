@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:games_services/games_services.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:project/dialogs/shop.dart';
 import 'package:project/dialogs/stats.dart';
 import 'package:project/dialogs/toast.dart';
@@ -123,10 +121,7 @@ class AbstractDialogState<T extends AbstractDialog> extends State<T> {
         Positioned(
             top: 46.d,
             right: 10.d,
-            child: Components.scores(theme, onTap: () {
-              Analytics.design('guiClick:record:${widget.mode.name}');
-              GamesServices.showLeaderboards();
-            }));
+            child: Components.scores(theme, widget.mode.name));
   }
 
   Widget statsButtonFactory(ThemeData theme) {
