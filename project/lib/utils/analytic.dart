@@ -15,6 +15,7 @@ class Analytics {
   static late FirebaseAnalytics _firebaseAnalytics;
 
   static final _funnelConfigs = {
+    "purchase": [1],
   };
 
   static init(FirebaseAnalytics analytics) {
