@@ -20,6 +20,8 @@ class Analytics {
     "adrewardedad": [1, 10, 20, 30, 40, 50],
     "adbannerclick": [1, 5, 10, 20],
     "round_end": [5, 10, 20, 30, 50],
+    "boost_removeone": [1],
+    "boost_removecolor": [1]
   };
 
   static init(FirebaseAnalytics analytics) {

@@ -264,8 +264,10 @@ class MyGame extends FlameGame with TapDetector {
       if (cell == null || cell.state != CellState.fixed) return;
       if (removingMode == Pref.boostRemoveOne) {
         Quests.increase(QuestType.removeone, 1);
+        Analytics.funnle("boost_removeone");
         _removeCell(cell.column, cell.row, true);
       } else {
+        Analytics.funnle("boost_removeone");
         _removeCellsByValue(cell.value);
       }
       removingMode!.increase(-1);
