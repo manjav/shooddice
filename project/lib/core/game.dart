@@ -9,7 +9,6 @@ import 'package:flame/palette.dart';
 import 'package:flame_svg/svg.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:games_services/games_services.dart';
 import 'package:project/animations/animate.dart';
 import 'package:project/core/achieves.dart';
 import 'package:project/core/cell.dart';
@@ -17,6 +16,7 @@ import 'package:project/core/cells.dart';
 import 'package:project/dialogs/quests.dart';
 import 'package:project/theme/themes.dart';
 import 'package:project/utils/analytic.dart';
+import 'package:project/utils/gamehub.dart';
 import 'package:project/utils/prefs.dart';
 import 'package:project/utils/sounds.dart';
 import 'package:project/utils/utils.dart';
@@ -80,12 +80,7 @@ class MyGame extends FlameGame with TapDetector {
     var _new = Prefs.score += Cell.getScore(value);
     onGameEvent?.call(GameEvent.score, _new);
     if (Pref.record.value >= Prefs.score) return;
-    GamesServices.submitScore(
-        score: Score(
-            androidLeaderboardID: 'CgkIw9yXzt4XEAIQAQ',
-            iOSLeaderboardID: 'ios_leaderboard_id',
-            value: Prefs.score));
-
+    GameHub.submitScore(Prefs.score);
     Pref.record.set(Prefs.score);
     _newRecord = Prefs.score;
   }
