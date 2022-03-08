@@ -14,8 +14,7 @@ class Components {
         tag: "score",
         child: GestureDetector(
             onTap: () {
-              Analytics.design('guiClick:record:$source');
-              GamesServices.showLeaderboards();
+              GameHub.showLeaderboards(source);
               onTap?.call();
             },
             child:

@@ -1,5 +1,7 @@
 import 'package:games_services/games_services.dart';
 
+import 'analytic.dart';
+
 class GameHub {
   static void submitScore(int score) {
     GamesServices.submitScore(
@@ -9,4 +11,8 @@ class GameHub {
             value: score));
   }
 
+  static void showLeaderboards(String source) {
+    Analytics.design('guiClick:record:$source');
+    GamesServices.showLeaderboards();
+  }
 }
