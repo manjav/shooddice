@@ -35,6 +35,12 @@ class Prefs {
     _instance!.setInt(key, value);
     // if (backup) _backup();
   }
+  static int increase(String key, int value) {
+    if (value == 0) return 0;
+    var newValue = getInt(key) + value;
+    setInt(key, newValue, false);
+    return newValue;
+  }
 
   static int getBig(int value) => _instance!.getInt("big_$value") ?? 0;
   static void increaseBig(int value) {
@@ -140,7 +146,6 @@ extension PrefExt on Pref {
   }
 
   int increase(int value, {bool backup = true}) {
-    if (value == 0) return 0;
-    return set(this.value + value, backup: backup);
+    return Prefs.increase(name, this.value + value);
   }
 }
