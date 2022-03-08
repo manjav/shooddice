@@ -12,6 +12,7 @@ class GameHub {
   }
 
   static void showLeaderboards(String source) {
+    Analytics.funnle("rankclicks");
     Analytics.design('guiClick:record:$source');
     GamesServices.showLeaderboards();
   }

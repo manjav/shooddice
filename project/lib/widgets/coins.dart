@@ -153,6 +153,7 @@ class _CoinsState extends State<Coins> with TickerProviderStateMixin {
                   ]),
                   onTap: () {
                     if (widget.clickable) {
+                      Analytics.funnle("shopclicks");
                       Analytics.design('guiClick:shop:${widget.source}');
                       if (widget.onTap != null) {
                         widget.onTap?.call();
