@@ -267,7 +267,7 @@ class MyGame extends FlameGame with TapDetector {
         Analytics.funnle("boost_removeone");
         _removeCell(cell.column, cell.row, true);
       } else {
-        Analytics.funnle("boost_removeone");
+        Analytics.funnle("boost_removecolor");
         _removeCellsByValue(cell.value);
       }
       removingMode!.increase(-1);
