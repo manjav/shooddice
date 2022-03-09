@@ -297,9 +297,11 @@ class _ShopDialogState extends AbstractDialogState<ShopDialog> {
   }
 
   _deliverProduct(PurchaseDetails purchaseDetails) {
+    Analytics.funnle("purchase");
     var p = _findProduct(purchaseDetails.productID);
     var type = "no_ads";
     if (purchaseDetails.productID == "no_ads") {
+      Analytics.funnle("noads");
       Pref.noAds.set(1);
     } else {
       type = "coin";

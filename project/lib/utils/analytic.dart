@@ -14,6 +14,19 @@ class Analytics {
   static late AppsflyerSdk _appsflyerSdk;
   static late FirebaseAnalytics _firebaseAnalytics;
 
+  static final _funnelConfigs = {
+    "purchase": [1],
+    "adinterstitial": [1],
+    "adrewardedad": [1, 10, 20, 30, 40, 50],
+    "adbannerclick": [1, 5, 10, 20],
+    "round_end": [5, 10, 20, 30, 50],
+    "big6": [1],
+    "big7": [1],
+    "big10": [1],
+    "boost_removeone": [1],
+    "boost_removecolor": [1]
+  };
+
   static init(FirebaseAnalytics analytics) {
     _firebaseAnalytics = analytics;
 
@@ -154,6 +167,26 @@ class Analytics {
     };
     GameAnalytics.addProgressionEvent(map);
     if (round % 3 == 0) _appsflyerSdk.logEvent("end_round", map);
+  }
+
+  static funnle(String name) {
+    name = "fnl_$name";
+    var step = Prefs.increase(name, 1);
+
+    // Unique events
+    if (_funnelConfigs.containsKey(name)) {
+      var values = _funnelConfigs[name];
+      if (values!.firstWhere((x) => x == step) > -1) {
+        _funnle("${name}_$step");
+      }
+      return;
+    }
+    _funnle(name, step);
+  }
+
+  static _funnle(String name, [int value = -1]) {
+    design(name);
+    _appsflyerSdk.logEvent(name, {});
   }
 
   static Future<void> design(String name,
