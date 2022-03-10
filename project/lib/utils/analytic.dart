@@ -15,16 +15,13 @@ class Analytics {
   static late FirebaseAnalytics _firebaseAnalytics;
 
   static final _funnelConfigs = {
-    "purchase": [1],
     "adinterstitial": [1],
-    "adrewardedad": [1, 10, 20, 30, 40, 50],
+    "adrewardedad": [1, 4, 10, 20, 30],
     "adbannerclick": [1, 5, 10, 20],
-    "round_end": [5, 10, 20, 30, 50],
+    "round_end": [1, 2, 4, 8],
     "big6": [1],
     "big7": [1],
     "big10": [1],
-    "boost_removeone": [1],
-    "boost_removecolor": [1]
   };
 
   static init(FirebaseAnalytics analytics) {
@@ -170,7 +167,6 @@ class Analytics {
   }
 
   static funnle(String name) {
-    name = "fnl_$name";
     var step = Prefs.increase(name, 1);
 
     // Unique events
@@ -185,6 +181,7 @@ class Analytics {
   }
 
   static _funnle(String name, [int value = -1]) {
+    // print("_funnle $name  value $value");
     design(name);
     _appsflyerSdk.logEvent(name, {});
   }
