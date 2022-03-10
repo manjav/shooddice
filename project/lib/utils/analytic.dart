@@ -1,9 +1,11 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:appsflyer_sdk/appsflyer_sdk.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:gameanalytics_sdk/gameanalytics.dart';
+import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:project/dialogs/shop.dart';
 import 'package:project/utils/localization.dart';
 import 'package:project/utils/prefs.dart';
@@ -15,16 +17,13 @@ class Analytics {
   static late FirebaseAnalytics _firebaseAnalytics;
 
   static final _funnelConfigs = {
-    "purchase": [1],
     "adinterstitial": [1],
-    "adrewardedad": [1, 10, 20, 30, 40, 50],
+    "adrewardedad": [1, 4, 10, 20, 30],
     "adbannerclick": [1, 5, 10, 20],
-    "round_end": [5, 10, 20, 30, 50],
+    "round_end": [1, 2, 4, 8],
     "big6": [1],
     "big7": [1],
     "big10": [1],
-    "boost_removeone": [1],
-    "boost_removecolor": [1]
   };
 
   static init(FirebaseAnalytics analytics) {
@@ -85,16 +84,16 @@ class Analytics {
     _firebaseAnalytics.setUserProperty(name: "test_variant", value: variantId);
   }
 
-  static Future<void> purchase(String currency, int amount, String itemId,
-      String itemType, String receipt, String signature) async {
-    // if (iOS) {
-    //   await _firebaseAnalytics.logEcommercePurchase(
-    //       currency: currency,
-    //       value: amount,
-    //       transactionId: signature,
-    //       origin: itemId,
-    //       coupon: receipt);
-    // }
+  static Future<void> purchase(
+      String currency,
+      double amount,
+      String itemId,
+      String itemType,
+      String receipt,
+      PurchaseVerificationData verificationData) async {
+    var signature = verificationData.source;
+    var localVerificationData = verificationData.localVerificationData;
+
     var data = {
       "currency": currency,
       "cartType": "shop",
@@ -105,6 +104,17 @@ class Analytics {
       "signature": signature,
     };
     GameAnalytics.addBusinessEvent(data);
+
+    if (Platform.isAndroid) {
+      _appsflyerSdk.validateAndLogInAppAndroidPurchase("shop_base64".l(),
+          signature, localVerificationData, amount.toString(), currency, null);
+    } else {
+      await _firebaseAnalytics.logPurchase(
+          currency: currency,
+          value: amount,
+          transactionId: signature,
+          coupon: receipt);
+    }
   }
 
   static Future<void> ad(
@@ -170,7 +180,6 @@ class Analytics {
   }
 
   static funnle(String name) {
-    name = "fnl_$name";
     var step = Prefs.increase(name, 1);
 
     // Unique events
@@ -184,9 +193,10 @@ class Analytics {
     _funnle(name, step);
   }
 
-  static _funnle(String name, [int value = -1]) {
-    design(name);
-    _appsflyerSdk.logEvent(name, {});
+  static _funnle(String name, [int step = -1]) {
+    // print("_funnle $name  value $value");
+    design(name, parameters: {"step":step});
+    _appsflyerSdk.logEvent(name, {"step":step});
   }
 
   static Future<void> design(String name,
