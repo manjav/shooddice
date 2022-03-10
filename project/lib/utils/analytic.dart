@@ -193,10 +193,10 @@ class Analytics {
     _funnle(name, step);
   }
 
-  static _funnle(String name, [int value = -1]) {
+  static _funnle(String name, [int step = -1]) {
     // print("_funnle $name  value $value");
-    design(name);
-    _appsflyerSdk.logEvent(name, {});
+    design(name, parameters: {"step":step});
+    _appsflyerSdk.logEvent(name, {"step":step});
   }
 
   static Future<void> design(String name,
