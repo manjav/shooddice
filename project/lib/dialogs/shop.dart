@@ -46,7 +46,6 @@ class _ShopDialogState extends AbstractDialogState<ShopDialog> {
   var coins = <String, ProductDetails>{};
   var others = <String, ProductDetails>{};
   static const String itemPrefix = "item_";
-  final InAppPurchase _inAppPurchase = InAppPurchase.instance;
   late StreamSubscription<List<PurchaseDetails>> _subscription;
 
   @override
@@ -67,7 +66,7 @@ class _ShopDialogState extends AbstractDialogState<ShopDialog> {
     }
 
     final Stream<List<PurchaseDetails>> purchaseUpdated =
-        _inAppPurchase.purchaseStream;
+        InAppPurchase.instance.purchaseStream;
     _subscription = purchaseUpdated.listen((purchaseDetailsList) {
       _listenToPurchaseUpdated(purchaseDetailsList);
     }, onDone: () => _subscription.cancel());
@@ -308,8 +307,8 @@ class _ShopDialogState extends AbstractDialogState<ShopDialog> {
       Coins.change(p!.amount, "shop", purchaseDetails.productID);
     }
 
-    Analytics.purchase(p!.currencyCode, (p.rawPrice * 100).round(), p.id, type,
-        purchaseDetails.purchaseID!, purchaseDetails.verificationData.source);
+    Analytics.purchase(p!.currencyCode, p.rawPrice, p.id, type,
+        purchaseDetails.purchaseID!, purchaseDetails.verificationData);
   }
 }
 
