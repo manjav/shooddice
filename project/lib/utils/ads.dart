@@ -201,7 +201,7 @@ class Ads {
     myAd.clearAd();
     await _waitForClose(place);
     Analytics.funnle("adinterstitial");
-    Analytics.funnle("adinterstitial_n");
+    Analytics.design("adinterstitial_n");
   }
 
   static Future<RewardItem?> showRewarded() async {
@@ -239,7 +239,7 @@ class Ads {
     if (reward != null) {
       Quests.increase(QuestType.video, 1);
       Analytics.funnle("adrewarded");
-      Analytics.funnle("adrewarded_n");
+      Analytics.design("adrewarded_n");
     }
     return reward;
   }
