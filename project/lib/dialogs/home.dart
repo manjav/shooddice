@@ -236,7 +236,7 @@ class _HomeDialogState extends AbstractDialogState<HomeDialog> {
         padding: EdgeInsets.fromLTRB(2.d, 6.d, 0.d, 12.d),
         colors: (available ? TColors.orange : TColors.whiteFlat).value,
         content: Column(children: [
-          SVG.show("calendar", 72.d),
+          SVG.show("daily", 72.d),
           Text("daily_l".l(), style: theme.textTheme.subtitle2)
         ]),
         onTap: () async {

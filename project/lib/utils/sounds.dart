@@ -25,7 +25,7 @@ class Sound {
 
   static Future<void> add(String name) async {
     int soundId =
-        await rootBundle.load("assets/sounds/$name.ogg").then((soundData) {
+        await rootBundle.load("assets/sounds/nums-$name.ogg").then((soundData) {
       return pool.load(soundData);
     });
     map[name] = soundId;

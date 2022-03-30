@@ -208,13 +208,13 @@ extension QuestTypeExt on QuestType {
   String get icon {
     switch (this) {
       case QuestType.ce11:
-        return "ce11";
+        return "q-ce11";
       case QuestType.merges:
-        return "merge";
+        return "q-merge";
       case QuestType.removeone:
         return "boostRemoveOne";
       case QuestType.video:
-        return "tv";
+        return "q-tv";
     }
   }
 

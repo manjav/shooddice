@@ -147,7 +147,7 @@ class Cell extends PositionComponent {
         ..style = PaintingStyle.stroke
         ..color = hiddenMode > 1 ? colors[value].color : Colors.white;
     }
-    if (reward > 0) _rewardPaint = await Svg.load('images/coin.svg');
+    if (reward > 0) _rewardPaint = await Svg.load('images/nums-coin.svg');
 
     size = Vector2(1.3, 1.3);
     var controller = EffectController(
