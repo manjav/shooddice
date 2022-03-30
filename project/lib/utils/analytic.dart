@@ -9,7 +9,6 @@ import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:project/dialogs/shop.dart';
 import 'package:project/utils/localization.dart';
 import 'package:project/utils/prefs.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 
 class Analytics {
   static late int variant = 1;
@@ -58,13 +57,13 @@ class Analytics {
   }
 
   static Future<void> updateVariantIDs() async {
-    var packageInfo = await PackageInfo.fromPlatform();
     var testVersion = Prefs.getString("testVersion");
-    if (testVersion.isNotEmpty && testVersion != packageInfo.buildNumber) {
+    var version = "app_version".l();
+    if (testVersion.isNotEmpty && testVersion != version) {
       return;
     }
     if (testVersion.isEmpty) {
-      Prefs.setString("testVersion", packageInfo.buildNumber);
+      Prefs.setString("testVersion", version);
     }
     var testName = "res-dayquest";
     var variantId =
@@ -195,8 +194,8 @@ class Analytics {
 
   static _funnle(String name, [int step = -1]) {
     // print("_funnle $name  value $value");
-    design(name, parameters: {"step":step});
-    _appsflyerSdk.logEvent(name, {"step":step});
+    design(name, parameters: {"step": step});
+    _appsflyerSdk.logEvent(name, {"step": step});
   }
 
   static Future<void> design(String name,
