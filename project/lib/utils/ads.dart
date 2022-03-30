@@ -9,7 +9,7 @@ import 'package:project/dialogs/quests.dart';
 import 'package:project/utils/analytic.dart';
 import 'package:project/utils/prefs.dart';
 import 'package:project/utils/utils.dart';
-import 'package:unity_ads_plugin/unity_ads.dart';
+import 'package:unity_ads_plugin/unity_ads_plugin.dart';
 
 class Ads {
   static final Map<AdPlace, MyAd> _placements = {
@@ -44,25 +44,15 @@ class Ads {
       _getRewarded();
     } else if (selectedSDK == AdSDK.unity) {
       UnityAds.init(
-          gameId: "4230791",
-          listener: (UnityAdState state, data) {
-            AdPlace adPlace = _getPlacement(data['placementId']);
-            if (state == UnityAdState.ready) {
-              _updateState(adPlace, AdState.loaded);
-            } else if (state == UnityAdState.started) {
-              _updateState(adPlace, AdState.show);
-            } else if (state == UnityAdState.complete) {
-              reward = RewardItem(1, AdState.rewardReceived.name);
-              _updateState(adPlace, AdState.rewardReceived);
-              _updateState(adPlace, AdState.closed);
-            } else if (state == UnityAdState.skipped) {
-              reward = RewardItem(1, AdState.closed.name);
-              _updateState(adPlace, AdState.closed);
-            } else if (state == UnityAdState.error) {
-              _updateState(adPlace, AdState.failedLoad);
-            }
-            // debugPrint("UnityAds ==> state: $state, $data");
-          });
+        gameId: "4230791",
+        onComplete: () {
+          _getInterstitial(AdPlace.interstitialVideo);
+          _getInterstitial(AdPlace.interstitial);
+          _getRewarded();
+        },
+        onFailed: (error, message) =>
+            debugPrint('UnityAds Initialization Failed: $error $message'),
+      );
     }
   }
 
@@ -76,7 +66,7 @@ class Ads {
     var _listener = BannerAdListener(
         onAdLoaded: (ad) => _updateState(place, AdState.loaded, ad),
         onAdFailedToLoad: (ad, error) {
-          _updateState(place, AdState.failedLoad, ad, error);
+          _updateState(place, AdState.failedLoad, ad, error.toString());
           ad.dispose();
         },
         onAdOpened: (ad) {
@@ -122,6 +112,12 @@ class Ads {
 
   static void _getInterstitial(AdPlace place) {
     var myAd = _placements[place]!;
+
+    if (myAd.sdk == AdSDK.unity) {
+      _getUnityAd(place);
+      return;
+    }
+
     InterstitialAd.load(
         adUnitId: place.id,
         request: _request,
@@ -131,7 +127,7 @@ class Ads {
           myAd.addAd(ad);
           ad.setImmersiveMode(true);
         }, onAdFailedToLoad: (LoadAdError error) {
-          _updateState(place, AdState.failedLoad, null, error);
+          _updateState(place, AdState.failedLoad, null, error.toString());
           myAd.clearAd();
           myAd.attempts++;
           if (myAd.attempts <= maxFailedLoadAttempts) {
@@ -143,6 +139,12 @@ class Ads {
   static void _getRewarded() {
     var place = AdPlace.rewarded;
     var myAd = _placements[place]!;
+
+    if (myAd.sdk == AdSDK.unity) {
+      _getUnityAd(place);
+      return;
+    }
+
     RewardedAd.load(
         adUnitId: place.id,
         request: _request,
@@ -151,7 +153,7 @@ class Ads {
           myAd.addAd(ad);
           _updateState(place, AdState.loaded, ad);
         }, onAdFailedToLoad: (LoadAdError error) {
-          _updateState(place, AdState.failedLoad, null, error);
+          _updateState(place, AdState.failedLoad, null, error.toString());
           myAd.clearAd();
           myAd.attempts++;
           if (myAd.attempts <= maxFailedLoadAttempts) {
@@ -192,7 +194,7 @@ class Ads {
           _getInterstitial(place);
         },
         onAdFailedToShowFullScreenContent: (InterstitialAd ad, AdError error) {
-          _updateState(place, AdState.failedShow, ad, error);
+          _updateState(place, AdState.failedShow, ad, error.toString());
           ad.dispose();
           _getInterstitial(place);
         },
@@ -224,7 +226,7 @@ class Ads {
           _getRewarded();
         },
         onAdFailedToShowFullScreenContent: (RewardedAd ad, AdError error) {
-          _updateState(myAd.type, AdState.failedShow, ad, error);
+          _updateState(myAd.type, AdState.failedShow, ad, error.toString());
           ad.dispose();
           _getRewarded();
         },
@@ -244,10 +246,35 @@ class Ads {
     return reward;
   }
 
-  static Future<RewardItem?> _showUnityAd([AdPlace? id]) async {
-    var placement = id ?? AdPlace.rewarded;
-    UnityAds.showVideoAd(placementId: placement.name);
-    var p = _placements[placement]!;
+  static void _getUnityAd(AdPlace place) {
+    UnityAds.load(
+        placementId: place.name,
+        onComplete: (placementId) {
+          _updateState(place, AdState.loaded, null);
+        },
+        onFailed: (placementId, error, message) {
+          _updateState(place, AdState.failedLoad, null, error.toString());
+        });
+  }
+
+  static Future<RewardItem?> _showUnityAd(AdPlace place) async {
+    UnityAds.showVideoAd(
+      placementId: place.name,
+      onStart: (id) => _updateState(_getPlace(id), AdState.show),
+      onClick: (id) => _updateState(_getPlace(id), AdState.clicked),
+      onSkipped: (id) {
+        reward = RewardItem(1, AdState.closed.name);
+        _updateState(_getPlace(id), AdState.closed);
+      },
+      onComplete: (id) {
+        reward = RewardItem(1, AdState.rewardReceived.name);
+        _updateState(_getPlace(id), AdState.rewardReceived);
+      },
+      onFailed: (id, e, messaeg) =>
+          _updateState(_getPlace(id), AdState.failedShow, null, messaeg),
+    );
+    
+    var p = _placements[place]!;
     p.state = AdState.show;
     const d = Duration(milliseconds: 300);
     while (p.state != AdState.closed && p.state != AdState.loaded) {
@@ -256,7 +283,7 @@ class Ads {
     return reward!.type == AdState.rewardReceived.name ? reward : null;
   }
 
-  static AdPlace _getPlacement(String id) {
+  static AdPlace _getPlace(String id) {
     if (id.contains("Banner")) return AdPlace.banner;
     if (id.contains("Interstitial")) return AdPlace.interstitial;
     if (id.contains("InterstitialVideo")) return AdPlace.interstitialVideo;
@@ -264,7 +291,7 @@ class Ads {
   }
 
   static void _updateState(AdPlace place, AdState state,
-      [Ad? ad, AdError? error]) {
+      [Ad? ad, String? error]) {
     if (!(_placements[place]!.state == AdState.loaded &&
         state != AdState.show)) {
       _placements[place]!.state = state;
