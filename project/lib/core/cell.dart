@@ -187,8 +187,9 @@ class Cell extends PositionComponent {
     _valuePaint!.render(
         canvas, "${hiddenMode == 1 ? "?" : getScore(value)}", _valuePos,
         anchor: Anchor.center);
-    if (reward > 0)
+    if (reward > 0) {
       _rewardPaint!.renderPosition(canvas, _rewardPos, _rewardSize);
+    }
   }
 
   @override
