@@ -37,7 +37,7 @@ class _ConfirmState extends AbstractDialogState<Confirm> {
       SizedBox(
           width: 120.d,
           height: 120.d,
-          child: const RiveAnimation.asset('anims/dado-character.riv',
+          child: const RiveAnimation.asset('anims/${Asset.prefix}character.riv',
               stateMachines: ["happyState"])),
       SizedBox(height: 12.d),
       Text(widget.text, style: theme.textTheme.headline6),

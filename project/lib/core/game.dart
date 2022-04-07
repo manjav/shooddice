@@ -471,7 +471,7 @@ class MyGame extends FlameGame with TapDetector {
         ? 0
         : random.nextInt(3) + _mergesCount * 2;
     var sprite = await Sprite.load(
-        'dado-celebration-${(_mergesCount - limit).clamp(0, 3)}.png');
+        '${Asset.prefix}celebration-${(_mergesCount - limit).clamp(0, 3)}.png');
     var celebration = SpriteComponent(
         position: Vector2(_bgRect!.center.dx, _bgRect!.center.dy),
         size: Vector2.zero(),
@@ -544,7 +544,7 @@ class ColumnHint extends PositionComponent {
   }
 
   Future<void> _create() async {
-    _hand = await Svg.load('images/dado-hand.svg');
+    _hand = await Svg.load('images/${Asset.prefix}hand.svg');
   }
 
   @override
@@ -570,7 +570,7 @@ class ColumnHint extends PositionComponent {
 
   show(double x, int direction) async {
     var side = direction == 0 ? "vertical" : (direction > 0 ? "right" : "left");
-    _arrow = await Svg.load('images/dado-arrow-$side.svg');
+    _arrow = await Svg.load('images/${Asset.prefix}arrow-$side.svg');
     alpha = 1;
     rect = RRect.fromLTRBXY(
         x - Cell.radius, rect.top, x + Cell.radius, rect.bottom, 8.d, 8.d);

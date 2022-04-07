@@ -74,7 +74,7 @@ class _ReviveDialogState extends AbstractDialogState<ReviveDialog> {
                 Text(Prefs.score.format(), style: theme.textTheme.headline3)),
         const Center(
             heightFactor: 0.85,
-            child: RiveAnimation.asset('anims/dado-revive.riv',
+            child: RiveAnimation.asset('anims/${Asset.prefix}revive.riv',
                 stateMachines: ["machine"])),
         buttonFactory(
             theme,

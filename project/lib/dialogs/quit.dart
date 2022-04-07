@@ -55,7 +55,8 @@ class _QuitDialogState extends AbstractDialogState<QuitDialog> {
               ? SizedBox(
                   width: 120.d,
                   height: 120.d,
-                  child: const RiveAnimation.asset('anims/dado-character.riv',
+                  child: const RiveAnimation.asset(
+                      'anims/${Asset.prefix}character.riv',
                       stateMachines: ["unhappyState"]))
               : const SizedBox()
         ]));
