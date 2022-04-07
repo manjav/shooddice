@@ -44,7 +44,7 @@ class Ads {
       _getRewarded();
     } else if (selectedSDK == AdSDK.unity) {
       UnityAds.init(
-        gameId: "4230791",
+        gameId: "4634440",
         onComplete: () {
           _getInterstitial(AdPlace.interstitialVideo);
           _getInterstitial(AdPlace.interstitial);
