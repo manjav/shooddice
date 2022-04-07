@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:project/dialogs/dialogs.dart';
 import 'package:project/theme/skinnedtext.dart';
 import 'package:project/theme/themes.dart';
+import 'package:project/utils/analytic.dart';
 import 'package:project/utils/localization.dart';
 import 'package:project/utils/prefs.dart';
 import 'package:project/utils/utils.dart';
@@ -96,10 +97,12 @@ class _QuestsDialogState extends AbstractDialogState<QuestsDialog> {
 }
 
 class Quests {
+  static bool isActive = false;
   static Function(Quest)? onQuestComplete;
   static Map<QuestType, Quest> list = {};
 
   static void init() {
+    isActive = Analytics.variant == 3 && Pref.playCount.value > 10;
     _addQuest(QuestType.merges);
     _addQuest(QuestType.removeone);
     _addQuest(QuestType.video);
@@ -119,7 +122,7 @@ class Quests {
   }
 
   static void increase(QuestType type, int value) {
-    if (value == 0) return;
+    if (!isActive || value == 0) return;
     var quest = list[type];
     var key = "q_${type.name}";
     var res = Prefs.getInt(key) + value;

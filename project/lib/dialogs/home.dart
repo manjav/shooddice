@@ -69,8 +69,10 @@ class _HomeDialogState extends AbstractDialogState<HomeDialog> {
     if (Pref.tutorMode.value == 0) return const SizedBox();
     var theme = Theme.of(context);
     stepChildren.clear();
-    stepChildren.add(_questButton(theme));
-    stepChildren.add(_dailyButton(theme));
+    if (Quests.isActive) {
+      stepChildren.add(_questButton(theme));
+      stepChildren.add(_dailyButton(theme));
+    }
     stepChildren.add(bannerAdsFactory("start"));
     return super.build(context);
   }
