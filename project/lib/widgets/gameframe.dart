@@ -193,7 +193,8 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
                 Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
               SizedBox(
                   width: 80.d,
-                  child: const RiveAnimation.asset('anims/nums-character.riv',
+                  child: const RiveAnimation.asset(
+                      'anims/${Asset.prefix}character.riv',
                       stateMachines: ["runState"])),
               Container(
                   height: 44.d,

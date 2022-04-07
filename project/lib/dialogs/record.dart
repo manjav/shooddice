@@ -51,7 +51,7 @@ class _RecordDialogState extends AbstractDialogState<RecordDialog> {
           top: 60, child: Components.confetty(widget.confettiController)),
       const Center(
           heightFactor: 0.52,
-          child: RiveAnimation.asset('anims/nums-record.riv',
+          child: RiveAnimation.asset('anims/${Asset.prefix}record.riv',
               stateMachines: ["machine"])),
     ]);
   }

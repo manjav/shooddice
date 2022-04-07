@@ -1,5 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:project/utils/prefs.dart';
+import 'package:project/utils/utils.dart';
 import 'package:soundpool/soundpool.dart';
 import 'package:vibration/vibration.dart';
 
@@ -24,8 +25,9 @@ class Sound {
   }
 
   static Future<void> add(String name) async {
-    int soundId =
-        await rootBundle.load("assets/sounds/nums-$name.ogg").then((soundData) {
+    int soundId = await rootBundle
+        .load("assets/sounds/${Asset.prefix}$name.ogg")
+        .then((soundData) {
       return pool.load(soundData);
     });
     map[name] = soundId;

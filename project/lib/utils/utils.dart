@@ -57,9 +57,14 @@ extension IntExt on int {
   int max(int max) => this > max ? max : this;
 }
 
+class Asset {
+  static const String prefix = "nums-";
+}
+
 class SVG {
   static SvgPicture show(String name, double size) {
-    return SvgPicture.asset("assets/images/nums-$name.svg", width: size);
+    return SvgPicture.asset("assets/images/${Asset.prefix}$name.svg",
+        width: size);
   }
 
   static SkinnedText icon(String name, ThemeData theme, {double? scale}) {

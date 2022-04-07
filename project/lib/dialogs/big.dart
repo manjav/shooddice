@@ -55,7 +55,7 @@ class _BigBlockDialogState extends AbstractDialogState<BigBlockDialog> {
           top: 0,
           width: 180.d,
           height: 180.d,
-          child: const RiveAnimation.asset('anims/nums-shine.riv',
+          child: const RiveAnimation.asset('anims/${Asset.prefix}shine.riv',
               stateMachines: ["machine"])),
       Positioned(
           top: 48.d,

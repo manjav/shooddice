@@ -147,7 +147,9 @@ class Cell extends PositionComponent {
         ..style = PaintingStyle.stroke
         ..color = hiddenMode > 1 ? colors[value].color : Colors.white;
     }
-    if (reward > 0) _rewardPaint = await Svg.load('images/nums-coin.svg');
+    if (reward > 0) {
+      _rewardPaint = await Svg.load('images/${Asset.prefix}coin.svg');
+    }
 
     size = Vector2(1.3, 1.3);
     var controller = EffectController(
@@ -185,7 +187,8 @@ class Cell extends PositionComponent {
     _valuePaint!.render(
         canvas, "${hiddenMode == 1 ? "?" : getScore(value)}", _valuePos,
         anchor: Anchor.center);
-    if (reward > 0) _rewardPaint!.renderPosition(canvas, _rewardPos, _rewardSize);
+    if (reward > 0)
+      _rewardPaint!.renderPosition(canvas, _rewardPos, _rewardSize);
   }
 
   @override
