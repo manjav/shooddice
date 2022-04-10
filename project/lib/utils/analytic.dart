@@ -206,9 +206,12 @@ class Analytics {
       {Map<String, dynamic>? parameters}) async {
     _firebaseAnalytics.logEvent(name: name, parameters: parameters);
 
-    var data = parameters == null
-        ? {"eventId": name}
-        : {"eventId": name, "value": parameters.values.first};
+    var data = {"eventId": name};
+    if (parameters != null) {
+      for (var k in parameters.keys) {
+        data[k] = parameters[k].toString();
+      }
+    }
     GameAnalytics.addDesignEvent(data);
   }
 
