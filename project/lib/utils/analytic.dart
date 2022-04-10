@@ -184,8 +184,12 @@ class Analytics {
     // Unique events
     if (_funnelConfigs.containsKey(name)) {
       var values = _funnelConfigs[name];
-      if (values!.firstWhere((x) => x == step) > -1) {
-        _funnle("${name}_$step");
+
+      for (var value in values!) {
+        if (value == step) {
+          _funnle("${name}_$step");
+          break;
+        }
       }
       return;
     }
