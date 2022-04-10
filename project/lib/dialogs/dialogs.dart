@@ -104,15 +104,22 @@ class AbstractDialogState<T extends AbstractDialog> extends State<T> {
     }
 
     var shouldPop = true;
-    var exchangeMode = "raw";
+    var exchangeMode = "withoutAd";
     if (showAd) {
       var reward = await Ads.showRewarded();
       shouldPop = reward != null;
-      exchangeMode = "ad";
+      exchangeMode = "withAd";
     } else if (coin > 0 && Ads.showSuicideInterstitial) {
       await Ads.showInterstitial(AdPlace.interstitial);
     }
-    Analytics.design("adconfirm_$type", parameters: {"type":exchangeMode, "coin":coin});
+    if (widget.mode == DialogMode.big ||
+        widget.mode == DialogMode.cube ||
+        widget.mode == DialogMode.piggy ||
+        widget.mode == DialogMode.record) {
+      await Coins.change(coin, "game", widget.mode.name);
+    }
+    Analytics.design("adconfirm_$type",
+        parameters: {"type": exchangeMode, "coin": coin});
     if (shouldPop) Rout.pop(context, [type, coin]);
   }
 

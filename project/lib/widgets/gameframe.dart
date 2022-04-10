@@ -320,13 +320,6 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
         return;
       }
       MyGame.isPlaying = true;
-      if (event == GameEvent.rewardBig ||
-          event == GameEvent.rewardCube ||
-          event == GameEvent.rewardPiggy) {
-        await Future.delayed(const Duration(milliseconds: 250));
-        await Coins.change(result[1], "game", event.name);
-        return;
-      }
 
       if (event == GameEvent.completeTutorial) {
         Prefs.setString("cells", "");
