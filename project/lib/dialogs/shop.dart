@@ -45,7 +45,7 @@ class _ShopDialogState extends AbstractDialogState<ShopDialog> {
   String _message = "wait_l".l();
   var coins = <String, ProductDetails>{};
   var others = <String, ProductDetails>{};
-  static const String itemPrefix = "coin_";
+  static const String itemPrefix = "item_";
   late StreamSubscription<List<PurchaseDetails>> _subscription;
 
   @override
