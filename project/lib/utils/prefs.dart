@@ -36,6 +36,7 @@ class Prefs {
     _instance!.setInt(key, value);
     // if (backup) _backup();
   }
+
   static int increase(String key, int value) {
     if (value == 0) return 0;
     var newValue = getInt(key) + value;
@@ -149,6 +150,6 @@ extension PrefExt on Pref {
   }
 
   int increase(int value, {bool backup = true}) {
-    return Prefs.increase(name, this.value + value);
+    return Prefs.increase(name, value);
   }
 }

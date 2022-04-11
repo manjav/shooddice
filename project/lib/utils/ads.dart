@@ -273,7 +273,7 @@ class Ads {
       onFailed: (id, e, messaeg) =>
           _updateState(_getPlace(id), AdState.failedShow, null, messaeg),
     );
-    
+
     var p = _placements[place]!;
     p.state = AdState.show;
     const d = Duration(milliseconds: 300);
@@ -368,13 +368,13 @@ extension AdSDKExt on AdSDK {
 
 enum AdState {
   closed,
-  clicked,
+  clicked,//Clicked = 1;
+  show,// Show = 2;
+  failedShow,//FailedShow = 3;
+  rewardReceived,//RewardReceived = 4;
+  request,//Request = 5;
+  loaded,//Loaded = 6;
   failedLoad,
-  failedShow,
-  loaded,
-  rewardReceived,
-  request,
-  show,
 }
 
 extension AdExt on AdState {
