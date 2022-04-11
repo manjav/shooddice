@@ -204,8 +204,6 @@ class _HomeDialogState extends AbstractDialogState<HomeDialog> {
         (Prefs.getString("cells").isEmpty ? "start_l" : "continue_l").l();
     _onUpdate();
     if (result != null) {
-      await Future.delayed(const Duration(milliseconds: 100));
-      await Coins.change(result[1], "game", result[0]);
       await RatingDialog.showRating(context);
     }
   }

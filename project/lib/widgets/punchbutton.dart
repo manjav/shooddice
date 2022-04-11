@@ -48,6 +48,8 @@ class _PunchButtonState extends State<PunchButton>
     with TickerProviderStateMixin {
   AnimationController? animation;
 
+  bool _disposed = false;
+
   @override
   void initState() {
     super.initState();
@@ -60,7 +62,7 @@ class _PunchButtonState extends State<PunchButton>
         animation!.reverse();
       } else if (status == AnimationStatus.dismissed) {
         await Future.delayed(Duration(seconds: widget.punchGap ?? 2));
-        animation?.forward();
+        if (!_disposed) animation!.forward();
       }
     });
     animation!.addListener(() {
@@ -92,6 +94,7 @@ class _PunchButtonState extends State<PunchButton>
 
   @override
   void dispose() {
+    _disposed = true;
     animation!.stop();
     animation!.dispose();
     super.dispose();

@@ -184,8 +184,12 @@ class Analytics {
     // Unique events
     if (_funnelConfigs.containsKey(name)) {
       var values = _funnelConfigs[name];
-      if (values!.firstWhere((x) => x == step) > -1) {
-        _funnle("${name}_$step");
+
+      for (var value in values!) {
+        if (value == step) {
+          _funnle("${name}_$step");
+          break;
+        }
       }
       return;
     }
@@ -202,9 +206,12 @@ class Analytics {
       {Map<String, dynamic>? parameters}) async {
     _firebaseAnalytics.logEvent(name: name, parameters: parameters);
 
-    var data = parameters == null
-        ? {"eventId": name}
-        : {"eventId": name, "value": parameters.values.first};
+    var data = {"eventId": name};
+    if (parameters != null) {
+      for (var k in parameters.keys) {
+        data[k] = parameters[k].toString();
+      }
+    }
     GameAnalytics.addDesignEvent(data);
   }
 

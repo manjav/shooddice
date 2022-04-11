@@ -34,12 +34,13 @@ class Coins extends StatefulWidget {
   }
 
   static effect(int value, {double? x, double? y, int? duraion}) async {
-    Coins._onStart.last.call(value, x, y, duraion);
-    await Future.delayed(Duration(milliseconds: Coins.duration));
+    var d = duraion ?? Coins.defaultDuration;
+    Coins._onStart.last.call(value, d, x, y);
+    await Future.delayed(Duration(milliseconds: d + 300));
   }
 
-  static final List<Function(int, double?, double?, int?)> _onStart = [];
-  static int duration = 0;
+  static final List<Function(int, int, double?, double?)> _onStart = [];
+  static const int defaultDuration = 2000;
   final String source;
   final Function? onTap;
   final bool clickable;
@@ -100,24 +101,24 @@ class _CoinsState extends State<Coins> with TickerProviderStateMixin {
     return AnimatedBuilder(builder: _buildAnimation, animation: _controller);
   }
 
-  void _onCoinStart(int value, double? x, double? y, int? duration) {
-    final d = duration ?? 1500;
+  void _onCoinStart(int value, int duration, double? x, double? y) {
+    final d = (duration * 0.8).round();
     final w = Device.size.width;
     final h = Device.size.height;
     final l = (widget.left ?? _defaultLeft) + 26.d;
     final t = (widget.top ?? _defaultTop) + 4.d;
     _x = _getAnimation(w * 0.38, x ?? l, 0.5, 0.8, Curves.easeInSine);
     _y = _getAnimation(h * 0.5, y ?? t, 0.5, 0.8, Curves.easeInExpo);
-    Coins.duration = (d * 0.8).round();
+    // Coins.duration = (d * 0.8).round();
     _value = value;
     _controller.reset();
     _controller.animateTo(1, duration: Duration(milliseconds: d));
     Sound.play("coin");
-    Timer(Duration(milliseconds: Coins.duration), () {
+    Timer(Duration(milliseconds: d), () {
       if (x == null) {
         _punchController.value = 1;
         _punchController.animateTo(0,
-            duration: Duration(milliseconds: d - Coins.duration));
+            duration: Duration(milliseconds: duration - d));
         Pref.coin.increase(value);
       }
       Sound.play("coins");
