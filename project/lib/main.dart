@@ -1,4 +1,3 @@
-import 'package:device_info/device_info.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +15,6 @@ import 'package:project/utils/prefs.dart';
 import 'package:project/utils/sounds.dart';
 import 'package:project/theme/themes.dart';
 import 'package:project/utils/utils.dart';
-import 'package:smartlook/smartlook.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -116,11 +114,11 @@ class _MainPageState extends State<MainPage> with WidgetsBindingObserver {
   }
 
   _recordApp() async {
-    if (Pref.visitCount.value > 1) return;
+    /* if (Pref.visitCount.value > 1) return;
     DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
     AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
     if (androidInfo.version.sdkInt < 30) return;
-    Smartlook.setupAndStartRecording(SetupOptionsBuilder("sl_key".l()).build());
+    Smartlook.setupAndStartRecording(SetupOptionsBuilder("sl_key".l()).build()); */
   }
 
   @override

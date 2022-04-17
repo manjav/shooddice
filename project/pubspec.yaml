@@ -35,7 +35,7 @@ dependencies:
   screenshot: ^1.2.3
   share: ^2.0.4
   shared_preferences: ^2.0.12
-  smartlook: ^2.0.1
+  # smartlook: ^2.0.1
   soundpool: ^2.1.0
   rive: ^0.8.1
   unity_ads_plugin: ^0.3.3
