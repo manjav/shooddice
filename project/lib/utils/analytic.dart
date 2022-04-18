@@ -71,12 +71,14 @@ class Analytics {
     variant = int.parse(variantId ?? "1");
     debugPrint("testVariantId ==> $variant");
     if (variant == 2) {
-      Price.ad = 100;
-      Price.cube = 20;
-      Price.piggy = 30;
-      Price.record = 20;
-      Price.tutorial = 500;
-      Price.revive = 100;
+      Price.ad = 50;//100
+      Price.big = 10;//20
+      Price.cube = 10;//20
+      Price.piggy = 20;//40
+      Price.record = 10;//20
+      Price.tutorial = 200;//400
+      Price.boost = 200;//100
+      Price.revive = 200;//100
     }
 
     _firebaseAnalytics.setUserProperty(name: "test_name", value: testName);

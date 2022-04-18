@@ -265,10 +265,12 @@ class Ads {
       onSkipped: (id) {
         reward = RewardItem(1, AdState.closed.name);
         _updateState(_getPlace(id), AdState.closed);
+        _getUnityAd(place);
       },
       onComplete: (id) {
         reward = RewardItem(1, AdState.rewardReceived.name);
         _updateState(_getPlace(id), AdState.rewardReceived);
+        _getUnityAd(place);
       },
       onFailed: (id, e, messaeg) =>
           _updateState(_getPlace(id), AdState.failedShow, null, messaeg),
@@ -368,12 +370,12 @@ extension AdSDKExt on AdSDK {
 
 enum AdState {
   closed,
-  clicked,//Clicked = 1;
-  show,// Show = 2;
-  failedShow,//FailedShow = 3;
-  rewardReceived,//RewardReceived = 4;
-  request,//Request = 5;
-  loaded,//Loaded = 6;
+  clicked, //Clicked = 1;
+  show, // Show = 2;
+  failedShow, //FailedShow = 3;
+  rewardReceived, //RewardReceived = 4;
+  request, //Request = 5;
+  loaded, //Loaded = 6;
   failedLoad,
 }
 

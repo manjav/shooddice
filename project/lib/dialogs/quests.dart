@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:project/dialogs/dialogs.dart';
 import 'package:project/theme/skinnedtext.dart';
 import 'package:project/theme/themes.dart';
-import 'package:project/utils/analytic.dart';
 import 'package:project/utils/localization.dart';
 import 'package:project/utils/prefs.dart';
 import 'package:project/utils/utils.dart';
@@ -102,7 +101,7 @@ class Quests {
   static Map<QuestType, Quest> list = {};
 
   static void init() {
-    isActive = Analytics.variant == 3 && Pref.playCount.value > 10;
+    isActive = false; //Analytics.variant == 3 && Pref.playCount.value > 10;
     _addQuest(QuestType.merges);
     _addQuest(QuestType.removeone);
     _addQuest(QuestType.video);

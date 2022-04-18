@@ -58,6 +58,8 @@ class AbstractDialogState<T extends AbstractDialog> extends State<T> {
   List<Widget> stepChildren = <Widget>[];
   int reward = 0;
   Function? onWillPop;
+  bool _enableButton = true;
+
   @override
   void initState() {
     Ads.onUpdate = _onAdsUpdate;
@@ -98,6 +100,8 @@ class AbstractDialogState<T extends AbstractDialog> extends State<T> {
   }
 
   buttonsClick(BuildContext context, String type, int coin, bool showAd) async {
+    if (!_enableButton) return;
+    _enableButton = false;
     if (coin < 0 && Pref.coin.value < -coin) {
       Rout.push(context, ShopDialog());
       return;
