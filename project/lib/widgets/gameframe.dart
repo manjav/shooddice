@@ -331,6 +331,7 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
         if (result[0] == "tutorFinish") {
           await Future.delayed(const Duration(microseconds: 200));
           await Coins.change(Price.tutorial, "game", event.name);
+          Analytics.funnle("tutorFinish");
         }
       }
     }
