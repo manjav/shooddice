@@ -2,7 +2,11 @@ import 'package:games_services/games_services.dart';
 
 import 'analytic.dart';
 
-class GameHub {
+class Games {
+  static Future<void> signIn() async {
+    await GamesServices.signIn();
+  }
+
   static void submitScore(int score) {
     GamesServices.submitScore(
         score: Score(
@@ -11,9 +15,10 @@ class GameHub {
             value: score));
   }
 
-  static void showLeaderboards(String source) {
+  static bool showLeaderboards(String source) {
     Analytics.funnle("rankclicks");
     Analytics.design('guiClick:record:$source');
     GamesServices.showLeaderboards();
+    return true;
   }
 }

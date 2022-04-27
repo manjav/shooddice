@@ -71,14 +71,14 @@ class Analytics {
     variant = int.parse(variantId ?? "1");
     debugPrint("testVariantId ==> $variant");
     if (variant == 2) {
-      Price.ad = 50;//100
-      Price.big = 10;//20
-      Price.cube = 10;//20
-      Price.piggy = 20;//40
-      Price.record = 10;//20
-      Price.tutorial = 200;//400
-      Price.boost = 200;//100
-      Price.revive = 200;//100
+      Price.ad = 50; //100
+      Price.big = 10; //20
+      Price.cube = 10; //20
+      Price.piggy = 20; //40
+      Price.record = 10; //20
+      Price.tutorial = 200; //400
+      Price.boost = 200; //100
+      Price.revive = 200; //100
     }
 
     _firebaseAnalytics.setUserProperty(name: "test_name", value: testName);
@@ -115,6 +115,10 @@ class Analytics {
           value: amount,
           transactionId: signature,
           coupon: receipt);
+    }
+
+    if (itemId == "no_ads") {
+      _appsflyerSdk.logEvent("purchase_no_ads", data);
     }
   }
 

@@ -16,7 +16,7 @@ import 'package:project/core/cells.dart';
 import 'package:project/dialogs/quests.dart';
 import 'package:project/theme/themes.dart';
 import 'package:project/utils/analytic.dart';
-import 'package:project/utils/gamehub.dart';
+import 'package:project/utils/games.dart';
 import 'package:project/utils/prefs.dart';
 import 'package:project/utils/sounds.dart';
 import 'package:project/utils/utils.dart';
@@ -80,7 +80,7 @@ class MyGame extends FlameGame with TapDetector {
     var _new = Prefs.score += Cell.getScore(value);
     onGameEvent?.call(GameEvent.score, _new);
     if (Pref.record.value >= Prefs.score) return;
-    GameHub.submitScore(Prefs.score);
+    Games.submitScore(Prefs.score);
     Pref.record.set(Prefs.score);
     _newRecord = Prefs.score;
   }
@@ -261,10 +261,10 @@ class MyGame extends FlameGame with TapDetector {
       if (cell == null || cell.state != CellState.fixed) return;
       if (removingMode == Pref.boostRemoveOne) {
         Quests.increase(QuestType.removeone, 1);
-        Analytics.design("boost_removeone");
+        Analytics.funnle("boost_removeone");
         _removeCell(cell.column, cell.row, true);
       } else {
-        Analytics.design("boost_removecolor");
+        Analytics.funnle("boost_removecolor");
         _removeCellsByValue(cell.value);
       }
       removingMode!.increase(-1);
@@ -411,6 +411,11 @@ class MyGame extends FlameGame with TapDetector {
 
   void _onCellsInit(Cell cell) {
     _addScore(cell.value);
+
+    // Send block data
+    if (cell.value > 5) {
+      Analytics.funnle("block_${Cell.getScore(cell.value)}");
+    }
 
     // Show big number popup
     if (cell.value > _valueRecord) {

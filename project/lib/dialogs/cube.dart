@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:project/dialogs/dialogs.dart';
 import 'package:project/dialogs/shop.dart';
 import 'package:project/utils/ads.dart';
+import 'package:project/utils/analytic.dart';
 import 'package:project/utils/localization.dart';
 import 'package:project/utils/sounds.dart';
 import 'package:project/utils/utils.dart';
@@ -33,6 +34,7 @@ class _CubeDialogState extends AbstractDialogState<CubeDialog> {
   @override
   void initState() {
     reward = Price.cube;
+    Analytics.funnle("cube");
     Timer(const Duration(milliseconds: 600), () => Sound.play("win"));
     CubeDialog.earnedAt = DateTime.now().millisecondsSinceEpoch;
     super.initState();
