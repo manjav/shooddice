@@ -1,8 +1,9 @@
-import 'package:device_info/device_info.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:install_prompt/install_prompt.dart';
+import 'package:project/dialogs/confirm.dart';
 import 'package:project/dialogs/daily.dart';
 import 'package:project/dialogs/home.dart';
 import 'package:project/dialogs/quests.dart';
@@ -16,7 +17,6 @@ import 'package:project/utils/notification.dart';
 import 'package:project/utils/prefs.dart';
 import 'package:project/utils/sounds.dart';
 import 'package:project/utils/utils.dart';
-import 'package:smartlook/smartlook.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -91,8 +91,15 @@ class _MainPageState extends State<MainPage> with WidgetsBindingObserver {
   }
 
   Future<bool> _onWillPop() async {
-    var result =
-        await Rout.push(context, QuitDialog(), barrierDismissible: true);
+    var result = await Rout.push(
+        context,
+        Confirm(
+            "Install the game on your device to make sure you’ll always have your progress saved and safe!",
+            acceptText: "Install",
+            declineText: "Not yet"));
+    if (result) InstallPrompt.showInstallPrompt();
+    result = await Rout.push(context, QuitDialog(showAvatar: !result),
+        barrierDismissible: true);
     return result != null;
   }
 
@@ -116,13 +123,7 @@ class _MainPageState extends State<MainPage> with WidgetsBindingObserver {
     WidgetsBinding.instance!.addObserver(this);
   }
 
-  _recordApp() async {
-    if (Pref.visitCount.value > 1) return;
-    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-    AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
-    if (androidInfo.version.sdkInt < 30) return;
-    Smartlook.setupAndStartRecording(SetupOptionsBuilder("sl_key".l()).build());
-  }
+  _recordApp() async {}
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
