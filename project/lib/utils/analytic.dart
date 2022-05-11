@@ -65,7 +65,7 @@ class Analytics {
     if (testVersion.isEmpty) {
       Prefs.setString("testVersion", version);
     }
-    var testName = "res-dayquest";
+    var testName = "source-sink";
     var variantId =
         await GameAnalytics.getRemoteConfigsValueAsString(testName, "1");
     variant = int.parse(variantId ?? "1");
