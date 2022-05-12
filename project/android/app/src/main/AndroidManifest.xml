@@ -1,4 +1,5 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="dice.dado.master.merge.puzzle.game.instant" android:targetSandboxVersion="2">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="dice.dado.master.merge.puzzle.game.instant" xmlns:dist="http://schemas.android.com/apk/distribution" android:targetSandboxVersion="2">
+	<dist:module dist:instant="true" />
 	<application android:label="Dice Dado Merge Puzzle" android:allowBackup="false" android:icon="@mipmap/ic_launcher">
 		<activity android:name="game.MainActivity" android:launchMode="singleTop" android:theme="@style/LaunchTheme" android:hardwareAccelerated="true" android:windowSoftInputMode="adjustResize"
 			android:exported="true" android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode">
