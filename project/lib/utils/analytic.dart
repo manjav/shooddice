@@ -184,12 +184,13 @@ class Analytics {
     if (round % 3 == 0) _appsflyerSdk.logEvent("end_round", map);
   }
 
-  static funnle(String name) {
+  static funnle(String type, [String? name]) {
+    name = name == null ? type : "${type}_$name";
     var step = Prefs.increase(name, 1);
 
     // Unique events
-    if (_funnelConfigs.containsKey(name)) {
-      var values = _funnelConfigs[name];
+    if (_funnelConfigs.containsKey(type)) {
+      var values = _funnelConfigs[type];
 
       for (var value in values!) {
         if (value == step) {
@@ -197,15 +198,15 @@ class Analytics {
           break;
         }
       }
-      return;
     }
     _funnle(name, step);
   }
 
   static _funnle(String name, [int step = -1]) {
-    // print("_funnle $name  value $value");
-    design(name, parameters: {"step": step});
-    _appsflyerSdk.logEvent(name, {"step": step});
+    var args = step > 0 ? {"step": step} : null;
+    // print("Analytics _funnle $name args $args");
+    design(name, parameters: args);
+    _appsflyerSdk.logEvent(name, args);
   }
 
   static Future<void> design(String name,
