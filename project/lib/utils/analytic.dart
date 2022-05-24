@@ -17,7 +17,7 @@ class Analytics {
 
   static final _funnelConfigs = {
     "adinterstitial": [1],
-    "adrewardedad": [1, 4, 10, 20, 30],
+    "adrewarded": [1, 4, 10, 20, 30],
     "adbannerclick": [1, 5, 10, 20],
     "round_end": [1, 2, 4, 8],
     "big6": [1],
