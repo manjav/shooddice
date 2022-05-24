@@ -110,7 +110,7 @@ class _MainPageState extends State<MainPage> with WidgetsBindingObserver {
       _loadingState = 2;
       setState(() {});
     });
-    WidgetsBinding.instance!.addObserver(this);
+    WidgetsBinding.instance.addObserver(this);
   }
 
   _recordApp() async {
@@ -129,7 +129,7 @@ class _MainPageState extends State<MainPage> with WidgetsBindingObserver {
 
   @override
   void dispose() {
-    WidgetsBinding.instance!.removeObserver(this);
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 }
