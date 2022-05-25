@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:gameanalytics_sdk/gameanalytics.dart';
 import 'package:http/http.dart' as http;
 import 'package:in_app_purchase/in_app_purchase.dart';
+import 'package:project/dialogs/shop.dart';
 import 'package:project/utils/localization.dart';
 import 'package:project/utils/prefs.dart';
 
@@ -20,9 +21,7 @@ class Analytics {
     "adrewarded": [1, 4, 10, 20, 30],
     "adbannerclick": [1, 5, 10, 20],
     "round_end": [1, 2, 4, 8],
-    "big6": [1],
-    "big7": [1],
-    "big10": [1],
+    "block": [1],
   };
 
   static init(FirebaseAnalytics analytics) {
@@ -54,6 +53,7 @@ class Analytics {
     GameAnalytics.initialize("ga_key".l(), "ga_secret".l());
 
     updateVariantIDs();
+    funnle("open");
   }
 
   static Future<void> updateVariantIDs() async {
