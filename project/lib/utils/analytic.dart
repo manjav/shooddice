@@ -5,7 +5,6 @@ import 'package:appsflyer_sdk/appsflyer_sdk.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:gameanalytics_sdk/gameanalytics.dart';
-import 'package:http/http.dart' as http;
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:project/dialogs/shop.dart';
 import 'package:project/utils/localization.dart';
@@ -72,10 +71,6 @@ class Analytics {
         await GameAnalytics.getRemoteConfigsValueAsString(testName, "1");
     variant = int.parse(variantId ?? "1");
     debugPrint("Analytics testVariantId ==> $variant");
-    var url =
-        "https://numbers.sarand.net/variant/?testName=$testName&variantId=$variantId&variant=$variant";
-    var response = await http.get(Uri.parse(url));
-    if (response.statusCode != 200) debugPrint('Failure status code 😱');
     if (variant == 3) {
       Price.ad = 40; //50 //100
       Price.big = 5; //10 //20
