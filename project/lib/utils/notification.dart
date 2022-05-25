@@ -51,9 +51,10 @@ class Notifier {
 
     // Message map
     var messages = {
-      record ? "record" : "default1": _getTime(24 * 3600),
-      "default2": _getTime(72 * 3600),
-      "default3": _getTime(168 * 3600),
+      record ? "record" : "default1": _getTime(1 * 24 * 3600),
+      "default2": _getTime(3 * 24 * 3600),
+      "default3": _getTime(7 * 24 * 3600),
+      "default4": _getTime(12 * 24 * 3600),
       "sleep": sleep,
       "weekend": weekend
     };
