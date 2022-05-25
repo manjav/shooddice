@@ -17,6 +17,7 @@ class Analytics {
   static late FirebaseAnalytics _firebaseAnalytics;
 
   static final _funnelConfigs = {
+    "open": [1],
     "adinterstitial": [1],
     "adrewarded": [1, 4, 10, 20, 30],
     "adbannerclick": [1, 5, 10, 20],
@@ -59,6 +60,7 @@ class Analytics {
   static Future<void> updateVariantIDs() async {
     var testVersion = Prefs.getString("testVersion");
     var version = "app_version".l();
+    debugPrint("Analytics version ==> $version testVersion ==> $testVersion");
     if (testVersion.isNotEmpty && testVersion != version) {
       return;
     }
@@ -69,12 +71,12 @@ class Analytics {
     var variantId =
         await GameAnalytics.getRemoteConfigsValueAsString(testName, "1");
     variant = int.parse(variantId ?? "1");
-    debugPrint("testVariantId ==> $variant");
+    debugPrint("Analytics testVariantId ==> $variant");
     var url =
         "https://numbers.sarand.net/variant/?testName=$testName&variantId=$variantId&variant=$variant";
     var response = await http.get(Uri.parse(url));
     if (response.statusCode != 200) debugPrint('Failure status code 😱');
-    /* if (variant == 2) {
+    if (variant == 3) {
       Price.ad = 40; //50 //100
       Price.big = 5; //10 //20
       Price.cube = 5; //10 //20
@@ -83,7 +85,7 @@ class Analytics {
       Price.tutorial = 200; //400
       Price.boost = 300; // 200 //100
       Price.revive = 300; //200 //100
-    } */
+    }
 
     _firebaseAnalytics.setUserProperty(name: "test_name", value: testName);
     _firebaseAnalytics.setUserProperty(name: "test_variant", value: variantId);
