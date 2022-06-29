@@ -338,12 +338,12 @@ class MyGame extends FlameGame with TapDetector {
 
       var c1 = EffectController(duration: time);
       c.add(MoveEffect.to(Vector2(c.x, dy + Cell.radius * coef), c1));
-      c.add(SizeEffect.to(Vector2(1, 1 - coef), c1));
+      c.add(ScaleEffect.to(Vector2(1, 1 - coef), c1));
 
       var c2 = DelayedEffectController(EffectController(duration: time * 2),
           delay: time);
       c.add(MoveEffect.to(Vector2(c.x, dy), c2));
-      c.add(SizeEffect.to(Vector2(1, 1), c2));
+      c.add(ScaleEffect.to(Vector2(1, 1), c2));
 
       Animate.checkCompletion(c2, () => fallingComplete(c, dy, hasDistance));
     }, state: CellState.float, startFrom: _lastFallingColumn);
