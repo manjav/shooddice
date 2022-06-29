@@ -18,7 +18,7 @@ class DailyDialog extends AbstractDialog {
           title: "daily_l".l(),
         );
   @override
-  _DailyDialogState createState() => _DailyDialogState();
+  createState() => _DailyDialogState();
 }
 
 class _DailyDialogState extends AbstractDialogState<DailyDialog> {

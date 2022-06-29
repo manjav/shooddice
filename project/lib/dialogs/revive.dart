@@ -21,7 +21,7 @@ class ReviveDialog extends AbstractDialog {
           width: 310.d,
         );
   @override
-  _ReviveDialogState createState() => _ReviveDialogState();
+  createState() => _ReviveDialogState();
 }
 
 class _ReviveDialogState extends AbstractDialogState<ReviveDialog> {

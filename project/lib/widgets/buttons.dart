@@ -25,7 +25,7 @@ class BumpedButton extends StatefulWidget {
       this.cornerRadius})
       : super(key: key);
   @override
-  _BumpedButtonState createState() => _BumpedButtonState();
+  createState() => _BumpedButtonState();
 }
 
 class _BumpedButtonState extends State<BumpedButton> {

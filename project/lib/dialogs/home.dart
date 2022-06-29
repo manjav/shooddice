@@ -32,7 +32,7 @@ class HomeDialog extends AbstractDialog {
           padding: EdgeInsets.fromLTRB(12.d, 12.d, 12.d, 14.d),
         );
   @override
-  _HomeDialogState createState() => _HomeDialogState();
+  createState() => _HomeDialogState();
 }
 
 class _HomeDialogState extends AbstractDialogState<HomeDialog> {

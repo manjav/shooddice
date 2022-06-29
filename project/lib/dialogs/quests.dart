@@ -20,7 +20,7 @@ class QuestsDialog extends AbstractDialog {
           title: "quests_l".l(),
         );
   @override
-  _QuestsDialogState createState() => _QuestsDialogState();
+  createState() => _QuestsDialogState();
 }
 
 class _QuestsDialogState extends AbstractDialogState<QuestsDialog> {
