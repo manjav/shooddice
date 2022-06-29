@@ -77,8 +77,8 @@ class MyGame extends FlameGame with TapDetector {
 
   void _addScore(int value) {
     if (_tutorMode) return;
-    var _new = Prefs.score += Cell.getScore(value);
-    onGameEvent?.call(GameEvent.score, _new);
+    var newScore = Prefs.score += Cell.getScore(value);
+    onGameEvent?.call(GameEvent.score, newScore);
     if (Pref.record.value >= Prefs.score) return;
     Games.submitScore(Prefs.score);
     Pref.record.set(Prefs.score);
@@ -296,20 +296,20 @@ class MyGame extends FlameGame with TapDetector {
       }
       var row = _cells.length(col);
       if (_cells.last! == _cells.get(col, row - 1)) --row;
-      var _y = Cell.getY(row);
-      if (_cells.last!.y > _y) {
-        debugPrint("col:$col  ${_cells.last!.y}  >>> $_y");
+      var y = Cell.getY(row);
+      if (_cells.last!.y > y) {
+        debugPrint("col:$col  ${_cells.last!.y}  >>> $y");
         return;
       }
-      var _x = Cell.getX(col);
+      var x = Cell.getX(col);
       // Change column
       if (_nextCell.column != col) {
         _nextCell.column = col;
-        _nextCell.add(MoveEffect.to(Vector2(_x, _nextCell.y),
+        _nextCell.add(MoveEffect.to(Vector2(x, _nextCell.y),
             EffectController(duration: 0.3, curve: Curves.easeInOutQuad)));
 
         _cells.translate(_cells.last!, col, row);
-        _cells.last!.x = _x;
+        _cells.last!.x = x;
       }
       _lastFallingColumn = _nextCell.column;
 
@@ -317,9 +317,9 @@ class MyGame extends FlameGame with TapDetector {
       ++_fallingsCount;
       _fallingEffect!.tint(
           RRect.fromLTRBXY(
-              _x - Cell.radius,
+              x - Cell.radius,
               _cells.last!.y + Cell.diameter,
-              _x + Cell.radius,
+              x + Cell.radius,
               bounds.bottom - row * Cell.diameter,
               Cell.roundness,
               Cell.roundness),
@@ -345,11 +345,11 @@ class MyGame extends FlameGame with TapDetector {
       c.add(MoveEffect.to(Vector2(c.x, dy), c2));
       c.add(ScaleEffect.to(Vector2(1, 1), c2));
 
-      Animate.checkCompletion(c2, () => fallingComplete(c, dy, hasDistance));
+      Animate.checkCompletion(c2, () => _fallingComplete(c, dy, hasDistance));
     }, state: CellState.float, startFrom: _lastFallingColumn);
   }
 
-  void fallingComplete(Cell cell, double dy, bool hasDistance) {
+  void _fallingComplete(Cell cell, double dy, bool hasDistance) {
     if (hasDistance) _lastFallingColumn = cell.column;
     cell.size = Vector2(1, 1);
     cell.y = dy;
@@ -500,13 +500,13 @@ class MyGame extends FlameGame with TapDetector {
         size: Vector2.zero(),
         sprite: sprite);
     celebration.anchor = Anchor.center;
-    var _size = Vector2(bounds.width, bounds.width * 0.2);
+    var size = Vector2(bounds.width, bounds.width * 0.2);
     var start = SizeEffect.to(
-        _size, EffectController(duration: 0.3, curve: Curves.easeInExpo));
-    var idle1 = SizeEffect.to(_size * 1.05,
+        size, EffectController(duration: 0.3, curve: Curves.easeInExpo));
+    var idle1 = SizeEffect.to(size * 1.05,
         EffectController(duration: 0.4, curve: Curves.easeOutExpo));
-    var idle2 = SizeEffect.to(_size * 1.0, EffectController(duration: 0.6));
-    var end = SizeEffect.to(Vector2(_size.x, 0),
+    var idle2 = SizeEffect.to(size * 1.0, EffectController(duration: 0.6));
+    var end = SizeEffect.to(Vector2(size.x, 0),
         EffectController(duration: 0.2, curve: Curves.easeInBack));
     Animate(celebration, [start, idle1, idle2, end],
         onComplete: () => remove(celebration));

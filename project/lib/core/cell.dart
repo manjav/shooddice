@@ -67,19 +67,19 @@ class Cell extends PositionComponent {
     return min + MyGame.random.nextInt(maxRandom - min);
   }
 
-  static void updateSizes(double _diameter) {
-    minSpeed = _diameter * 0.01;
-    maxSpeed = _diameter * 0.8;
-    diameter = _diameter;
-    padding = _diameter * 0.04;
-    strock = _diameter * 0.045;
-    roundness = _diameter * 0.15;
-    thickness = _diameter * 0.1;
-    radius = _diameter * 0.5;
+  static void updateSizes(double mdiameter) {
+    minSpeed = mdiameter * 0.01;
+    maxSpeed = mdiameter * 0.8;
+    diameter = mdiameter;
+    padding = mdiameter * 0.04;
+    strock = mdiameter * 0.045;
+    roundness = mdiameter * 0.15;
+    thickness = mdiameter * 0.1;
+    radius = mdiameter * 0.5;
 
-    _valuePos = Vector2(0, _diameter * -0.05);
-    _rewardPos = Vector2.all(_diameter * -0.43);
-    _rewardSize = Vector2.all(_diameter * 0.4);
+    _valuePos = Vector2(0, mdiameter * -0.05);
+    _rewardPos = Vector2.all(mdiameter * -0.43);
+    _rewardSize = Vector2.all(mdiameter * 0.4);
 
     _backRect = RRect.fromLTRBXY(padding - radius, padding - radius,
         radius - padding, radius - padding, roundness * 1.3, roundness * 1.3);

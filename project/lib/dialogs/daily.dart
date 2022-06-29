@@ -120,7 +120,7 @@ class TimeWidget extends StatefulWidget {
   final Function callback;
   const TimeWidget(this.label, this.callback, {Key? key}) : super(key: key);
   @override
-  _TimeWidgetState createState() => _TimeWidgetState();
+  createState() => _TimeWidgetState();
 }
 
 class _TimeWidgetState extends State<TimeWidget> {
