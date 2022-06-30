@@ -201,7 +201,7 @@ class _HomeDialogState extends AbstractDialogState<HomeDialog> {
         (Prefs.getString("cells").isEmpty ? "start_l" : "continue_l").l();
     _onUpdate();
     if (mounted && result != null) {
-      await RatingDialog.showRating(context);
+      await Rout.push(context, RatingDialog());
     }
   }
 
