@@ -7,12 +7,12 @@ class Widgets {
     return Container(
         padding: EdgeInsets.only(bottom: 6.d),
         alignment: Alignment.center,
-        child: Text("${Cell.getScore(value)}",
-            textAlign: TextAlign.center,
-            style: textStyle ?? theme.textTheme.headline4),
         decoration: CellDecoration(value),
         width: 154.d,
-        height: 52.d);
+        height: 52.d,
+        child: Text("${Cell.getScore(value)}",
+            textAlign: TextAlign.center,
+            style: textStyle ?? theme.textTheme.headline4));
   }
 }
 

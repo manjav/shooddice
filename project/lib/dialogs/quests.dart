@@ -146,7 +146,7 @@ class Quest {
 
   bool get isDone => value >= max;
 
-  String get text => ("quest_" + type.name).l([max.toString()]);
+  String get text => ("quest_${type.name}").l([max.toString()]);
 
   void levelUp() {
     Coins.change(reward, "quest", type.name);
