@@ -193,13 +193,14 @@ class _HomeDialogState extends AbstractDialogState<HomeDialog> {
     if (Pref.playCount.value > AdPlace.interstitialVideo.threshold) {
       await Ads.showInterstitial(AdPlace.interstitialVideo, widget.mode.name);
     }
+    if (!mounted) return;
     var result = await Rout.push(context, const GamePage());
     MyGame.boostNextMode = 0;
     MyGame.boostBig = false;
     _startButtonLabel =
         (Prefs.getString("cells").isEmpty ? "start_l" : "continue_l").l();
     _onUpdate();
-    if (result != null) {
+    if (mounted && result != null) {
       await RatingDialog.showRating(context);
     }
   }
