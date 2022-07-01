@@ -9,10 +9,10 @@ class Widgets {
     return Container(
         padding: EdgeInsets.only(bottom: size * 0.4),
         alignment: Alignment.center,
-        child: SVG.show("n$value", size * 1.9),
         decoration: CellDecoration(value, size),
         width: 154.d,
-        height: 52.d);
+        height: 52.d,
+        child: SVG.show("n$value", size * 1.9));
   }
 }
 

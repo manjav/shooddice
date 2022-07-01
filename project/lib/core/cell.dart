@@ -84,18 +84,18 @@ class Cell extends PositionComponent {
     return min + MyGame.random.nextInt(maxRandom - min);
   }
 
-  static void updateSizes(double _diameter) {
-    diameter = _diameter;
-    padding = _diameter * 0.04;
-    strock = _diameter * 0.065;
-    roundness = _diameter * 0.25;
-    thickness = _diameter * 0.025;
-    radius = _diameter * 0.5;
+  static void updateSizes(double mdiameter) {
+    diameter = mdiameter;
+    padding = mdiameter * 0.04;
+    strock = mdiameter * 0.065;
+    roundness = mdiameter * 0.25;
+    thickness = mdiameter * 0.025;
+    radius = mdiameter * 0.5;
 
-    _valuePos = Vector2(_diameter * -0.25, _diameter * -0.28);
-    _valueSize = Vector2.all(_diameter * 0.5);
-    _rewardPos = Vector2.all(_diameter * -0.43);
-    _rewardSize = Vector2.all(_diameter * 0.4);
+    _valuePos = Vector2(mdiameter * -0.25, mdiameter * -0.28);
+    _valueSize = Vector2.all(mdiameter * 0.5);
+    _rewardPos = Vector2.all(mdiameter * -0.43);
+    _rewardSize = Vector2.all(mdiameter * 0.4);
 
     _shadowRect = RRect.fromLTRBXY(padding - radius, padding - radius,
         radius - padding, radius + thickness, roundness, roundness);
@@ -153,16 +153,16 @@ class Cell extends PositionComponent {
       _rewardPaint = await Svg.load('images/${Asset.prefix}coin.svg');
     }
 
-    size = Vector2(1.3, 1.3);
+    scale = Vector2(1.3, 1.3);
     var controller = EffectController(
         duration: matched ? 0.2 : 0.3, curve: Curves.easeOutBack);
-    add(SizeEffect.to(Vector2(1, 1), controller));
+    add(ScaleEffect.to(Vector2(1, 1), controller));
     Animate.checkCompletion(controller, _animationComplete);
     return this;
   }
 
   void _animationComplete() {
-    size = Vector2(1, 1);
+    scale = Vector2(1, 1);
     if (state == CellState.init) state = CellState.float;
     onInit?.call(this);
     onInit = null;
@@ -171,7 +171,7 @@ class Cell extends PositionComponent {
   void delete(Function(Cell)? onDelete) {
     var controller = EffectController(
         duration: MyGame.random.nextDouble() * 0.8, curve: Curves.easeInBack);
-    add(SizeEffect.to(Vector2.zero(), controller));
+    add(ScaleEffect.to(Vector2.zero(), controller));
     Animate.checkCompletion(controller, () => onDelete?.call(this));
   }
 
@@ -179,9 +179,9 @@ class Cell extends PositionComponent {
   void render(Canvas canvas) {
     super.render(canvas);
     if (_sidePaint == null) return;
-    canvas.drawRRect(_shadowRect.s(size), _shadowPaint!);
-    canvas.drawRRect(_sideRect.s(size), _sidePaint!);
-    canvas.drawRRect(_overRect.s(size), _overPaint!);
+    canvas.drawRRect(_shadowRect.s(scale), _shadowPaint!);
+    canvas.drawRRect(_sideRect.s(scale), _sidePaint!);
+    canvas.drawRRect(_overRect.s(scale), _overPaint!);
 
     _valuePaint!.renderPosition(canvas, _valuePos, _valueSize);
     if (reward > 0) {
@@ -194,9 +194,9 @@ class Cell extends PositionComponent {
 }
 
 extension RRectExt on RRect {
-  RRect s(Vector2 size) {
-    if (size.x == 1 && size.y == 1) return this;
-    return RRect.fromLTRBXY(left * size.x, top * size.y, right * size.x,
-        bottom * size.y, blRadiusX * size.x, blRadiusY * size.y);
+  RRect s(Vector2 scale) {
+    if (scale.x == 1 && scale.y == 1) return this;
+    return RRect.fromLTRBXY(left * scale.x, top * scale.y, right * scale.x,
+        bottom * scale.y, blRadiusX * scale.x, blRadiusY * scale.y);
   }
 }

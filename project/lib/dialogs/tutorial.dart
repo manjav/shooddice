@@ -23,7 +23,7 @@ class TutorialDialog extends AbstractDialog {
             scoreButton: const SizedBox(),
             padding: EdgeInsets.fromLTRB(12.d, 4.d, 12.d, 12.d));
   @override
-  _TutorialDialogState createState() => _TutorialDialogState();
+  createState() => _TutorialDialogState();
 }
 
 class _TutorialDialogState extends AbstractDialogState<TutorialDialog> {

@@ -25,7 +25,7 @@ class BumpedButton extends StatefulWidget {
       this.cornerRadius})
       : super(key: key);
   @override
-  _BumpedButtonState createState() => _BumpedButtonState();
+  createState() => _BumpedButtonState();
 }
 
 class _BumpedButtonState extends State<BumpedButton> {
@@ -62,11 +62,11 @@ class _BumpedButtonState extends State<BumpedButton> {
         },
         child: Container(
             padding: padding,
-            child: widget.content ?? const SizedBox(),
             decoration: ButtonDecor(widget.colors ?? TColors.white.value,
                 widget.cornerRadius ?? 18.d, enable, _isPressed),
             width: 144.d,
-            height: 52.d));
+            height: 52.d,
+            child: widget.content ?? const SizedBox()));
   }
 }
 
