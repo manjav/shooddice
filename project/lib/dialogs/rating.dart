@@ -53,7 +53,6 @@ class _RatingDialogState extends AbstractDialogState<RatingDialog> {
 
   @override
   Widget build(BuildContext context) {
-    print("Rate => build $_response");
     return super.build(context);
   }
 
