@@ -463,7 +463,8 @@ class MyGame extends FlameGame with TapDetector {
   }
 
   void _removeCellsByValue(int value) {
-    _cells.loop((i, j, c) => _removeCell(i, j, true), value: value);
+    _cells.loop((i, j, c) => _removeCell(i, j, true),
+        value: value, state: CellState.fixed);
   }
 
   void boostNext() {
