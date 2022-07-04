@@ -247,7 +247,7 @@ class MyGame extends FlameGame with TapDetector {
     }
 
     // Change cell state
-    _fallAll();
+    _fallAll(true);
   }
 
   @override
@@ -273,7 +273,7 @@ class MyGame extends FlameGame with TapDetector {
       removingMode!.increase(-1);
       Prefs.increaseCount(removingMode!);
       isPlaying = true;
-      _fallAll();
+      _fallAll(false);
       onGameEvent?.call(GameEvent.remove, 0);
       return;
     }
@@ -325,27 +325,29 @@ class MyGame extends FlameGame with TapDetector {
               Cell.roundness),
           Cell.colors[_cells.last!.value].color);
     }
-    _fallAll();
+    _fallAll(true);
   }
 
-  void _fallAll() {
+  void _fallAll(bool alsoLastCell) {
     var time = 0.1;
     _cells.loop((i, j, c) {
-      c.state = CellState.falling;
-      var dy = Cell.getY(c.row);
-      var coef = ((dy - c.y) / (Cell.diameter * Cells.height)) * 0.4;
-      var hasDistance = dy - c.y > 0;
+      if (alsoLastCell || c != _cells.last) {
+        c.state = CellState.falling;
+        var dy = Cell.getY(c.row);
+        var coef = ((dy - c.y) / (Cell.diameter * Cells.height)) * 0.4;
+        var hasDistance = dy - c.y > 0;
 
-      var c1 = EffectController(duration: time);
-      c.add(MoveEffect.to(Vector2(c.x, dy + Cell.radius * coef), c1));
-      c.add(ScaleEffect.to(Vector2(1, 1 - coef), c1));
+        var c1 = EffectController(duration: time);
+        c.add(MoveEffect.to(Vector2(c.x, dy + Cell.radius * coef), c1));
+        c.add(ScaleEffect.to(Vector2(1, 1 - coef), c1));
 
-      var c2 = DelayedEffectController(EffectController(duration: time * 2),
-          delay: time);
-      c.add(MoveEffect.to(Vector2(c.x, dy), c2));
-      c.add(ScaleEffect.to(Vector2(1, 1), c2));
+        var c2 = DelayedEffectController(EffectController(duration: time * 2),
+            delay: time);
+        c.add(MoveEffect.to(Vector2(c.x, dy), c2));
+        c.add(ScaleEffect.to(Vector2(1, 1), c2));
 
-      Animate.checkCompletion(c2, () => _fallingComplete(c, dy, hasDistance));
+        Animate.checkCompletion(c2, () => _fallingComplete(c, dy, hasDistance));
+      }
     }, state: CellState.float, startFrom: _lastFallingColumn);
   }
 
@@ -449,7 +451,7 @@ class MyGame extends FlameGame with TapDetector {
       Pref.maxRandom.set(Cell.maxRandom = index.min(Cell.maxRandom));
     }
 
-    _fallAll();
+    _fallAll(true);
   }
 
   void _removeCell(int column, int row, bool accumulate) {
