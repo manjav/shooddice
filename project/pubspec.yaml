@@ -32,7 +32,7 @@ dependencies:
   intl: ^0.17.0
   path_provider: ^2.0.8
   screenshot: ^1.2.3
-  share: ^2.0.4
+  share_plus: ^4.0.10
   shared_preferences: ^2.0.15
   # smartlook: ^2.0.1
   soundpool: ^2.1.0
