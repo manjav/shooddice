@@ -3,6 +3,7 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_smartlook/flutter_smartlook.dart';
 import 'package:project/dialogs/daily.dart';
 import 'package:project/dialogs/home.dart';
 import 'package:project/dialogs/quests.dart';
@@ -16,7 +17,6 @@ import 'package:project/utils/notification.dart';
 import 'package:project/utils/prefs.dart';
 import 'package:project/utils/sounds.dart';
 import 'package:project/utils/utils.dart';
-import 'package:smartlook/smartlook.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -121,7 +121,11 @@ class _MainPageState extends State<MainPage> with WidgetsBindingObserver {
     DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
     AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
     if (androidInfo.version.sdkInt! < 30) return;
-    Smartlook.setupAndStartRecording(SetupOptionsBuilder("sl_key".l()).build());
+    final SetupOptions options = (SetupOptionsBuilder("sl_key".l())
+          ..Fps = 1
+          ..StartNewSession = false)
+        .build();
+    await Smartlook.setupAndStartRecording(options);
   }
 
   @override
