@@ -14,7 +14,7 @@ dependencies:
   appsflyer_sdk: ^6.4.0+2
   confetti: ^0.7.0
   cupertino_icons: ^1.0.5
-  device_info: ^2.0.2
+  device_info_plus: ^4.0.0
   firebase_analytics: ^9.1.12
   firebase_core: ^1.19.1
   firebase_messaging: ^11.4.4

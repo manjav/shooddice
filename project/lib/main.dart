@@ -1,4 +1,4 @@
-import 'package:device_info/device_info.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -120,7 +120,7 @@ class _MainPageState extends State<MainPage> with WidgetsBindingObserver {
     if (Pref.visitCount.value > 1) return;
     DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
     AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
-    if (androidInfo.version.sdkInt < 30) return;
+    if (androidInfo.version.sdkInt! < 30) return;
     Smartlook.setupAndStartRecording(SetupOptionsBuilder("sl_key".l()).build());
   }
 
