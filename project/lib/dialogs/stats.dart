@@ -11,7 +11,7 @@ import 'package:project/widgets/buttons.dart';
 import 'package:project/widgets/coins.dart';
 import 'package:project/widgets/widgets.dart';
 import 'package:screenshot/screenshot.dart';
-import 'package:share/share.dart';
+import 'package:share_plus/share_plus.dart';
 
 class StatsDialog extends AbstractDialog {
   StatsDialog({Key? key})

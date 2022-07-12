@@ -46,7 +46,7 @@ class Notifier {
 
     // Weekend message
     var date = DateTime(now.year, now.month, now.day, 10);
-    while (date.weekday != 6) {
+    while (date.weekday != 6 || date.isBefore(now)) {
       date = date.add(const Duration(days: 1));
     }
     var weekend = tz.TZDateTime.from(date, tz.local);
