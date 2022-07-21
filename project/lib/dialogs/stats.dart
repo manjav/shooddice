@@ -17,7 +17,7 @@ class StatsDialog extends AbstractDialog {
           padding: EdgeInsets.all(12.d),
         );
   @override
-  _StatsDialogState createState() => _StatsDialogState();
+  createState() => _StatsDialogState();
 }
 
 class _StatsDialogState extends AbstractDialogState<StatsDialog> {

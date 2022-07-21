@@ -61,7 +61,7 @@ class MainPage extends StatefulWidget {
   final FirebaseAnalytics analytics;
   const MainPage({Key? key, required this.analytics}) : super(key: key);
   @override
-  _MainPageState createState() => _MainPageState();
+  createState() => _MainPageState();
 }
 
 class _MainPageState extends State<MainPage> with WidgetsBindingObserver {
@@ -98,6 +98,7 @@ class _MainPageState extends State<MainPage> with WidgetsBindingObserver {
             acceptText: "Install",
             declineText: "Not yet"));
     if (result) InstallPrompt.showInstallPrompt();
+    if (!mounted) return false;
     result = await Rout.push(context, QuitDialog(showAvatar: !result),
         barrierDismissible: true);
     return result != null;
