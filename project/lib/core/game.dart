@@ -50,6 +50,7 @@ class MyGame extends FlameGame with TapDetector {
   int _newRecord = 0;
   int _numRewardCells = 0;
   int _mergesCount = 0;
+  int _mergesCountRecord = 0;
   int _valueRecord = 0;
   int _fallingsCount = 0;
   int _lastFallingColumn = 0;
@@ -415,10 +416,10 @@ class MyGame extends FlameGame with TapDetector {
       }
       // debugPrint("match $c len:${matchs.length}");
     }
-    if (merges > 0) {
-      _mergesCount = (_mergesCount + 1).clamp(1, 6);
-      Sound.play("merge-$_mergesCount");
-      Sound.vibrate(3 + 4 * _mergesCount);
+    if (merges > 0){
+      _mergesCountRecord = (_mergesCountRecord + 1).clamp(1, 6);
+      Sound.play("merge-$_mergesCountRecord");
+      Sound.vibrate(3 + 4 * _mergesCountRecord);
     }
     return merges;
   }
@@ -492,12 +493,12 @@ class MyGame extends FlameGame with TapDetector {
 
   Future<void> _celebrate() async {
     var limit = 3;
-    if (_mergesCount < limit) return;
+    if (_mergesCountRecord < limit) return;
     _reward = _numRewardCells > 0 || _tutorMode
         ? 0
-        : random.nextInt(3) + _mergesCount * 2;
+        : random.nextInt(3) + _mergesCountRecord * 2;
     var sprite = await Sprite.load(
-        '${Asset.prefix}celebration-${(_mergesCount - limit).clamp(0, 3)}.png');
+        '${Asset.prefix}celebration-${(_mergesCountRecord - limit).clamp(0, 3)}.png');
     var celebration = SpriteComponent(
         position: Vector2(_bgRect!.center.dx, _bgRect!.center.dy),
         size: Vector2.zero(),
