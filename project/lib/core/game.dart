@@ -80,8 +80,8 @@ class MyGame extends FlameGame with TapDetector {
     if (_tutorMode) return;
     var newScore = Prefs.score += Cell.getScore(value);
     onGameEvent?.call(GameEvent.score, newScore);
-    if (Pref.record.value >= Prefs.score) return;
     Games.submitScore(Prefs.score);
+    if (Pref.record.value >= Prefs.score) return;
     Pref.record.set(Prefs.score);
     _newRecord = Prefs.score;
   }
@@ -367,27 +367,28 @@ class MyGame extends FlameGame with TapDetector {
     // Check all matchs after falling animation
     if (!_findMatchs()) {
       _celebrate();
-      _mergesCount = 0;
+      _mergesCountRecord = 0;
       _spawn();
     }
   }
 
   bool _findMatchs() {
-    var numMerges = 0;
+    var mergesCount = 0;
     var cp = _lastFallingColumn;
     var cm = _lastFallingColumn - 1;
     while (cp < Cells.width || cm > -1) {
       if (cp < Cells.width) {
-        numMerges += _foundMatch(cp);
+        mergesCount += _foundMatch(cp);
         cp++;
       }
       if (cm > -1) {
-        numMerges += _foundMatch(cm);
+        mergesCount += _foundMatch(cm);
         cm--;
       }
     }
-    Quests.increase(QuestType.merges, numMerges);
-    return numMerges > 0;
+    Quests.increase(QuestType.merges, mergesCount);
+    _mergesCount += mergesCount;
+    return mergesCount > 0;
   }
 
   int _foundMatch(int i) {
