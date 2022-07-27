@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:games_services/games_services.dart';
+import 'package:project/utils/localization.dart';
 
 import 'analytic.dart';
 
@@ -17,8 +18,8 @@ class Games {
       _timer?.cancel();
       GamesServices.submitScore(
           score: Score(
-              androidLeaderboardID: 'CgkIw9yXzt4XEAIQAQ',
-              iOSLeaderboardID: 'ios_leaderboard_id',
+              androidLeaderboardID: 'leaderboard_android'.l(),
+              iOSLeaderboardID: 'leaderboard_ios'.l(),
               value: score));
     });
   }
