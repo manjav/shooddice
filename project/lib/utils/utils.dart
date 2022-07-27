@@ -9,13 +9,13 @@ class Rout {
   static dynamic push(BuildContext context, Widget page,
       {Color? barrierColor,
       Tween<Offset>? tween,
-      bool barrierDismissible = false}) async {
+      bool barrierDismissible = false, bool isReplaced = false}) async {
     if (_lastPageName == page.key.toString()) return null;
     _lastPageName = page.toStringShort();
-    var popDuration = (page is AbstractDialog) ? (page.popDuration ?? 1) : 1;
-    return await Navigator.of(context).push(PageRouteBuilder(
+    var popDuration = Duration(milliseconds:(page is AbstractDialog) ? (page.popDuration ?? 1) : 1);
+    var builder =  PageRouteBuilder(
         opaque: false,
-        reverseTransitionDuration: Duration(milliseconds: popDuration),
+        reverseTransitionDuration: popDuration,
         barrierColor:
             barrierColor ?? Theme.of(context).backgroundColor.withAlpha(230),
         barrierDismissible: barrierDismissible,
@@ -25,7 +25,12 @@ class Rout {
                     Tween(begin: const Offset(0.0, 0.08), end: Offset.zero)
                         .chain(CurveTween(curve: Curves.easeOutExpo))),
                 child: child),
-        pageBuilder: (c, _, __) => page));
+        pageBuilder: (c, _, __) => page);
+        if(isReplaced){
+              return Navigator.of(context).pushReplacement(builder);
+
+        }
+    return await Navigator.of(context).push(builder);
   }
 
   static void pop<T extends Object?>(BuildContext context, [T? result]) {

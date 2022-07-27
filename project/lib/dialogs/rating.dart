@@ -12,6 +12,25 @@ import 'package:project/utils/utils.dart';
 import 'package:project/widgets/buttons.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
+class Rating {
+  static bool isReady(){
+   var hours = DateTime.now().hoursSinceEpoch;
+    debugPrint(
+        "Rate => ${Pref.rate.value}, The last rating time elapsed:${hours - Pref.rateLastTime.value}");
+
+    // Repeat rating request
+    // Already 5 rating or pending to proper time
+    if (Pref.rate.value >= 5 || (hours - Pref.rateLastTime.value) < 24) {
+      return false;
+    }
+    // Bad rating and pending to proper time
+    if (Pref.rate.value > 0 && (hours - Pref.rateLastTime.value) < 24 * 3) {
+      return false;
+    }
+    return true;
+  }
+}
+
 class RatingDialog extends AbstractDialog {
   final int initialRating;
   RatingDialog({Key? key, this.initialRating = 1})
@@ -29,27 +48,6 @@ class RatingDialog extends AbstractDialog {
 
 class _RatingDialogState extends AbstractDialogState<RatingDialog> {
   var _response = 0;
-  var _hours = 0;
-
-  @override
-  void initState() {
-    _hours = DateTime.now().hoursSinceEpoch;
-    debugPrint(
-        "Rate => ${Pref.rate.value}, The last rating time elapsed:${_hours - Pref.rateLastTime.value}");
-
-    // Repeat rating request
-    // Already 5 rating or pending to proper time
-    if (Pref.rate.value >= 5 || (_hours - Pref.rateLastTime.value) < 24) {
-      Navigator.pop(context, _response = -1);
-      return;
-    }
-    // Bad rating and pending to proper time
-    if (Pref.rate.value > 0 && (_hours - Pref.rateLastTime.value) < 24 * 3) {
-      Navigator.pop(context, _response = -1);
-      return;
-    }
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -96,12 +94,13 @@ class _RatingDialogState extends AbstractDialogState<RatingDialog> {
 
   _onSubmit() async {
     Pref.rate.set(_response);
-    Pref.rateLastTime.set(_hours);
+    Pref.rateLastTime.set(DateTime.now().hoursSinceEpoch);
 
     String comment = "";
     if (_response > 0) {
       if (_response < 5) {
-        var r = await Rout.push(context, ReviewDialog());
+
+        var r = await Rout.push(context, ReviewDialog(), isReplaced: true);
         if (r != null) {
           comment = r;
           var url =
@@ -113,7 +112,7 @@ class _RatingDialogState extends AbstractDialogState<RatingDialog> {
         await _requestReview();
       }
       if (!mounted) return;
-      await Rout.push(context, Toast("thanks_l".l()), barrierDismissible: true);
+      await Rout.push(context, Toast("thanks_l".l()), barrierDismissible: true, isReplaced: true);
     }
     Analytics.design('rate', parameters: <String, dynamic>{
       'rating': _response,
