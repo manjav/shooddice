@@ -47,6 +47,7 @@ class Cell extends PositionComponent {
   static double thickness = 2.0;
   static double strock = 3.0;
   static double radius = 32.0;
+  static int qualificationThreashold = 20;
   static RRect _backRect = RRect.zero;
   static RRect _sideRect = RRect.zero;
   static RRect _overRect = RRect.zero;
@@ -55,6 +56,7 @@ class Cell extends PositionComponent {
   static Vector2 _rewardSize = Vector2.zero();
 
   static final scales = [0, 1, 0.9, 0.75, 0.65, 0.6, 0.55];
+
   static double getX(int col) => MyGame.bounds.left + col * diameter + radius;
   static double getY(int row) =>
       MyGame.bounds.top + (Cells.height - row) * diameter + radius;

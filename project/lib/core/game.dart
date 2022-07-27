@@ -421,7 +421,7 @@ class MyGame extends FlameGame with TapDetector {
       _mergesCountRecord = (_mergesCountRecord + 1).clamp(1, 6);
       Sound.play("merge-$_mergesCountRecord");
       Sound.vibrate(3 + 4 * _mergesCountRecord);
-    }
+    } 
     return merges;
   }
 
@@ -520,6 +520,8 @@ class MyGame extends FlameGame with TapDetector {
     Sound.play("merge-end");
     onGameEvent?.call(GameEvent.celebrate, 0);
   }
+
+  bool qualified() => _mergesCount > Cell.qualificationThreashold;
 }
 
 class FallingEffect extends PositionComponent {

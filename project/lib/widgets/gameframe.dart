@@ -138,8 +138,7 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             Text("clt_${_game!.removingMode!.name}_tip".l()),
             GestureDetector(
-                onTap: _onRemoveBlock,
-                child: SVG.show("close", 32.d))
+                onTap: _onRemoveBlock, child: SVG.show("close", 32.d))
           ]));
     }
     return Row(crossAxisAlignment: CrossAxisAlignment.end, children: [
@@ -294,7 +293,7 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
 
     if (myWidget != null) {
       MyGame.isPlaying = false;
-    if (!mounted) return;
+      if (!mounted) return;
       var result = await Rout.push(context, myWidget);
       if (event == GameEvent.lose) {
         if (result == null) {
@@ -352,7 +351,9 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
     switch (type) {
       case "home":
         Pref.score.set(Prefs.score);
-        Rout.pop(context);
+        dynamic result;
+        if (_game!.qualified()) result = "qualified";
+        Rout.pop(context, result);
         break;
       case "resume":
         MyGame.isPlaying = true;
