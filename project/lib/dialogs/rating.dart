@@ -99,7 +99,8 @@ class _RatingDialogState extends AbstractDialogState<RatingDialog> {
     String comment = "";
     if (_response > 0) {
       if (_response < 5) {
-        var r = await Rout.push(context, ReviewDialog());
+
+        var r = await Rout.push(context, ReviewDialog(), isReplaced: true);
         if (r != null) {
           comment = r;
           var url =
@@ -111,7 +112,7 @@ class _RatingDialogState extends AbstractDialogState<RatingDialog> {
         await _requestReview();
       }
       if (!mounted) return;
-      await Rout.push(context, Toast("thanks_l".l()), barrierDismissible: true);
+      await Rout.push(context, Toast("thanks_l".l()), barrierDismissible: true, isReplaced: true);
     }
     Analytics.design('rate', parameters: <String, dynamic>{
       'rating': _response,
