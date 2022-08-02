@@ -3,7 +3,7 @@ description: Simple and colorful dice merge game to tease your brain, Easy, fun 
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.0.11+10011
+version: 1.0.12+10012
 
 environment:
   sdk: ">=2.15.0 <3.0.0"
