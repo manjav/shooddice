@@ -55,7 +55,7 @@ class MyGame extends FlameGame with TapDetector {
   int _fallingsCount = 0;
   int _lastFallingColumn = 0;
   double _speed = Cell.minSpeed;
-  final Cell _nextCell = Cell(0, 0, 0);
+  final Cell _nextCell = Cell(0, 0, 1);
   final Cells _cells = Cells();
 
   RRect? _bgRect;
