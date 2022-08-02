@@ -50,10 +50,11 @@ class MyGame extends FlameGame with TapDetector {
   int _newRecord = 0;
   int _numRewardCells = 0;
   int _mergesCount = 0;
+  int _mergesCountRecord = 0;
   int _valueRecord = 0;
   int _fallingsCount = 0;
   int _lastFallingColumn = 0;
-  final Cell _nextCell = Cell(0, 0, 0);
+  final Cell _nextCell = Cell(0, 0, 1);
   final Cells _cells = Cells();
 
   RRect? _bgRect;
@@ -79,8 +80,8 @@ class MyGame extends FlameGame with TapDetector {
     if (_tutorMode) return;
     var newScore = Prefs.score += Cell.getScore(value);
     onGameEvent?.call(GameEvent.score, newScore);
-    if (Pref.record.value >= Prefs.score) return;
     Games.submitScore(Prefs.score);
+    if (Pref.record.value >= Prefs.score) return;
     Pref.record.set(Prefs.score);
     _newRecord = Prefs.score;
   }
@@ -348,27 +349,28 @@ class MyGame extends FlameGame with TapDetector {
     // Check all matchs after falling animation
     if (!_findMatchs()) {
       _celebrate();
-      _mergesCount = 0;
+      _mergesCountRecord = 0;
       _spawn();
     }
   }
 
   bool _findMatchs() {
-    var numMerges = 0;
+    var mergesCount = 0;
     var cp = _lastFallingColumn;
     var cm = _lastFallingColumn - 1;
     while (cp < Cells.width || cm > -1) {
       if (cp < Cells.width) {
-        numMerges += _foundMatch(cp);
+        mergesCount += _foundMatch(cp);
         cp++;
       }
       if (cm > -1) {
-        numMerges += _foundMatch(cm);
+        mergesCount += _foundMatch(cm);
         cm--;
       }
     }
-    Quests.increase(QuestType.merges, numMerges);
-    return numMerges > 0;
+    Quests.increase(QuestType.merges, mergesCount);
+    _mergesCount += mergesCount;
+    return mergesCount > 0;
   }
 
   int _foundMatch(int i) {
@@ -398,9 +400,9 @@ class MyGame extends FlameGame with TapDetector {
       // debugPrint("match $c len:${matchs.length}");
     }
     if (merges > 0) {
-      _mergesCount = (_mergesCount + 1).clamp(1, 6);
-      Sound.play("merge-$_mergesCount");
-      Sound.vibrate(3 + 4 * _mergesCount);
+      _mergesCountRecord = (_mergesCountRecord + 1).clamp(1, 6);
+      Sound.play("merge-$_mergesCountRecord");
+      Sound.vibrate(3 + 4 * _mergesCountRecord);
     }
     return merges;
   }
@@ -474,12 +476,18 @@ class MyGame extends FlameGame with TapDetector {
 
   Future<void> _celebrate() async {
     var limit = 3;
-    if (_mergesCount < limit) return;
-    _reward = _numRewardCells > 0 || _tutorMode
-        ? 0
-        : random.nextInt(3) + _mergesCount * 2;
-    var sprite = await Sprite.load(
-        '${Asset.prefix}celebration-${(_mergesCount - limit).clamp(0, 3)}.png');
+    var level = (_mergesCountRecord - limit).clamp(-1, 3);
+    if (level < 0) return;
+    if (_numRewardCells > 0 || _tutorMode) {
+      _reward = 0;
+    } else {
+      if (Analytics.variant == 3) {
+        _reward = random.nextInt(2) + pow(2, level) as int;
+      } else {
+        _reward = random.nextInt(3) + _mergesCountRecord * 2;
+      }
+    }
+    var sprite = await Sprite.load('${Asset.prefix}celebration-$level.png');
     var celebration = SpriteComponent(
         position: Vector2(_bgRect!.center.dx, _bgRect!.center.dy),
         size: Vector2.zero(),
@@ -500,6 +508,8 @@ class MyGame extends FlameGame with TapDetector {
     Sound.play("merge-end");
     onGameEvent?.call(GameEvent.celebrate, 0);
   }
+
+  bool qualified() => _mergesCount > Cell.qualificationThreashold;
 }
 
 class FallingEffect extends PositionComponent {

@@ -56,9 +56,4 @@ class _RecordDialogState extends AbstractDialogState<RecordDialog> {
     ]);
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-    widget.confettiController.stop();
-  }
 }

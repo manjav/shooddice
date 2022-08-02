@@ -215,7 +215,7 @@ class _HomeDialogState extends AbstractDialogState<HomeDialog> {
               declineText: "Not yet"));
       if (accept) {
         InstallPrompt.showInstallPrompt();
-      } else if (mounted) {
+      } else if (mounted && Rating.isReady()) {
         await Rout.push(context, RatingDialog());
       }
     }

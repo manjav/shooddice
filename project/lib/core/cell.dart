@@ -64,6 +64,7 @@ class Cell extends PositionComponent {
   static double thickness = 2.0;
   static double strock = 3.0;
   static double radius = 32.0;
+  static int qualificationThreashold = 20;
   static RRect _shadowRect = RRect.zero;
   static RRect _sideRect = RRect.zero;
   static RRect _overRect = RRect.zero;
