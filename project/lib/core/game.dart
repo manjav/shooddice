@@ -496,11 +496,16 @@ class MyGame extends FlameGame with TapDetector {
     var limit = 3;
     var level = (_mergesCountRecord - limit).clamp(-1, 3);
     if (level < 0) return;
-    _reward = _numRewardCells > 0 || _tutorMode
-        ? 0
-        : random.nextInt(2) + pow(2, level) as int;
-    var sprite = await Sprite.load(
-        '${Asset.prefix}celebration-$level.png');
+    if (_numRewardCells > 0 || _tutorMode) {
+      _reward = 0;
+    } else {
+      if (Analytics.variant == 3) {
+        _reward = random.nextInt(2) + pow(2, level) as int;
+      } else {
+        _reward = random.nextInt(3) + _mergesCountRecord * 2;
+      }
+    }
+    var sprite = await Sprite.load('${Asset.prefix}celebration-$level.png');
     var celebration = SpriteComponent(
         position: Vector2(_bgRect!.center.dx, _bgRect!.center.dy),
         size: Vector2.zero(),
